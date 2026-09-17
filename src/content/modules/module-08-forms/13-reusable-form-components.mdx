@@ -1,0 +1,38 @@
+---
+id: "m08-13"
+number: "13"
+title: "Reusable Form Components"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Building generic TextField, CheckboxField, and SelectField components."
+codeTitle: "Reusable FormField Wrapper"
+---
+
+# Reusable Form Components
+
+Encapsulate label, input, helper text, and error messages into reusable field wrappers.
+
+### Key Concepts & Rules:
+
+- Massively cuts down boilerplate in enterprise apps.
+
+### Code Example: Reusable FormField Wrapper
+
+```tsx
+interface FormFieldProps {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}
+
+export function FormField({ label, error, children }: FormFieldProps) {
+  return (
+    <div className="space-y-1">
+      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">{label}</label>
+      {children}
+      {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
+    </div>
+  );
+}
+```

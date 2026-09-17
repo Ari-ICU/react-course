@@ -1,0 +1,37 @@
+---
+id: "m13-04"
+number: "04"
+title: "Routes and Route"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Defining URL matching rules and target components."
+codeTitle: "Configuring Routes"
+---
+
+# Routes and Route
+
+`<Routes>` examines all its child `<Route>` elements and chooses the best match based on the current URL path.
+
+### Key Concepts & Rules:
+
+- Matches are prioritized based on specificity.
+
+### Code Example: Configuring Routes
+
+```tsx
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import CurriculumPage from './pages/CurriculumPage';
+import ProjectsPage from './pages/ProjectsPage';
+
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/curriculum" element={<CurriculumPage />} />
+      <Route path="/projects" element={<ProjectsPage />} />
+    </Routes>
+  );
+}
+```

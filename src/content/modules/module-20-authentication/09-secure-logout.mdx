@@ -1,0 +1,32 @@
+---
+id: "m20-09"
+number: "09"
+title: "Secure Logout"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Clearing tokens and invalidating server sessions."
+codeTitle: "Complete Secure Logout Sequence"
+---
+
+# Secure Logout
+
+On logout: 1) Call backend `/auth/logout` to revoke refresh token; 2) Clear client memory and storage; 3) Reset query cache; 4) Redirect to login.
+
+### Key Concepts & Rules:
+
+- Clear TanStack Query cache on logout to avoid leaking user data to subsequent logins.
+
+### Code Example: Complete Secure Logout Sequence
+
+```tsx
+const logout = async () => {
+  try {
+    await apiClient.post('/auth/logout');
+  } finally {
+    queryClient.clear(); // Purge all cached user data!
+    useAuthStore.getState().reset();
+    window.location.href = '/login';
+  }
+};
+```

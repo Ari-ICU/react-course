@@ -1,69 +1,286 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect, useCallback } from "react";
+import { modulesData } from "@/data/modules-data";
+import { Header } from "@/components/header";
+import { SlideView } from "@/components/slide-view";
+import { StudyView } from "@/components/study-view";
+import { ProjectsView } from "@/components/projects-view";
+import { ArchitectureView } from "@/components/architecture-view";
+import { ChapterDrawer } from "@/components/chapter-drawer";
+import { CommandSearch } from "@/components/command-search";
+
+export default function CourseApp() {
+  const [currentModuleId, setCurrentModuleId] = useState<string>("module-01");
+  const [currentTopicId, setCurrentTopicId] = useState<string>("m01-01");
+  const [viewMode, setViewMode] = useState<"slide" | "study" | "projects" | "architecture">("slide");
+  const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [completedTopics, setCompletedTopics] = useState<string[]>([]);
+  const [isReady, setIsReady] = useState(false);
+
+  // Restore navigation state from URL parameters or localStorage on initial mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      // 1. Check URL parameters
+      const params = new URLSearchParams(window.location.search);
+      const urlModule = params.get("module");
+      const urlTopic = params.get("topic");
+      const urlMode = params.get("mode") as any;
+
+      // 2. Check localStorage
+      const savedModule = localStorage.getItem("react_course_last_module");
+      const savedTopic = localStorage.getItem("react_course_last_topic");
+      const savedMode = localStorage.getItem("react_course_last_mode") as any;
+      const savedCompleted = localStorage.getItem("react_course_completed_topics");
+
+      if (savedCompleted) {
+        try {
+          setCompletedTopics(JSON.parse(savedCompleted));
+        } catch {}
+      }
+
+      // Priority: URL > localStorage > default
+      const targetModule = urlModule || savedModule || "module-01";
+      const targetTopic = urlTopic || savedTopic;
+      const targetMode = urlMode || savedMode;
+
+      let activeModId = "module-01";
+      let activeTopId = "m01-01";
+
+      if (modulesData.some((m) => m.id === targetModule)) {
+        activeModId = targetModule;
+        const mod = modulesData.find((m) => m.id === targetModule);
+        if (targetTopic && mod?.topics.some((t) => t.id === targetTopic)) {
+          activeTopId = targetTopic;
+        } else if (mod?.topics[0]) {
+          activeTopId = mod.topics[0].id;
+        }
+      }
+
+      setCurrentModuleId(activeModId);
+      setCurrentTopicId(activeTopId);
+
+      if (targetMode && ["slide", "study", "projects", "architecture"].includes(targetMode)) {
+        setViewMode(targetMode);
+      }
+    } catch (e) {
+      console.error("Failed to restore course navigation state", e);
+    } finally {
+      setIsReady(true);
+    }
+  }, []);
+
+  // Synchronize state changes to localStorage and URL query string ONLY after isReady is true
+  useEffect(() => {
+    if (!isReady || typeof window === "undefined") return;
+
+    try {
+      localStorage.setItem("react_course_last_module", currentModuleId);
+      localStorage.setItem("react_course_last_topic", currentTopicId);
+      localStorage.setItem("react_course_last_mode", viewMode);
+
+      const params = new URLSearchParams(window.location.search);
+      params.set("module", currentModuleId);
+      params.set("topic", currentTopicId);
+      params.set("mode", viewMode);
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState(null, "", newUrl);
+    } catch {
+      // ignore
+    }
+  }, [isReady, currentModuleId, currentTopicId, viewMode]);
+
+  // Save completed topics
+  const handleToggleComplete = useCallback((topicId: string) => {
+    setCompletedTopics((prev) => {
+      const updated = prev.includes(topicId)
+        ? prev.filter((id) => id !== topicId)
+        : [...prev, topicId];
+      try {
+        localStorage.setItem("react_course_completed_topics", JSON.stringify(updated));
+      } catch {
+        // ignore
+      }
+      return updated;
+    });
+  }, []);
+
+  // Module selection (e.g. from Curriculum sidebar)
+  const handleSelectModule = useCallback((moduleId: string) => {
+    setCurrentModuleId(moduleId);
+    const mod = modulesData.find((m) => m.id === moduleId);
+    if (mod && mod.topics[0]) {
+      setCurrentTopicId(mod.topics[0].id);
+    }
+  }, []);
+
+  // Current Module & Topic Lookup
+  const currentModule =
+    modulesData.find((m) => m.id === currentModuleId) || modulesData[0];
+  const currentTopicIndex = currentModule.topics.findIndex((t) => t.id === currentTopicId);
+  const currentTopic =
+    currentTopicIndex >= 0 ? currentModule.topics[currentTopicIndex] : currentModule.topics[0];
+
+  const currentModuleIndex = modulesData.findIndex((m) => m.id === currentModule.id);
+
+  // Navigation Handlers
+  const handleNext = useCallback(() => {
+    if (currentTopicIndex < currentModule.topics.length - 1) {
+      setCurrentTopicId(currentModule.topics[currentTopicIndex + 1].id);
+    } else if (currentModuleIndex < modulesData.length - 1) {
+      const nextMod = modulesData[currentModuleIndex + 1];
+      setCurrentModuleId(nextMod.id);
+      setCurrentTopicId(nextMod.topics[0].id);
+    }
+  }, [currentTopicIndex, currentModule, currentModuleIndex]);
+
+  const handlePrev = useCallback(() => {
+    if (currentTopicIndex > 0) {
+      setCurrentTopicId(currentModule.topics[currentTopicIndex - 1].id);
+    } else if (currentModuleIndex > 0) {
+      const prevMod = modulesData[currentModuleIndex - 1];
+      setCurrentModuleId(prevMod.id);
+      setCurrentTopicId(prevMod.topics[prevMod.topics.length - 1].id);
+    }
+  }, [currentTopicIndex, currentModuleIndex]);
+
+  const hasNext =
+    currentTopicIndex < currentModule.topics.length - 1 ||
+    currentModuleIndex < modulesData.length - 1;
+  const hasPrev = currentTopicIndex > 0 || currentModuleIndex > 0;
+
+  const handleSelectTopic = useCallback((moduleId: string, topicId: string) => {
+    setCurrentModuleId(moduleId);
+    setCurrentTopicId(topicId);
+    setViewMode("slide");
+  }, []);
+
+  const handleSelectProject = useCallback((projectId: string) => {
+    setViewMode("projects");
+  }, []);
+
+  const handleToggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(() => {});
+      setIsFullscreen(false);
+    }
+  }, []);
+
+  // Global Keyboard Shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+        return;
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "m") {
+        e.preventDefault();
+        setIsChapterDrawerOpen((prev) => !prev);
+      } else if (e.key.toLowerCase() === "f" && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        handleToggleFullscreen();
+      } else if (viewMode === "slide" && !isChapterDrawerOpen && !isSearchOpen) {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          handleNext();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          handlePrev();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    viewMode,
+    isChapterDrawerOpen,
+    isSearchOpen,
+    handleNext,
+    handlePrev,
+    handleToggleFullscreen,
+  ]);
+
+  const totalTopicsCount = modulesData.reduce((acc, m) => acc + m.topics.length, 0);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+      {/* Top Header */}
+      <Header
+        currentModule={currentModule}
+        currentTopic={currentTopic}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        onOpenChapterDrawer={() => setIsChapterDrawerOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        completedTopicsCount={completedTopics.length}
+        totalTopicsCount={totalTopicsCount}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={handleToggleFullscreen}
+      />
+
+      {/* Main Viewport Content */}
+      <main className="flex-1 flex flex-col">
+        {viewMode === "slide" && (
+          <SlideView
+            module={currentModule}
+            topic={currentTopic}
+            onPrev={handlePrev}
+            onNext={handleNext}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+            isCompleted={completedTopics.includes(currentTopic.id)}
+            onToggleComplete={handleToggleComplete}
+            onSelectTopicIndex={(index) =>
+              setCurrentTopicId(currentModule.topics[index].id)
+            }
+            currentTopicIndex={currentTopicIndex}
+          />
+        )}
+
+        {viewMode === "study" && (
+          <StudyView
+            currentModuleId={currentModuleId}
+            onSelectModule={handleSelectModule}
+            onSelectTopic={handleSelectTopic}
+            completedTopics={completedTopics}
+          />
+        )}
+
+        {viewMode === "projects" && <ProjectsView />}
+
+        {viewMode === "architecture" && <ArchitectureView />}
       </main>
+
+      {/* Chapter Drawer Overlay (Cmd+M) */}
+      <ChapterDrawer
+        isOpen={isChapterDrawerOpen}
+        onClose={() => setIsChapterDrawerOpen(false)}
+        currentModuleId={currentModuleId}
+        currentTopicId={currentTopicId}
+        onSelectTopic={handleSelectTopic}
+        completedTopics={completedTopics}
+      />
+
+      {/* Command Search Modal (Cmd+K) */}
+      <CommandSearch
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        onSelectTopic={handleSelectTopic}
+        onSelectProject={handleSelectProject}
+      />
     </div>
   );
 }

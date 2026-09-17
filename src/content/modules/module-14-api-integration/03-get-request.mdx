@@ -1,0 +1,27 @@
+---
+id: "m14-03"
+number: "03"
+title: "GET Request"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Retrieving records from backend endpoints."
+codeTitle: "Axios GET Request"
+---
+
+# GET Request
+
+Used to fetch data without side effects on the server.
+
+### Key Concepts & Rules:
+
+- Idempotent and safe HTTP method.
+
+### Code Example: Axios GET Request
+
+```tsx
+const fetchStudents = async () => {
+  const res = await axios.get('/api/students');
+  return res.data;
+};
+```

@@ -1,0 +1,26 @@
+---
+id: "m07-12"
+number: "12"
+title: "State Management Best Practices"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Keep state local, lift state only when needed, and avoid duplicate sources of truth."
+codeTitle: "State Colocation Rule"
+---
+
+# State Management Best Practices
+
+State should live as close to where it is used as possible. Only lift state to common ancestors when siblings require synchronization.
+
+### Key Concepts & Rules:
+
+- Colocate state with the components that render it.
+
+### Code Example: State Colocation Rule
+
+```tsx
+// State Colocation Rule:
+// If only ComponentA needs 'isModalOpen', keep it inside ComponentA,
+// NOT in the global store or App root!
+```

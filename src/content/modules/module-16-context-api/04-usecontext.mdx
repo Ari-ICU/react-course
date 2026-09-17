@@ -1,0 +1,30 @@
+---
+id: "m16-04"
+number: "04"
+title: "useContext"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Consuming context in functional components."
+codeTitle: "Safe Custom Context Hook"
+---
+
+# useContext
+
+The `useContext(MyContext)` hook returns the current value passed to the nearest matching Provider above in the tree.
+
+### Key Concepts & Rules:
+
+- Always create a custom hook wrapper (e.g. `useTheme()`) with safety checks.
+
+### Code Example: Safe Custom Context Hook
+
+```tsx
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+}
+```

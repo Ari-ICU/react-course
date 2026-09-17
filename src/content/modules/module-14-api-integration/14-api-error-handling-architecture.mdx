@@ -1,0 +1,28 @@
+---
+id: "m14-14"
+number: "14"
+title: "API Error Handling Architecture"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Unified error models and retry policies."
+codeTitle: "Strongly Typed ApiError Model"
+---
+
+# API Error Handling Architecture
+
+Map raw HTTP error codes to strongly typed domain errors.
+
+### Key Concepts & Rules:
+
+- Provides clean typed error models for UI components.
+
+### Code Example: Strongly Typed ApiError Model
+
+```tsx
+export interface ApiError {
+  statusCode: number;
+  message: string;
+  fieldErrors?: Record<string, string[]>;
+}
+```

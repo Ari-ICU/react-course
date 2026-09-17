@@ -1,0 +1,31 @@
+---
+id: "m09-03"
+number: "03"
+title: "Passing Functions"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Using callbacks for modular event delegation."
+codeTitle: "Callback Action Delegation"
+---
+
+# Passing Functions
+
+Decouples child rendering from state management logic in the parent.
+
+### Key Concepts & Rules:
+
+- Allows reusing child components across different features.
+
+### Code Example: Callback Action Delegation
+
+```tsx
+export function ActionToolbar({ onSave, onCancel }: ToolbarProps) {
+  return (
+    <div className="flex gap-2">
+      <button onClick={onSave} className="bg-emerald-600 px-3 py-1 text-white rounded">Save</button>
+      <button onClick={onCancel} className="bg-slate-700 px-3 py-1 text-white rounded">Cancel</button>
+    </div>
+  );
+}
+```

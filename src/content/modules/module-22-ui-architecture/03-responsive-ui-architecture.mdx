@@ -1,0 +1,26 @@
+---
+id: "m22-03"
+number: "03"
+title: "Responsive UI Architecture"
+moduleId: "module-22"
+moduleNumber: "22"
+category: "Enterprise & Production"
+summary: "Mobile-first layouts with Tailwind breakpoints."
+codeTitle: "Mobile-First Grid Layout"
+---
+
+# Responsive UI Architecture
+
+Design for mobile screens first (`w-full`), then enhance for tablets (`md:grid-cols-2`) and desktop (`lg:grid-cols-3`).
+
+### Key Concepts & Rules:
+
+- Avoid fixed pixel widths that cause horizontal scrollbars on mobile.
+
+### Code Example: Mobile-First Grid Layout
+
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {/* Automatically responsive cards */}
+</div>
+```

@@ -1,0 +1,34 @@
+---
+id: "m13-13"
+number: "13"
+title: "Protected Routes"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Restricting access to authenticated users and redirecting guests."
+codeTitle: "Protected Route Gate"
+---
+
+# Protected Routes
+
+A wrapper route component that checks authentication state: if logged in, renders `<Outlet />`; otherwise redirects to `/login`.
+
+### Key Concepts & Rules:
+
+- Include `state={{ from: location }}` to redirect user back after login.
+
+### Code Example: Protected Route Gate
+
+```tsx
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+
+export function ProtectedRoute({ isAuthenticated }: { isAuthenticated: boolean }) {
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
+}
+```

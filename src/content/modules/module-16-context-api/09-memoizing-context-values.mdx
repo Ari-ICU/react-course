@@ -1,0 +1,34 @@
+---
+id: "m16-09"
+number: "09"
+title: "Memoizing Context Values"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Preventing unnecessary consumer re-renders with useMemo."
+codeTitle: "Memoizing Provider Value"
+---
+
+# Memoizing Context Values
+
+Wrap the context value object in `useMemo` so its object reference remains stable unless dependencies change.
+
+### Key Concepts & Rules:
+
+- Prevents re-renders caused by parent re-renders.
+
+### Code Example: Memoizing Provider Value
+
+```tsx
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+
+  // Memoize value to stabilize object reference:
+  const value = useMemo(() => ({
+    user,
+    isAuthenticated: !!user,
+  }), [user]);
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+```

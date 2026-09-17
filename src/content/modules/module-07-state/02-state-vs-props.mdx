@@ -1,0 +1,33 @@
+---
+id: "m07-02"
+number: "02"
+title: "State vs Props"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Internal mutable component data vs external immutable inputs."
+codeTitle: "State vs Props in Action"
+---
+
+# State vs Props
+
+Props configure a component from the outside; State stores interactive changes on the inside.
+
+### Key Concepts & Rules:
+
+- Props are passed down; State is managed internally.
+
+### Code Example: State vs Props in Action
+
+```tsx
+// Props: Read-only input from parent
+function Display({ message }: { message: string }) {
+  return <h1>{message}</h1>;
+}
+
+// State: Internal interactive value
+function Editor() {
+  const [text, setText] = useState("Hello");
+  return <Display message={text} />;
+}
+```

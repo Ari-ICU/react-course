@@ -1,0 +1,29 @@
+---
+id: "m09-06"
+number: "06"
+title: "Sibling Communication"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Why siblings cannot directly talk to each other in React."
+codeTitle: "Sibling Communication Architecture"
+---
+
+# Sibling Communication
+
+React components are isolated. Sibling A cannot call functions or access state in Sibling B. They must communicate through their shared parent or a global store.
+
+### Key Concepts & Rules:
+
+- No direct peer-to-peer coupling.
+
+### Code Example: Sibling Communication Architecture
+
+```tsx
+/*
+             [Common Parent]  <── Holds state
+             /             \
+      [Sibling A]       [Sibling B]
+     (Triggers update)   (Reflects update)
+*/
+```

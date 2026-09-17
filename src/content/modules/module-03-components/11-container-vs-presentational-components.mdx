@@ -1,0 +1,44 @@
+---
+id: "m03-11"
+number: "11"
+title: "Container vs Presentational Components"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Separating data fetching and business logic from visual rendering."
+codeTitle: "Container vs Presentational Pattern"
+---
+
+# Container vs Presentational Components
+
+Presentational components care only about how things look (receiving props and rendering UI). Container components care about how things work (fetching data, subscribing to stores).
+
+### Key Concepts & Rules:
+
+- Presentational: Stateless or UI-state only, highly testable with Storybook.
+- Container: Hooks, API queries, mutation handlers.
+
+### Code Example: Container vs Presentational Pattern
+
+```tsx
+// Presentational Component (Dumb / Pure UI)
+export function UserCardUI({ name, email, avatar }: UserProps) {
+  return (
+    <div className="flex items-center gap-3 p-3 bg-slate-900 rounded-lg">
+      <img src={avatar} className="w-10 h-10 rounded-full" alt={name} />
+      <div>
+        <p className="font-medium text-white">{name}</p>
+        <p className="text-xs text-slate-400">{email}</p>
+      </div>
+    </div>
+  );
+}
+
+// Container Component (Smart / Data Fetching)
+export function UserCardContainer({ userId }: { userId: string }) {
+  const { data: user, isLoading } = useQuery(['user', userId], () => fetchUser(userId));
+  if (isLoading) return <Skeleton className="h-16 w-full" />;
+  if (!user) return null;
+  return <UserCardUI name={user.name} email={user.email} avatar={user.avatar} />;
+}
+```

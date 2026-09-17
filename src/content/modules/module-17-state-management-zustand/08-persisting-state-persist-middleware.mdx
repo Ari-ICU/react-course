@@ -1,0 +1,39 @@
+---
+id: "m17-08"
+number: "08"
+title: "Persisting State (persist middleware)"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Saving store state to localStorage automatically."
+codeTitle: "Zustand with persist Middleware"
+---
+
+# Persisting State (persist middleware)
+
+Zustand includes a built-in `persist` middleware that synchronizes store slices with `localStorage` or `sessionStorage`.
+
+### Key Concepts & Rules:
+
+- Automatic hydration on page reload.
+- Use `partialize` to choose which fields to persist.
+
+### Code Example: Zustand with persist Middleware
+
+```tsx
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set) => ({
+      cartItems: [],
+      addToCart: (item) => set((s) => ({ cartItems: [...s.cartItems, item] })),
+      clearCart: () => set({ cartItems: [] }),
+    }),
+    {
+      name: 'react-course-cart-storage', // localStorage key
+    }
+  )
+);
+```

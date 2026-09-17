@@ -1,0 +1,30 @@
+---
+id: "m08-03"
+number: "03"
+title: "Input Fields"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Handling text, number, email, and password types."
+codeTitle: "Password Input"
+---
+
+# Input Fields
+
+Standard input types behave identically to HTML, with camelCase attributes.
+
+### Key Concepts & Rules:
+
+- Use `type="email"` or `type="password"` with controlled values.
+
+### Code Example: Password Input
+
+```tsx
+<input 
+  type="password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  placeholder="Enter secure password"
+  className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white"
+/>
+```

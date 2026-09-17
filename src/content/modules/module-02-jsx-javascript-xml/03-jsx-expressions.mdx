@@ -1,0 +1,36 @@
+---
+id: "m02-03"
+number: "03"
+title: "JSX Expressions"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Embedding dynamic expressions, calculations, and variables inside curly braces."
+codeTitle: "Expressions Inside JSX"
+---
+
+# JSX Expressions
+
+Any valid JavaScript expression (variables, math, function calls, ternary operators) can be placed between curly braces `{}` inside JSX.
+
+### Key Concepts & Rules:
+
+- Statements like `if`, `for`, `while` are not valid inside `{}`; use ternary or array methods instead.
+- Numbers and strings render directly; booleans, `null`, and `undefined` are safely ignored.
+
+### Code Example: Expressions Inside JSX
+
+```tsx
+export function UserGreeting({ username, points }: { username: string; points: number }) {
+  const multiplier = 1.5;
+
+  return (
+    <div className="p-4 bg-slate-900 rounded-lg text-white">
+      <h2 className="text-xl">Welcome back, {username.toUpperCase()}!</h2>
+      <p className="text-slate-400">
+        Adjusted score: {(points * multiplier).toFixed(0)} XP
+      </p>
+    </div>
+  );
+}
+```

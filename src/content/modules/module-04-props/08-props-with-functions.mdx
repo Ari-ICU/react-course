@@ -1,0 +1,34 @@
+---
+id: "m04-08"
+number: "08"
+title: "Props with Functions"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Passing callback functions to handle user actions."
+codeTitle: "Passing Callback Function Props"
+---
+
+# Props with Functions
+
+Passing functions down as props allows children to notify parents when events occur (e.g., button clicked, input changed).
+
+### Key Concepts & Rules:
+
+- Enables child-to-parent communication.
+- Pass function references; do not invoke them during render.
+
+### Code Example: Passing Callback Function Props
+
+```tsx
+export function DeleteButton({ onDelete }: { onDelete: (id: string) => void }) {
+  return (
+    <button 
+      onClick={() => onDelete("item-42")}
+      className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm"
+    >
+      Delete Record
+    </button>
+  );
+}
+```

@@ -1,0 +1,37 @@
+---
+id: "m17-07"
+number: "07"
+title: "Updating Store State (set & get)"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Using set() and get() for complex state transitions."
+codeTitle: "Using set and get in Actions"
+---
+
+# Updating Store State (set & get)
+
+The `get()` function allows reading other state properties inside an action without subscribing.
+
+### Key Concepts & Rules:
+
+- Use `get()` to read current values during async flows.
+
+### Code Example: Using set and get in Actions
+
+```tsx
+export const useCartStore = create<CartState>((set, get) => ({
+  items: [],
+  addItem: (item) => {
+    const currentItems = get().items;
+    const existing = currentItems.find(i => i.id === item.id);
+    if (existing) {
+      set({
+        items: currentItems.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i)
+      });
+    } else {
+      set({ items: [...currentItems, { ...item, qty: 1 }] });
+    }
+  },
+}));
+```

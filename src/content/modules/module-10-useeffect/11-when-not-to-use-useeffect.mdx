@@ -1,0 +1,33 @@
+---
+id: "m10-11"
+number: "11"
+title: "When NOT to use useEffect"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Modern React guidelines: avoid effects for derived data and user events."
+codeTitle: "Avoiding Redundant Effects"
+---
+
+# When NOT to use useEffect
+
+The React core team advises against using `useEffect` for: 1) Calculating derived state (compute it during render); 2) Handling user interactions (handle them directly in `onClick`/`onSubmit`); 3) Resetting state on prop change (use key prop).
+
+### Key Concepts & Rules:
+
+- Compute during render instead of `setState` in `useEffect`.
+- Use TanStack Query for server fetching instead of manual `useEffect` fetching.
+
+### Code Example: Avoiding Redundant Effects
+
+```tsx
+// ❌ Bad: Redundant effect for derived data
+/*
+useEffect(() => {
+  setFullName(`${firstName} ${lastName}`);
+}, [firstName, lastName]);
+*/
+
+// ✅ Good: Compute directly during render!
+const fullName = `${firstName} ${lastName}`;
+```

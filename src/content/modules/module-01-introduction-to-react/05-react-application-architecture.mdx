@@ -1,0 +1,35 @@
+---
+id: "m01-05"
+number: "05"
+title: "React Application Architecture"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Understanding the unidirectional data tree and component hierarchy."
+codeTitle: "Component Tree Architecture"
+---
+
+# React Application Architecture
+
+React applications are structured as a tree of components. Root components pass props downwards to leaf components. Events trigger state updates which trigger downward reconciliation.
+
+### Key Concepts & Rules:
+
+- Root component (`App` or Root Layout) anchors the entire virtual DOM tree.
+- Unidirectional props travel from top to bottom.
+- Lifting state up allows sharing state between sibling nodes.
+
+### Code Example: Component Tree Architecture
+
+```tsx
+/*
+        [App Root]
+         ├── [Header]
+         │    ├── [Logo]
+         │    └── [NavMenu]
+         ├── [CourseView]
+         │    ├── [ModuleList]  <── (State: selectedModule)
+         │    └── [SlideDisplay]
+         └── [Footer]
+*/
+```

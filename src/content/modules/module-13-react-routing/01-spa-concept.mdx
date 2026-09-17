@@ -1,0 +1,26 @@
+---
+id: "m13-01"
+number: "01"
+title: "SPA Concept"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "How Single Page Applications render multiple screens without browser refreshes."
+codeTitle: "SPA Mental Model"
+---
+
+# SPA Concept
+
+In an SPA, the browser downloads a single HTML file and JavaScript bundle. When the user navigates to a new URL, client-side JavaScript intercepts the navigation and updates the DOM dynamically without requesting a new HTML page from the server.
+
+### Key Concepts & Rules:
+
+- Instant navigation transitions without white screen flashes.
+- State persists in memory across route changes.
+
+### Code Example: SPA Mental Model
+
+```tsx
+// Traditional Multi-Page App: Server returns full HTML page per URL.
+// Single Page App (SPA): Client-side JavaScript swaps view components on URL change.
+```

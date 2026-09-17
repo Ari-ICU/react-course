@@ -1,0 +1,36 @@
+---
+id: "m20-07"
+number: "07"
+title: "Handling 401 Unauthorized"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Automatic token refresh queue with Axios interceptors."
+codeTitle: "Automatic 401 Token Refresh Interceptor"
+---
+
+# Handling 401 Unauthorized
+
+When an API request returns 401, pause the failed requests, call `/refresh`, update the access token, and retry the original requests seamlessly.
+
+### Key Concepts & Rules:
+
+- Queue simultaneous requests while refresh is in flight to prevent duplicate refresh calls.
+
+### Code Example: Automatic 401 Token Refresh Interceptor
+
+```tsx
+apiClient.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const newAccessToken = await refreshAuthToken();
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      return apiClient(originalRequest); // Retry original request!
+    }
+    return Promise.reject(error);
+  }
+);
+```

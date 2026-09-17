@@ -1,0 +1,32 @@
+---
+id: "m14-08"
+number: "08"
+title: "Loading State"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Tracking in-flight network requests."
+codeTitle: "In-Flight Loading Lifecycle"
+---
+
+# Loading State
+
+Set `isLoading(true)` before the request and `isLoading(false)` in `finally`.
+
+### Key Concepts & Rules:
+
+- Always use `finally` to ensure loading spinners disappear on error.
+
+### Code Example: In-Flight Loading Lifecycle
+
+```tsx
+try {
+  setIsLoading(true);
+  const data = await fetchStudents();
+  setStudents(data);
+} catch (err) {
+  setError('Failed to load students');
+} finally {
+  setIsLoading(false);
+}
+```

@@ -1,0 +1,28 @@
+---
+id: "m20-08"
+number: "08"
+title: "Role-Based Access Control (RBAC)"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Restricting UI elements based on user roles."
+codeTitle: "Declarative RoleGate Component"
+---
+
+# Role-Based Access Control (RBAC)
+
+Hide or disable actions (like Delete, Edit, or Admin Dashboard) based on whether `user.role === 'admin'`.
+
+### Key Concepts & Rules:
+
+- Always enforce authorization on the backend; frontend RBAC is solely for UX!
+
+### Code Example: Declarative RoleGate Component
+
+```tsx
+export function RoleGate({ allowedRoles, children }: { allowedRoles: string[]; children: React.ReactNode }) {
+  const { user } = useAuth();
+  if (!user || !allowedRoles.includes(user.role)) return null;
+  return <>{children}</>;
+}
+```

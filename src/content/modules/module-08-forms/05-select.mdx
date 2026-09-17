@@ -1,0 +1,32 @@
+---
+id: "m08-05"
+number: "05"
+title: "Select"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Dropdown select with controlled option values."
+codeTitle: "Controlled Select Dropdown"
+---
+
+# Select
+
+In React, you put the `value` prop directly on the `<select>` tag rather than marking an `<option selected>`.
+
+### Key Concepts & Rules:
+
+- `<select value={selected}>` defines active selection.
+
+### Code Example: Controlled Select Dropdown
+
+```tsx
+<select 
+  value={role} 
+  onChange={(e) => setRole(e.target.value)}
+  className="bg-slate-900 border border-slate-800 text-white rounded-lg p-2"
+>
+  <option value="student">Student</option>
+  <option value="instructor">Instructor</option>
+  <option value="admin">Administrator</option>
+</select>
+```

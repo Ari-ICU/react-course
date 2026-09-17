@@ -1,0 +1,31 @@
+---
+id: "m10-08"
+number: "08"
+title: "Cleanup Functions"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Preventing memory leaks, clearing timers, and removing event listeners."
+codeTitle: "Timer Cleanup Function"
+---
+
+# Cleanup Functions
+
+Return a cleanup function from your effect. React runs this cleanup function before re-running the effect and when the component unmounts.
+
+### Key Concepts & Rules:
+
+- Crucial for `addEventListener`, `setInterval`, WebSocket connections, and aborting fetch requests.
+
+### Code Example: Timer Cleanup Function
+
+```tsx
+useEffect(() => {
+  const interval = setInterval(() => {
+    setSeconds(s => s + 1);
+  }, 1000);
+
+  // Cleanup: Clears interval when unmounted
+  return () => clearInterval(interval);
+}, []);
+```

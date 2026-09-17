@@ -1,0 +1,24 @@
+---
+id: "m14-05"
+number: "05"
+title: "PUT Request"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Full replacement update of an existing resource."
+codeTitle: "Axios PUT Request"
+---
+
+# PUT Request
+
+Replaces the entire entity at `/api/resources/:id`.
+
+### Key Concepts & Rules:
+
+- Idempotent update replacing all fields.
+
+### Code Example: Axios PUT Request
+
+```tsx
+await axios.put(`/api/students/${id}`, fullStudentObject);
+```

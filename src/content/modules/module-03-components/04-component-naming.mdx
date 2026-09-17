@@ -1,0 +1,31 @@
+---
+id: "m03-04"
+number: "04"
+title: "Component Naming"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "PascalCase convention and domain naming guidelines."
+codeTitle: "PascalCase Naming Rule"
+---
+
+# Component Naming
+
+React components MUST start with an uppercase letter (`PascalCase`). If a component starts with a lowercase letter, JSX treats it as a built-in HTML tag like `<div>` or `<header>`.
+
+### Key Concepts & Rules:
+
+- Always use PascalCase: `UserProfile`, `NavigationDrawer`, `ProductCard`.
+- Prefix or suffix helper components logically: `CardHeader`, `CardFooter`.
+
+### Code Example: PascalCase Naming Rule
+
+```tsx
+// ❌ Incorrect: Lowercase treated as unknown HTML element
+// function userProfile() { return <div>User</div>; }
+
+// ✅ Correct: PascalCase recognized as React component
+export function UserProfile() {
+  return <div className="p-4 bg-slate-900 rounded">User Profile</div>;
+}
+```

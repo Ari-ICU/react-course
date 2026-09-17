@@ -1,0 +1,31 @@
+---
+id: "m10-10"
+number: "10"
+title: "Common useEffect Mistakes"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Infinite loops, missing dependencies, and object reference traps."
+pitfall: "Passing un-memoized functions or objects into the dependency array triggers the effect on EVERY render because their reference changes every time."
+codeTitle: "Infinite Loop Example"
+---
+
+# Common useEffect Mistakes
+
+Creating an object or function inside your component body and putting it in the dependency array causes an infinite loop because new memory references are generated every render!
+
+### Key Concepts & Rules:
+
+- Infinite loop trigger: Updating state inside effect without proper dependencies.
+- Object dependency trap: Pass primitive values or memoize with `useCallback`/`useMemo`.
+
+### Code Example: Infinite Loop Example
+
+```tsx
+// ❌ Infinite Loop Bug:
+/*
+useEffect(() => {
+  setCount(count + 1); // Triggers re-render -> runs effect -> triggers re-render...
+}, [count]);
+*/
+```

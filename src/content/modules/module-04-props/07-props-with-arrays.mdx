@@ -1,0 +1,34 @@
+---
+id: "m04-07"
+number: "07"
+title: "Props with Arrays"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Passing lists of items to components for iteration."
+codeTitle: "Passing and Iterating Arrays"
+---
+
+# Props with Arrays
+
+Pass arrays to components to render lists, menus, or tag clouds.
+
+### Key Concepts & Rules:
+
+- Pass arrays inside curly braces: `items={['A', 'B', 'C']}`.
+
+### Code Example: Passing and Iterating Arrays
+
+```tsx
+export function TagList({ tags }: { tags: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <span key={tag} className="px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300">
+          #{tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+```

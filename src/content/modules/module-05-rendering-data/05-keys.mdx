@@ -1,0 +1,35 @@
+---
+id: "m05-05"
+number: "05"
+title: "Keys"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Why React requires keys and how reconciliation uses them."
+pitfall: "Using array index as key when deleting or sorting items causes state from one input item to persist in a different item after re-ordering!"
+codeTitle: "Correct Key Usage in React"
+---
+
+# Keys
+
+Keys give elements a stable identity across renders. When array items change order, get added, or are deleted, React compares keys to determine which DOM nodes to reuse or recreate without re-rendering the entire list.
+
+### Key Concepts & Rules:
+
+- Keys must be unique among siblings.
+- Never use `Math.random()` as a key; it destroys DOM nodes on every render.
+- Avoid array index as key when list order can change.
+
+### Code Example: Correct Key Usage in React
+
+```tsx
+// ✅ Use stable IDs from your database/backend
+{todos.map(todo => (
+  <TodoItem key={todo.id} todo={todo} />
+))}
+
+// ⚠️ Array index is acceptable ONLY if list is strictly static:
+{['Home', 'About', 'Contact'].map((item, idx) => (
+  <span key={idx}>{item}</span>
+))}
+```

@@ -1,0 +1,49 @@
+---
+id: "m19-09"
+number: "09"
+title: "Data Table Component"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Reusable data tables with sorting, filtering, and selection."
+codeTitle: "Generic Reusable DataTable Component"
+---
+
+# Data Table Component
+
+Abstracts table headers, column configurations, sorting state, and row rendering into a reusable component.
+
+### Key Concepts & Rules:
+
+- Powers enterprise management dashboards.
+
+### Code Example: Generic Reusable DataTable Component
+
+```tsx
+interface Column<T> {
+  header: string;
+  accessorKey: keyof T;
+  render?: (item: T) => React.ReactNode;
+}
+
+export function DataTable<T extends { id: string }>({ data, columns }: { data: T[]; columns: Column<T>[] }) {
+  return (
+    <table className="w-full text-left text-sm text-slate-300">
+      <thead className="bg-slate-900 border-b border-slate-800 text-xs uppercase text-slate-400">
+        <tr>{columns.map(c => <th key={String(c.accessorKey)} className="p-3">{c.header}</th>)}</tr>
+      </thead>
+      <tbody className="divide-y divide-slate-800">
+        {data.map(row => (
+          <tr key={row.id}>
+            {columns.map(c => (
+              <td key={String(c.accessorKey)} className="p-3">
+                {c.render ? c.render(row) : String(row[c.accessorKey])}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+```

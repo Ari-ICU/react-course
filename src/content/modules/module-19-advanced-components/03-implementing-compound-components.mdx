@@ -1,0 +1,42 @@
+---
+id: "m19-03"
+number: "03"
+title: "Implementing Compound Components"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Building internal context and sub-component exports."
+codeTitle: "Compound Component Implementation"
+---
+
+# Implementing Compound Components
+
+Create an internal context to share the active value and setter between the parent container and child triggers.
+
+### Key Concepts & Rules:
+
+- Sub-components can be attached as static properties or named exports.
+
+### Code Example: Compound Component Implementation
+
+```tsx
+const TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);
+
+export function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {
+  const [active, setActive] = useState(defaultValue);
+  return <TabsContext.Provider value={{ active, setActive }}>{children}</TabsContext.Provider>;
+}
+
+export function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {
+  const ctx = useContext(TabsContext)!;
+  const isSelected = ctx.active === value;
+  return (
+    <button 
+      onClick={() => ctx.setActive(value)}
+      className={isSelected ? "border-b-2 border-blue-500 font-bold" : "text-slate-400"}
+    >
+      {children}
+    </button>
+  );
+}
+```

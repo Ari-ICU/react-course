@@ -1,0 +1,37 @@
+---
+id: "m04-10"
+number: "10"
+title: "Default Props"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Setting fallback values for optional props using ES6 default parameters."
+codeTitle: "ES6 Default Props Pattern"
+---
+
+# Default Props
+
+Use standard JavaScript default parameter values in the destructured signature instead of obsolete `defaultProps` static properties.
+
+### Key Concepts & Rules:
+
+- ES6 defaults work cleanly with TypeScript optional properties (`prop?: string`).
+
+### Code Example: ES6 Default Props Pattern
+
+```tsx
+interface ButtonProps {
+  label: string;
+  variant?: "primary" | "secondary";
+  size?: "sm" | "md" | "lg";
+}
+
+// Fallbacks assigned in destructuring:
+export function Button({ 
+  label, 
+  variant = "primary", 
+  size = "md" 
+}: ButtonProps) {
+  return <button className={`btn-${variant} btn-${size}`}>{label}</button>;
+}
+```

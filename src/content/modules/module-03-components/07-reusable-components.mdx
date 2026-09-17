@@ -1,0 +1,41 @@
+---
+id: "m03-07"
+number: "07"
+title: "Reusable Components"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Designing flexible, configurable UI building blocks."
+codeTitle: "Robust Reusable Button"
+---
+
+# Reusable Components
+
+A good reusable component has a minimal required API, sensible defaults, and accepts standard HTML attributes (like `className`, `disabled`, `onClick`).
+
+### Key Concepts & Rules:
+
+- Extend HTML attributes using TypeScript: `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+- Allow external styling via `className` merging.
+
+### Code Example: Robust Reusable Button
+
+```tsx
+import React from 'react';
+import { cn } from '@/lib/utils';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'danger';
+}
+
+export function Button({ variant = 'primary', className, ...props }: ButtonProps) {
+  const base = "px-4 py-2 rounded-lg font-medium transition-colors focus:ring-2";
+  const variants = {
+    primary: "bg-blue-600 hover:bg-blue-700 text-white",
+    secondary: "bg-slate-800 hover:bg-slate-700 text-slate-200",
+    danger: "bg-rose-600 hover:bg-rose-700 text-white",
+  };
+
+  return <button className={cn(base, variants[variant], className)} {...props} />;
+}
+```

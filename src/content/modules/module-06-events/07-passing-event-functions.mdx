@@ -1,0 +1,35 @@
+---
+id: "m06-07"
+number: "07"
+title: "Passing Event Functions"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Passing custom event triggers through props."
+codeTitle: "Passing Event Callbacks"
+---
+
+# Passing Event Functions
+
+Prefix custom event props with `on` (e.g., `onSelectTopic`, `onDelete`) and implementation handlers with `handle` (`handleSelectTopic`).
+
+### Key Concepts & Rules:
+
+- Naming convention: `onEvent` for props, `handleEvent` for functions.
+
+### Code Example: Passing Event Callbacks
+
+```tsx
+interface TopicItemProps {
+  topic: TopicItem;
+  onSelectTopic: (topic: TopicItem) => void;
+}
+
+export function TopicCard({ topic, onSelectTopic }: TopicItemProps) {
+  return (
+    <div onClick={() => onSelectTopic(topic)} className="cursor-pointer">
+      <h4>{topic.title}</h4>
+    </div>
+  );
+}
+```

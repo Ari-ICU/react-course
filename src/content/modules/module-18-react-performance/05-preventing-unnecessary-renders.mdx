@@ -1,0 +1,33 @@
+---
+id: "m18-05"
+number: "05"
+title: "Preventing Unnecessary Renders"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Architectural techniques that eliminate the need for memoization."
+codeTitle: "State Down Optimization Pattern"
+---
+
+# Preventing Unnecessary Renders
+
+You can often eliminate re-renders by moving state down or lifting JSX up as `children`, completely avoiding manual `useMemo` or `React.memo` calls.
+
+### Key Concepts & Rules:
+
+- Move state into dedicated leaf components.
+- Pass static trees as `{children}`.
+
+### Code Example: State Down Optimization Pattern
+
+```tsx
+// Moving state down into dedicated component:
+export function App() {
+  return (
+    <div>
+      <InputWithState /> {/* Only this small input re-renders as user types */}
+      <VeryExpensiveTree /> {/* Never re-renders when user types! */}
+    </div>
+  );
+}
+```

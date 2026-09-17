@@ -1,0 +1,27 @@
+---
+id: "m07-03"
+number: "03"
+title: "useState"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Declaring state variables and updater functions."
+codeTitle: "useState TypeScript Declarations"
+---
+
+# useState
+
+The `useState` hook returns a tuple containing the current state value and an updater function: `const [state, setState] = useState(initialValue)`.
+
+### Key Concepts & Rules:
+
+- Always call hooks at the top level of your component.
+- Never call hooks inside loops, conditions, or nested functions.
+
+### Code Example: useState TypeScript Declarations
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+const [user, setUser] = useState<User | null>(null);
+const [tags, setTags] = useState<string[]>([]);
+```

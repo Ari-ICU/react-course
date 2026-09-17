@@ -1,0 +1,32 @@
+---
+id: "m11-06"
+number: "06"
+title: "useRef vs useState"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "When to choose mutable ref vs reactive state."
+codeTitle: "useRef vs useState Decision Guide"
+---
+
+# useRef vs useState
+
+If changing a value should update the UI visible to the user, use `useState`. If changing the value is internal housekeeping that should NOT trigger a re-render, use `useRef`.
+
+### Key Concepts & Rules:
+
+- useState -> Affects UI rendering.
+- useRef -> Internal data storage / DOM node access.
+
+### Code Example: useRef vs useState Decision Guide
+
+```tsx
+/*
+| Need | Hook |
+|------|------|
+| Re-render UI on change | useState |
+| DOM element reference | useRef |
+| Store timer ID / socket | useRef |
+| Form input value | useState (controlled) |
+*/
+```

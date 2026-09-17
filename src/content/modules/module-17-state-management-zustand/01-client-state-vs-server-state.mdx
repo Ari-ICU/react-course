@@ -1,0 +1,26 @@
+---
+id: "m17-01"
+number: "01"
+title: "Client State vs Server State"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Defining the role of Zustand alongside TanStack Query."
+codeTitle: "Modern Separation of State Responsibilities"
+---
+
+# Client State vs Server State
+
+Modern React architecture delegates server caching to TanStack Query, and client-only state (shopping cart, audio player, modal manager, drawer status) to Zustand.
+
+### Key Concepts & Rules:
+
+- Do NOT duplicate server data inside Zustand stores.
+- Keep stores lean, synchronous, and focused on UI state.
+
+### Code Example: Modern Separation of State Responsibilities
+
+```tsx
+// Server Data -> TanStack Query (Query cache)
+// Client UI State -> Zustand (Global store)
+```

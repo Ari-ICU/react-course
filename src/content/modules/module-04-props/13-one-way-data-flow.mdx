@@ -1,0 +1,37 @@
+---
+id: "m04-13"
+number: "13"
+title: "One-way Data Flow"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Unidirectional data binding prevents circular dependency bugs."
+codeTitle: "Unidirectional Data Flow Example"
+---
+
+# One-way Data Flow
+
+In React, data flows strictly downwards through props. If a child needs to modify data, it calls a callback function passed by the parent, triggering parent state updates which flow back down.
+
+### Key Concepts & Rules:
+
+- Makes state changes predictable and easy to trace in DevTools.
+- Prevents synchronization conflicts found in two-way data-binding frameworks.
+
+### Code Example: Unidirectional Data Flow Example
+
+```tsx
+// Parent maintains single source of truth
+export function CounterApp() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="space-y-4">
+      {/* Data flows down as props */}
+      <CountDisplay value={count} />
+      {/* Callback flows down to trigger state change */}
+      <CountControls onIncrement={() => setCount(c => c + 1)} onReset={() => setCount(0)} />
+    </div>
+  );
+}
+```

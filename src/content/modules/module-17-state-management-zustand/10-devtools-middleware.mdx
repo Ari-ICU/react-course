@@ -1,0 +1,30 @@
+---
+id: "m17-10"
+number: "10"
+title: "DevTools Middleware"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Integrating with Redux DevTools browser extension."
+codeTitle: "Zustand DevTools Middleware"
+---
+
+# DevTools Middleware
+
+Wrap your store in `devtools()` to inspect time-travel state changes in Redux DevTools.
+
+### Key Concepts & Rules:
+
+- Named actions appear in DevTools timeline.
+
+### Code Example: Zustand DevTools Middleware
+
+```tsx
+import { devtools } from 'zustand/middleware';
+
+export const useStore = create<MyState>()(
+  devtools((set) => ({
+    // actions...
+  }))
+);
+```

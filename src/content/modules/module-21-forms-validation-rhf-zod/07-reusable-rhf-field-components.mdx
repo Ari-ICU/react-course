@@ -1,0 +1,32 @@
+---
+id: "m21-07"
+number: "07"
+title: "Reusable RHF Field Components"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Integrating RHF with custom design system UI primitives."
+codeTitle: "Controlled Custom Widget via Controller"
+---
+
+# Reusable RHF Field Components
+
+Use `Controller` from React Hook Form to bind custom UI components (like Radix Select, DatePickers, and custom switches) that do not expose a native input ref.
+
+### Key Concepts & Rules:
+
+- `Controller` bridges custom UI widgets with form state.
+
+### Code Example: Controlled Custom Widget via Controller
+
+```tsx
+import { Controller } from 'react-hook-form';
+
+<Controller
+  name="theme"
+  control={control}
+  render={({ field }) => (
+    <CustomSelect value={field.value} onChange={field.onChange} />
+  )}
+/>
+```

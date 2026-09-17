@@ -1,0 +1,36 @@
+---
+id: "m21-02"
+number: "02"
+title: "Zod Schema Definition"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Declaring type-safe runtime validation schemas."
+codeTitle: "Complete Zod Validation Schema"
+---
+
+# Zod Schema Definition
+
+Zod lets you declare schemas with chainable validators. TypeScript types are automatically inferred via `z.infer<typeof schema>`.
+
+### Key Concepts & Rules:
+
+- Single source of truth for both TypeScript types and runtime validation.
+
+### Code Example: Complete Zod Validation Schema
+
+```tsx
+import { z } from 'zod';
+
+export const studentSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  gpa: z.coerce.number().min(0, "GPA >= 0").max(4.0, "GPA <= 4.0"),
+  major: z.enum(["Computer Science", "Software Engineering", "Cybersecurity"]),
+  agreeTerms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept terms" }),
+  }),
+});
+
+export type StudentFormData = z.infer<typeof studentSchema>;
+```

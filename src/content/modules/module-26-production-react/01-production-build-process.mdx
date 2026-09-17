@@ -1,0 +1,24 @@
+---
+id: "m26-01"
+number: "01"
+title: "Production Build Process"
+moduleId: "module-26"
+moduleNumber: "26"
+category: "Enterprise & Production"
+summary: "Minification, dead-code elimination, and tree-shaking."
+codeTitle: "Production Build Command"
+---
+
+# Production Build Process
+
+Running `npm run build` generates an optimized static distribution with minified JavaScript, compressed CSS, and stripped development warnings.
+
+### Key Concepts & Rules:
+
+- Build bundles are hashed for immutable browser caching.
+
+### Code Example: Production Build Command
+
+```tsx
+npm run build && npm run start
+```

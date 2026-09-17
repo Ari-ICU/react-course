@@ -1,0 +1,33 @@
+---
+id: "m08-12"
+number: "12"
+title: "Resetting Forms"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Restoring form state back to clean initial values."
+codeTitle: "Resetting Form State"
+---
+
+# Resetting Forms
+
+Reset state back to initial constants after a successful submission.
+
+### Key Concepts & Rules:
+
+- Extract `INITIAL_STATE` constant for easy resetting.
+
+### Code Example: Resetting Form State
+
+```tsx
+const INITIAL_FORM = { title: '', description: '' };
+
+export function CreateTaskForm() {
+  const [form, setForm] = useState(INITIAL_FORM);
+
+  const handleSuccess = () => {
+    // Reset to blank:
+    setForm(INITIAL_FORM);
+  };
+}
+```

@@ -1,0 +1,25 @@
+---
+id: "m19-12"
+number: "12"
+title: "Advanced Component Patterns"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Polymorphic components with the `as` prop."
+codeTitle: "Polymorphic Component Concept"
+---
+
+# Advanced Component Patterns
+
+Allows a component to render as a `<button>`, an `<a>` link, or a Next.js `<Link>` while preserving unified styling and TypeScript prop types.
+
+### Key Concepts & Rules:
+
+- The `asChild` pattern popularized by Radix UI.
+
+### Code Example: Polymorphic Component Concept
+
+```tsx
+// Polymorphic button can render as an <a> link or <button>
+<Button as="a" href="/curriculum">Go to Curriculum</Button>
+```

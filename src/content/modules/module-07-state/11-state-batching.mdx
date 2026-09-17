@@ -1,0 +1,29 @@
+---
+id: "m07-11"
+number: "11"
+title: "State Batching"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "React 18+ automatic grouping of multiple updates in promises and timeouts."
+codeTitle: "Automatic Async Batching"
+---
+
+# State Batching
+
+React automatically batches state updates across async boundaries (setTimeout, fetch promises, native events) into a single re-render.
+
+### Key Concepts & Rules:
+
+- Reduces unnecessary intermediate renders and boosts performance.
+
+### Code Example: Automatic Async Batching
+
+```tsx
+async function handleAsyncSave() {
+  await api.save();
+  // In React 18+, both updates batch into 1 single render:
+  setIsLoading(false);
+  setSuccess(true);
+}
+```

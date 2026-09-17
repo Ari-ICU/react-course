@@ -1,0 +1,41 @@
+---
+id: "m06-12"
+number: "12"
+title: "Event Handling Best Practices"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Debouncing rapid clicks, avoiding inline allocations when unnecessary."
+codeTitle: "Best Practice Event Handler"
+---
+
+# Event Handling Best Practices
+
+Keep handlers clean, extract complex business logic into custom hooks, and debounce high-frequency events like search input or window resize.
+
+### Key Concepts & Rules:
+
+- Avoid side-effects inside JSX; keep handlers focused.
+
+### Code Example: Best Practice Event Handler
+
+```tsx
+// Clean extracted handler pattern
+export function RegistrationForm() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return; // Prevent double submit
+    setIsSubmitting(true);
+    try {
+      await registerUser(email);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return <form onSubmit={handleSubmit}>...</form>;
+}
+```

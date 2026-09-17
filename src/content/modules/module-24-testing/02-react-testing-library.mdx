@@ -1,0 +1,37 @@
+---
+id: "m24-02"
+number: "02"
+title: "React Testing Library"
+moduleId: "module-24"
+moduleNumber: "24"
+category: "Enterprise & Production"
+summary: "Querying elements by role, label, and text."
+codeTitle: "RTL User Interaction Test"
+---
+
+# React Testing Library
+
+RTL prioritizes accessible queries: `getByRole('button', { name: /submit/i })`, `getByLabelText`, `getByText`.
+
+### Key Concepts & Rules:
+
+- Avoid `getByTestId` unless no accessible role exists.
+- Tests break only when user experience breaks, not when refactoring implementation.
+
+### Code Example: RTL User Interaction Test
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Counter } from './Counter';
+
+test('increments counter on button click', async () => {
+  const user = userEvent.setup();
+  render(<Counter />);
+
+  const button = screen.getByRole('button', { name: /clicks: 0/i });
+  await user.click(button);
+
+  expect(screen.getByRole('button', { name: /clicks: 1/i })).toBeInTheDocument();
+});
+```

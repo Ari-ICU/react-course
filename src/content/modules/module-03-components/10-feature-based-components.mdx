@@ -1,0 +1,35 @@
+---
+id: "m03-10"
+number: "10"
+title: "Feature-based Components"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Structuring by business capability rather than technical role."
+codeTitle: "Feature Folder Structure"
+---
+
+# Feature-based Components
+
+Feature folders colocate everything related to a domain: components, hooks, types, and API calls. When you delete or modify a feature, all relevant files are in one spot.
+
+### Key Concepts & Rules:
+
+- Improves project maintainability as codebases grow beyond 100+ files.
+- Clear boundary between feature-specific code and shared UI.
+
+### Code Example: Feature Folder Structure
+
+```tsx
+features/auth/
+├── components/
+│   ├── LoginForm.tsx
+│   ├── RegisterModal.tsx
+│   └── PasswordStrength.tsx
+├── hooks/
+│   └── useAuth.ts
+├── services/
+│   └── authApi.ts
+└── types/
+    └── auth.ts
+```

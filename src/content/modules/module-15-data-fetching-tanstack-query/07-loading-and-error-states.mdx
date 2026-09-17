@@ -1,0 +1,26 @@
+---
+id: "m15-07"
+number: "07"
+title: "Loading and Error States"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Granular status flags: isPending, isFetching, isError, isSuccess."
+codeTitle: "isPending vs isFetching"
+---
+
+# Loading and Error States
+
+`isPending` indicates initial load with no cached data; `isFetching` indicates background revalidation even if cached data is already visible.
+
+### Key Concepts & Rules:
+
+- Display subtle background fetching spinners while showing cached data.
+
+### Code Example: isPending vs isFetching
+
+```tsx
+const { data, isPending, isFetching } = useQuery(...);
+// isPending: True on first fetch (show skeleton)
+// isFetching: True during background refresh (show subtle top indicator)
+```

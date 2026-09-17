@@ -1,0 +1,28 @@
+---
+id: "m23-03"
+number: "03"
+title: "Configuration Hygiene"
+moduleId: "module-23"
+moduleNumber: "23"
+category: "Enterprise & Production"
+summary: "ESLint, Prettier, TypeScript strict mode, and environment variables."
+codeTitle: "Strict TypeScript Configuration"
+---
+
+# Configuration Hygiene
+
+Enforce strict TypeScript (`strict: true`) and automated lint rules to prevent bugs before code hits pull requests.
+
+### Key Concepts & Rules:
+
+- Enforce consistent code style across engineering teams.
+
+### Code Example: Strict TypeScript Configuration
+
+```tsx
+// tsconfig.json
+"compilerOptions": {
+  "strict": true,
+  "noUncheckedIndexedAccess": true
+}
+```

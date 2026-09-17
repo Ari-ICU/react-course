@@ -1,0 +1,29 @@
+---
+id: "m10-01"
+number: "01"
+title: "What is useEffect?"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Hook for synchronizing components with external systems."
+codeTitle: "Synchronizing Document Title"
+---
+
+# What is useEffect?
+
+The `useEffect` hook lets you run code after rendering to synchronize with external systems: browser DOM APIs, network requests, timers, or web sockets.
+
+### Key Concepts & Rules:
+
+- Runs asynchronously after the render has painted to the screen.
+- Replaces componentDidMount, componentDidUpdate, and componentWillUnmount.
+
+### Code Example: Synchronizing Document Title
+
+```tsx
+import { useEffect } from 'react';
+
+useEffect(() => {
+  document.title = `React Course - ${topicTitle}`;
+}, [topicTitle]);
+```

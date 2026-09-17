@@ -1,0 +1,32 @@
+---
+id: "m11-04"
+number: "04"
+title: "Focus Input"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Programmatically focusing an input when modals open or search triggers."
+codeTitle: "Programmatic Input Focus"
+---
+
+# Focus Input
+
+A common use case: when the user presses `Cmd+K`, focus the search input immediately.
+
+### Key Concepts & Rules:
+
+- Call `inputRef.current?.focus()` inside an effect or handler.
+
+### Code Example: Programmatic Input Focus
+
+```tsx
+export function AutoFocusSearch() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  return <input ref={inputRef} placeholder="Search topics..." className="border p-2" />;
+}
+```

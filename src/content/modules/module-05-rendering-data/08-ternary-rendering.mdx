@@ -1,0 +1,26 @@
+---
+id: "m05-08"
+number: "08"
+title: "Ternary Rendering"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Compact inline if/else expression."
+codeTitle: "Inline Ternary Operator"
+---
+
+# Ternary Rendering
+
+The ternary operator `condition ? <A /> : <B />` is ideal for toggling between two mutually exclusive UI elements inside JSX markup.
+
+### Key Concepts & Rules:
+
+- Great for binary switches: Dark/Light theme, Active/Inactive tab.
+
+### Code Example: Inline Ternary Operator
+
+```tsx
+<button className={isActive ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-400"}>
+  {isActive ? "Currently Selected" : "Select Option"}
+</button>
+```

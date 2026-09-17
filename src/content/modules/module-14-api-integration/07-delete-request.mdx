@@ -1,0 +1,24 @@
+---
+id: "m14-07"
+number: "07"
+title: "DELETE Request"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Removing a resource by identifier."
+codeTitle: "Axios DELETE Request"
+---
+
+# DELETE Request
+
+Sends HTTP DELETE to purge a record from the database.
+
+### Key Concepts & Rules:
+
+- Check response status 200/204 to confirm deletion.
+
+### Code Example: Axios DELETE Request
+
+```tsx
+await axios.delete(`/api/todos/${id}`);
+```

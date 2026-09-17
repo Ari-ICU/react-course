@@ -1,0 +1,30 @@
+---
+id: "m04-06"
+number: "06"
+title: "Props with Objects"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Passing complex objects and configuring nested structures."
+codeTitle: "Passing Object Props"
+---
+
+# Props with Objects
+
+Pass objects inside curly braces: `user={{ name: 'Alice', age: 28 }}`. Note the double curly braces.
+
+### Key Concepts & Rules:
+
+- Outer curly braces denote JSX expression; inner braces denote object literal.
+
+### Code Example: Passing Object Props
+
+```tsx
+const currentUser = { id: "u123", name: "Dara", role: "Instructor" };
+
+// Pass variable or inline object:
+<AccountSettings 
+  user={currentUser}
+  themeConfig={{ mode: "dark", accent: "#3b82f6" }}
+/>
+```

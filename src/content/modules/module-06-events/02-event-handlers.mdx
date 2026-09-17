@@ -1,0 +1,32 @@
+---
+id: "m06-02"
+number: "02"
+title: "Event Handlers"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Passing handler function references vs invoking functions."
+codeTitle: "Function Reference vs Invocation"
+---
+
+# Event Handlers
+
+You must pass the function reference (`onClick={handleClick}`), NOT invoke it (`onClick={handleClick()}`). Invoking it runs the function during render!
+
+### Key Concepts & Rules:
+
+- Pass function reference: `onClick={handleClick}`.
+- Pass inline arrow function if parameters are needed: `onClick={() => handleDelete(id)}`.
+
+### Code Example: Function Reference vs Invocation
+
+```tsx
+// ❌ Wrong: handleClick runs immediately on render!
+// <button onClick={handleClick()}>Click</button>
+
+// ✅ Correct: Function reference passed
+<button onClick={handleClick}>Click</button>
+
+// ✅ Correct: Arrow function wrapper for arguments
+<button onClick={() => handleDelete(item.id)}>Delete</button>
+```

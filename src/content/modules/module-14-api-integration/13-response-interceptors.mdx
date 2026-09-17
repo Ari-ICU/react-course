@@ -1,0 +1,33 @@
+---
+id: "m14-13"
+number: "13"
+title: "Response Interceptors"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Handling global errors and automatic 401 token refresh."
+codeTitle: "Response Error Interceptor"
+---
+
+# Response Interceptors
+
+Catch 401 Unauthorized responses globally to refresh access tokens or redirect to login.
+
+### Key Concepts & Rules:
+
+- Centralizes session expiration handling.
+
+### Code Example: Response Error Interceptor
+
+```tsx
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      // Trigger token refresh or logout
+      window.location.href = '/login?expired=true';
+    }
+    return Promise.reject(error);
+  }
+);
+```

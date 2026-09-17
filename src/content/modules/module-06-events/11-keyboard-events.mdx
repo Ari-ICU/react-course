@@ -1,0 +1,33 @@
+---
+id: "m06-11"
+number: "11"
+title: "Keyboard Events"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Handling onKeyDown, Escape modal closing, and Cmd+K shortcuts."
+codeTitle: "Global Keyboard Shortcut Listener"
+---
+
+# Keyboard Events
+
+Detecting keys like `Enter`, `Escape`, or `MetaKey` to build accessible keyboard navigation and modal dismissals.
+
+### Key Concepts & Rules:
+
+- Use `e.key === 'Escape'` or `(e.metaKey || e.ctrlKey) && e.key === 'k'`.
+
+### Code Example: Global Keyboard Shortcut Listener
+
+```tsx
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      setIsSearchOpen(prev => !prev);
+    }
+  };
+  window.addEventListener('keydown', handleKeyDown);
+  return () => window.removeEventListener('keydown', handleKeyDown);
+}, []);
+```

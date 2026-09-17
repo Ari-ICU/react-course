@@ -1,0 +1,27 @@
+---
+id: "m14-09"
+number: "09"
+title: "Error Handling"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Parsing server error responses and displaying helpful messages."
+codeTitle: "Parsing API Error Responses"
+---
+
+# Error Handling
+
+Extract error messages from `error.response?.data?.message` to give users actionable feedback.
+
+### Key Concepts & Rules:
+
+- Differentiate network failures from 400 validation errors.
+
+### Code Example: Parsing API Error Responses
+
+```tsx
+catch (error: any) {
+  const message = error.response?.data?.message || error.message || 'Unknown network error';
+  toast.error(message);
+}
+```

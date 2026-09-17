@@ -1,0 +1,26 @@
+---
+id: "m20-01"
+number: "01"
+title: "Authentication Concepts"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Authentication vs authorization, sessions vs JWT tokens."
+codeTitle: "JWT Token Structure"
+---
+
+# Authentication Concepts
+
+Authentication proves WHO you are (e.g. valid credentials). Authorization determines WHAT you are permitted to do (e.g. Admin vs Student roles).
+
+### Key Concepts & Rules:
+
+- JWT: JSON Web Token containing cryptographically signed user claims.
+- Sessions: Stateful server-side session IDs stored in database.
+
+### Code Example: JWT Token Structure
+
+```tsx
+// JWT Structure: header.payload.signature
+// Decoded payload contains: { sub: "u123", role: "admin", exp: 1735689600 }
+```

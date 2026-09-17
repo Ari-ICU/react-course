@@ -1,0 +1,27 @@
+---
+id: "m16-05"
+number: "05"
+title: "Sharing Global Data"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Broadcasting settings, preferences, and configurations."
+codeTitle: "Consuming Context in Child"
+---
+
+# Sharing Global Data
+
+Allows distant child components to read and update shared state.
+
+### Key Concepts & Rules:
+
+- Ideal for app-wide settings that rarely change.
+
+### Code Example: Consuming Context in Child
+
+```tsx
+export function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  return <button onClick={toggleTheme}>Active Theme: {theme}</button>;
+}
+```

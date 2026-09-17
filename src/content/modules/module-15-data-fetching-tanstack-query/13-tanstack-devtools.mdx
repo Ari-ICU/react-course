@@ -1,0 +1,29 @@
+---
+id: "m15-13"
+number: "13"
+title: "TanStack DevTools"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Visualizing query cache, stale states, and mutations."
+codeTitle: "Integrating ReactQueryDevtools"
+---
+
+# TanStack DevTools
+
+The TanStack Query Devtools floating panel displays all cached queries, their data, fetch state, and provides buttons to trigger manual refetch or cache clearing.
+
+### Key Concepts & Rules:
+
+- Included in dev builds only; stripped in production.
+
+### Code Example: Integrating ReactQueryDevtools
+
+```tsx
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+<QueryClientProvider client={queryClient}>
+  <App />
+  <ReactQueryDevtools initialIsOpen={false} />
+</QueryClientProvider>
+```

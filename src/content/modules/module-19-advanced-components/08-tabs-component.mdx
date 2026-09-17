@@ -1,0 +1,28 @@
+---
+id: "m19-08"
+number: "08"
+title: "Tabs Component"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Accessible tablist, tab, and tabpanel ARIA semantics."
+codeTitle: "Accessible Tab ARIA Attributes"
+---
+
+# Tabs Component
+
+Complies with accessibility standards: `role="tablist"`, `role="tab"`, `aria-selected`, and arrow key tab switching.
+
+### Key Concepts & Rules:
+
+- Keyboard left/right arrows switch active tab.
+
+### Code Example: Accessible Tab ARIA Attributes
+
+```tsx
+<div role="tablist" className="flex border-b border-slate-800">
+  <button role="tab" aria-selected={active === 'code'} onClick={() => setActive('code')}>
+    Code
+  </button>
+</div>
+```

@@ -1,0 +1,34 @@
+---
+id: "m18-01"
+number: "01"
+title: "React Rendering"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "How and why React renders components."
+codeTitle: "Default Cascade Re-render Behavior"
+---
+
+# React Rendering
+
+Rendering is React calling your component function to obtain the new JSX element tree. A component re-renders when: 1) Its state changes; 2) Its parent re-renders; 3) A context it consumes changes.
+
+### Key Concepts & Rules:
+
+- A parent re-render automatically re-renders ALL its children by default, even if their props didn't change!
+- Rendering is not the same as DOM painting; if JSX output is identical, no DOM mutation occurs.
+
+### Code Example: Default Cascade Re-render Behavior
+
+```tsx
+// When Parent re-renders, Child re-renders by default:
+function Parent() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+      <ExpensiveChild /> {/* Re-renders on every click unless memoized! */}
+    </div>
+  );
+}
+```

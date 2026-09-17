@@ -1,0 +1,30 @@
+---
+id: "m18-03"
+number: "03"
+title: "useMemo"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Caching the result of expensive calculations."
+codeTitle: "useMemo for Array Filtering"
+---
+
+# useMemo
+
+`useMemo(() => computeExpensiveValue(a, b), [a, b])` caches the calculated value and recalculates only when dependencies change.
+
+### Key Concepts & Rules:
+
+- Use for heavy filtering, sorting, or complex mathematical transformations on large arrays.
+- Do not overuse on cheap calculations; `useMemo` itself has memory and comparison overhead.
+
+### Code Example: useMemo for Array Filtering
+
+```tsx
+// Only re-calculates filtered items when 'query' or 'items' changes:
+const filteredStudents = useMemo(() => {
+  return items.filter(item => 
+    item.name.toLowerCase().includes(query.toLowerCase())
+  );
+}, [items, query]);
+```

@@ -1,0 +1,41 @@
+---
+id: "m08-09"
+number: "09"
+title: "Form State"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Managing multi-field forms with a single state object."
+codeTitle: "Unified Multi-Field Form Handler"
+---
+
+# Form State
+
+Instead of 10 individual `useState` calls for a 10-field form, use a single state object indexed with `e.target.name`.
+
+### Key Concepts & Rules:
+
+- Dynamic object keys: `[e.target.name]: e.target.value`.
+
+### Code Example: Unified Multi-Field Form Handler
+
+```tsx
+export function MultiFieldForm() {
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <form className="space-y-2">
+      <input name="firstName" value={form.firstName} onChange={handleChange} placeholder="First Name" />
+      <input name="lastName" value={form.lastName} onChange={handleChange} placeholder="Last Name" />
+      <input name="email" value={form.email} onChange={handleChange} placeholder="Email" />
+    </form>
+  );
+}
+```

@@ -1,0 +1,27 @@
+---
+id: "m06-09"
+number: "09"
+title: "Preventing Default Behavior"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Using e.preventDefault() on forms, links, and keyboard events."
+codeTitle: "e.preventDefault() Usage"
+---
+
+# Preventing Default Behavior
+
+Prevents the default browser action (e.g. following links, submitting forms, scrolling on arrow keys).
+
+### Key Concepts & Rules:
+
+- In React, returning `false` does not work; you must call `e.preventDefault()`.
+
+### Code Example: e.preventDefault() Usage
+
+```tsx
+const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.preventDefault();
+  router.push('/custom-destination');
+};
+```

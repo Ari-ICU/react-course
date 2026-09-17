@@ -1,0 +1,24 @@
+---
+id: "m13-08"
+number: "08"
+title: "Dynamic Routes"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Capturing variable URL paths using parameters like :id."
+codeTitle: "Dynamic Route Parameter Definition"
+---
+
+# Dynamic Routes
+
+Define dynamic paths with a colon prefix: `/modules/:moduleId/topics/:topicId`.
+
+### Key Concepts & Rules:
+
+- Allows single component to handle thousands of dynamic URLs.
+
+### Code Example: Dynamic Route Parameter Definition
+
+```tsx
+<Route path="/modules/:moduleId" element={<ModuleDetailView />} />
+```

@@ -1,0 +1,31 @@
+---
+id: "m18-08"
+number: "08"
+title: "React Profiler"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Identifying slow renders and commit timelines in React DevTools."
+codeTitle: "React Profiler API"
+---
+
+# React Profiler
+
+The React Profiler records render duration and flame graphs, showing exactly which component rendered, why it rendered, and how long it took.
+
+### Key Concepts & Rules:
+
+- Use 'Record why each component rendered while profiling' in DevTools settings.
+
+### Code Example: React Profiler API
+
+```tsx
+// Use the Profiler component programmatically if needed:
+import { Profiler } from 'react';
+
+<Profiler id="CourseTable" onRender={(id, phase, actualDuration) => {
+  console.log(`${id} [${phase}] took ${actualDuration}ms`);
+}}>
+  <CourseTable />
+</Profiler>
+```

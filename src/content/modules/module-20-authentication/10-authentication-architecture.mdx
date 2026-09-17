@@ -1,0 +1,28 @@
+---
+id: "m20-10"
+number: "10"
+title: "Authentication Architecture"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Enterprise auth structure across hooks, stores, and interceptors."
+codeTitle: "Auth Feature Directory Layout"
+---
+
+# Authentication Architecture
+
+Colocate auth services, tokens, guards, and context into a dedicated `@/features/auth` slice.
+
+### Key Concepts & Rules:
+
+- Clean encapsulation of security concerns.
+
+### Code Example: Auth Feature Directory Layout
+
+```tsx
+features/auth/
+├── components/LoginForm.tsx, RoleGate.tsx
+├── hooks/useAuth.ts
+├── services/authService.ts
+└── store/useAuthStore.ts
+```

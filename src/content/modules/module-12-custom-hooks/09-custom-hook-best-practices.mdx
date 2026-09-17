@@ -1,0 +1,29 @@
+---
+id: "m12-09"
+number: "09"
+title: "Custom Hook Best Practices"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Ensuring stable callbacks with useCallback and accurate TypeScript return types."
+codeTitle: "Tuple Return with as const"
+---
+
+# Custom Hook Best Practices
+
+Use `as const` on tuple returns or explicit TypeScript return types so consumers get accurate tuple types rather than union arrays.
+
+### Key Concepts & Rules:
+
+- Add `as const` to tuple returns for instant type inference.
+
+### Code Example: Tuple Return with as const
+
+```tsx
+// Using "as const" for tuple inference:
+export function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
+  const increment = () => setCount(c => c + 1);
+  return [count, increment] as const;
+}
+```

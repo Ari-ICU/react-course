@@ -1,0 +1,30 @@
+---
+id: "m11-08"
+number: "08"
+title: "Common useRef Mistakes"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Reading or writing ref.current during rendering."
+codeTitle: "Do Not Mutate Refs During Render"
+---
+
+# Common useRef Mistakes
+
+Do NOT read or write `ref.current` during rendering JSX. That violates React's purity rules. Only read and write `ref.current` inside event handlers or `useEffect`.
+
+### Key Concepts & Rules:
+
+- Mutating refs during render makes components non-deterministic.
+
+### Code Example: Do Not Mutate Refs During Render
+
+```tsx
+// ❌ Impure: Writing to ref during render
+/*
+function Bad() {
+  myRef.current = 123; // Don't do this during render!
+  return <div>{myRef.current}</div>;
+}
+*/
+```

@@ -1,0 +1,36 @@
+---
+id: "m12-02"
+number: "02"
+title: "Why Custom Hooks?"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Code reuse, component decluttering, and testable domain logic."
+codeTitle: "Using Custom Hooks in Components"
+---
+
+# Why Custom Hooks?
+
+Extracting complex effects and state workflows into custom hooks keeps your UI components clean, declarative, and focused solely on layout.
+
+### Key Concepts & Rules:
+
+- Eliminates copy-paste code across pages.
+- Decouples business logic from rendering.
+
+### Code Example: Using Custom Hooks in Components
+
+```tsx
+// Component remains pure and concise:
+export function SettingsView() {
+  const [isDarkMode, toggleTheme] = useToggle(true);
+  const [isNotificationsEnabled, toggleNotifications] = useToggle(false);
+
+  return (
+    <div>
+      <button onClick={toggleTheme}>Dark Mode: {isDarkMode ? 'ON' : 'OFF'}</button>
+      <button onClick={toggleNotifications}>Alerts: {isNotificationsEnabled ? 'ON' : 'OFF'}</button>
+    </div>
+  );
+}
+```

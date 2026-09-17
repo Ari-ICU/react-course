@@ -1,0 +1,29 @@
+---
+id: "m18-11"
+number: "11"
+title: "Web Vitals in React"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "LCP, FID/INP, and CLS metrics."
+codeTitle: "startTransition for Responsive INP"
+---
+
+# Web Vitals in React
+
+Core Web Vitals measure real-world user experience. Cumulative Layout Shift (CLS) is prevented by skeleton dimensions; Interaction to Next Paint (INP) is improved by non-blocking transitions.
+
+### Key Concepts & Rules:
+
+- Use `startTransition` in React 18/19 for non-urgent UI updates.
+
+### Code Example: startTransition for Responsive INP
+
+```tsx
+import { startTransition } from 'react';
+
+// Non-urgent update won't block typing input:
+startTransition(() => {
+  setFilteredResults(heavyCalculation(query));
+});
+```

@@ -1,0 +1,27 @@
+---
+id: "m14-04"
+number: "04"
+title: "POST Request"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Creating new resources with JSON payload."
+codeTitle: "Axios POST Request"
+---
+
+# POST Request
+
+Used for submitting forms, creating tasks, or authenticating users.
+
+### Key Concepts & Rules:
+
+- Transmits data in request body.
+
+### Code Example: Axios POST Request
+
+```tsx
+const createStudent = async (newStudent: StudentInput) => {
+  const res = await axios.post('/api/students', newStudent);
+  return res.data;
+};
+```

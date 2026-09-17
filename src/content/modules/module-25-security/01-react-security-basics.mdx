@@ -1,0 +1,25 @@
+---
+id: "m25-01"
+number: "01"
+title: "React Security Basics"
+moduleId: "module-25"
+moduleNumber: "25"
+category: "Enterprise & Production"
+summary: "Built-in auto-escaping against Cross-Site Scripting (XSS)."
+codeTitle: "Automatic XSS Escaping"
+---
+
+# React Security Basics
+
+By default, React escapes all strings rendered inside JSX before inserting them into the DOM, neutralizing basic `<script>` injection attacks.
+
+### Key Concepts & Rules:
+
+- Automatic string escaping prevents HTML injection.
+
+### Code Example: Automatic XSS Escaping
+
+```tsx
+// If userInput is "<script>alert('hack')</script>",
+// React renders it as safe plain text: &lt;script&gt;...
+```

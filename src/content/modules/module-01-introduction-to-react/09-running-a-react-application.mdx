@@ -1,0 +1,31 @@
+---
+id: "m01-09"
+number: "09"
+title: "Running a React Application"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Development server, hot reloading, port binding, and build scripts."
+codeTitle: "Standard NPM Scripts"
+---
+
+# Running a React Application
+
+Understanding `npm run dev` for dev server with HMR, `npm run build` for optimized production bundles, and `npm run preview` / `npm start` for production serving.
+
+### Key Concepts & Rules:
+
+- Fast Refresh maintains component state across edits.
+- Source maps provide clean browser DevTools debugging.
+
+### Code Example: Standard NPM Scripts
+
+```tsx
+// package.json scripts
+"scripts": {
+  "dev": "next dev",           // Starts local development server
+  "build": "next build",       // Compiles production-optimized code
+  "start": "next start",       // Runs production server
+  "lint": "eslint ."           // Code quality inspection
+}
+```

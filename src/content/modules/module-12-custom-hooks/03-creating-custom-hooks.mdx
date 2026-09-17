@@ -1,0 +1,36 @@
+---
+id: "m12-03"
+number: "03"
+title: "Creating Custom Hooks"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Rules, naming conventions, and returning values."
+codeTitle: "useWindowDimensions Hook"
+---
+
+# Creating Custom Hooks
+
+Custom hooks follow the standard Rules of Hooks. Return either a tuple `[value, setter]` or an object `{ data, isLoading, error }`.
+
+### Key Concepts & Rules:
+
+- Return tuples for 1-2 values; return objects for 3+ values.
+
+### Code Example: useWindowDimensions Hook
+
+```tsx
+// Return object with named properties:
+export function useWindowDimensions() {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return dimensions;
+}
+```

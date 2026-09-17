@@ -1,0 +1,29 @@
+---
+id: "m08-04"
+number: "04"
+title: "Textarea"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Multi-line text input with controlled value prop."
+codeTitle: "Controlled Textarea"
+---
+
+# Textarea
+
+Unlike HTML where textarea content sits between tags (`<textarea>hello</textarea>`), React uses the `value` attribute: `<textarea value={bio} onChange={...} />`.
+
+### Key Concepts & Rules:
+
+- Use `value` attribute, not children.
+
+### Code Example: Controlled Textarea
+
+```tsx
+<textarea 
+  value={bio} 
+  onChange={(e) => setBio(e.target.value)} 
+  rows={4} 
+  className="w-full bg-slate-900 border rounded-lg p-3 text-white"
+/>
+```

@@ -1,0 +1,37 @@
+---
+id: "m07-01"
+number: "01"
+title: "What is State?"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Component memory that triggers UI re-renders upon mutation."
+interactiveDemoKey: "StateDemo"
+codeTitle: "Basic State Declaration"
+---
+
+# What is State?
+
+State is data that changes over time in response to user actions or network responses. When state changes, React schedules a re-render of the component and updates the DOM.
+
+### Key Concepts & Rules:
+
+- State is private to the component instance.
+- State persists across re-renders.
+- Updating state triggers reconciliation.
+
+### Code Example: Basic State Declaration
+
+```tsx
+import { useState } from 'react';
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(count + 1)} className="px-4 py-2 bg-blue-600 text-white rounded">
+      Count: {count}
+    </button>
+  );
+}
+```

@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -12,15 +12,131 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.03) 0%, transparent 35%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  min-height: 100vh;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ============================================================
+   PrismJS Syntax Highlighting Theme (VS Code / GitHub Dark Pro)
+   ============================================================ */
+
+.code-highlight-area ::selection {
+  background-color: rgba(59, 130, 246, 0.35) !important;
+  color: #ffffff !important;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b !important;
+  font-style: italic !important;
+}
+
+.token.punctuation {
+  color: #94a3b8 !important;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f87171 !important; /* Rose / Red */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #34d399 !important; /* Emerald / Mint Green */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #7dd3fc !important; /* Sky Blue */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #c084fc !important; /* Purple */
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #60a5fa !important; /* Vibrant Blue */
+  font-weight: 500;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fbbf24 !important; /* Amber */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* JSX specific tags & attributes */
+.token.tag .token.tag {
+  color: #f43f5e !important; /* Coral / Rose */
+  font-weight: 600;
+}
+
+.token.tag .token.attr-name {
+  color: #fb923c !important; /* Orange */
+}
+
+.token.plain-text {
+  color: #e2e8f0 !important;
 }

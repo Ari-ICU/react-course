@@ -1,0 +1,31 @@
+---
+id: "m03-09"
+number: "09"
+title: "Component Organization"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Organizing generic UI components vs page-specific components."
+codeTitle: "Component Tier Hierarchy"
+---
+
+# Component Organization
+
+Keep generic atomic components in `@/components/ui`, complex compound widgets in `@/components`, and domain-specific logic in `@/features`.
+
+### Key Concepts & Rules:
+
+- Atomic primitives: Button, Input, Checkbox, Badge.
+- Compound components: Modal, DropdownMenu, NavigationDrawer.
+- Feature components: StudentTable, CartDrawer, ProductGrid.
+
+### Code Example: Component Tier Hierarchy
+
+```tsx
+src/
+├── components/
+│   ├── ui/             # Primitives: Button.tsx, Input.tsx
+│   └── layout/         # Header.tsx, Sidebar.tsx
+└── features/
+    └── cart/           # CartDrawer.tsx, CartItem.tsx, CartSummary.tsx
+```

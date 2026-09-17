@@ -1,0 +1,31 @@
+---
+id: "m07-04"
+number: "04"
+title: "Updating State"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Direct replacement vs functional updater pattern."
+codeTitle: "Functional State Updates"
+---
+
+# Updating State
+
+When new state depends on previous state, always pass an updater function: `setCount(prev => prev + 1)`. This prevents stale closure bugs during batched updates.
+
+### Key Concepts & Rules:
+
+- Functional update: `setCount(prev => prev + 1)`.
+- Guarantees reading the most recent state value in asynchronous callbacks.
+
+### Code Example: Functional State Updates
+
+```tsx
+// ⚠️ Problem with direct state:
+// setCount(count + 1);
+// setCount(count + 1); // count is still stale; only increments by 1!
+
+// ✅ Solution: Functional updates
+setCount(prev => prev + 1);
+setCount(prev => prev + 1); // Increments by 2 safely!
+```

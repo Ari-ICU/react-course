@@ -1,0 +1,33 @@
+---
+id: "m19-02"
+number: "02"
+title: "Compound Components"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Flexible multi-part component APIs that share implicit state."
+codeTitle: "Compound Component Pattern Usage"
+---
+
+# Compound Components
+
+Compound components work together as a cohesive unit (like `<select>` and `<option>`). Examples include `<Tabs>`, `<Tabs.List>`, `<Tabs.Trigger>`, and `<Tabs.Content>`. They communicate via an internal React Context.
+
+### Key Concepts & Rules:
+
+- Provides consumers with complete layout flexibility.
+- Eliminates prop-drilling within the widget.
+
+### Code Example: Compound Component Pattern Usage
+
+```tsx
+// Usage of Compound Tabs:
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">Overview Details</TabsContent>
+  <TabsContent value="curriculum">Curriculum List</TabsContent>
+</Tabs>
+```

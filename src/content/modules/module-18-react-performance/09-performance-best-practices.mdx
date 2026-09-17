@@ -1,0 +1,26 @@
+---
+id: "m18-09"
+number: "09"
+title: "Performance Best Practices"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Checklist for maintaining 60fps React applications."
+codeTitle: "Performance Golden Rules"
+---
+
+# Performance Best Practices
+
+1) Measure before optimizing (premature optimization is the root of all evil); 2) Colocate state; 3) Use pagination/virtualization; 4) Optimize images; 5) Lazy-load heavy routes.
+
+### Key Concepts & Rules:
+
+- Always test with CPU throttling (4x / 6x slowdown) in DevTools.
+
+### Code Example: Performance Golden Rules
+
+```tsx
+// 1. Don't optimize until you measure bottlenecks.
+// 2. Colocate state before reaching for memo/useCallback.
+// 3. Virtualize lists > 100 items.
+```

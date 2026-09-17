@@ -1,0 +1,42 @@
+---
+id: "m07-06"
+number: "06"
+title: "Updating Objects"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Copying object properties with spread syntax."
+codeTitle: "Updating Object State Immutably"
+---
+
+# Updating Objects
+
+Use the object spread operator `...` to copy existing properties and overwrite the changed fields.
+
+### Key Concepts & Rules:
+
+- Pattern: `setUser(prev => ({ ...prev, name: 'New Name' }))`.
+
+### Code Example: Updating Object State Immutably
+
+```tsx
+interface Profile {
+  name: string;
+  theme: 'light' | 'dark';
+  notifications: boolean;
+}
+
+const [profile, setProfile] = useState<Profile>({
+  name: 'Alex',
+  theme: 'dark',
+  notifications: true,
+});
+
+// Update single field safely:
+const toggleTheme = () => {
+  setProfile(prev => ({
+    ...prev,
+    theme: prev.theme === 'dark' ? 'light' : 'dark',
+  }));
+};
+```

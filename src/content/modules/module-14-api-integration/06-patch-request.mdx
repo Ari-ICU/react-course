@@ -1,0 +1,24 @@
+---
+id: "m14-06"
+number: "06"
+title: "PATCH Request"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Partial update of specific modified fields."
+codeTitle: "Axios PATCH Request"
+---
+
+# PATCH Request
+
+Updates only the fields sent in the request body (e.g. toggle task status).
+
+### Key Concepts & Rules:
+
+- Saves bandwidth by sending only changed properties.
+
+### Code Example: Axios PATCH Request
+
+```tsx
+await axios.patch(`/api/todos/${id}`, { completed: true });
+```

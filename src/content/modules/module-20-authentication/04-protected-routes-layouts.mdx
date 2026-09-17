@@ -1,0 +1,29 @@
+---
+id: "m20-04"
+number: "04"
+title: "Protected Routes & Layouts"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Preventing unauthorized access to private pages."
+codeTitle: "Protected Layout Route"
+---
+
+# Protected Routes & Layouts
+
+Gate entire layout route trees so that unauthenticated visitors are automatically forwarded to `/login`.
+
+### Key Concepts & Rules:
+
+- Redirect preserves intended destination URL.
+
+### Code Example: Protected Layout Route
+
+```tsx
+export function ProtectedLayout() {
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return <LoadingScreen />;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return <Outlet />;
+}
+```

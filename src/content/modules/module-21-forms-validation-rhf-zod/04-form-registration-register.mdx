@@ -1,0 +1,31 @@
+---
+id: "m21-04"
+number: "04"
+title: "Form Registration ({...register})"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Connecting native inputs to React Hook Form."
+codeTitle: "Input Registration and Error Display"
+---
+
+# Form Registration ({...register})
+
+`register('name')` returns `onChange`, `onBlur`, `ref`, and `name` attributes to spread onto the input.
+
+### Key Concepts & Rules:
+
+- No manual `value` or `onChange` state wiring required.
+
+### Code Example: Input Registration and Error Display
+
+```tsx
+<div>
+  <label className="block text-sm font-medium text-slate-300">Full Name</label>
+  <input 
+    {...register('name')} 
+    className="w-full bg-slate-900 border border-slate-800 p-2 rounded text-white" 
+  />
+  {errors.name && <p className="text-xs text-rose-400 mt-1">{errors.name.message}</p>}
+</div>
+```

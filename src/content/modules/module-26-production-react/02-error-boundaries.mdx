@@ -1,0 +1,42 @@
+---
+id: "m26-02"
+number: "02"
+title: "Error Boundaries"
+moduleId: "module-26"
+moduleNumber: "26"
+category: "Enterprise & Production"
+summary: "Catching runtime JavaScript errors to prevent white-screen crashes."
+codeTitle: "React Error Boundary Component"
+---
+
+# Error Boundaries
+
+An Error Boundary catches JavaScript errors anywhere in its child component tree, logs the error, and displays a friendly fallback UI instead of crashing the entire screen.
+
+### Key Concepts & Rules:
+
+- Wrap major feature sections in independent Error Boundaries.
+- A failure in a sidebar should never crash the main application view.
+
+### Code Example: React Error Boundary Component
+
+```tsx
+import { Component, ErrorInfo, ReactNode } from 'react';
+
+export class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("Caught in ErrorBoundary:", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
+}
+```

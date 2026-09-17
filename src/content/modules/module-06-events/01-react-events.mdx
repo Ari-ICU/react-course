@@ -1,0 +1,32 @@
+---
+id: "m06-01"
+number: "01"
+title: "React Events"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Cross-browser SyntheticEvent wrapper system."
+codeTitle: "React SyntheticEvent Handling"
+---
+
+# React Events
+
+React wraps native browser events in a cross-browser `SyntheticEvent` instance that ensures identical event behavior across Safari, Chrome, Firefox, and Edge.
+
+### Key Concepts & Rules:
+
+- Synthetic events match W3C standards.
+- Named in camelCase: `onClick`, `onChange`, `onKeyDown`.
+
+### Code Example: React SyntheticEvent Handling
+
+```tsx
+export function EventLogger() {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("Event Type:", e.type);
+    console.log("Coordinates:", e.clientX, e.clientY);
+  };
+
+  return <button onClick={handleClick}>Log Event</button>;
+}
+```

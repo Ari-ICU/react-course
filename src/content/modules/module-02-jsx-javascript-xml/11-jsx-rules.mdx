@@ -1,0 +1,37 @@
+---
+id: "m02-11"
+number: "11"
+title: "JSX Rules"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Strict closing tags, single root element, and property casing rules."
+codeTitle: "JSX Core Rules Summary"
+---
+
+# JSX Rules
+
+JSX requires: 1) Return a single root element (or Fragment); 2) Close all tags; 3) camelCase most attributes; 4) Quote static strings with `""` and dynamic expressions with `{}`.
+
+### Key Concepts & Rules:
+
+- Single parent element required.
+- All elements must be closed explicitly.
+- Style must be an object, not a CSS string.
+
+### Code Example: JSX Core Rules Summary
+
+```tsx
+// Summary of Core JSX Rules:
+// 1. Single Root
+return <div className="card">...</div>;
+
+// 2. Closed Tags
+<input type="text" />
+
+// 3. camelCase
+<button onClick={handleClick} tabIndex={0}>Click</button>
+
+// 4. Expression braces
+<h1>{`Hello ${user.name}`}</h1>
+```

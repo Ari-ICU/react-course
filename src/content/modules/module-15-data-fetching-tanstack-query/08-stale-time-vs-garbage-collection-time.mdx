@@ -1,0 +1,30 @@
+---
+id: "m15-08"
+number: "08"
+title: "Stale Time vs Garbage Collection Time"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Fine-tuning cache lifetime with staleTime and gcTime."
+codeTitle: "staleTime and gcTime Configuration"
+---
+
+# Stale Time vs Garbage Collection Time
+
+`staleTime` determines how long data is considered fresh before needing a background refresh. `gcTime` determines how long inactive data stays in memory before being evicted.
+
+### Key Concepts & Rules:
+
+- Default `staleTime` is 0 (data immediately considered stale).
+- Set `staleTime: 60_000` for data that changes infrequently.
+
+### Code Example: staleTime and gcTime Configuration
+
+```tsx
+const { data } = useQuery({
+  queryKey: ['systemConfig'],
+  queryFn: fetchConfig,
+  staleTime: 1000 * 60 * 30, // 30 minutes
+  gcTime: 1000 * 60 * 60,    // 1 hour
+});
+```

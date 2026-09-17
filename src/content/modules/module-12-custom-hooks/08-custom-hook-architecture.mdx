@@ -1,0 +1,30 @@
+---
+id: "m12-08"
+number: "08"
+title: "Custom Hook Architecture"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Organizing hooks directory and composable hook pipelines."
+codeTitle: "Hooks Folder Architecture"
+---
+
+# Custom Hook Architecture
+
+Compose custom hooks from smaller custom hooks (e.g. `useUser` uses `useFetch` which uses `useLocalStorage`).
+
+### Key Concepts & Rules:
+
+- Colocate domain hooks in feature folders; put generic hooks in `@/hooks`.
+
+### Code Example: Hooks Folder Architecture
+
+```tsx
+src/
+├── hooks/
+│   ├── useLocalStorage.ts
+│   ├── useDebounce.ts
+│   └── useMediaQuery.ts
+└── features/students/hooks/
+    └── useStudentFilters.ts
+```

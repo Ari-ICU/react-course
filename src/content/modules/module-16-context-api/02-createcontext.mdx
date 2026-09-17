@@ -1,0 +1,29 @@
+---
+id: "m16-02"
+number: "02"
+title: "createContext"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Instantiating a context object with fallback defaults."
+codeTitle: "Declaring Context with TypeScript"
+---
+
+# createContext
+
+`const MyContext = createContext(defaultValue)` creates the context container.
+
+### Key Concepts & Rules:
+
+- The default value is only used if a component consumes context outside a Provider.
+
+### Code Example: Declaring Context with TypeScript
+
+```tsx
+interface ThemeContextType {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+```

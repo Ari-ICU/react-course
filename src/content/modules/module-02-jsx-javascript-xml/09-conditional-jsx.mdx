@@ -1,0 +1,35 @@
+---
+id: "m02-09"
+number: "09"
+title: "Conditional JSX"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Ternary operators, early returns, and logical short-circuiting."
+codeTitle: "Ternary Conditional JSX"
+---
+
+# Conditional JSX
+
+Conditional rendering lets you display different UI branches based on state or prop flags using ternary expressions `? :` or early `return` guards.
+
+### Key Concepts & Rules:
+
+- Use early return guards for loading and error UI to keep main component logic clean.
+- Use ternary operators for inline binary toggles.
+
+### Code Example: Ternary Conditional JSX
+
+```tsx
+export function AuthButton({ isLoggedIn, onLogin, onLogout }: AuthButtonProps) {
+  return isLoggedIn ? (
+    <button onClick={onLogout} className="px-3 py-1.5 bg-rose-600 text-white rounded">
+      Sign Out
+    </button>
+  ) : (
+    <button onClick={onLogin} className="px-3 py-1.5 bg-blue-600 text-white rounded">
+      Sign In
+    </button>
+  );
+}
+```

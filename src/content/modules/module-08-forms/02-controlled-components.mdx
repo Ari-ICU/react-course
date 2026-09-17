@@ -1,0 +1,35 @@
+---
+id: "m08-02"
+number: "02"
+title: "Controlled Components"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Inputs whose values are strictly driven by React state."
+codeTitle: "Controlled Input with Sanitization"
+---
+
+# Controlled Components
+
+A controlled component guarantees that what the user sees on screen is always in sync with component state. It allows validating, formatting, and masking input values in real-time.
+
+### Key Concepts & Rules:
+
+- Value is governed by state.
+- Mutations pass through `onChange` handler before reflecting on screen.
+
+### Code Example: Controlled Input with Sanitization
+
+```tsx
+export function PhoneInput() {
+  const [phone, setPhone] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow digits:
+    const cleaned = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setPhone(cleaned);
+  };
+
+  return <input value={phone} onChange={handleChange} placeholder="Digits only" />;
+}
+```

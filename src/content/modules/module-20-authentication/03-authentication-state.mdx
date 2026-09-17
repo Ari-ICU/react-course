@@ -1,0 +1,28 @@
+---
+id: "m20-03"
+number: "03"
+title: "Authentication State"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "Managing current session, user profile, and token in memory."
+codeTitle: "Auth State Shape"
+---
+
+# Authentication State
+
+Store the access token in memory or secure storage, with user profile metadata exposed to the application.
+
+### Key Concepts & Rules:
+
+- Security rule: Avoid storing raw JWT tokens in localStorage if vulnerable to XSS.
+
+### Code Example: Auth State Shape
+
+```tsx
+interface AuthState {
+  user: UserProfile | null;
+  token: string | null;
+  isAuthenticated: boolean;
+}
+```

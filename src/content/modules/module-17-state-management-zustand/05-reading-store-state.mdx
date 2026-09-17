@@ -1,0 +1,29 @@
+---
+id: "m17-05"
+number: "05"
+title: "Reading Store State"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Accessing values inside functional components."
+codeTitle: "Consuming Zustand Store"
+---
+
+# Reading Store State
+
+Components invoke the store hook: `const isSidebarOpen = useUIStore(state => state.isSidebarOpen)`.
+
+### Key Concepts & Rules:
+
+- Always pass a selector to avoid subscribing to the entire store.
+
+### Code Example: Consuming Zustand Store
+
+```tsx
+export function SidebarToggle() {
+  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);
+  const toggleSidebar = useUIStore((state) => state.toggleSidebar);
+
+  return <button onClick={toggleSidebar}>{isSidebarOpen ? 'Close' : 'Open'}</button>;
+}
+```

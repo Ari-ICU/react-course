@@ -1,0 +1,38 @@
+---
+id: "m21-05"
+number: "05"
+title: "Dynamic Form Arrays (useFieldArray)"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Adding and removing items dynamically (e.g. invoice line items)."
+codeTitle: "Dynamic Inputs with useFieldArray"
+---
+
+# Dynamic Form Arrays (useFieldArray)
+
+`useFieldArray` provides methods (`append`, `remove`, `move`) to manage dynamic lists of inputs inside a single form.
+
+### Key Concepts & Rules:
+
+- Crucial for order forms, tags, and multi-phone inputs.
+
+### Code Example: Dynamic Inputs with useFieldArray
+
+```tsx
+import { useFieldArray } from 'react-hook-form';
+
+const { fields, append, remove } = useFieldArray({
+  control,
+  name: "phoneNumbers",
+});
+
+// Render dynamic items:
+{fields.map((field, index) => (
+  <div key={field.id} className="flex gap-2">
+    <input {...register(`phoneNumbers.${index}.number`)} />
+    <button type="button" onClick={() => remove(index)}>Remove</button>
+  </div>
+))}
+<button type="button" onClick={() => append({ number: '' })}>Add Phone</button>
+```

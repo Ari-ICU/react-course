@@ -1,0 +1,33 @@
+---
+id: "m02-12"
+number: "12"
+title: "Common JSX Mistakes"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Rendering 0 with logical AND `&&`, forgetting keys, and class vs className."
+pitfall: "Writing `{count && <Element />}` when count is 0 prints the character '0' to your UI. Always use `{count > 0 && <Element />}`."
+codeTitle: "The Logical AND Zero Bug"
+---
+
+# Common JSX Mistakes
+
+The most famous JSX gotcha is `count && <Component />`: if `count` is `0`, JavaScript evaluates `0 && ...` to `0`, causing the number `0` to render on screen rather than nothing!
+
+### Key Concepts & Rules:
+
+- Never write `items.length && <List />` -> use `items.length > 0 && <List />` or ternary `items.length ? <List /> : null`.
+- Avoid using array index as `key` when list items can be reordered or removed.
+
+### Code Example: The Logical AND Zero Bug
+
+```tsx
+// ❌ Pitfall: Renders the number "0" onto the webpage!
+{messages.length && <Badge count={messages.length} />}
+
+// ✅ Fix: Use explicit boolean comparison:
+{messages.length > 0 && <Badge count={messages.length} />}
+
+// ✅ Alternative: Use ternary operator:
+{messages.length > 0 ? <Badge count={messages.length} /> : null}
+```

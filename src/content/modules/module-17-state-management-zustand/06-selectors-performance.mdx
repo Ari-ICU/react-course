@@ -1,0 +1,29 @@
+---
+id: "m17-06"
+number: "06"
+title: "Selectors & Performance"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Preventing unnecessary renders with fine-grained selectors."
+proTip: "Always use selectors like `state => state.property`. Never call `const store = useMyStore()` without a selector in performance-critical UI."
+codeTitle: "Selector Subscription Pattern"
+---
+
+# Selectors & Performance
+
+By selecting only `state.isSidebarOpen`, the component will NOT re-render if `activeModal` changes elsewhere in the store. This provides immense performance gains over Context.
+
+### Key Concepts & Rules:
+
+- Components re-render ONLY when their selected slice changes.
+
+### Code Example: Selector Subscription Pattern
+
+```tsx
+// ✅ Optimal: Subscribes ONLY to 'itemsCount':
+const count = useCartStore(state => state.items.length);
+
+// ❌ Suboptimal: Subscribes to ENTIRE store object:
+// const store = useCartStore(); // Re-renders on ANY change in store!
+```

@@ -1,0 +1,31 @@
+---
+id: "m17-09"
+number: "09"
+title: "Accessing State Outside Components"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Reading and writing store data in vanilla JS, API interceptors, and utils."
+codeTitle: "Zustand Outside React Components"
+---
+
+# Accessing State Outside Components
+
+Because Zustand stores are standard JavaScript objects, you can read or update them anywhere in your codebase without React hooks!
+
+### Key Concepts & Rules:
+
+- Use `useStore.getState()` and `useStore.setState()` outside React.
+
+### Code Example: Zustand Outside React Components
+
+```tsx
+// In an Axios interceptor or pure utility file:
+import { useAuthStore } from '@/store/authStore';
+
+// Read token without React:
+const token = useAuthStore.getState().token;
+
+// Update state directly outside components:
+useAuthStore.getState().logout();
+```

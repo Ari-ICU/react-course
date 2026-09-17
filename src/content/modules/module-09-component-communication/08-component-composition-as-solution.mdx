@@ -1,0 +1,25 @@
+---
+id: "m09-08"
+number: "08"
+title: "Component Composition as Solution"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Passing slotted elements down rather than raw props."
+codeTitle: "Composition Solving Prop Drilling"
+---
+
+# Component Composition as Solution
+
+Often you can solve prop drilling simply by passing the leaf component directly via `children` or named slots.
+
+### Key Concepts & Rules:
+
+- Intermediary components only render `{children}`, unaware of specific props.
+
+### Code Example: Composition Solving Prop Drilling
+
+```tsx
+// Instead of passing user through Sidebar:
+// <Sidebar><Avatar user={user} /></Sidebar>
+```

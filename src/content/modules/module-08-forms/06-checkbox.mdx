@@ -1,0 +1,32 @@
+---
+id: "m08-06"
+number: "06"
+title: "Checkbox"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Boolean inputs using checked prop and e.target.checked."
+codeTitle: "Controlled Checkbox"
+---
+
+# Checkbox
+
+Checkboxes use `checked={isChecked}` instead of `value`, and you read `e.target.checked` in the handler.
+
+### Key Concepts & Rules:
+
+- Read `e.target.checked`, not `e.target.value`.
+
+### Code Example: Controlled Checkbox
+
+```tsx
+<label className="flex items-center gap-2 cursor-pointer">
+  <input 
+    type="checkbox" 
+    checked={agreed} 
+    onChange={(e) => setAgreed(e.target.checked)}
+    className="w-4 h-4 rounded text-blue-600"
+  />
+  <span className="text-sm text-slate-300">I accept terms and conditions</span>
+</label>
+```

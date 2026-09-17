@@ -1,0 +1,36 @@
+---
+id: "m07-07"
+number: "07"
+title: "Updating Arrays"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Adding, filtering, updating, and removing array elements immutably."
+codeTitle: "Immutable Array Helpers"
+---
+
+# Updating Arrays
+
+Use `.filter()` to delete, `.map()` to update an item, and `[...prev, item]` to add items.
+
+### Key Concepts & Rules:
+
+- Add: `[...items, newItem]`
+- Remove: `items.filter(i => i.id !== id)`
+- Update: `items.map(i => i.id === id ? { ...i, done: true } : i)`
+
+### Code Example: Immutable Array Helpers
+
+```tsx
+// Common Immutable Array Operations:
+// 1. Add
+setTodos(prev => [...prev, newTodo]);
+
+// 2. Remove
+setTodos(prev => prev.filter(todo => todo.id !== deleteId));
+
+// 3. Update single item
+setTodos(prev => prev.map(todo => 
+  todo.id === targetId ? { ...todo, completed: !todo.completed } : todo
+));
+```

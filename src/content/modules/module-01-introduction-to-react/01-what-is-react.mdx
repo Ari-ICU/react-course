@@ -1,0 +1,54 @@
+---
+id: "m01-01"
+number: "01"
+title: "What is React?"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "A declarative, component-based JavaScript library for building interactive user interfaces created by Meta."
+proTip: "Think in state transitions: define how your data changes, and let React calculate and apply the necessary DOM transformations."
+pitfall: "Do not attempt to directly query or mutate DOM elements (e.g. innerHTML or querySelector) inside React components."
+codeTitle: "Imperative vs Declarative Example"
+---
+
+# What is React?
+
+React is an open-source JavaScript library focused exclusively on the view layer (V in MVC). Instead of manually querying and mutating DOM nodes using imperative APIs like `document.getElementById` and `element.appendChild`, React introduces a declarative paradigm where you describe what the UI should look like for any given state, and React handles the low-level DOM mutations efficiently.
+
+### Key Concepts & Rules:
+
+- Declarative UI: Describe the desired final UI state, not step-by-step imperative mutations.
+- Component-Based: Break complex screens into isolated, reusable, and testable building blocks.
+- Learn Once, Write Anywhere: Core mental models transfer to React Native for mobile apps and Next.js for full-stack apps.
+- Unidirectional Data Flow: Data flows down through props, while events bubble up through callbacks.
+
+### Code Example: Imperative vs Declarative Example
+
+```tsx
+// Imperative DOM manipulation vs React Declarative UI
+// ❌ Traditional Imperative JavaScript:
+const btn = document.createElement('button');
+btn.innerText = 'Clicks: 0';
+let count = 0;
+btn.addEventListener('click', () => {
+  count++;
+  btn.innerText = `Clicks: ${count}`;
+});
+document.body.appendChild(btn);
+
+// ✅ Modern Declarative React Component:
+import { useState } from 'react';
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button 
+      onClick={() => setCount(count + 1)}
+      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+    >
+      Clicks: {count}
+    </button>
+  );
+}
+```

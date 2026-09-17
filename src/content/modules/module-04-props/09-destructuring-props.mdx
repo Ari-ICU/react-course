@@ -1,0 +1,45 @@
+---
+id: "m04-09"
+number: "09"
+title: "Destructuring Props"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Clean prop extraction in function signature."
+codeTitle: "Destructuring in Function Signature"
+---
+
+# Destructuring Props
+
+Destructuring props makes components concise and explicitly documents which properties are consumed.
+
+### Key Concepts & Rules:
+
+- Destructure directly in function parameters: `({ title, count }: Props)`.
+- You can rename properties or assign default fallback values.
+
+### Code Example: Destructuring in Function Signature
+
+```tsx
+export function MetricCard({ 
+  label, 
+  value, 
+  trend = "up" 
+}: { 
+  label: string; 
+  value: number | string; 
+  trend?: "up" | "down" 
+}) {
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
+      <p className="text-sm text-slate-400">{label}</p>
+      <div className="flex items-baseline gap-2 mt-1">
+        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className={trend === "up" ? "text-emerald-400 text-xs" : "text-rose-400 text-xs"}>
+          {trend === "up" ? "▲ +12%" : "▼ -4%"}
+        </span>
+      </div>
+    </div>
+  );
+}
+```

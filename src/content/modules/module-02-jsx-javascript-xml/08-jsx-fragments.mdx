@@ -1,0 +1,39 @@
+---
+id: "m02-08"
+number: "08"
+title: "JSX Fragments"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Grouping lists of children without adding extra wrapper DOM nodes."
+codeTitle: "React Fragments with Keys"
+---
+
+# JSX Fragments
+
+Fragments (`<React.Fragment>` or shorthand `<>...</>`) allow returning multiple sibling components without injecting superfluous `<div>` tags into the DOM layout.
+
+### Key Concepts & Rules:
+
+- Shorthand syntax `<>...</>` adds zero DOM overhead.
+- Use the full `<React.Fragment key={item.id}>` when rendering fragments in a loop that requires a `key` prop.
+
+### Code Example: React Fragments with Keys
+
+```tsx
+import React from 'react';
+
+export function TableRowGroup({ items }: { items: { id: string; label: string; value: string }[] }) {
+  return (
+    <dl className="grid grid-cols-2 gap-2">
+      {items.map((item) => (
+        // Key is required here, so use explicit React.Fragment:
+        <React.Fragment key={item.id}>
+          <dt className="text-slate-400 font-medium">{item.label}</dt>
+          <dd className="text-white text-right">{item.value}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+}
+```

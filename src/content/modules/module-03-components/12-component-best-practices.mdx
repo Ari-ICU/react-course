@@ -1,0 +1,36 @@
+---
+id: "m03-12"
+number: "12"
+title: "Component Best Practices"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Single responsibility principle, purity, and prop count hygiene."
+codeTitle: "Enforcing Component Purity"
+---
+
+# Component Best Practices
+
+Keep components small and focused on a single responsibility. If a component accepts more than 7-8 props, consider grouping related props into objects or breaking it down into compound components.
+
+### Key Concepts & Rules:
+
+- Keep components pure: given identical props, always return identical JSX.
+- Avoid side effects during rendering; perform them in useEffect or event handlers.
+
+### Code Example: Enforcing Component Purity
+
+```tsx
+// Golden Rule of React: Purity during render
+// ❌ Impure: Mutating external variables during render
+let renderCount = 0;
+function BadComponent() {
+  renderCount++; // Side effect!
+  return <div>Render {renderCount}</div>;
+}
+
+// ✅ Pure: Rendering has no observable external mutations
+function GoodComponent({ title }: { title: string }) {
+  return <h2 className="text-xl font-semibold">{title}</h2>;
+}
+```

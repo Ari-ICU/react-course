@@ -1,0 +1,38 @@
+---
+id: "m11-03"
+number: "03"
+title: "Accessing DOM Elements"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Interacting directly with native HTML DOM elements."
+codeTitle: "DOM Scroll into View via Ref"
+---
+
+# Accessing DOM Elements
+
+Allows calling native methods like `.focus()`, `.scrollIntoView()`, or measuring dimensions with `.getBoundingClientRect()`.
+
+### Key Concepts & Rules:
+
+- Always check `if (ref.current)` before accessing properties.
+
+### Code Example: DOM Scroll into View via Ref
+
+```tsx
+export function ScrollToBottom() {
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <div>
+      <button onClick={scrollToBottom}>Scroll Down</button>
+      <div style={{ height: 1000 }} />
+      <div ref={bottomRef} />
+    </div>
+  );
+}
+```

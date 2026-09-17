@@ -1,0 +1,28 @@
+---
+id: "m04-05"
+number: "05"
+title: "Props with Numbers"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Passing numeric values using curly brace expressions."
+codeTitle: "Passing Numeric Props"
+---
+
+# Props with Numbers
+
+Numbers MUST be passed inside curly braces (e.g. `rating={4.9}`), otherwise they are parsed as literal strings.
+
+### Key Concepts & Rules:
+
+- `<Widget count=5 />` is invalid syntax; write `<Widget count={5} />`.
+
+### Code Example: Passing Numeric Props
+
+```tsx
+<RatingBadge 
+  score={4.85} 
+  totalReviews={1240} 
+  stars={5} 
+/>
+```

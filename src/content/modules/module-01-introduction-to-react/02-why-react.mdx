@@ -1,0 +1,45 @@
+---
+id: "m01-02"
+number: "02"
+title: "Why React?"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Learn why React dominates the modern web ecosystem and developer tooling."
+proTip: "Investing in React gives you access to the largest repository of production-tested packages and UI patterns in the JavaScript ecosystem."
+codeTitle: "Composable Component Pattern"
+---
+
+# Why React?
+
+React provides unmatched ecosystem support, massive community backing, top-tier performance through fiber reconciler algorithms, and a vibrant ecosystem ranging from Next.js to Tailwind CSS and Shadcn UI.
+
+### Key Concepts & Rules:
+
+- High reusability of design system components across enterprise teams.
+- Predictable debugging with unidirectional data flow and React DevTools.
+- Universal ecosystem with libraries like TanStack Query, Zustand, React Hook Form, and Framer Motion.
+
+### Code Example: Composable Component Pattern
+
+```tsx
+// The React ecosystem enables composable, modular features
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+export function CourseCard({ title, level, studentCount }: CourseCardProps) {
+  return (
+    <Card className="border border-slate-800 bg-slate-900/60 p-5 rounded-xl">
+      <CardHeader className="flex items-center justify-between pb-2">
+        <CardTitle className="text-xl font-bold text-white">{title}</CardTitle>
+        <Badge variant="outline" className="text-emerald-400 border-emerald-500/30">
+          {level}
+        </Badge>
+      </CardHeader>
+      <CardContent className="text-slate-400 text-sm">
+        Over {studentCount.toLocaleString()} developers enrolled.
+      </CardContent>
+    </Card>
+  );
+}
+```

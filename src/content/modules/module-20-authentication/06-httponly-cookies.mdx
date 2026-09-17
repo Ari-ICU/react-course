@@ -1,0 +1,29 @@
+---
+id: "m20-06"
+number: "06"
+title: "HttpOnly Cookies"
+moduleId: "module-20"
+moduleNumber: "20"
+category: "Enterprise & Production"
+summary: "The most secure storage mechanism against XSS attacks."
+codeTitle: "Configuring Axios for HttpOnly Cookies"
+---
+
+# HttpOnly Cookies
+
+HttpOnly cookies cannot be read by JavaScript `document.cookie`. This prevents cross-site scripting (XSS) attacks from stealing authentication sessions.
+
+### Key Concepts & Rules:
+
+- Browser sends cookie automatically with `credentials: 'include'`.
+- Requires CORS configuration with `withCredentials: true`.
+
+### Code Example: Configuring Axios for HttpOnly Cookies
+
+```tsx
+// Axios configuration for HttpOnly cookie sessions:
+export const apiClient = axios.create({
+  baseURL: '/api',
+  withCredentials: true, // Sends and receives secure cookies!
+});
+```

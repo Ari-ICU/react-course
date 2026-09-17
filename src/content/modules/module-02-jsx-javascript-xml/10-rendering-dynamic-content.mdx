@@ -1,0 +1,33 @@
+---
+id: "m02-10"
+number: "10"
+title: "Rendering Dynamic Content"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Displaying dynamic strings, numbers, dates, and localized strings."
+codeTitle: "Dynamic Attributes in JSX"
+---
+
+# Rendering Dynamic Content
+
+Components take props or state and dynamically reflect updates in real-time.
+
+### Key Concepts & Rules:
+
+- Values automatically re-render when referenced state changes.
+- Interpolate dynamic attributes like `alt`, `href`, and `src` with `{variable}`.
+
+### Code Example: Dynamic Attributes in JSX
+
+```tsx
+export function Avatar({ user }: { user: { name: string; avatarUrl: string } }) {
+  return (
+    <img 
+      src={user.avatarUrl} 
+      alt={`Profile picture of ${user.name}`}
+      className="w-10 h-10 rounded-full border-2 border-emerald-500" 
+    />
+  );
+}
+```

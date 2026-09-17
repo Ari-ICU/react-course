@@ -1,0 +1,32 @@
+---
+id: "m05-04"
+number: "04"
+title: "Rendering Lists"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Building scalable dynamic lists and cards from data feeds."
+codeTitle: "Rendering List of Grid Cards"
+---
+
+# Rendering Lists
+
+Combining `.map()` with reusable card components enables dynamic rendering of products, blog posts, or comments.
+
+### Key Concepts & Rules:
+
+- Extract list items into dedicated subcomponents for clarity and memoization.
+
+### Code Example: Rendering List of Grid Cards
+
+```tsx
+export function ModuleGrid({ modules }: { modules: ModuleItem[] }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {modules.map((mod) => (
+        <ModuleCard key={mod.id} module={mod} />
+      ))}
+    </div>
+  );
+}
+```

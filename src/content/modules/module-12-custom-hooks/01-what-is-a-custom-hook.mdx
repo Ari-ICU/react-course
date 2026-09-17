@@ -1,0 +1,31 @@
+---
+id: "m12-01"
+number: "01"
+title: "What is a Custom Hook?"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "JavaScript functions starting with 'use' that encapsulate other hooks."
+interactiveDemoKey: "CustomHookDemo"
+codeTitle: "Simple useToggle Custom Hook"
+---
+
+# What is a Custom Hook?
+
+A custom hook is a standard JavaScript function whose name starts with `use` and can call other React hooks (`useState`, `useEffect`, `useRef`). Custom hooks allow sharing stateful logic between components without duplicating code.
+
+### Key Concepts & Rules:
+
+- Must begin with `use` (e.g., `useDebounce`, `useLocalStorage`).
+- Shares stateful logic, NOT shared state (each caller gets an independent state instance).
+
+### Code Example: Simple useToggle Custom Hook
+
+```tsx
+// Basic Custom Hook:
+export function useToggle(initialValue = false): [boolean, () => void] {
+  const [value, setValue] = useState(initialValue);
+  const toggle = () => setValue(v => !v);
+  return [value, toggle];
+}
+```

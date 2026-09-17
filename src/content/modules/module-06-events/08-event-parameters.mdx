@@ -1,0 +1,26 @@
+---
+id: "m06-08"
+number: "08"
+title: "Event Parameters"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Supplying additional data along with synthetic events."
+codeTitle: "Passing Custom Parameters"
+---
+
+# Event Parameters
+
+Use inline arrow functions to pass record IDs, indices, or custom payloads into event handlers.
+
+### Key Concepts & Rules:
+
+- Signature: `(e) => handleAction(id, e)`.
+
+### Code Example: Passing Custom Parameters
+
+```tsx
+<button onClick={(e) => handleArchive(item.id, e)}>
+  Archive Item
+</button>
+```

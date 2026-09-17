@@ -1,0 +1,30 @@
+---
+id: "m14-12"
+number: "12"
+title: "Request Interceptors"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Automatically attaching Bearer tokens to outgoing requests."
+codeTitle: "JWT Request Interceptor"
+---
+
+# Request Interceptors
+
+Axios request interceptors run before every outgoing request, injecting the latest JWT token from memory or cookies.
+
+### Key Concepts & Rules:
+
+- No need to manually pass headers in every service method.
+
+### Code Example: JWT Request Interceptor
+
+```tsx
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('access_token');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+```

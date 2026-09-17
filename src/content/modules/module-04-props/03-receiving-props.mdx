@@ -1,0 +1,31 @@
+---
+id: "m04-03"
+number: "03"
+title: "Receiving Props"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Accessing the props object in the component function parameter."
+codeTitle: "Receiving the Props Object"
+---
+
+# Receiving Props
+
+The first argument of a functional component is the `props` object. You can access properties via `props.title` or destructure them directly.
+
+### Key Concepts & Rules:
+
+- Props is a plain JavaScript object containing all passed attributes.
+
+### Code Example: Receiving the Props Object
+
+```tsx
+export function CourseHeader(props: { title: string; subtitle: string }) {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold text-white">{props.title}</h1>
+      <p className="text-slate-400">{props.subtitle}</p>
+    </div>
+  );
+}
+```

@@ -1,0 +1,32 @@
+---
+id: "m06-03"
+number: "03"
+title: "onClick"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Handling click interactions on buttons, links, and cards."
+codeTitle: "onClick Handler"
+---
+
+# onClick
+
+The most common event handler in web applications, triggered when an element is pressed or activated via keyboard Enter.
+
+### Key Concepts & Rules:
+
+- Works with mouse, touchscreen, and keyboard accessibility.
+
+### Code Example: onClick Handler
+
+```tsx
+<button 
+  onClick={(e) => {
+    e.stopPropagation();
+    console.log("Clicked!");
+  }}
+  className="px-4 py-2 bg-blue-600 rounded-lg text-white"
+>
+  Click Me
+</button>
+```

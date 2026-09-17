@@ -1,0 +1,33 @@
+---
+id: "m23-01"
+number: "01"
+title: "Feature-Based Architecture"
+moduleId: "module-23"
+moduleNumber: "23"
+category: "Enterprise & Production"
+summary: "Organizing enterprise applications by business domain rather than technical file types."
+codeTitle: "Enterprise Feature-Based Layout"
+---
+
+# Feature-Based Architecture
+
+Colocate components, hooks, services, and types that belong together. This makes navigating, editing, and deleting features effortless.
+
+### Key Concepts & Rules:
+
+- Prevents monolith folders with 100+ unrelated files.
+- Feature boundaries keep mental overhead low.
+
+### Code Example: Enterprise Feature-Based Layout
+
+```tsx
+src/
+├── app/                  # Route layouts and pages
+├── components/ui/        # Reusable design system primitives
+├── features/
+│   ├── auth/             # Login, Register, useAuth, authService
+│   ├── catalog/          # ProductList, CategoryFilter, useProducts
+│   └── cart/             # CartDrawer, CartItem, useCartStore
+├── lib/                  # Shared utilities (cn, date formatters)
+└── types/                # Global TypeScript definitions
+```

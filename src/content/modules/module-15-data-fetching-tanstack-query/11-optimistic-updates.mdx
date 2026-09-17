@@ -1,0 +1,45 @@
+---
+id: "m15-11"
+number: "11"
+title: "Optimistic Updates"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Instantly updating the UI before server confirmation."
+codeTitle: "Complete Optimistic Update Pattern"
+---
+
+# Optimistic Updates
+
+Update the local query cache immediately when the user clicks an action (e.g. toggling a like or checking a todo). If the server request fails, rollback to the snapshot!
+
+### Key Concepts & Rules:
+
+- Creates instantaneous, zero-latency user experience.
+- Always save previous cache snapshot in `onMutate` for rollback.
+
+### Code Example: Complete Optimistic Update Pattern
+
+```tsx
+const toggleMutation = useMutation({
+  mutationFn: todoService.toggle,
+  onMutate: async (todoId) => {
+    await queryClient.cancelQueries({ queryKey: ['todos'] });
+    const previousTodos = queryClient.getQueryData(['todos']);
+
+    // Optimistically update cache:
+    queryClient.setQueryData(['todos'], (old: Todo[] = []) =>
+      old.map(t => t.id === todoId ? { ...t, completed: !t.completed } : t)
+    );
+
+    return { previousTodos }; // Context for rollback
+  },
+  onError: (err, newTodo, context) => {
+    // Rollback to previous state on error!
+    queryClient.setQueryData(['todos'], context?.previousTodos);
+  },
+  onSettled: () => {
+    queryClient.invalidateQueries({ queryKey: ['todos'] });
+  },
+});
+```

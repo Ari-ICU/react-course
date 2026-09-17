@@ -1,0 +1,32 @@
+---
+id: "m14-11"
+number: "11"
+title: "Axios Instance Configuration"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Configuring base URLs, timeouts, and headers."
+codeTitle: "Axios Centralized Instance"
+---
+
+# Axios Instance Configuration
+
+Create a centralized Axios instance with default headers and base URL.
+
+### Key Concepts & Rules:
+
+- Single place to configure authorization headers.
+
+### Code Example: Axios Centralized Instance
+
+```tsx
+import axios from 'axios';
+
+export const apiClient = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.reactcourse.dev/v1',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+```

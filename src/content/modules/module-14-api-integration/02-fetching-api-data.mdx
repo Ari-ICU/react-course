@@ -1,0 +1,27 @@
+---
+id: "m14-02"
+number: "02"
+title: "Fetching API Data"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Native fetch() API vs external HTTP client libraries."
+codeTitle: "Native fetch() Error Checking"
+---
+
+# Fetching API Data
+
+Modern browsers have native `fetch()`, but Axios or TanStack Query simplify error handling, request cancellation, and response body JSON parsing.
+
+### Key Concepts & Rules:
+
+- Native fetch does not reject promises on HTTP 404/500 status codes!
+
+### Code Example: Native fetch() Error Checking
+
+```tsx
+// Native fetch requires manual ok check:
+const response = await fetch('/api/products');
+if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+const data = await response.json();
+```

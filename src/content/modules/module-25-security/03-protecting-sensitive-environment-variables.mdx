@@ -1,0 +1,29 @@
+---
+id: "m25-03"
+number: "03"
+title: "Protecting Sensitive Environment Variables"
+moduleId: "module-25"
+moduleNumber: "25"
+category: "Enterprise & Production"
+summary: "Server-only secrets vs public client variables."
+codeTitle: "Securing Environment Variables"
+---
+
+# Protecting Sensitive Environment Variables
+
+Variables with `NEXT_PUBLIC_` or `VITE_` are embedded into the client bundle and are 100% visible to anyone inspecting browser network tabs. Never put database passwords, Stripe secret keys, or private certificates in client env variables!
+
+### Key Concepts & Rules:
+
+- Public env vars: API URLs, public analytics IDs.
+- Secret env vars: Database keys, payment secret keys.
+
+### Code Example: Securing Environment Variables
+
+```tsx
+// ❌ DANGEROUS: Leaked to browser client!
+// NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_12345
+
+// ✅ Safe: Only accessible in server environments / API routes:
+// STRIPE_SECRET_KEY=sk_live_12345
+```

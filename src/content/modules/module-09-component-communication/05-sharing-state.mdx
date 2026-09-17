@@ -1,0 +1,24 @@
+---
+id: "m09-05"
+number: "05"
+title: "Sharing State"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Synchronizing sibling views through hoisted state."
+codeTitle: "Sibling State Sharing"
+---
+
+# Sharing State
+
+Both siblings receive shared data as props and update it via parent callbacks.
+
+### Key Concepts & Rules:
+
+- Maintains consistency across disparate panels on screen.
+
+### Code Example: Sibling State Sharing
+
+```tsx
+// Sibling 1 (Filter input) -> updates query in Parent -> Sibling 2 (Results list) receives filtered query
+```

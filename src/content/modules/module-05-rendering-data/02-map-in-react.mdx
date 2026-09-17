@@ -1,0 +1,42 @@
+---
+id: "m05-02"
+number: "02"
+title: "map() in React"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "The standard declarative array transformation method for JSX."
+codeTitle: "Mapping Objects to JSX Elements"
+---
+
+# map() in React
+
+JavaScript's `.map()` method transforms an array of data into an array of JSX elements. Because `.map()` returns a new array, it embeds cleanly into JSX curly braces.
+
+### Key Concepts & Rules:
+
+- Use `.map()` rather than `forEach` because `.map()` returns a transformed array.
+- Keep mapping functions pure and concise.
+
+### Code Example: Mapping Objects to JSX Elements
+
+```tsx
+interface Student {
+  id: string;
+  name: string;
+  score: number;
+}
+
+export function Leaderboard({ students }: { students: Student[] }) {
+  return (
+    <div className="divide-y divide-slate-800">
+      {students.map((student, index) => (
+        <div key={student.id} className="flex justify-between py-2 text-sm">
+          <span className="text-slate-300">#{index + 1} {student.name}</span>
+          <span className="font-bold text-emerald-400">{student.score} pts</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+```

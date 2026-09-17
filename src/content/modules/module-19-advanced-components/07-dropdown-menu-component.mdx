@@ -1,0 +1,33 @@
+---
+id: "m19-07"
+number: "07"
+title: "Dropdown Menu Component"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Click outside dismissal and keyboard arrow navigation."
+codeTitle: "useClickOutside Custom Hook"
+---
+
+# Dropdown Menu Component
+
+Dropdowns toggle on click, listen for outside clicks to auto-close, and support arrow key item selection.
+
+### Key Concepts & Rules:
+
+- Use mousedown listener on `document` to detect clicks outside.
+
+### Code Example: useClickOutside Custom Hook
+
+```tsx
+export function useClickOutside(ref: React.RefObject<HTMLElement | null>, handler: () => void) {
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) return;
+      handler();
+    };
+    document.addEventListener('mousedown', listener);
+    return () => document.removeEventListener('mousedown', listener);
+  }, [ref, handler]);
+}
+```

@@ -1,0 +1,27 @@
+---
+id: "m07-08"
+number: "08"
+title: "Multiple State Variables"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "When to split state vs when to group related fields into an object."
+codeTitle: "Multiple State Slices"
+---
+
+# Multiple State Variables
+
+Split unrelated state into independent `useState` calls. Group state into an object only if fields change together or represent a unified form model.
+
+### Key Concepts & Rules:
+
+- Independent state variables make code easier to reason about and refactor.
+
+### Code Example: Multiple State Slices
+
+```tsx
+// Good: Independent concerns kept separate
+const [searchQuery, setSearchQuery] = useState('');
+const [currentPage, setCurrentPage] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+```

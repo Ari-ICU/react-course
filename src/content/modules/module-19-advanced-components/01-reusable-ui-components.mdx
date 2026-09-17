@@ -1,0 +1,43 @@
+---
+id: "m19-01"
+number: "01"
+title: "Reusable UI Components"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Designing enterprise component libraries inspired by Shadcn UI and Radix."
+codeTitle: "Class Variance Authority (CVA) Component Pattern"
+---
+
+# Reusable UI Components
+
+Modern UI architecture separates visual styling (Tailwind CSS) from accessible primitives. Components expose accessible ARIA roles, keyboard navigation, and customizable slots.
+
+### Key Concepts & Rules:
+
+- Follow WAI-ARIA authoring practices.
+- Allow consumers to inject custom classNames via `cn()` utility.
+
+### Code Example: Class Variance Authority (CVA) Component Pattern
+
+```tsx
+// Example Shadcn-inspired Badge:
+import { cva, type VariantProps } from "class-variance-authority";
+
+export const badgeVariants = cva(
+  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors",
+  {
+    variants: {
+      variant: {
+        default: "bg-blue-600 text-white",
+        secondary: "bg-slate-800 text-slate-300",
+        destructive: "bg-rose-600 text-white",
+        outline: "border border-slate-700 text-slate-300",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+);
+```

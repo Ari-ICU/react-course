@@ -1,0 +1,44 @@
+---
+id: "m22-02"
+number: "02"
+title: "Component Variants with CVA"
+moduleId: "module-22"
+moduleNumber: "22"
+category: "Enterprise & Production"
+summary: "Managing component style permutations cleanly."
+codeTitle: "CVA Button Variants"
+---
+
+# Component Variants with CVA
+
+Class Variance Authority (`cva`) lets you define type-safe variants (sizes: sm/md/lg, variants: primary/secondary/ghost) without string concatenation spaghetti.
+
+### Key Concepts & Rules:
+
+- Standard pattern used by Shadcn UI.
+
+### Code Example: CVA Button Variants
+
+```tsx
+const buttonVariants = cva(
+  "inline-flex items-center justify-center font-medium rounded-lg transition-colors",
+  {
+    variants: {
+      variant: {
+        default: "bg-blue-600 text-white hover:bg-blue-700",
+        ghost: "hover:bg-slate-800 text-slate-300",
+        outline: "border border-slate-700 hover:bg-slate-800",
+      },
+      size: {
+        sm: "h-8 px-3 text-xs",
+        md: "h-10 px-4 text-sm",
+        lg: "h-12 px-6 text-base",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  }
+);
+```

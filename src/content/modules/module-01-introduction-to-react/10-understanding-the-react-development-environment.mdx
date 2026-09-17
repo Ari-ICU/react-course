@@ -1,0 +1,35 @@
+---
+id: "m01-10"
+number: "10"
+title: "Understanding the React Development Environment"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "React DevTools, React StrictMode, and double-rendering behavior."
+proTip: "If you see your console.log executing twice in useEffect, remember that is intentional in StrictMode to verify your effect cleanup!"
+codeTitle: "React StrictMode Wrapper"
+---
+
+# Understanding the React Development Environment
+
+In development, React StrictMode deliberately mounts and unmounts components twice to uncover accidental side-effects and missing cleanup functions in effects.
+
+### Key Concepts & Rules:
+
+- StrictMode runs effects twice in dev mode to enforce idempotency.
+- React Developer Tools browser extension allows inspecting props, state, and render timelines.
+
+### Code Example: React StrictMode Wrapper
+
+```tsx
+// React.StrictMode wraps your application tree
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```

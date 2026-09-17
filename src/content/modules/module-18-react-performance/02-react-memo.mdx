@@ -1,0 +1,30 @@
+---
+id: "m18-02"
+number: "02"
+title: "React.memo"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Skipping component re-renders when props are shallowly equal."
+codeTitle: "Memoizing Component with React.memo"
+---
+
+# React.memo
+
+`React.memo` wraps a component function and memoizes its rendered output. If props are shallowly equal to the previous render, React skips calling the component function entirely.
+
+### Key Concepts & Rules:
+
+- Performs shallow equality check (`Object.is`) on every prop.
+- Fails to prevent re-renders if you pass un-memoized object literals or inline functions as props!
+
+### Code Example: Memoizing Component with React.memo
+
+```tsx
+import React from 'react';
+
+export const ExpensiveTableRow = React.memo(function TableRow({ item }: { item: Student }) {
+  // Only re-renders if 'item' reference changes!
+  return <tr><td>{item.name}</td><td>{item.gpa}</td></tr>;
+});
+```

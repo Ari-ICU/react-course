@@ -1,0 +1,24 @@
+---
+id: "m17-02"
+number: "02"
+title: "When to Use Context vs Zustand"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Choosing the right tool for state scope and update frequency."
+codeTitle: "Installing Zustand"
+---
+
+# When to Use Context vs Zustand
+
+Use Context for static/low-frequency data. Use Zustand when you need fine-grained selector subscriptions that only re-render components when specific chosen properties change.
+
+### Key Concepts & Rules:
+
+- Zustand requires NO Provider wrapping; access stores anywhere!
+
+### Code Example: Installing Zustand
+
+```tsx
+npm install zustand
+```

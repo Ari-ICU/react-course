@@ -1,0 +1,48 @@
+---
+id: "m12-06"
+number: "06"
+title: "useLocalStorage Hook"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Persisting state to browser storage with automatic JSON serialization."
+codeTitle: "Enterprise useLocalStorage Hook"
+---
+
+# useLocalStorage Hook
+
+Combines `useState` with `localStorage` so that changes automatically persist and re-hydrate on page refresh.
+
+### Key Concepts & Rules:
+
+- Handles SSR guards (`typeof window !== 'undefined'`) and try/catch parsing.
+
+### Code Example: Enterprise useLocalStorage Hook
+
+```tsx
+export function useLocalStorage<T>(key: string, initialValue: T): [T, (val: T | ((prev: T) => T)) => void] {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') return initialValue;
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: T | ((prev: T) => T)) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return [storedValue, setValue];
+}
+```

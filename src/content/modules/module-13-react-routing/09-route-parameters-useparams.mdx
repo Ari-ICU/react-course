@@ -1,0 +1,29 @@
+---
+id: "m13-09"
+number: "09"
+title: "Route Parameters (useParams)"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Extracting dynamic parameters from URL path."
+codeTitle: "Reading URL Parameters with useParams"
+---
+
+# Route Parameters (useParams)
+
+The `useParams()` hook returns an object of key/value pairs of the URL parameters matched by the `<Route path>`.
+
+### Key Concepts & Rules:
+
+- Parameters are always strings.
+
+### Code Example: Reading URL Parameters with useParams
+
+```tsx
+import { useParams } from 'react-router-dom';
+
+export function ModuleDetailView() {
+  const { moduleId } = useParams<{ moduleId: string }>();
+  return <h2>Displaying details for Module {moduleId}</h2>;
+}
+```

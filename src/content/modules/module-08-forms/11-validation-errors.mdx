@@ -1,0 +1,31 @@
+---
+id: "m08-11"
+number: "11"
+title: "Validation Errors"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Rendering user-friendly error banners and inline field messages."
+codeTitle: "Inline Validation Error"
+---
+
+# Validation Errors
+
+Display red borders on invalid inputs and contextual error messages below them.
+
+### Key Concepts & Rules:
+
+- Accessible error messages linked via `aria-describedby`.
+
+### Code Example: Inline Validation Error
+
+```tsx
+<div>
+  <input 
+    className={cn("border rounded p-2", errors.email && "border-rose-500 bg-rose-950/20")}
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
+  {errors.email && <p className="text-xs text-rose-400 mt-1">{errors.email}</p>}
+</div>
+```

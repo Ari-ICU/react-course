@@ -1,0 +1,36 @@
+---
+id: "m05-01"
+number: "01"
+title: "Rendering Arrays"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Displaying collections of primitives or objects on screen."
+codeTitle: "Rendering Simple Arrays"
+---
+
+# Rendering Arrays
+
+React allows rendering arrays of elements directly. When an array of JSX elements is passed, React iterates and mounts each element in sequence.
+
+### Key Concepts & Rules:
+
+- Arrays are rendered in order.
+- Each top-level element in the array requires a unique `key` prop.
+
+### Code Example: Rendering Simple Arrays
+
+```tsx
+export function NumberList() {
+  const numbers = [10, 20, 30, 40, 50];
+  return (
+    <ul className="flex gap-2">
+      {numbers.map((n) => (
+        <li key={n} className="px-3 py-1 bg-slate-800 rounded text-blue-400 font-mono">
+          {n}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```

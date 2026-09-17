@@ -1,0 +1,36 @@
+---
+id: "m12-07"
+number: "07"
+title: "useDebounce Hook"
+moduleId: "module-12"
+moduleNumber: "12"
+category: "Hooks & Lifecycle"
+summary: "Delaying rapid state updates for search inputs."
+codeTitle: "useDebounce Custom Hook"
+---
+
+# useDebounce Hook
+
+Prevents making an API request on every keystroke by delaying the updated value until the user pauses typing for specified milliseconds.
+
+### Key Concepts & Rules:
+
+- Essential for search query inputs and resize handlers.
+
+### Code Example: useDebounce Custom Hook
+
+```tsx
+export function useDebounce<T>(value: T, delay: number = 300): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+```

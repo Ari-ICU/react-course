@@ -1,0 +1,29 @@
+---
+id: "m15-10"
+number: "10"
+title: "Infinite Queries (useInfiniteQuery)"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Building 'Load More' buttons and infinite scroll feeds."
+codeTitle: "useInfiniteQuery Hook"
+---
+
+# Infinite Queries (useInfiniteQuery)
+
+Manages paginated data as an array of pages, providing `fetchNextPage` and `hasNextPage` flags.
+
+### Key Concepts & Rules:
+
+- Pairs with intersection observer for infinite scroll.
+
+### Code Example: useInfiniteQuery Hook
+
+```tsx
+const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  queryKey: ['feed'],
+  queryFn: ({ pageParam = 1 }) => fetchFeed(pageParam),
+  getNextPageParam: (lastPage) => lastPage.nextPage,
+  initialPageParam: 1,
+});
+```

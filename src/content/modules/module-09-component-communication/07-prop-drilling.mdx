@@ -1,0 +1,25 @@
+---
+id: "m09-07"
+number: "07"
+title: "Prop Drilling"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "The problem of passing props through intermediary components that don't need them."
+codeTitle: "Prop Drilling Demonstration"
+---
+
+# Prop Drilling
+
+Prop drilling occurs when you pass data through 4 or 5 levels of components just so a deep leaf component can access it. It clutters component APIs and makes refactoring tedious.
+
+### Key Concepts & Rules:
+
+- Solutions: Component composition (`children`), React Context, or Zustand store.
+
+### Code Example: Prop Drilling Demonstration
+
+```tsx
+// Prop Drilling Anti-pattern:
+// <Page user={user}> -> <Dashboard user={user}> -> <Sidebar user={user}> -> <Avatar user={user}>
+```

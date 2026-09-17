@@ -1,0 +1,34 @@
+---
+id: "m05-09"
+number: "09"
+title: "Logical AND Rendering"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Rendering an element only when a condition is truthy."
+codeTitle: "Logical AND Guard"
+---
+
+# Logical AND Rendering
+
+Using `condition && <Element />` renders `<Element />` if `condition` is truthy, and ignores it if `false` or `null`.
+
+### Key Concepts & Rules:
+
+- Always ensure the left operand is a strict boolean: `Boolean(val)` or `val > 0`.
+
+### Code Example: Logical AND Guard
+
+```tsx
+export function NotificationBanner({ hasDiscount, discountCode }: BannerProps) {
+  return (
+    <div>
+      {hasDiscount && (
+        <div className="bg-emerald-950/80 border border-emerald-800 p-2 text-emerald-300 text-xs rounded">
+          Use code <strong>{discountCode}</strong> for 20% off!
+        </div>
+      )}
+    </div>
+  );
+}
+```

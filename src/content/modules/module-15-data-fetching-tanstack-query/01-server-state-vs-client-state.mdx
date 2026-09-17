@@ -1,0 +1,25 @@
+---
+id: "m15-01"
+number: "01"
+title: "Server State vs Client State"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Why server data must be treated differently than UI state."
+codeTitle: "Client vs Server State Separation"
+---
+
+# Server State vs Client State
+
+Client state is synchronous, owned completely by the browser (e.g. modal open/closed, current tab). Server state is asynchronous, owned remotely, and can become stale at any moment without the client knowing. Managing server state with plain `useState` + `useEffect` leads to cache bugs.
+
+### Key Concepts & Rules:
+
+- Server state requires caching, background refetching, deduplication, and stale-time policies.
+
+### Code Example: Client vs Server State Separation
+
+```tsx
+// Client State: Modal isOpen, active tab, form inputs -> Zustand or useState
+// Server State: Products list, user profile, orders -> TanStack Query
+```

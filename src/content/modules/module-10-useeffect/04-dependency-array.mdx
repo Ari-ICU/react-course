@@ -1,0 +1,31 @@
+---
+id: "m10-04"
+number: "04"
+title: "Dependency Array"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "No array vs empty array vs populated dependencies."
+codeTitle: "Dependency Array Options"
+---
+
+# Dependency Array
+
+1) No dependency array: runs on EVERY render. 2) Empty array `[]`: runs ONCE on mount. 3) `[a, b]`: runs on mount and whenever `a` or `b` changes.
+
+### Key Concepts & Rules:
+
+- Never lie to the dependency array; include every reactive variable used inside.
+
+### Code Example: Dependency Array Options
+
+```tsx
+// 1. Runs after every single render (rarely desired):
+useEffect(() => { console.log('Rendered'); });
+
+// 2. Runs once on initial mount:
+useEffect(() => { console.log('Mounted'); }, []);
+
+// 3. Runs when count changes:
+useEffect(() => { console.log('Count is', count); }, [count]);
+```

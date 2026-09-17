@@ -1,0 +1,37 @@
+---
+id: "m06-05"
+number: "05"
+title: "onSubmit"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Handling form submissions and preventing full-page reloads."
+codeTitle: "onSubmit Form Handler"
+---
+
+# onSubmit
+
+Form submissions naturally trigger a browser page refresh. Use `e.preventDefault()` inside `onSubmit` to retain SPA state and handle submission via JavaScript.
+
+### Key Concepts & Rules:
+
+- Always invoke `e.preventDefault()`.
+- Attach `onSubmit` to `<form>` rather than `onClick` to submit button to allow Enter key submissions.
+
+### Code Example: onSubmit Form Handler
+
+```tsx
+export function LoginForm() {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted safely without page reload!");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <input type="email" placeholder="Email" required />
+      <button type="submit" className="bg-blue-600 px-4 py-2 rounded text-white">Log In</button>
+    </form>
+  );
+}
+```

@@ -1,0 +1,28 @@
+---
+id: "m09-02"
+number: "02"
+title: "Child to Parent"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Upwards event notification via callback functions."
+codeTitle: "Child to Parent Notification"
+---
+
+# Child to Parent
+
+Children notify parents of actions by calling function props supplied by the parent.
+
+### Key Concepts & Rules:
+
+- Children invoke callbacks with arguments.
+
+### Code Example: Child to Parent Notification
+
+```tsx
+// Parent:
+<ChildComponent onSelect={(itemId) => setSelected(itemId)} />
+
+// Child:
+<button onClick={() => onSelect('item-1')}>Select Item</button>
+```

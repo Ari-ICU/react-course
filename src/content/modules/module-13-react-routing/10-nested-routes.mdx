@@ -1,0 +1,41 @@
+---
+id: "m13-10"
+number: "10"
+title: "Nested Routes"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Sub-routes sharing layout frames using <Outlet />."
+codeTitle: "Nested Routes and Outlet Layout"
+---
+
+# Nested Routes
+
+Parent routes can render common layouts (e.g. sidebar and header), with `<Outlet />` serving as the placeholder for child route components.
+
+### Key Concepts & Rules:
+
+- Hierarchical route structures mirror visual component nesting.
+
+### Code Example: Nested Routes and Outlet Layout
+
+```tsx
+// Route configuration:
+<Route path="/dashboard" element={<DashboardLayout />}>
+  <Route index element={<DashboardOverview />} />
+  <Route path="analytics" element={<AnalyticsView />} />
+  <Route path="settings" element={<SettingsView />} />
+</Route>
+
+// Inside DashboardLayout.tsx:
+export function DashboardLayout() {
+  return (
+    <div className="flex">
+      <Sidebar />
+      <main className="flex-1 p-6">
+        <Outlet /> {/* Child route renders here! */}
+      </main>
+    </div>
+  );
+}
+```

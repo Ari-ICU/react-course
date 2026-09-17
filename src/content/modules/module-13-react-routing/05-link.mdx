@@ -1,0 +1,28 @@
+---
+id: "m13-05"
+number: "05"
+title: "Link"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Client-side navigation without page refresh."
+codeTitle: "Client Navigation with Link"
+---
+
+# Link
+
+The `<Link to="/destination">` component renders an `<a>` tag with an `onClick` handler that prevents the browser's default reload and triggers client-side route navigation.
+
+### Key Concepts & Rules:
+
+- Always use `<Link>` instead of `<a href="...">` for internal links.
+
+### Code Example: Client Navigation with Link
+
+```tsx
+import { Link } from 'react-router-dom';
+
+<Link to="/projects" className="text-blue-400 hover:underline">
+  View Real-World Projects
+</Link>
+```

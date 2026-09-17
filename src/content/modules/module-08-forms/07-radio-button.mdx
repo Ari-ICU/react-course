@@ -1,0 +1,43 @@
+---
+id: "m08-07"
+number: "07"
+title: "Radio Button"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Single-choice selection from a group."
+codeTitle: "Controlled Radio Group"
+---
+
+# Radio Button
+
+Radio buttons share a common `name` attribute and are controlled by comparing `checked={selectedOption === value}`.
+
+### Key Concepts & Rules:
+
+- Bind all radios in group to the same state string.
+
+### Code Example: Controlled Radio Group
+
+```tsx
+export function PlanSelector() {
+  const [plan, setPlan] = useState<'free' | 'pro'>('pro');
+
+  return (
+    <div className="flex gap-4">
+      {['free', 'pro'].map((option) => (
+        <label key={option} className="flex items-center gap-2">
+          <input 
+            type="radio" 
+            name="plan" 
+            value={option} 
+            checked={plan === option} 
+            onChange={(e) => setPlan(e.target.value as 'free' | 'pro')} 
+          />
+          <span className="capitalize">{option} Plan</span>
+        </label>
+      ))}
+    </div>
+  );
+}
+```

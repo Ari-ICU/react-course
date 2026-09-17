@@ -1,0 +1,32 @@
+---
+id: "m04-12"
+number: "12"
+title: "Props vs State"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "External immutable data vs internal mutable reactive data."
+codeTitle: "Props vs State Comparison Matrix"
+---
+
+# Props vs State
+
+Props are passed from the parent (like function parameters) and cannot be changed by the child. State is internal and managed by the component itself (like local function variables) via `useState`.
+
+### Key Concepts & Rules:
+
+- Props: Controlled by parent, immutable to child.
+- State: Controlled by component, mutated via setter functions.
+
+### Code Example: Props vs State Comparison Matrix
+
+```tsx
+/*
+| Characteristic | Props                          | State                         |
+|----------------|--------------------------------|-------------------------------|
+| Origin         | Passed from parent             | Initialized inside component  |
+| Mutability     | Read-only (immutable)          | Mutated via setState function |
+| Ownership      | Parent controls value          | Component owns value          |
+| Purpose        | Configuration & callbacks      | Interactivity & dynamic data  |
+*/
+```

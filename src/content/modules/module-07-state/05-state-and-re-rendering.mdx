@@ -1,0 +1,33 @@
+---
+id: "m07-05"
+number: "05"
+title: "State and Re-rendering"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "How React triggers reconciliation when Object.is() returns false."
+pitfall: "Directly mutating an array with `.push()` or `.splice()` will NOT trigger a re-render. Always use `[...prev, newItem]`."
+codeTitle: "Immutability & Object.is() Comparison"
+---
+
+# State and Re-rendering
+
+React compares old state with new state using `Object.is()`. If the reference is unchanged, React skips re-rendering. This is why mutating objects in place fails to trigger updates!
+
+### Key Concepts & Rules:
+
+- Mutating an object/array in-place keeps identical memory reference -> no re-render!
+- Always return a new object or array copy via spread operator.
+
+### Code Example: Immutability & Object.is() Comparison
+
+```tsx
+// ❌ Bug: Mutating array in place fails to re-render
+/*
+items.push(newItem);
+setItems(items); // Identical reference! React does nothing.
+*/
+
+// ✅ Fix: Create new array reference via spread
+setItems(prev => [...prev, newItem]);
+```

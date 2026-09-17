@@ -1,0 +1,34 @@
+---
+id: "m11-07"
+number: "07"
+title: "useRef Use Cases"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Media players, measuring widths, canvas drawing, and tracking previous state."
+codeTitle: "Controlling HTML5 Video with useRef"
+---
+
+# useRef Use Cases
+
+Used extensively with `<video>`, `<audio>`, HTML5 `<canvas>`, and third-party imperative libraries (e.g. Chart.js, Leaflet).
+
+### Key Concepts & Rules:
+
+- Bridges declarative React with imperative external browser APIs.
+
+### Code Example: Controlling HTML5 Video with useRef
+
+```tsx
+export function VideoPlayer({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <div>
+      <video ref={videoRef} src={src} />
+      <button onClick={() => videoRef.current?.play()}>Play</button>
+      <button onClick={() => videoRef.current?.pause()}>Pause</button>
+    </div>
+  );
+}
+```

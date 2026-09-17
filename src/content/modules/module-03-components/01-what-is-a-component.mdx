@@ -1,0 +1,33 @@
+---
+id: "m03-01"
+number: "01"
+title: "What is a Component?"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "The primary reusable, self-contained UI building block in React."
+codeTitle: "Basic Functional Component"
+---
+
+# What is a Component?
+
+A component is a JavaScript function that accepts arbitrary inputs called 'props' and returns a React element describing what should appear on the screen. Components encapsulate markup, logic, and styles into independent modules.
+
+### Key Concepts & Rules:
+
+- Components let you split the UI into independent, reusable pieces.
+- Components must be pure functions with respect to their props.
+- Component state allows dynamic behavior and interactivity.
+
+### Code Example: Basic Functional Component
+
+```tsx
+export function WelcomeBanner() {
+  return (
+    <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-lg">
+      <h1 className="text-2xl font-bold">Welcome to Modern React</h1>
+      <p className="text-blue-100 mt-1">Master components, hooks, and architecture.</p>
+    </div>
+  );
+}
+```

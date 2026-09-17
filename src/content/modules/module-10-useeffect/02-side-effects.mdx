@@ -1,0 +1,24 @@
+---
+id: "m010-02"
+number: "02"
+title: "Side Effects"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "What qualifies as a side effect in React."
+codeTitle: "Side Effect Placement"
+---
+
+# Side Effects
+
+A side effect is any operation that affects something outside the scope of the currently executing function (e.g. timers, network requests, reading localStorage, setting window listeners).
+
+### Key Concepts & Rules:
+
+- Pure render functions must not execute side effects directly during render.
+
+### Code Example: Side Effect Placement
+
+```tsx
+// Side effects belong in useEffect or event handlers, NOT in render body!
+```

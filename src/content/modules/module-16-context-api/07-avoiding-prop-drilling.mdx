@@ -1,0 +1,32 @@
+---
+id: "m16-07"
+number: "07"
+title: "Avoiding Prop Drilling"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Comparing prop drilling vs context solutions."
+codeTitle: "Eliminating Prop Drilling with Context"
+---
+
+# Avoiding Prop Drilling
+
+Context completely eliminates passing props through intermediary components that don't need them.
+
+### Key Concepts & Rules:
+
+- Leaf nodes access context directly.
+
+### Code Example: Eliminating Prop Drilling with Context
+
+```tsx
+// Intermediary components don't touch auth props!
+<AuthProvider>
+  <AppLayout>
+    <Sidebar />
+    <MainContent>
+      <UserAvatar /> {/* Consumes useAuth() directly */}
+    </MainContent>
+  </AppLayout>
+</AuthProvider>
+```

@@ -1,0 +1,36 @@
+---
+id: "m13-06"
+number: "06"
+title: "NavLink"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Active link styling for navigation bars and menus."
+codeTitle: "Active Styling with NavLink"
+---
+
+# NavLink
+
+A special version of `<Link>` that knows whether it is currently active. It passes an `isActive` boolean to its `className` function for easy active styling.
+
+### Key Concepts & Rules:
+
+- Makes active tab highlights declarative.
+
+### Code Example: Active Styling with NavLink
+
+```tsx
+import { NavLink } from 'react-router-dom';
+
+<NavLink
+  to="/curriculum"
+  className={({ isActive }) =>
+    cn(
+      "px-3 py-2 rounded-md text-sm font-medium",
+      isActive ? "bg-slate-800 text-white" : "text-slate-400 hover:text-white"
+    )
+  }
+>
+  Curriculum
+</NavLink>
+```

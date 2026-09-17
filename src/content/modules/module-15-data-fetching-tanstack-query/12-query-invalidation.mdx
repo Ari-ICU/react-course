@@ -1,0 +1,24 @@
+---
+id: "m15-12"
+number: "12"
+title: "Query Invalidation"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Targeted cache busting after mutations."
+codeTitle: "Invalidating Query Cache"
+---
+
+# Query Invalidation
+
+Marking queries as invalid causes them to refetch if they are currently active on screen.
+
+### Key Concepts & Rules:
+
+- Use exact or prefix matching.
+
+### Code Example: Invalidating Query Cache
+
+```tsx
+queryClient.invalidateQueries({ queryKey: ['todos'] });
+```

@@ -1,0 +1,27 @@
+---
+id: "m16-11"
+number: "11"
+title: "Context Limitations"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Why large apps transition from Context to Zustand or Redux."
+codeTitle: "Context vs External State Library"
+---
+
+# Context Limitations
+
+Context lacks fine-grained selectors and middleware. When state updates frequently, external libraries with selector subscriptions provide vastly superior performance.
+
+### Key Concepts & Rules:
+
+- Context = Dependency Injection tool; Zustand = State Management tool.
+
+### Code Example: Context vs External State Library
+
+```tsx
+/*
+Use Context for: Low-frequency, broad data (Theme, Auth, Language).
+Use Zustand for: High-frequency, complex, or modular state (Cart, Filters, Media Player).
+*/
+```

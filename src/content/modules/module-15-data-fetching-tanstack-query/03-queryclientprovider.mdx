@@ -1,0 +1,41 @@
+---
+id: "m15-03"
+number: "03"
+title: "QueryClientProvider"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Setting up the query client at application root."
+codeTitle: "QueryClientProvider Setup"
+---
+
+# QueryClientProvider
+
+Wraps your component tree and provides the cache engine to all child hooks.
+
+### Key Concepts & Rules:
+
+- Configure default `staleTime` and retry policies.
+
+### Code Example: QueryClientProvider Setup
+
+```tsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // Data fresh for 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+export function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
+}
+```

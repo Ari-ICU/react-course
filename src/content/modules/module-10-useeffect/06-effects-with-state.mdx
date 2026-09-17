@@ -1,0 +1,29 @@
+---
+id: "m10-06"
+number: "06"
+title: "Effects with State"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Reacting to state transitions."
+codeTitle: "Auto-save on State Change"
+---
+
+# Effects with State
+
+Run effects whenever specific state variables transition.
+
+### Key Concepts & Rules:
+
+- Triggers actions like auto-saving drafts when content changes.
+
+### Code Example: Auto-save on State Change
+
+```tsx
+useEffect(() => {
+  if (draftText) {
+    const timer = setTimeout(() => saveDraft(draftText), 1000);
+    return () => clearTimeout(timer);
+  }
+}, [draftText]);
+```

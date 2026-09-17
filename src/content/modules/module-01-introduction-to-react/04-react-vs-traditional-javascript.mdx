@@ -1,0 +1,42 @@
+---
+id: "m01-04"
+number: "04"
+title: "React vs Traditional JavaScript"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Direct DOM manipulation vs React's state-driven reconciliation model."
+codeTitle: "Vanilla JS vs Declarative React"
+---
+
+# React vs Traditional JavaScript
+
+Traditional vanilla JavaScript requires manual bookkeeping: tracking elements, querying selectors, and updating attributes. React treats UI as a pure projection of state (`UI = f(State)`).
+
+### Key Concepts & Rules:
+
+- Vanilla JS requires sync between UI and memory state manually.
+- React automates UI updates via reactive state bindings.
+- Eliminates typical spaghetti code caused by scattered DOM mutation queries.
+
+### Code Example: Vanilla JS vs Declarative React
+
+```tsx
+// Comparison: Updating a dynamic badge
+// Vanilla JS
+function updateBadge(unreadCount) {
+  const el = document.getElementById('badge');
+  if (unreadCount > 0) {
+    el.innerText = unreadCount;
+    el.style.display = 'inline-block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+// React: purely declarative projection
+function UnreadBadge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full">{count}</span>;
+}
+```

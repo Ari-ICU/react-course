@@ -1,0 +1,33 @@
+---
+id: "m14-10"
+number: "10"
+title: "API Service Layer"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Abstracting HTTP calls out of UI components."
+codeTitle: "Dedicated Service Layer Pattern"
+---
+
+# API Service Layer
+
+Components should never make direct `axios.get()` calls! Keep all API endpoints in dedicated service files (e.g. `studentService.ts`).
+
+### Key Concepts & Rules:
+
+- Decouples UI components from backend URLs and API changes.
+
+### Code Example: Dedicated Service Layer Pattern
+
+```tsx
+// src/services/studentService.ts
+import { apiClient } from './apiClient';
+import { Student } from '@/types';
+
+export const studentService = {
+  getAll: () => apiClient.get<Student[]>('/students').then(r => r.data),
+  getById: (id: string) => apiClient.get<Student>(`/students/${id}`).then(r => r.data),
+  create: (data: Omit<Student, 'id'>) => apiClient.post<Student>('/students', data).then(r => r.data),
+  delete: (id: string) => apiClient.delete(`/students/${id}`),
+};
+```

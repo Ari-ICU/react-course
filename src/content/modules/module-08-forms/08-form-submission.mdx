@@ -1,0 +1,35 @@
+---
+id: "m08-08"
+number: "08"
+title: "Form Submission"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Packaging form data and sending to API endpoints."
+codeTitle: "Safe Form Submission Handler"
+---
+
+# Form Submission
+
+Handle form submission on `<form onSubmit={...}>` with validation before dispatching to an API service.
+
+### Key Concepts & Rules:
+
+- Always prevent default browser reload.
+
+### Code Example: Safe Form Submission Handler
+
+```tsx
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    await apiClient.post('/users', formData);
+    showSuccessToast('User registered successfully');
+  } catch (err) {
+    showErrorToast('Failed to register user');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+```

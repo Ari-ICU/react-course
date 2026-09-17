@@ -1,0 +1,41 @@
+---
+id: "m11-05"
+number: "05"
+title: "Storing Mutable Values"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Keeping timer IDs and previous state without re-render overhead."
+codeTitle: "Storing Timer Handle in useRef"
+---
+
+# Storing Mutable Values
+
+Store interval IDs or previous values that need to be read in event handlers or cleanups.
+
+### Key Concepts & Rules:
+
+- Ideal for storing `setInterval` or `setTimeout` handles.
+
+### Code Example: Storing Timer Handle in useRef
+
+```tsx
+export function Stopwatch() {
+  const [time, setTime] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const start = () => {
+    if (timerRef.current !== null) return;
+    timerRef.current = setInterval(() => setTime(t => t + 1), 1000);
+  };
+
+  const stop = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
+  return <div>Time: {time}s <button onClick={start}>Start</button> <button onClick={stop}>Stop</button></div>;
+}
+```

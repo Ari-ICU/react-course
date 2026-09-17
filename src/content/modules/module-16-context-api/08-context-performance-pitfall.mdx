@@ -1,0 +1,30 @@
+---
+id: "m16-08"
+number: "08"
+title: "Context Performance Pitfall"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Every consumer re-renders on any value update."
+pitfall: "Using Context for high-frequency state (like an animation frame, mouse position, or rapidly typing text) will cause massive re-renders across the entire tree."
+codeTitle: "Context Splitting Strategy"
+---
+
+# Context Performance Pitfall
+
+If you put an object with 10 properties in context and update just 1 property, EVERY component calling `useContext` re-renders, even if it only uses an unchanged property!
+
+### Key Concepts & Rules:
+
+- Split unrelated state into separate contexts (e.g. `ThemeContext` vs `AuthContext`).
+- For high-frequency updates, use Zustand selectors instead.
+
+### Code Example: Context Splitting Strategy
+
+```tsx
+// ⚠️ Bad: Bundling high-frequency state with low-frequency state:
+// <BigContext.Provider value={{ user, timerSeconds, theme, searchResults }}>
+
+// ✅ Good: Split contexts by concern:
+// <AuthProvider><ThemeProvider><App /></ThemeProvider></AuthProvider>
+```

@@ -1,0 +1,36 @@
+---
+id: "m01-06"
+number: "06"
+title: "React Project Structure"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Scalable folder layouts for enterprise React and Next.js applications."
+codeTitle: "Recommended React Folder Structure"
+---
+
+# React Project Structure
+
+Adopting a domain-driven or feature-based structure prevents monolith folders. Organize by `components/`, `features/`, `hooks/`, `services/`, and `types/`.
+
+### Key Concepts & Rules:
+
+- Colocate component styles, tests, and sub-components when feature-specific.
+- Shared generic UI primitives live in `@/components/ui`.
+- Business domain features live in `@/features/<feature-name>`.
+
+### Code Example: Recommended React Folder Structure
+
+```tsx
+src/
+├── app/              # App Router routes and page layouts
+├── components/       # Cross-cutting reusable UI primitives
+│   └── ui/           # Button, Card, Dialog, Badge (Shadcn style)
+├── features/         # Feature slices (auth, courses, cart)
+│   ├── components/
+│   ├── hooks/
+│   └── services/
+├── hooks/            # Global custom hooks (useDebounce, useTheme)
+├── lib/              # Utilities (cn, formatters, api client)
+└── types/            # TypeScript models and interfaces
+```

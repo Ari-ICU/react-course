@@ -1,0 +1,31 @@
+---
+id: "m19-04"
+number: "04"
+title: "Render Props"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Sharing rendering logic by passing a function as children."
+codeTitle: "Render Props Pattern"
+---
+
+# Render Props
+
+A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic.
+
+### Key Concepts & Rules:
+
+- Precursor to custom hooks, still valuable for template customization.
+
+### Code Example: Render Props Pattern
+
+```tsx
+export function MouseTracker({ render }: { render: (pos: { x: number; y: number }) => React.ReactNode }) {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  return (
+    <div onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}>
+      {render(pos)}
+    </div>
+  );
+}
+```

@@ -1,0 +1,24 @@
+---
+id: "m24-01"
+number: "01"
+title: "Testing Philosophy"
+moduleId: "module-24"
+moduleNumber: "24"
+category: "Enterprise & Production"
+summary: "The testing pyramid: unit tests, component tests, and E2E tests."
+codeTitle: "Installing Testing Stack"
+---
+
+# Testing Philosophy
+
+Test your application the way real users interact with it! Rather than testing internal component state or implementation details, test rendered text and user events.
+
+### Key Concepts & Rules:
+
+- 'The more your tests resemble the way your software is used, the more confidence they can give you.' — Kent C. Dodds
+
+### Code Example: Installing Testing Stack
+
+```tsx
+npm install -D vitest @testing-library/react @testing-library/user-event jsdom
+```

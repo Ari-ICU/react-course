@@ -1,0 +1,34 @@
+---
+id: "m02-01"
+number: "01"
+title: "What is JSX?"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Syntax extension for JavaScript that looks like HTML and compiles to React elements."
+codeTitle: "JSX Compilation Target"
+---
+
+# What is JSX?
+
+JSX provides a syntactic sugar on top of `React.createElement` or modern JSX runtime transforms (`jsx(...)`). It allows writing component markup directly alongside rendering logic.
+
+### Key Concepts & Rules:
+
+- JSX compiles to JavaScript functions before reaching the browser.
+- Allows seamless embedding of full JavaScript expressions within `{}`.
+- Provides compile-time syntax validation and auto-escaping against XSS attacks.
+
+### Code Example: JSX Compilation Target
+
+```tsx
+// JSX syntax:
+const element = <h1 className="text-2xl font-bold">Hello React</h1>;
+
+// What the compiler outputs behind the scenes:
+import { jsx as _jsx } from "react/jsx-runtime";
+const element = _jsx("h1", { 
+  className: "text-2xl font-bold", 
+  children: "Hello React" 
+});
+```

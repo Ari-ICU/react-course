@@ -1,0 +1,38 @@
+---
+id: "m01-08"
+number: "08"
+title: "Vite + React"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "How Vite leverages native ESM and Rollup for instant developer builds."
+codeTitle: "Vite Configuration with Path Aliases"
+---
+
+# Vite + React
+
+Vite serves source code over native ESM during development, skipping bundle steps. This ensures Hot Module Replacement (HMR) stays instant regardless of application size.
+
+### Key Concepts & Rules:
+
+- Instant server start without pre-bundling the whole project.
+- Fast TypeScript transpilation via esbuild.
+- Optimized Rollup production bundling for small bundle sizes.
+
+### Code Example: Vite Configuration with Path Aliases
+
+```tsx
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+});
+```

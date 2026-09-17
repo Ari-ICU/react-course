@@ -1,0 +1,56 @@
+---
+id: "m03-05"
+number: "05"
+title: "Component Structure"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Internal organization: imports, interfaces, state, handlers, and JSX return."
+codeTitle: "Predictable Component Layout Structure"
+---
+
+# Component Structure
+
+A standard component structure keeps code predictable: 1) Imports; 2) Props interface; 3) Component declaration; 4) State & hooks; 5) Derived state; 6) Handlers; 7) JSX return.
+
+### Key Concepts & Rules:
+
+- Keep hooks at the very top of the function.
+- Declare handlers before the JSX return.
+
+### Code Example: Predictable Component Layout Structure
+
+```tsx
+// 1. Imports
+import { useState } from 'react';
+import { Heart } from 'lucide-react';
+
+// 2. Types
+interface LikeButtonProps {
+  initialCount?: number;
+}
+
+// 3. Component Declaration
+export function LikeButton({ initialCount = 0 }: LikeButtonProps) {
+  // 4. Hooks / State
+  const [likes, setLikes] = useState(initialCount);
+  const [liked, setLiked] = useState(false);
+
+  // 5. Handlers
+  const handleToggle = () => {
+    setLiked(!liked);
+    setLikes(prev => liked ? prev - 1 : prev + 1);
+  };
+
+  // 6. JSX Return
+  return (
+    <button 
+      onClick={handleToggle}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500"
+    >
+      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
+      <span className="text-sm font-medium">{likes}</span>
+    </button>
+  );
+}
+```

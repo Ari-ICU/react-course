@@ -1,0 +1,29 @@
+---
+id: "m13-15"
+number: "15"
+title: "Route Architecture"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Centralizing route definitions, route constants, and loaders."
+codeTitle: "Centralized Route Constants"
+---
+
+# Route Architecture
+
+Store all route path strings in a central `ROUTES` constant (`ROUTES.PROJECTS`, `ROUTES.CURRICULUM`) to prevent broken link typos across large codebases.
+
+### Key Concepts & Rules:
+
+- Centralized route configuration improves refactoring speed.
+
+### Code Example: Centralized Route Constants
+
+```tsx
+export const ROUTES = {
+  HOME: '/',
+  CURRICULUM: '/curriculum',
+  PROJECTS: '/projects',
+  PROJECT_DETAIL: (id: string) => `/projects/${id}`,
+} as const;
+```

@@ -1,0 +1,46 @@
+---
+id: "m02-02"
+number: "02"
+title: "JSX Syntax"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Tags must close, self-closing tags, and single parent element rules."
+codeTitle: "Valid JSX Syntax Rules"
+---
+
+# JSX Syntax
+
+Unlike relaxed HTML parsers, JSX follows strict XML parsing rules: all void tags (`<img />`, `<input />`, `<br />`) must be explicitly self-closed, and every component must return a single top-level node.
+
+### Key Concepts & Rules:
+
+- Tags are case-sensitive: lowercase tags are HTML elements, uppercase are React components.
+- Self-closing is required for empty tags: `<input />`, `<img />`.
+- Single parent node return is enforced by JavaScript syntax (a function can only return one value).
+
+### Code Example: Valid JSX Syntax Rules
+
+```tsx
+// ❌ Invalid JSX: Unclosed tag and multiple root nodes
+/*
+return (
+  <h1>Title</h1>
+  <input type="text">
+);
+*/
+
+// ✅ Valid JSX: Wrapped in a single parent or Fragment with closed tags
+export function SearchBar() {
+  return (
+    <div className="flex items-center gap-2">
+      <h1 className="text-lg font-medium">Search:</h1>
+      <input 
+        type="text" 
+        placeholder="Type here..." 
+        className="px-3 py-1 border rounded"
+      />
+    </div>
+  );
+}
+```

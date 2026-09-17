@@ -1,0 +1,29 @@
+---
+id: "m10-03"
+number: "03"
+title: "useEffect Syntax"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "The effect callback and dependency array parameters."
+codeTitle: "useEffect Anatomy"
+---
+
+# useEffect Syntax
+
+`useEffect(effectFunction, dependencyArray)`.
+
+### Key Concepts & Rules:
+
+- Dependency array controls when the effect re-runs.
+
+### Code Example: useEffect Anatomy
+
+```tsx
+useEffect(() => {
+  // Setup logic runs here
+  return () => {
+    // Optional cleanup logic runs here
+  };
+}, [/* dependencies */]);
+```

@@ -1,0 +1,33 @@
+---
+id: "m13-07"
+number: "07"
+title: "Navigation Hook (useNavigate)"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Programmatic redirects inside handlers or effects."
+codeTitle: "Programmatic Navigation with useNavigate"
+---
+
+# Navigation Hook (useNavigate)
+
+The `useNavigate` hook returns a navigation function for redirecting users after form submissions or logout actions.
+
+### Key Concepts & Rules:
+
+- Can navigate forwards, backwards (`navigate(-1)`), or with options (`{ replace: true }`).
+
+### Code Example: Programmatic Navigation with useNavigate
+
+```tsx
+import { useNavigate } from 'react-router-dom';
+
+export function LoginForm() {
+  const navigate = useNavigate();
+
+  const handleLoginSuccess = () => {
+    // Redirect to dashboard without back-button loop:
+    navigate('/dashboard', { replace: true });
+  };
+}
+```

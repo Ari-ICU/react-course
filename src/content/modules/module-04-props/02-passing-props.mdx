@@ -1,0 +1,31 @@
+---
+id: "m04-02"
+number: "02"
+title: "Passing Props"
+moduleId: "module-04"
+moduleNumber: "04"
+category: "Fundamentals"
+summary: "Supplying values to components via JSX attributes."
+codeTitle: "Passing Diverse Prop Types"
+---
+
+# Passing Props
+
+You pass props to components the same way you add attributes to HTML tags: `<Header title="Dashboard" count={42} isVisible />`.
+
+### Key Concepts & Rules:
+
+- Pass strings with literal quotes: `title="React"`.
+- Pass numbers, booleans, objects, arrays, and functions with curly braces: `count={10}`.
+
+### Code Example: Passing Diverse Prop Types
+
+```tsx
+<CourseCard 
+  title="Advanced Next.js"
+  moduleCount={27}
+  isPublished={true}
+  tags={["React", "Next.js", "Zustand"]}
+  onEnroll={(id) => console.log("Enrolled in", id)}
+/>
+```

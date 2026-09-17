@@ -1,0 +1,29 @@
+---
+id: "m21-06"
+number: "06"
+title: "Multi-Step Form Wizard"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Building multi-page registration pipelines with step validation."
+codeTitle: "Step Validation with trigger()"
+---
+
+# Multi-Step Form Wizard
+
+Break long forms into steps (Personal Info -> Address -> Payment -> Review). Validate only the current step's fields using `trigger(['name', 'email'])` before advancing.
+
+### Key Concepts & Rules:
+
+- Preserves entered data across steps in a single form instance.
+- Validate current step before allowing 'Next' button click.
+
+### Code Example: Step Validation with trigger()
+
+```tsx
+const handleNextStep = async () => {
+  // Only validate step 1 fields:
+  const isValid = await trigger(['name', 'email']);
+  if (isValid) setStep(s => s + 1);
+};
+```

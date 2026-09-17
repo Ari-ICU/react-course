@@ -1,0 +1,39 @@
+---
+id: "m06-10"
+number: "10"
+title: "Event Propagation"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Event bubbling and e.stopPropagation()."
+codeTitle: "e.stopPropagation() in Nested Elements"
+---
+
+# Event Propagation
+
+Events bubble up the React tree. Calling `e.stopPropagation()` prevents parent handlers from triggering when clicking nested child controls.
+
+### Key Concepts & Rules:
+
+- Crucial when a card has an `onClick` but also contains a nested 'Delete' or 'Favorite' button.
+
+### Code Example: e.stopPropagation() in Nested Elements
+
+```tsx
+export function CardWithAction() {
+  return (
+    <div onClick={() => console.log("Card opened")} className="p-4 border rounded">
+      <h3>Card Title</h3>
+      <button 
+        onClick={(e) => {
+          e.stopPropagation(); // Prevents card opening!
+          console.log("Deleted");
+        }}
+        className="text-rose-500"
+      >
+        Delete
+      </button>
+    </div>
+  );
+}
+```

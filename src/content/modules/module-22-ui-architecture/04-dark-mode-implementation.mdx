@@ -1,0 +1,27 @@
+---
+id: "m22-04"
+number: "04"
+title: "Dark Mode Implementation"
+moduleId: "module-22"
+moduleNumber: "22"
+category: "Enterprise & Production"
+summary: "CSS class-based dark mode toggling with system preference detection."
+codeTitle: "Dark Mode Class Toggle"
+---
+
+# Dark Mode Implementation
+
+Toggle a `.dark` class on the root `<html>` element. Tailwind's `dark:` variant automatically updates all colors seamlessly.
+
+### Key Concepts & Rules:
+
+- Persist theme in `localStorage` and detect `prefers-color-scheme`.
+
+### Code Example: Dark Mode Class Toggle
+
+```tsx
+export function toggleDarkMode() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+```

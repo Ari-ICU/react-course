@@ -1,0 +1,31 @@
+---
+id: "m16-06"
+number: "06"
+title: "Authentication Context"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Full authentication session context pattern."
+codeTitle: "Authentication Context Interface"
+---
+
+# Authentication Context
+
+Managing current user profile, token status, login, and logout handlers in a global AuthProvider.
+
+### Key Concepts & Rules:
+
+- Widely used in production SPA applications.
+
+### Code Example: Authentication Context Interface
+
+```tsx
+interface AuthContextType {
+  user: User | null;
+  isAuthenticated: boolean;
+  login: (credentials: Credentials) => Promise<void>;
+  logout: () => void;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+```

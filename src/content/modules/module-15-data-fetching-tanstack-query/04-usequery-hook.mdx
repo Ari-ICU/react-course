@@ -1,0 +1,37 @@
+---
+id: "m15-04"
+number: "04"
+title: "useQuery Hook"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Fetching and subscribing to server state."
+codeTitle: "Basic useQuery Hook"
+---
+
+# useQuery Hook
+
+The `useQuery` hook accepts a `queryKey` and a `queryFn` returning a Promise.
+
+### Key Concepts & Rules:
+
+- Returns `{ data, isLoading, isError, error, refetch }`.
+
+### Code Example: Basic useQuery Hook
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { studentService } from '@/services/studentService';
+
+export function StudentList() {
+  const { data: students, isLoading, isError } = useQuery({
+    queryKey: ['students'],
+    queryFn: studentService.getAll,
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorMessage />;
+
+  return <ul>{students?.map(s => <li key={s.id}>{s.name}</li>)}</ul>;
+}
+```

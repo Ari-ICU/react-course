@@ -1,0 +1,36 @@
+---
+id: "m03-03"
+number: "03"
+title: "Creating Components"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Writing, exporting, importing, and organizing components across files."
+codeTitle: "Exporting and Modularizing Components"
+---
+
+# Creating Components
+
+Create components in dedicated `.tsx` files. Use named exports to improve refactoring safety in editors like VS Code.
+
+### Key Concepts & Rules:
+
+- Prefer named exports (`export function Header()`) over default exports for clearer imports.
+- Keep each component file under 150-200 lines to preserve readability.
+
+### Code Example: Exporting and Modularizing Components
+
+```tsx
+// src/components/Header.tsx
+export function Header() {
+  return (
+    <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between">
+      <span className="font-bold text-lg text-white">ReactMaster</span>
+      <nav className="flex gap-4 text-sm text-slate-400">
+        <a href="#modules" className="hover:text-white">Curriculum</a>
+        <a href="#projects" className="hover:text-white">Projects</a>
+      </nav>
+    </header>
+  );
+}
+```

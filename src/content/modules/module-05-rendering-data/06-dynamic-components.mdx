@@ -1,0 +1,36 @@
+---
+id: "m05-06"
+number: "06"
+title: "Dynamic Components"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Selecting components at runtime using lookup dictionaries."
+codeTitle: "Dynamic Component Lookup Map"
+---
+
+# Dynamic Components
+
+Map string identifiers or status keys to specific component constructors dynamically.
+
+### Key Concepts & Rules:
+
+- Store components in a dictionary object and index with dynamic key.
+
+### Code Example: Dynamic Component Lookup Map
+
+```tsx
+import { CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';
+
+const iconMap = {
+  success: CheckCircle,
+  warning: AlertTriangle,
+  error: XCircle,
+  info: Info,
+};
+
+export function DynamicStatusIcon({ type }: { type: 'success' | 'warning' | 'error' | 'info' }) {
+  const IconComponent = iconMap[type];
+  return <IconComponent className="w-5 h-5" />;
+}
+```

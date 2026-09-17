@@ -1,0 +1,33 @@
+---
+id: "m16-03"
+number: "03"
+title: "Context Provider"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Supplying values to the subtree using <Context.Provider value={...}>."
+codeTitle: "Custom Context Provider Component"
+---
+
+# Context Provider
+
+Every Context object comes with a Provider React component that accepts a `value` prop to be consumed by descendant components.
+
+### Key Concepts & Rules:
+
+- All consumers re-render whenever the Provider's `value` prop changes.
+
+### Code Example: Custom Context Provider Component
+
+```tsx
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className={theme}>{children}</div>
+    </ThemeContext.Provider>
+  );
+}
+```

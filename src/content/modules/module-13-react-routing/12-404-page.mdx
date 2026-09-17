@@ -1,0 +1,24 @@
+---
+id: "m13-12"
+number: "12"
+title: "404 Page"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Catch-all wildcard routes (*)."
+codeTitle: "Catch-all 404 Route"
+---
+
+# 404 Page
+
+Use `<Route path="*" element={<NotFoundPage />} />` at the very end of your route list to catch any unmatched URLs.
+
+### Key Concepts & Rules:
+
+- Always provide a helpful 404 page with a link back to home.
+
+### Code Example: Catch-all 404 Route
+
+```tsx
+<Route path="*" element={<NotFoundView />} />
+```

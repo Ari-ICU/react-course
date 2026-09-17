@@ -1,0 +1,34 @@
+---
+id: "m02-05"
+number: "05"
+title: "JSX Attributes"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "camelCase property naming conventions and boolean props."
+codeTitle: "JSX camelCase Attributes"
+---
+
+# JSX Attributes
+
+HTML attributes are converted to camelCase in JSX (e.g. `onclick` becomes `onClick`, `tabindex` becomes `tabIndex`). Passing a prop without a value defaults to `true`.
+
+### Key Concepts & Rules:
+
+- Attribute names follow camelCase: `tabIndex`, `autoFocus`, `aria-*` (hyphenated).
+- Boolean shorthand: `<button disabled>` is equivalent to `<button disabled={true}>`.
+
+### Code Example: JSX camelCase Attributes
+
+```tsx
+<input 
+  id="user-email"
+  type="email"
+  autoComplete="email"
+  autoFocus
+  disabled={false}
+  tabIndex={1}
+  aria-label="User Email Address"
+  className="w-full px-4 py-2 border rounded-md"
+/>
+```

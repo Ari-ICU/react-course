@@ -1,0 +1,26 @@
+---
+id: "m10-07"
+number: "07"
+title: "Effects with Props"
+moduleId: "module-10"
+moduleNumber: "10"
+category: "Hooks & Lifecycle"
+summary: "Synchronizing when parent attributes update."
+codeTitle: "Reacting to Prop Changes"
+---
+
+# Effects with Props
+
+Update local state or external subscriptions when prop IDs change.
+
+### Key Concepts & Rules:
+
+- Use prop values as dependencies to react to route parameter changes.
+
+### Code Example: Reacting to Prop Changes
+
+```tsx
+useEffect(() => {
+  fetchModuleDetails(moduleId);
+}, [moduleId]);
+```

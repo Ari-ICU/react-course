@@ -1,0 +1,25 @@
+---
+id: "m14-15"
+number: "15"
+title: "Environment Variables for APIs"
+moduleId: "module-14"
+moduleNumber: "14"
+category: "Routing & Network"
+summary: "Configuring dev vs staging vs production endpoints safely."
+codeTitle: "Environment Variable Configuration"
+---
+
+# Environment Variables for APIs
+
+Use `.env.local` and `NEXT_PUBLIC_` prefixes for client-accessible variables.
+
+### Key Concepts & Rules:
+
+- Never commit secret API keys or database credentials to git.
+
+### Code Example: Environment Variable Configuration
+
+```tsx
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_APP_ENV=production
+```

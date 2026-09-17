@@ -1,0 +1,28 @@
+---
+id: "m17-12"
+number: "12"
+title: "State Management Architecture"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Organizing multiple stores in large applications."
+codeTitle: "Modular Store Architecture"
+---
+
+# State Management Architecture
+
+Divide stores by domain: `useCartStore`, `useAuthStore`, `useUIStore`. Avoid creating a giant single monolithic store.
+
+### Key Concepts & Rules:
+
+- Modular domain stores keep logic cleanly isolated.
+
+### Code Example: Modular Store Architecture
+
+```tsx
+src/store/
+├── useAuthStore.ts
+├── useCartStore.ts
+├── useUIStore.ts
+└── useCourseProgressStore.ts
+```

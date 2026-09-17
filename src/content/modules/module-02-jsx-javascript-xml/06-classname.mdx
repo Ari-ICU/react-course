@@ -1,0 +1,40 @@
+---
+id: "m02-06"
+number: "06"
+title: "className"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Why React uses className instead of class for CSS styling."
+codeTitle: "className with Dynamic Utility"
+---
+
+# className
+
+Because `class` is a reserved keyword in JavaScript (used to declare ES6 classes), React uses `className` to specify CSS classes on elements.
+
+### Key Concepts & Rules:
+
+- Use `className` for all CSS classes.
+- Use the `cn()` utility (clsx + tailwind-merge) for conditional and dynamic class names.
+
+### Code Example: className with Dynamic Utility
+
+```tsx
+import { cn } from "@/lib/utils";
+
+export function StatusBadge({ status }: { status: "active" | "inactive" | "pending" }) {
+  return (
+    <span
+      className={cn(
+        "px-2.5 py-1 text-xs font-semibold rounded-full border",
+        status === "active" && "bg-emerald-950/50 text-emerald-400 border-emerald-800",
+        status === "pending" && "bg-amber-950/50 text-amber-400 border-amber-800",
+        status === "inactive" && "bg-rose-950/50 text-rose-400 border-rose-800"
+      )}
+    >
+      {status.toUpperCase()}
+    </span>
+  );
+}
+```

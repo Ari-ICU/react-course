@@ -1,0 +1,37 @@
+---
+id: "m06-06"
+number: "06"
+title: "onMouseEnter & onMouseLeave"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Hover states and tooltips."
+codeTitle: "Hover Handlers"
+---
+
+# onMouseEnter & onMouseLeave
+
+Used to build interactive tooltips, preview cards, and custom cursor animations.
+
+### Key Concepts & Rules:
+
+- React's mouseEnter does not bubble, mimicking standard CSS hover.
+
+### Code Example: Hover Handlers
+
+```tsx
+export function HoverPreview() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div 
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="p-4 border rounded-lg transition-colors bg-slate-900 hover:border-blue-500"
+    >
+      Hover over me!
+      {isHovered && <p className="text-xs text-blue-400 mt-1">✨ Tooltip content visible</p>}
+    </div>
+  );
+}
+```

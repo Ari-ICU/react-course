@@ -1,0 +1,25 @@
+---
+id: "m16-10"
+number: "10"
+title: "Context Best Practices"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "Rules for safe context consumption and clean provider architectures."
+codeTitle: "Localized Provider Placement"
+---
+
+# Context Best Practices
+
+1) Keep providers close to where they are needed; 2) Wrap with safety custom hooks; 3) Split distinct concerns.
+
+### Key Concepts & Rules:
+
+- Never use context for state that belongs locally.
+
+### Code Example: Localized Provider Placement
+
+```tsx
+// Golden Rule: If state is only used in one branch of the tree,
+// mount the Provider at that branch, NOT at the application root!
+```

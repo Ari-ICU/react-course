@@ -1,0 +1,36 @@
+---
+id: "m05-12"
+number: "12"
+title: "Error UI"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Displaying informative error recovery states."
+codeTitle: "Error Recovery Component"
+---
+
+# Error UI
+
+When network requests fail, show actionable error messages with retry buttons.
+
+### Key Concepts & Rules:
+
+- Include error message and retry callback.
+
+### Code Example: Error Recovery Component
+
+```tsx
+export function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
+  return (
+    <div className="p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center">
+      <p className="text-rose-300 font-medium">{message}</p>
+      <button 
+        onClick={onRetry}
+        className="mt-3 px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white rounded text-xs font-semibold"
+      >
+        Retry Request
+      </button>
+    </div>
+  );
+}
+```

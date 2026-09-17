@@ -1,0 +1,35 @@
+---
+id: "m13-16"
+number: "16"
+title: "React Router Best Practices"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Code-splitting routes with React.lazy and Suspense."
+codeTitle: "Lazy-loaded Route with Suspense"
+---
+
+# React Router Best Practices
+
+Lazy-load route pages so users only download the JavaScript for the specific page they are currently viewing.
+
+### Key Concepts & Rules:
+
+- Wrap lazy routes in `<Suspense fallback={<LoadingSkeleton />}>`.
+
+### Code Example: Lazy-loaded Route with Suspense
+
+```tsx
+import React, { Suspense } from 'react';
+
+const ProjectsPage = React.lazy(() => import('./pages/ProjectsPage'));
+
+<Route 
+  path="/projects" 
+  element={
+    <Suspense fallback={<PageSkeleton />}>
+      <ProjectsPage />
+    </Suspense>
+  } 
+/>
+```

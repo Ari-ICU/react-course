@@ -1,0 +1,48 @@
+---
+id: "m21-03"
+number: "03"
+title: "React Hook Form + Zod Resolver"
+moduleId: "module-21"
+moduleNumber: "21"
+category: "Enterprise & Production"
+summary: "Connecting Zod schemas to useForm."
+codeTitle: "useForm with zodResolver"
+---
+
+# React Hook Form + Zod Resolver
+
+Use `@hookform/resolvers/zod` to validate form state against your Zod schema on submit or blur.
+
+### Key Concepts & Rules:
+
+- Automatic typed submission handler `handleSubmit(onSubmit)`.
+
+### Code Example: useForm with zodResolver
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+export function StudentForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<StudentFormData>({
+    resolver: zodResolver(studentSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      gpa: 3.5,
+    },
+  });
+
+  const onSubmit = async (data: StudentFormData) => {
+    await studentService.create(data);
+    reset();
+  };
+
+  return <form onSubmit={handleSubmit(onSubmit)}>...</form>;
+}
+```

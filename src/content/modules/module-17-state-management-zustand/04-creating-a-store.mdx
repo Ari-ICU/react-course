@@ -1,0 +1,30 @@
+---
+id: "m17-04"
+number: "04"
+title: "Creating a Store"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Defining state variables and updater actions inside create()."
+codeTitle: "Colocating State and Actions"
+---
+
+# Creating a Store
+
+In Zustand, state and actions are colocated inside the store definition. The `set` function merges state updates shallowly.
+
+### Key Concepts & Rules:
+
+- `set()` automatically merges state at the top level.
+
+### Code Example: Colocating State and Actions
+
+```tsx
+export const useUIStore = create<UIState>((set) => ({
+  isSidebarOpen: false,
+  activeModal: null,
+  toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),
+  openModal: (modalName) => set({ activeModal: modalName }),
+  closeModal: () => set({ activeModal: null }),
+}));
+```

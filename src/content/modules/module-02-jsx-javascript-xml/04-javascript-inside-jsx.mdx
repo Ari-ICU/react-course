@@ -1,0 +1,34 @@
+---
+id: "m02-04"
+number: "04"
+title: "JavaScript inside JSX"
+moduleId: "module-02"
+moduleNumber: "02"
+category: "Fundamentals"
+summary: "Function invocation, template literals, and object references."
+codeTitle: "JavaScript Functions in JSX"
+---
+
+# JavaScript inside JSX
+
+Curly braces act as a portal into pure JavaScript. You can call utility functions, format dates, and calculate styles dynamically.
+
+### Key Concepts & Rules:
+
+- Format dates and numbers on the fly with standard JavaScript functions.
+- Pass callback references directly to handlers without invoking them immediately.
+
+### Code Example: JavaScript Functions in JSX
+
+```tsx
+export function ProductPrice({ priceInCents }: { priceInCents: number }) {
+  const formatCurrency = (cents: number) => 
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);
+
+  return (
+    <span className="font-semibold text-emerald-400">
+      {formatCurrency(priceInCents)}
+    </span>
+  );
+}
+```

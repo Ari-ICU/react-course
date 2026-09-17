@@ -1,0 +1,30 @@
+---
+id: "m08-10"
+number: "10"
+title: "Form Validation"
+moduleId: "module-08"
+moduleNumber: "08"
+category: "Core Concepts"
+summary: "Client-side synchronous validation rules."
+codeTitle: "Synchronous Validation Logic"
+---
+
+# Form Validation
+
+Validate inputs against rules (minimum length, email regex, required fields) and store errors in a dedicated error object.
+
+### Key Concepts & Rules:
+
+- Validate either `onChange`, `onBlur`, or `onSubmit`.
+
+### Code Example: Synchronous Validation Logic
+
+```tsx
+const validate = () => {
+  const newErrors: Record<string, string> = {};
+  if (!form.email.includes('@')) newErrors.email = 'Invalid email address';
+  if (form.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+```

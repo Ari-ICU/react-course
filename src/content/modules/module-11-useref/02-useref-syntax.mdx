@@ -1,0 +1,25 @@
+---
+id: "m11-02"
+number: "02"
+title: "useRef Syntax"
+moduleId: "module-11"
+moduleNumber: "11"
+category: "Hooks & Lifecycle"
+summary: "Declaring refs with TypeScript types for DOM nodes."
+codeTitle: "useRef Syntax with TypeScript"
+---
+
+# useRef Syntax
+
+For DOM refs, initialize with `null`: `const inputRef = useRef<HTMLInputElement>(null)`. React automatically populates `.current` with the DOM node once mounted.
+
+### Key Concepts & Rules:
+
+- Type parameter matches the HTML element: `HTMLInputElement`, `HTMLDivElement`.
+
+### Code Example: useRef Syntax with TypeScript
+
+```tsx
+const inputRef = useRef<HTMLInputElement>(null);
+return <input ref={inputRef} type="text" />;
+```

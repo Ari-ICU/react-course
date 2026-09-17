@@ -1,0 +1,29 @@
+---
+id: "m07-10"
+number: "10"
+title: "State Initialization"
+moduleId: "module-07"
+moduleNumber: "07"
+category: "Core Concepts"
+summary: "Lazy state initialization for expensive setup computations."
+codeTitle: "Lazy State Initialization Function"
+---
+
+# State Initialization
+
+If your initial state requires heavy computation (like parsing JSON from `localStorage`), pass an initializer function to `useState(() => computeValue())`. It runs only once on initial mount!
+
+### Key Concepts & Rules:
+
+- `useState(computeValue())` runs on every render.
+- `useState(() => computeValue())` runs ONLY on mount.
+
+### Code Example: Lazy State Initialization Function
+
+```tsx
+// Runs only once on initial mount:
+const [savedTheme, setSavedTheme] = useState(() => {
+  if (typeof window === 'undefined') return 'dark';
+  return localStorage.getItem('theme') || 'dark';
+});
+```

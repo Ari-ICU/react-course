@@ -1,0 +1,26 @@
+---
+id: "m09-09"
+number: "09"
+title: "Designing Component APIs"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Crafting ergonomic, intuitive props for long-term maintainability."
+codeTitle: "Discriminated Union Props"
+---
+
+# Designing Component APIs
+
+Design props like a public library API: keep them minimal, provide sensible defaults, and use TypeScript union types for predictable variants.
+
+### Key Concepts & Rules:
+
+- Use discriminating unions for mutually exclusive states.
+
+### Code Example: Discriminated Union Props
+
+```tsx
+type AlertProps = 
+  | { variant: 'simple'; message: string }
+  | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };
+```

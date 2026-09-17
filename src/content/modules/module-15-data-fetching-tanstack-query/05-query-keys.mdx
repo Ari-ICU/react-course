@@ -1,0 +1,29 @@
+---
+id: "m15-05"
+number: "05"
+title: "Query Keys"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Hierarchical arrays that uniquely identify and cache queries."
+codeTitle: "Hierarchical Query Keys"
+---
+
+# Query Keys
+
+Query keys are arrays: `['students']`, `['students', studentId]`, `['products', { category, page }]`. When any item in the query key array changes, TanStack Query automatically refetches the data.
+
+### Key Concepts & Rules:
+
+- Include all variables used in the `queryFn` inside the `queryKey`.
+- Hierarchical invalidation allows invalidating all `['students']` queries at once.
+
+### Code Example: Hierarchical Query Keys
+
+```tsx
+// Parameterized query key:
+const { data } = useQuery({
+  queryKey: ['products', { category, sort, page }],
+  queryFn: () => productService.getList({ category, sort, page }),
+});
+```

@@ -1,0 +1,35 @@
+---
+id: "m13-14"
+number: "14"
+title: "Query Parameters (useSearchParams)"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Reading and updating URL search queries like ?sort=desc&page=2."
+codeTitle: "Query Strings with useSearchParams"
+---
+
+# Query Parameters (useSearchParams)
+
+`useSearchParams` behaves like `useState`, but stores state directly in the URL query string, making URLs shareable and bookmarkable.
+
+### Key Concepts & Rules:
+
+- Synchronizes table filters with browser history.
+
+### Code Example: Query Strings with useSearchParams
+
+```tsx
+import { useSearchParams } from 'react-router-dom';
+
+export function SearchFilter() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
+
+  const handleSearch = (newQuery: string) => {
+    setSearchParams({ q: newQuery });
+  };
+
+  return <input value={query} onChange={(e) => handleSearch(e.target.value)} />;
+}
+```

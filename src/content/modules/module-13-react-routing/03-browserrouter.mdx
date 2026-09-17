@@ -1,0 +1,31 @@
+---
+id: "m13-03"
+number: "03"
+title: "BrowserRouter"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Wrapping your app to connect with the browser History API."
+codeTitle: "BrowserRouter Provider"
+---
+
+# BrowserRouter
+
+`<BrowserRouter>` uses the HTML5 history API (`pushState`, `replaceState`, and `popstate` event) to keep your UI in sync with the URL.
+
+### Key Concepts & Rules:
+
+- Place `<BrowserRouter>` at the root of your application.
+
+### Code Example: BrowserRouter Provider
+
+```tsx
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+```

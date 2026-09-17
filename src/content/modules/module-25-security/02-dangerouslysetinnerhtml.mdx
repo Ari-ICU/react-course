@@ -1,0 +1,30 @@
+---
+id: "m25-02"
+number: "02"
+title: "dangerouslySetInnerHTML"
+moduleId: "module-25"
+moduleNumber: "25"
+category: "Enterprise & Production"
+summary: "The hazards of raw HTML injection and sanitization with DOMPurify."
+pitfall: "Passing raw strings to dangerouslySetInnerHTML allows attackers to execute arbitrary JavaScript in your users' browser sessions."
+codeTitle: "Safe HTML Sanitization with DOMPurify"
+---
+
+# dangerouslySetInnerHTML
+
+If you must render rich HTML from CMS feeds, ALWAYS sanitize it with `DOMPurify` before passing to `dangerouslySetInnerHTML`.
+
+### Key Concepts & Rules:
+
+- Never pass un-sanitized user input to `dangerouslySetInnerHTML`.
+
+### Code Example: Safe HTML Sanitization with DOMPurify
+
+```tsx
+import DOMPurify from 'dompurify';
+
+export function SafeHtml({ rawContent }: { rawContent: string }) {
+  const cleanHtml = DOMPurify.sanitize(rawContent);
+  return <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />;
+}
+```

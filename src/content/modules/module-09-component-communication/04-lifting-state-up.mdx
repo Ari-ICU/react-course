@@ -1,0 +1,34 @@
+---
+id: "m09-04"
+number: "04"
+title: "Lifting State Up"
+moduleId: "module-09"
+moduleNumber: "09"
+category: "Core Concepts"
+summary: "Moving state to the closest common ancestor of communicating siblings."
+codeTitle: "Lifting State Up Pattern"
+---
+
+# Lifting State Up
+
+When two sibling components need to share or synchronize data, move the state out of both and into their closest common parent.
+
+### Key Concepts & Rules:
+
+- Eliminates out-of-sync duplicate state.
+- Parent becomes single source of truth.
+
+### Code Example: Lifting State Up Pattern
+
+```tsx
+export function CommonParent() {
+  const [activeTab, setActiveTab] = useState('summary');
+
+  return (
+    <div>
+      <TabList activeTab={activeTab} onTabChange={setActiveTab} />
+      <TabContent activeTab={activeTab} />
+    </div>
+  );
+}
+```

@@ -1,0 +1,27 @@
+---
+id: "m13-11"
+number: "11"
+title: "Layout Routes"
+moduleId: "module-13"
+moduleNumber: "13"
+category: "Routing & Network"
+summary: "Grouping routes under shared layouts without adding URL path prefixes."
+codeTitle: "Pathless Layout Route"
+---
+
+# Layout Routes
+
+Omit the `path` prop on the parent Route to wrap routes in a layout without modifying the URL path.
+
+### Key Concepts & Rules:
+
+- Pathless layout routes cleanly group public vs authenticated layouts.
+
+### Code Example: Pathless Layout Route
+
+```tsx
+<Route element={<AuthLayout />}>
+  <Route path="/login" element={<LoginPage />} />
+  <Route path="/register" element={<RegisterPage />} />
+</Route>
+```

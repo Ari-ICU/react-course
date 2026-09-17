@@ -1,0 +1,30 @@
+---
+id: "m22-05"
+number: "05"
+title: "Accessibility (a11y)"
+moduleId: "module-22"
+moduleNumber: "22"
+category: "Enterprise & Production"
+summary: "Color contrast, screen readers, semantic tags, and keyboard focus."
+codeTitle: "Accessible Focus Ring"
+---
+
+# Accessibility (a11y)
+
+Build accessible interfaces that all users can navigate using keyboards and screen readers.
+
+### Key Concepts & Rules:
+
+- Ensure visible `:focus-visible` outlines.
+- Use semantic `<header>`, `<main>`, `<nav>`, and `<button>` elements.
+
+### Code Example: Accessible Focus Ring
+
+```tsx
+<button 
+  className="focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+  aria-label="Close dialog"
+>
+  <X className="w-5 h-5" />
+</button>
+```

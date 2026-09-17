@@ -1,0 +1,33 @@
+---
+id: "m03-06"
+number: "06"
+title: "Component Composition"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Building complex interfaces by assembling smaller atomic pieces."
+codeTitle: "Component Composition Pattern"
+---
+
+# Component Composition
+
+Composition is React's core superpower. Instead of building monolithic components with hundreds of props, compose focused components together.
+
+### Key Concepts & Rules:
+
+- Favor composition over inheritance.
+- Pass components as props or use `children` to slot content dynamically.
+
+### Code Example: Component Composition Pattern
+
+```tsx
+// Composing Layout with Header and Content
+export function PageLayout({ header, children }: { header: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <header className="border-b border-slate-800">{header}</header>
+      <main className="max-w-7xl mx-auto p-6">{children}</main>
+    </div>
+  );
+}
+```

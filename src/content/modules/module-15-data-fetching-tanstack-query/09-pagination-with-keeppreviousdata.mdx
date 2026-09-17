@@ -1,0 +1,30 @@
+---
+id: "m15-09"
+number: "09"
+title: "Pagination with keepPreviousData"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Seamless table pagination without page flickering."
+codeTitle: "Smooth Pagination with keepPreviousData"
+---
+
+# Pagination with keepPreviousData
+
+Using `placeholderData: keepPreviousData` keeps the old page visible while the next page fetches in the background, preventing layout jumps.
+
+### Key Concepts & Rules:
+
+- Eliminates jarring layout shifts during table pagination.
+
+### Code Example: Smooth Pagination with keepPreviousData
+
+```tsx
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+const { data: pageData, isPlaceholderData } = useQuery({
+  queryKey: ['students', page],
+  queryFn: () => studentService.getPage(page),
+  placeholderData: keepPreviousData,
+});
+```

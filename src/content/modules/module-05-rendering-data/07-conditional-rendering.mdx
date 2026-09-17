@@ -1,0 +1,39 @@
+---
+id: "m05-07"
+number: "07"
+title: "Conditional Rendering"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Strategies for rendering different UI based on state flags."
+codeTitle: "Conditional Rendering Pattern"
+---
+
+# Conditional Rendering
+
+Choose between early return, ternary operators, or switch statements depending on whether the UI is mutually exclusive or inline.
+
+### Key Concepts & Rules:
+
+- Early return for page-level state guards (unauthenticated, loading, error).
+- Ternary for inline component switches.
+
+### Code Example: Conditional Rendering Pattern
+
+```tsx
+export function AccountStatus({ status }: { status: 'loading' | 'verified' | 'unverified' }) {
+  if (status === 'loading') {
+    return <p className="text-slate-500">Checking status...</p>;
+  }
+
+  return (
+    <div>
+      {status === 'verified' ? (
+        <span className="text-emerald-400">Account Active ✓</span>
+      ) : (
+        <span className="text-amber-400">Please verify your email address</span>
+      )}
+    </div>
+  );
+}
+```

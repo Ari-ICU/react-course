@@ -1,0 +1,30 @@
+---
+id: "m18-04"
+number: "04"
+title: "useCallback"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Caching function definitions between renders."
+codeTitle: "useCallback with Functional Setter"
+---
+
+# useCallback
+
+`useCallback(fn, deps)` returns a memoized version of the callback function with a stable reference across renders. Essential when passing callbacks to `React.memo` child components.
+
+### Key Concepts & Rules:
+
+- `useCallback(fn, deps)` is equivalent to `useMemo(() => fn, deps)`.
+- Prevents child re-renders caused by passing freshly recreated function instances.
+
+### Code Example: useCallback with Functional Setter
+
+```tsx
+// Stable function reference passed to memoized child:
+const handleDelete = useCallback((id: string) => {
+  setStudents(prev => prev.filter(s => s.id !== id));
+}, []); // Empty deps because functional setter is used!
+
+return <MemoizedStudentTable onDelete={handleDelete} />;
+```

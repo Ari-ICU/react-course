@@ -1,0 +1,41 @@
+---
+id: "m18-07"
+number: "07"
+title: "Lazy Loading & Code Splitting"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Splitting bundle into on-demand chunks with React.lazy and Suspense."
+codeTitle: "On-demand Lazy Component Loading"
+---
+
+# Lazy Loading & Code Splitting
+
+Allows deferring the loading of heavy components (like rich text editors, charts, or modal dialogs) until the user actually requests them.
+
+### Key Concepts & Rules:
+
+- Significantly reduces initial page load JavaScript size (First Contentful Paint).
+
+### Code Example: On-demand Lazy Component Loading
+
+```tsx
+import React, { Suspense, useState } from 'react';
+
+const HeavyChart = React.lazy(() => import('./HeavyAnalyticsChart'));
+
+export function AnalyticsDashboard() {
+  const [showChart, setShowChart] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setShowChart(true)}>Show Chart</button>
+      {showChart && (
+        <Suspense fallback={<div className="h-64 animate-pulse bg-slate-800" />}>
+          <HeavyChart />
+        </Suspense>
+      )}
+    </div>
+  );
+}
+```

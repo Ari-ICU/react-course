@@ -1,0 +1,24 @@
+---
+id: "m17-11"
+number: "11"
+title: "Zustand + React 19"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Concurrent rendering and useSyncExternalStore integration."
+codeTitle: "Concurrent Safety Guarantee"
+---
+
+# Zustand + React 19
+
+Zustand internally uses `useSyncExternalStore` to guarantee zero visual tearing during concurrent renders in React 18 and 19.
+
+### Key Concepts & Rules:
+
+- Completely safe for concurrent mode.
+
+### Code Example: Concurrent Safety Guarantee
+
+```tsx
+// Zustand is built natively on React's useSyncExternalStore API.
+```

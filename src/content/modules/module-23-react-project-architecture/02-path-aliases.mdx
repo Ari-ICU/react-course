@@ -1,0 +1,32 @@
+---
+id: "m23-02"
+number: "02"
+title: "Path Aliases"
+moduleId: "module-23"
+moduleNumber: "23"
+category: "Enterprise & Production"
+summary: "Eliminating brittle relative paths with @/ imports."
+codeTitle: "Path Alias tsconfig Configuration"
+---
+
+# Path Aliases
+
+Configure `@/*` in `tsconfig.json` so you never write `../../../../components/ui/button` again.
+
+### Key Concepts & Rules:
+
+- Makes copying and moving files between folders painless.
+
+### Code Example: Path Alias tsconfig Configuration
+
+```tsx
+// tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```

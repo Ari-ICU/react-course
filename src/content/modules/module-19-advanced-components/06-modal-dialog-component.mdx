@@ -1,0 +1,38 @@
+---
+id: "m19-06"
+number: "06"
+title: "Modal / Dialog Component"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Portals, backdrop blur, focus trapping, and Esc key dismissal."
+codeTitle: "React Portal Modal"
+---
+
+# Modal / Dialog Component
+
+Modals must render via `createPortal` into `document.body` so that parent `overflow: hidden` or `z-index` stacking contexts do not clip the dialog.
+
+### Key Concepts & Rules:
+
+- Always use `createPortal`.
+- Trap keyboard focus inside the modal while open.
+- Restore body scroll when closed.
+
+### Code Example: React Portal Modal
+
+```tsx
+import { createPortal } from 'react-dom';
+
+export function PortalModal({ isOpen, onClose, children }: ModalProps) {
+  if (!isOpen) return null;
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+      <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 max-w-md w-full">
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
+```

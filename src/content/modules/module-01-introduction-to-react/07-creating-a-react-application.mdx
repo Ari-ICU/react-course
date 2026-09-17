@@ -1,0 +1,29 @@
+---
+id: "m01-07"
+number: "07"
+title: "Creating a React Application"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "Scaffolding options: Vite, Next.js, and modern React toolchains."
+codeTitle: "Scaffolding Modern React Applications"
+---
+
+# Creating a React Application
+
+While Create-React-App is deprecated, modern developers use Vite for lightning-fast Client-Side SPAs or Next.js for full-stack, SEO-ready web applications.
+
+### Key Concepts & Rules:
+
+- Vite: Lightning-fast HMR based on native ES modules and esbuild.
+- Next.js: Full-stack framework with App Router, SSR, SSG, and Server Actions.
+
+### Code Example: Scaffolding Modern React Applications
+
+```tsx
+// Scaffolding a modern SPA with Vite:
+npm create vite@latest my-react-app -- --template react-ts
+
+// Scaffolding an enterprise full-stack app with Next.js:
+npx create-next-app@latest my-next-app --typescript --tailwind --eslint --app
+```

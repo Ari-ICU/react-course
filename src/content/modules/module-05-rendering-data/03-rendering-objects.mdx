@@ -1,0 +1,36 @@
+---
+id: "m05-03"
+number: "03"
+title: "Rendering Objects"
+moduleId: "module-05"
+moduleNumber: "05"
+category: "Core Concepts"
+summary: "Accessing and formatting object properties inside templates."
+codeTitle: "Rendering Object Properties Correctly"
+---
+
+# Rendering Objects
+
+You cannot render a raw JavaScript object directly inside JSX (`<div>{user}</div>` throws an error). You must render individual primitive properties (`user.name`) or serialize with `JSON.stringify`.
+
+### Key Concepts & Rules:
+
+- Objects are not valid React children.
+- Render specific properties or map over `Object.entries(obj)`.
+
+### Code Example: Rendering Object Properties Correctly
+
+```tsx
+// ❌ Error: Objects are not valid as a React child:
+// return <div>{user}</div>;
+
+// ✅ Correct:
+export function UserProfile({ user }: { user: { name: string; email: string } }) {
+  return (
+    <div>
+      <h4 className="font-semibold text-white">{user.name}</h4>
+      <p className="text-xs text-slate-400">{user.email}</p>
+    </div>
+  );
+}
+```

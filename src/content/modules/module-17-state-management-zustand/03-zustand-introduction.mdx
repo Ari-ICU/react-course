@@ -1,0 +1,39 @@
+---
+id: "m17-03"
+number: "03"
+title: "Zustand Introduction"
+moduleId: "module-17"
+moduleNumber: "17"
+category: "State & Architecture"
+summary: "Small, fast, scalable bearbones state management."
+interactiveDemoKey: "ZustandDemo"
+codeTitle: "Basic Zustand Store"
+---
+
+# Zustand Introduction
+
+Zustand is a minimalistic state management solution based on simplified flux principles. It has a tiny footprint (<1kb), zero boilerplate, and doesn't require wrapping your app in Providers.
+
+### Key Concepts & Rules:
+
+- Direct hook-based access.
+- Selective re-rendering via selector functions.
+- Full TypeScript support with auto-inference.
+
+### Code Example: Basic Zustand Store
+
+```tsx
+import { create } from 'zustand';
+
+interface CounterState {
+  count: number;
+  increment: () => void;
+  reset: () => void;
+}
+
+export const useCounterStore = create<CounterState>((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  reset: () => set({ count: 0 }),
+}));
+```

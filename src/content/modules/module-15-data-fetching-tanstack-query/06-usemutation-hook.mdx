@@ -1,0 +1,43 @@
+---
+id: "m15-06"
+number: "06"
+title: "useMutation Hook"
+moduleId: "module-15"
+moduleNumber: "15"
+category: "Routing & Network"
+summary: "Creating, updating, and deleting server data with side effects."
+codeTitle: "useMutation with Cache Invalidation"
+---
+
+# useMutation Hook
+
+Unlike queries (which run automatically), mutations are triggered on-demand by user actions (like clicking Submit or Delete).
+
+### Key Concepts & Rules:
+
+- Use `onSuccess` to invalidate cached queries and trigger refetches.
+
+### Code Example: useMutation with Cache Invalidation
+
+```tsx
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+export function AddStudentButton() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: studentService.create,
+    onSuccess: () => {
+      // Invalidate and refetch student list automatically!
+      queryClient.invalidateQueries({ queryKey: ['students'] });
+      toast.success('Student added!');
+    },
+  });
+
+  return (
+    <button onClick={() => mutation.mutate({ name: 'Sophea', gpa: 3.8 })}>
+      {mutation.isPending ? 'Saving...' : 'Add Student'}
+    </button>
+  );
+}
+```

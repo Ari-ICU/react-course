@@ -1,0 +1,46 @@
+---
+id: "m03-08"
+number: "08"
+title: "Nested Components"
+moduleId: "module-03"
+moduleNumber: "03"
+category: "Fundamentals"
+summary: "Rendering child components inside parent trees without defining them inline."
+pitfall: "Declaring a component inside another component's body causes it to be re-instantiated on every re-render, resetting input focus and state!"
+codeTitle: "Properly Nesting Components"
+---
+
+# Nested Components
+
+You can nest components inside other components. NEVER declare a component function inside another component function, as it will be recreated on every single render and lose internal state.
+
+### Key Concepts & Rules:
+
+- Keep child component definitions outside the parent component body.
+- Pass data to nested children via props.
+
+### Code Example: Properly Nesting Components
+
+```tsx
+// ❌ Anti-pattern: Defining child inside parent
+/*
+function Parent() {
+  function Child() { return <div>Recreated every render!</div>; }
+  return <Child />;
+}
+*/
+
+// ✅ Correct: Declared at module scope
+function Child({ title }: { title: string }) {
+  return <li className="text-slate-300 py-1">{title}</li>;
+}
+
+export function Parent() {
+  return (
+    <ul className="list-disc pl-5">
+      <Child title="First Topic" />
+      <Child title="Second Topic" />
+    </ul>
+  );
+}
+```

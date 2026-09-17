@@ -1,0 +1,25 @@
+---
+id: "m16-01"
+number: "01"
+title: "What is Context?"
+moduleId: "module-16"
+moduleNumber: "16"
+category: "State & Architecture"
+summary: "React's native mechanism for broadcasting data across the component tree."
+codeTitle: "Context Imports"
+---
+
+# What is Context?
+
+Context provides a way to pass data through the component tree without having to pass props down manually at every single level.
+
+### Key Concepts & Rules:
+
+- Built directly into React; requires no external dependencies.
+- Designed for low-frequency global data: themes, authenticated user, locale.
+
+### Code Example: Context Imports
+
+```tsx
+import { createContext, useContext } from 'react';
+```

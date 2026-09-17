@@ -1,0 +1,28 @@
+---
+id: "m18-10"
+number: "10"
+title: "Debouncing and Throttling"
+moduleId: "module-18"
+moduleNumber: "18"
+category: "Enterprise & Production"
+summary: "Controlling high-frequency event execution."
+codeTitle: "Debounced API Handler"
+---
+
+# Debouncing and Throttling
+
+Debounce delays execution until silence; Throttle limits execution to at most once per time window.
+
+### Key Concepts & Rules:
+
+- Debounce: Search inputs; Throttle: Window scroll / resize.
+
+### Code Example: Debounced API Handler
+
+```tsx
+// Debounced handler:
+const debouncedSearch = useMemo(
+  () => debounce((val: string) => api.search(val), 300),
+  []
+);
+```

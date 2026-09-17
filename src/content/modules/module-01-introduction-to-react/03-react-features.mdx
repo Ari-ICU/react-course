@@ -1,0 +1,46 @@
+---
+id: "m01-03"
+number: "03"
+title: "React Features"
+moduleId: "module-01"
+moduleNumber: "01"
+category: "Fundamentals"
+summary: "JSX, Virtual DOM, React Fiber Reconciler, and Server Components."
+proTip: "Use functional updates `setCount(prev => prev + 1)` whenever the new state derives directly from the previous state."
+codeTitle: "Automatic Batching in React"
+---
+
+# React Features
+
+Key features include JSX syntax extension, the Virtual DOM diffing algorithm that minimizes expensive browser layout recalcs, and React 19 concurrent features with automatic batching.
+
+### Key Concepts & Rules:
+
+- JSX: Expressive HTML-in-JavaScript syntax with compile-time type safety.
+- Virtual DOM & Reconciliation: Memory representation compared via O(n) diffing heuristics.
+- Hooks: Functional state and lifecycle logic sharing without class components.
+- Automatic Batching: Groups multiple state updates together to prevent superfluous re-renders.
+
+### Code Example: Automatic Batching in React
+
+```tsx
+// React 18+ automatic batching example
+import { useState } from 'react';
+
+export function BatchingDemo() {
+  const [count, setCount] = useState(0);
+  const [flag, setFlag] = useState(false);
+
+  function handleClick() {
+    // Both state updates are queued and trigger only ONE single re-render!
+    setCount((c) => c + 1);
+    setFlag((f) => !f);
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Count: {count} | Flag: {flag ? 'ON' : 'OFF'}
+    </button>
+  );
+}
+```

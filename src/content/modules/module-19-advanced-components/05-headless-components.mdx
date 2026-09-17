@@ -1,0 +1,39 @@
+---
+id: "m19-05"
+number: "05"
+title: "Headless Components"
+moduleId: "module-19"
+moduleNumber: "19"
+category: "Enterprise & Production"
+summary: "Unstyled accessible logic components."
+codeTitle: "Headless Modal Component"
+---
+
+# Headless Components
+
+Headless UI libraries (Radix UI, Headless UI) provide 100% accessible keyboard navigation, focus trapping, and ARIA attributes with 0% CSS, allowing you to style freely with Tailwind CSS.
+
+### Key Concepts & Rules:
+
+- Total styling freedom without reinventing accessibility.
+
+### Code Example: Headless Modal Component
+
+```tsx
+// Radix UI Headless Dialog wrapped in Tailwind:
+import * as Dialog from '@radix-ui/react-dialog';
+
+export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  return (
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full">
+          <Dialog.Title className="text-xl font-bold text-white">{title}</Dialog.Title>
+          {children}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+```

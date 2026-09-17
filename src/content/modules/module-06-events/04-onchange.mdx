@@ -1,0 +1,34 @@
+---
+id: "m06-04"
+number: "04"
+title: "onChange"
+moduleId: "module-06"
+moduleNumber: "06"
+category: "Core Concepts"
+summary: "Tracking input, textarea, and select changes in real time."
+codeTitle: "onChange Event Handler"
+---
+
+# onChange
+
+Unlike vanilla JS where `change` only fires when an input loses focus, React's `onChange` fires on every single keystroke, making controlled components trivial.
+
+### Key Concepts & Rules:
+
+- Access input value via `e.target.value`.
+
+### Code Example: onChange Event Handler
+
+```tsx
+export function SearchInput({ value, onChange }: SearchInputProps) {
+  return (
+    <input 
+      type="text" 
+      value={value} 
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Filter topics..."
+      className="w-full bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-white"
+    />
+  );
+}
+```
