@@ -19,7 +19,7 @@ Gate entire layout route trees so that unauthenticated visitors are automaticall
 
 ### Code Example: Protected Layout Route
 
-```tsx
+```jsx
 export function ProtectedLayout() {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <LoadingScreen />;

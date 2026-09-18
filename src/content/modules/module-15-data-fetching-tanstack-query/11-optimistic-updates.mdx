@@ -20,7 +20,7 @@ Update the local query cache immediately when the user clicks an action (e.g. to
 
 ### Code Example: Complete Optimistic Update Pattern
 
-```tsx
+```jsx
 const toggleMutation = useMutation({
   mutationFn: todoService.toggle,
   onMutate: async (todoId) => {

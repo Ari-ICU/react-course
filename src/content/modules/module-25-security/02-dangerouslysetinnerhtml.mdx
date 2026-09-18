@@ -20,7 +20,7 @@ If you must render rich HTML from CMS feeds, ALWAYS sanitize it with `DOMPurify`
 
 ### Code Example: Safe HTML Sanitization with DOMPurify
 
-```tsx
+```jsx
 import DOMPurify from 'dompurify';
 
 export function SafeHtml({ rawContent }: { rawContent: string }) {

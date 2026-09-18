@@ -20,7 +20,7 @@ If your initial state requires heavy computation (like parsing JSON from `localS
 
 ### Code Example: Lazy State Initialization Function
 
-```tsx
+```jsx
 // Runs only once on initial mount:
 const [savedTheme, setSavedTheme] = useState(() => {
   if (typeof window === 'undefined') return 'dark';

@@ -19,7 +19,7 @@ Combines `useState` with `localStorage` so that changes automatically persist an
 
 ### Code Example: Enterprise useLocalStorage Hook
 
-```tsx
+```jsx
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (val: T | ((prev: T) => T)) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === 'undefined') return initialValue;

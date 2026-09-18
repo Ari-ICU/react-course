@@ -21,7 +21,7 @@ codeTitle: "Vanilla JS vs Declarative React"
 
 ### Code Example: Vanilla JS vs Declarative React
 
-```tsx
+```jsx
 // Comparison: Updating a dynamic badge
 // Vanilla JS
 function updateBadge(unreadCount) {
@@ -35,7 +35,7 @@ function updateBadge(unreadCount) {
 }
 
 // React: purely declarative projection
-function UnreadBadge({ count }: { count: number }) {
+function UnreadBadge({ count }) {
   if (count <= 0) return null;
   return <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full">{count}</span>;
 }

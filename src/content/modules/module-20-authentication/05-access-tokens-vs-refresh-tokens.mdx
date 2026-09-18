@@ -20,7 +20,7 @@ Access tokens expire quickly to minimize the window of vulnerability if intercep
 
 ### Code Example: Token Rotation Lifecycle
 
-```tsx
+```jsx
 // Token Lifecycle:
 // 1. User logs in -> Receives Access Token (15m) + Refresh Token (7d)
 // 2. Access Token expires -> App calls /refresh -> Receives new Access Token

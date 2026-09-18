@@ -17,31 +17,48 @@ codeTitle: "Properly Nesting Components"
 ### Key Concepts & Rules:
 
 - ត្រូវប្រកាស child components នៅ module scope (ខាងក្រៅ parent component) ជានិច្ច។
-- បញ្ជូនទិន្នន័យពី parent ទៅកាន់ child components តាមរយៈ props។
-- រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលតាមដាន data flow។
+- ហៅប្រើប្រាស់ child components នៅក្នុង JSX នៃ parent component តាមរយៈ syntax `<ChildComponent />`។
+- រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលអាន និងថែទាំ។
 
 ### Code Example: Properly Nesting Components
 
-```tsx
-// ❌ Anti-pattern: Defining child inside parent
+```jsx
+// ❌ Anti-pattern: Defining child component INSIDE parent component
 /*
 function Parent() {
-  function Child() { return <div>Recreated every render!</div>; }
-  return <Child />;
+  // Re-declared on every single render!
+  function UserAvatar() { 
+    return <div className="w-10 h-10 rounded-full bg-blue-500" />; 
+  }
+  return <UserAvatar />;
 }
 */
 
-// ✅ Correct: Declared at module scope
-function Child({ title }: { title: string }) {
-  return <li className="text-slate-300 py-1">{title}</li>;
+// ✅ Correct: Declared at module scope (outside parent, no props)
+function UserAvatar() {
+  return (
+    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+      R
+    </div>
+  );
 }
 
-export function Parent() {
+function UserDetails() {
   return (
-    <ul className="list-disc pl-5">
-      <Child title="First Topic" />
-      <Child title="Second Topic" />
-    </ul>
+    <div>
+      <p className="text-sm font-medium text-white">Ratha Tech</p>
+      <p className="text-xs text-slate-400">Full-Stack Developer</p>
+    </div>
+  );
+}
+
+// Parent rendering nested child components (No props)
+export function UserCard() {
+  return (
+    <div className="flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+      <UserAvatar />
+      <UserDetails />
+    </div>
   );
 }
 ```

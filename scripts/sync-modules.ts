@@ -103,7 +103,7 @@ ${mod.topics.map((t) => `- **Lesson ${t.number}**: ${t.title} - *${t.summary}*`)
         : "";
 
       const codeBlockSection = topic.codeSnippet
-        ? `\n\n### Code Example: ${topic.codeTitle || topic.title}\n\n\`\`\`${topic.codeLanguage || "tsx"}\n${topic.codeSnippet}\n\`\`\``
+        ? `\n\n### Code Example: ${topic.codeTitle || topic.title}\n\n\`\`\`${topic.codeLanguage || "jsx"}\n${topic.codeSnippet}\n\`\`\``
         : "";
 
       const lessonContent = `${frontmatterLines.join("\n")}
@@ -217,7 +217,7 @@ export function compileFromMDX() {
       let explanation = "";
       const keyPoints: string[] = [];
       let codeSnippet = "";
-      let codeLanguage = frontmatter.codeLanguage || "tsx";
+      let codeLanguage = frontmatter.codeLanguage || "jsx";
 
       const titleMatch = body.match(/^#\s+[^\r\n]+/);
       let rest = body;

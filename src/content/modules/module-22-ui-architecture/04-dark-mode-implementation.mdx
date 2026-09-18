@@ -19,7 +19,7 @@ Toggle a `.dark` class on the root `<html>` element. Tailwind's `dark:` variant 
 
 ### Code Example: Dark Mode Class Toggle
 
-```tsx
+```jsx
 export function toggleDarkMode() {
   const isDark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');

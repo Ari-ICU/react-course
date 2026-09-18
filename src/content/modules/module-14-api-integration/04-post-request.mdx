@@ -19,7 +19,7 @@ Used for submitting forms, creating tasks, or authenticating users.
 
 ### Code Example: Axios POST Request
 
-```tsx
+```jsx
 const createStudent = async (newStudent: StudentInput) => {
   const res = await axios.post('/api/students', newStudent);
   return res.data;

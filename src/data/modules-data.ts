@@ -46,7 +46,7 @@ export const modulesData: ModuleItem[] = [
           "Unidirectional Data Flow: ទិន្នន័យហូរចុះក្រោមតាមរយៈ props ចំណែកឯ events ហូរឡើងលើវិញតាមរយៈ callbacks។"
         ],
         "codeSnippet": "// Imperative DOM manipulation vs React Declarative UI\n// ❌ Traditional Imperative JavaScript:\nconst btn = document.createElement('button');\nbtn.innerText = 'Clicks: 0';\nlet count = 0;\nbtn.addEventListener('click', () => {\n  count++;\n  btn.innerText = `Clicks: ${count}`;\n});\ndocument.body.appendChild(btn);\n\n// ✅ Modern Declarative React Component:\nimport { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button \n      onClick={() => setCount(count + 1)}\n      className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\"\n    >\n      Clicks: {count}\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Imperative vs Declarative Example",
         "proTip": "គិតតាមបែប state transitions៖ កំណត់ទិន្នន័យរបស់អ្នកថាតើវាផ្លាស់ប្តូរយ៉ាងដូចម្តេច ហើយទុកឱ្យ React គណនា និងអនុវត្តការផ្លាស់ប្តូរនៅលើ DOM ដោយស្វ័យប្រវត្តិ។",
         "pitfall": "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។"
@@ -62,8 +62,8 @@ export const modulesData: ModuleItem[] = [
           "Predictable Debugging: ភាពងាយស្រួលក្នុងការត្រួតពិនិត្យ និង debug កូដ ដោយសារ unidirectional data flow និងឧបករណ៍ React DevTools។",
           "Universal Ecosystem: ភាពសម្បូរបែបនៃ libraries ស្តង់ដារដូចជា TanStack Query, Zustand, React Hook Form និង Framer Motion។"
         ],
-        "codeSnippet": "// The React ecosystem enables composable, modular features\nimport { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";\nimport { Badge } from \"@/components/ui/badge\";\n\nexport function CourseCard({ title, level, studentCount }: CourseCardProps) {\n  return (\n    <Card className=\"border border-slate-800 bg-slate-900/60 p-5 rounded-xl\">\n      <CardHeader className=\"flex items-center justify-between pb-2\">\n        <CardTitle className=\"text-xl font-bold text-white\">{title}</CardTitle>\n        <Badge variant=\"outline\" className=\"text-emerald-400 border-emerald-500/30\">\n          {level}\n        </Badge>\n      </CardHeader>\n      <CardContent className=\"text-slate-400 text-sm\">\n        Over {studentCount.toLocaleString()} developers enrolled.\n      </CardContent>\n    </Card>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// The React ecosystem enables composable, modular features\nimport { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";\nimport { Badge } from \"@/components/ui/badge\";\n\nexport function CourseCard({ title, level, studentCount }) {\n  return (\n    <Card className=\"border border-slate-800 bg-slate-900/60 p-5 rounded-xl\">\n      <CardHeader className=\"flex items-center justify-between pb-2\">\n        <CardTitle className=\"text-xl font-bold text-white\">{title}</CardTitle>\n        <Badge variant=\"outline\" className=\"text-emerald-400 border-emerald-500/30\">\n          {level}\n        </Badge>\n      </CardHeader>\n      <CardContent className=\"text-slate-400 text-sm\">\n        Over {studentCount.toLocaleString()} developers enrolled.\n      </CardContent>\n    </Card>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Composable Component Pattern",
         "proTip": "ការរៀន React ជួយឱ្យអ្នកមានលទ្ធភាពប្រើប្រាស់ ecosystem ដ៏ធំបំផុតនៅលើពិភពលោក ដែលពោរពេញទៅដោយ production-tested packages និង UI patterns កម្រិតខ្ពស់។"
       },
@@ -80,7 +80,7 @@ export const modulesData: ModuleItem[] = [
           "Automatic Batching: ប្រមូលផ្តុំការ update state ច្រើនបញ្ចូលគ្នាក្នុងពេលតែមួយ ដើម្បីកាត់បន្ថយការ re-render ឥតប្រយោជន៍។"
         ],
         "codeSnippet": "// React 18+ automatic batching example\nimport { useState } from 'react';\n\nexport function BatchingDemo() {\n  const [count, setCount] = useState(0);\n  const [flag, setFlag] = useState(false);\n\n  function handleClick() {\n    // Both state updates are queued and trigger only ONE single re-render!\n    setCount((c) => c + 1);\n    setFlag((f) => !f);\n  }\n\n  return (\n    <button onClick={handleClick}>\n      Count: {count} | Flag: {flag ? 'ON' : 'OFF'}\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Automatic Batching in React",
         "proTip": "គួរប្រើ functional updates `setCount(prev => prev + 1)` ជានិច្ចនៅពេលដែល state ថ្មីអាស្រ័យដោយផ្ទាល់លើតម្លៃនៃ state ចាស់។"
       },
@@ -95,8 +95,8 @@ export const modulesData: ModuleItem[] = [
           "React ធ្វើបច្ចុប្បន្នភាព UI ដោយស្វ័យប្រវត្តិតាមរយៈ reactive state bindings។",
           "លុបបំបាត់បញ្ហា spaghetti code ដែលកើតឡើងដោយសារកូដ DOM mutations រាយប៉ាយពាសពេញ file។"
         ],
-        "codeSnippet": "// Comparison: Updating a dynamic badge\n// Vanilla JS\nfunction updateBadge(unreadCount) {\n  const el = document.getElementById('badge');\n  if (unreadCount > 0) {\n    el.innerText = unreadCount;\n    el.style.display = 'inline-block';\n  } else {\n    el.style.display = 'none';\n  }\n}\n\n// React: purely declarative projection\nfunction UnreadBadge({ count }: { count: number }) {\n  if (count <= 0) return null;\n  return <span className=\"bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full\">{count}</span>;\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// Comparison: Updating a dynamic badge\n// Vanilla JS\nfunction updateBadge(unreadCount) {\n  const el = document.getElementById('badge');\n  if (unreadCount > 0) {\n    el.innerText = unreadCount;\n    el.style.display = 'inline-block';\n  } else {\n    el.style.display = 'none';\n  }\n}\n\n// React: purely declarative projection\nfunction UnreadBadge({ count }) {\n  if (count <= 0) return null;\n  return <span className=\"bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full\">{count}</span>;\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Vanilla JS vs Declarative React"
       },
       {
@@ -111,7 +111,7 @@ export const modulesData: ModuleItem[] = [
           "Lifting state up គឺជាបច្ចេកទេសលើក state ទៅកាន់ parent component រួម ដើម្បីចែករំលែកទិន្នន័យរវាង sibling nodes។"
         ],
         "codeSnippet": "/*\n        [App Root]\n         ├── [Header]\n         │    ├── [Logo]\n         │    └── [NavMenu]\n         ├── [CourseView]\n         │    ├── [ModuleList]  <── (State: selectedModule)\n         │    └── [SlideDisplay]\n         └── [Footer]\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Component Tree Architecture"
       },
       {
@@ -125,8 +125,8 @@ export const modulesData: ModuleItem[] = [
           "រក្សាទុក reusable UI primitives ទូទៅនៅក្នុង `@/components/ui`។",
           "រក្សាទុក business domain logic នៅក្នុង `@/features/<feature-name>`។"
         ],
-        "codeSnippet": "src/\n├── app/              # App Router routes and page layouts\n├── components/       # Cross-cutting reusable UI primitives\n│   └── ui/           # Button, Card, Dialog, Badge (Shadcn style)\n├── features/         # Feature slices (auth, courses, cart)\n│   ├── components/\n│   ├── hooks/\n│   └── services/\n├── hooks/            # Global custom hooks (useDebounce, useTheme)\n├── lib/              # Utilities (cn, formatters, api client)\n└── types/            # TypeScript models and interfaces",
-        "codeLanguage": "tsx",
+        "codeSnippet": "src/\n├── app/              # App Router routes and page layouts\n├── components/       # Cross-cutting reusable UI primitives\n│   └── ui/           # Button, Card, Dialog, Badge (Shadcn style)\n├── features/         # Feature slices (auth, courses, cart)\n│   ├── components/\n│   ├── hooks/\n│   └── services/\n├── hooks/            # Global custom hooks (useDebounce, useTheme)\n├── lib/              # Utilities (cn, formatters, api client)\n└── utils/            # Helper functions and constants",
+        "codeLanguage": "jsx",
         "codeTitle": "Recommended React Folder Structure"
       },
       {
@@ -140,7 +140,7 @@ export const modulesData: ModuleItem[] = [
           "Next.js: Full-stack framework ជាមួយ App Router, Server-Side Rendering (SSR), Static Site Generation (SSG) និង Server Actions។"
         ],
         "codeSnippet": "// Scaffolding a modern SPA with Vite:\nnpm create vite@latest my-react-app -- --template react-ts\n\n// Scaffolding an enterprise full-stack app with Next.js:\nnpx create-next-app@latest my-next-app --typescript --tailwind --eslint --app",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Scaffolding Modern React Applications"
       },
       {
@@ -155,7 +155,7 @@ export const modulesData: ModuleItem[] = [
           "ដំណើរការ Rollup production bundling ប្រកបដោយប្រសិទ្ធភាពដើម្បីឱ្យ production code មានទំហំតូចបំផុត។"
         ],
         "codeSnippet": "// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport path from 'path';\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: {\n      '@': path.resolve(__dirname, './src'),\n    },\n  },\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Vite Configuration with Path Aliases"
       },
       {
@@ -169,7 +169,7 @@ export const modulesData: ModuleItem[] = [
           "Source maps ជួយសម្រួលដល់ការ debug កូដនៅលើ browser DevTools ឱ្យឃើញកូដដើមយ៉ាងច្បាស់។"
         ],
         "codeSnippet": "// package.json scripts\n\"scripts\": {\n  \"dev\": \"next dev\",           // Starts local development server\n  \"build\": \"next build\",       // Compiles production-optimized code\n  \"start\": \"next start\",       // Runs production server\n  \"lint\": \"eslint .\"           // Code quality inspection\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Standard NPM Scripts"
       },
       {
@@ -183,7 +183,7 @@ export const modulesData: ModuleItem[] = [
           "React Developer Tools browser extension អនុញ្ញាតឱ្យ developer ពិនិត្យមើល props, state, និង render timeline នៃ components នីមួយៗបានយ៉ាងងាយស្រួល។"
         ],
         "codeSnippet": "// React.StrictMode wraps your application tree\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "React StrictMode Wrapper",
         "proTip": "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅក្នុង `useEffect` កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីផ្ទៀងផ្ទាត់ cleanup function របស់អ្នកប៉ុណ្ណោះ!"
       }
@@ -209,7 +209,7 @@ export const modulesData: ModuleItem[] = [
           "ផ្តល់នូវ compile-time syntax validation និងការពារប្រព័ន្ធពីការវាយប្រហារ XSS (Cross-Site Scripting) ដោយស្វ័យប្រវត្តិតាមរយៈ auto-escaping។"
         ],
         "codeSnippet": "// JSX syntax:\nconst element = <h1 className=\"text-2xl font-bold\">Hello React</h1>;\n\n// What the compiler outputs behind the scenes:\nimport { jsx as _jsx } from \"react/jsx-runtime\";\nconst element = _jsx(\"h1\", { \n  className: \"text-2xl font-bold\", \n  children: \"Hello React\" \n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JSX Compilation Target"
       },
       {
@@ -224,7 +224,7 @@ export const modulesData: ModuleItem[] = [
           "ច្បាប់ single parent node return កើតឡើងដោយសារ JavaScript syntax ផ្ទាល់ (ព្រោះ function មួយអាច return តម្លៃបានតែមួយប៉ុណ្ណោះក្នុងពេលតែមួយ)។"
         ],
         "codeSnippet": "// ❌ Invalid JSX: Unclosed tag and multiple root nodes\n/*\nreturn (\n  <h1>Title</h1>\n  <input type=\"text\">\n);\n*/\n\n// ✅ Valid JSX: Wrapped in a single parent or Fragment with closed tags\nexport function SearchBar() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <h1 className=\"text-lg font-medium\">Search:</h1>\n      <input \n        type=\"text\" \n        placeholder=\"Type here...\" \n        className=\"px-3 py-1 border rounded\"\n      />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Valid JSX Syntax Rules"
       },
       {
@@ -237,8 +237,8 @@ export const modulesData: ModuleItem[] = [
           "Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ array methods (ដូចជា `.map()`, `.filter()`) ជំនួសវិញ។",
           "Numbers និង strings នឹងត្រូវបង្ហាញលើ UI ដោយផ្ទាល់ ចំណែកឯ booleans (`true`/`false`), `null`, និង `undefined` ត្រូវបាន React ignore (មិនបង្ហាញលើអេក្រង់ឡើយ)។"
         ],
-        "codeSnippet": "export function UserGreeting({ username, points }: { username: string; points: number }) {\n  const multiplier = 1.5;\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg text-white\">\n      <h2 className=\"text-xl\">Welcome back, {username.toUpperCase()}!</h2>\n      <p className=\"text-slate-400\">\n        Adjusted score: {(points * multiplier).toFixed(0)} XP\n      </p>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function UserGreeting({ username, points }) {\n  const multiplier = 1.5;\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg text-white\">\n      <h2 className=\"text-xl\">Welcome back, {username.toUpperCase()}!</h2>\n      <p className=\"text-slate-400\">\n        Adjusted score: {(points * multiplier).toFixed(0)} XP\n      </p>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Expressions Inside JSX"
       },
       {
@@ -252,7 +252,7 @@ export const modulesData: ModuleItem[] = [
           "បញ្ជូន callback function reference ទៅកាន់ event handlers ដោយផ្ទាល់ ដោយមិនត្រូវហៅ function ដំណើរការភ្លាមៗពេល render នោះឡើយ (ឧ. `onClick={handleClick}` មិនមែន `onClick={handleClick()}`)។"
         ],
         "codeSnippet": "export function ProductPrice({ priceInCents }: { priceInCents: number }) {\n  const formatCurrency = (cents: number) => \n    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);\n\n  return (\n    <span className=\"font-semibold text-emerald-400\">\n      {formatCurrency(priceInCents)}\n    </span>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JavaScript Functions in JSX"
       },
       {
@@ -266,7 +266,7 @@ export const modulesData: ModuleItem[] = [
           "Boolean prop shorthand៖ ការសរសេរ `<button disabled>` គឺដូចគ្នាទៅនឹងការសរសេរ `<button disabled={true}>`។"
         ],
         "codeSnippet": "<input \n  id=\"user-email\"\n  type=\"email\"\n  autoComplete=\"email\"\n  autoFocus\n  disabled={false}\n  tabIndex={1}\n  aria-label=\"User Email Address\"\n  className=\"w-full px-4 py-2 border rounded-md\"\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JSX camelCase Attributes"
       },
       {
@@ -280,7 +280,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រើ utility function `cn()` (ការរួមបញ្ចូលគ្នារវាង `clsx` និង `tailwind-merge`) ដើម្បីគ្រប់គ្រង conditional និង dynamic class names ឱ្យមានរបៀបរៀបរយ និងមិនជាន់គ្នា។"
         ],
         "codeSnippet": "import { cn } from \"@/lib/utils\";\n\nexport function StatusBadge({ status }: { status: \"active\" | \"inactive\" | \"pending\" }) {\n  return (\n    <span\n      className={cn(\n        \"px-2.5 py-1 text-xs font-semibold rounded-full border\",\n        status === \"active\" && \"bg-emerald-950/50 text-emerald-400 border-emerald-800\",\n        status === \"pending\" && \"bg-amber-950/50 text-amber-400 border-amber-800\",\n        status === \"inactive\" && \"bg-rose-950/50 text-rose-400 border-rose-800\"\n      )}\n    >\n      {status.toUpperCase()}\n    </span>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "className with Dynamic Utility"
       },
       {
@@ -294,7 +294,7 @@ export const modulesData: ModuleItem[] = [
           "Inline styles មិនគាំទ្រ media queries ឬ pseudo-classes (`:hover`, `:focus`) ឡើយ ដូច្នេះគួរប្រើ Tailwind CSS ឬ CSS modules សម្រាប់ styling ទូទៅ។"
         ],
         "codeSnippet": "export function CustomProgressBar({ progress }: { progress: number }) {\n  return (\n    <div className=\"w-full bg-slate-800 h-3 rounded-full overflow-hidden\">\n      <div \n        className=\"h-full bg-blue-500 transition-all duration-300\"\n        style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}\n      />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Inline Style Object in JSX"
       },
       {
@@ -307,8 +307,8 @@ export const modulesData: ModuleItem[] = [
           "ការសរសេរកាត់ `<>...</>` មិនបង្កើត DOM node បន្ថែមឡើយ (zero DOM overhead)។",
           "ត្រូវប្រើ syntax ពេញ `<React.Fragment key={item.id}>` នៅពេល render fragments នៅក្នុង loop ដែលទាមទារឱ្យមាន `key` prop។"
         ],
-        "codeSnippet": "import React from 'react';\n\nexport function TableRowGroup({ items }: { items: { id: string; label: string; value: string }[] }) {\n  return (\n    <dl className=\"grid grid-cols-2 gap-2\">\n      {items.map((item) => (\n        // Key is required here, so use explicit React.Fragment:\n        <React.Fragment key={item.id}>\n          <dt className=\"text-slate-400 font-medium\">{item.label}</dt>\n          <dd className=\"text-white text-right\">{item.value}</dd>\n        </React.Fragment>\n      ))}\n    </dl>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "import React from 'react';\n\nexport function TableRowGroup({ items }) {\n  return (\n    <dl className=\"grid grid-cols-2 gap-2\">\n      {items.map((item) => (\n        // Key is required here, so use explicit React.Fragment:\n        <React.Fragment key={item.id}>\n          <dt className=\"text-slate-400 font-medium\">{item.label}</dt>\n          <dd className=\"text-white text-right\">{item.value}</dd>\n        </React.Fragment>\n      ))}\n    </dl>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "React Fragments with Keys"
       },
       {
@@ -322,7 +322,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រើ ternary operators សម្រាប់ការប្តូរ UI ពីរសណ្ឋាន (binary toggles) នៅខាងក្នុង markup ដោយផ្ទាល់។"
         ],
         "codeSnippet": "export function AuthButton({ isLoggedIn, onLogin, onLogout }: AuthButtonProps) {\n  return isLoggedIn ? (\n    <button onClick={onLogout} className=\"px-3 py-1.5 bg-rose-600 text-white rounded\">\n      Sign Out\n    </button>\n  ) : (\n    <button onClick={onLogin} className=\"px-3 py-1.5 bg-blue-600 text-white rounded\">\n      Sign In\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Ternary Conditional JSX"
       },
       {
@@ -335,8 +335,8 @@ export const modulesData: ModuleItem[] = [
           "តម្លៃនៅលើ UI នឹង re-render ដោយស្វ័យប្រវត្តិនៅពេលដែល state ឬ props ដែលវាប្រើមានការផ្លាស់ប្តូរ។",
           "អាចបញ្ចូល dynamic attributes ដូចជា `alt`, `href`, និង `src` ដោយប្រើប្រាស់ `{variable}` ឬ template literals។"
         ],
-        "codeSnippet": "export function Avatar({ user }: { user: { name: string; avatarUrl: string } }) {\n  return (\n    <img \n      src={user.avatarUrl} \n      alt={`Profile picture of ${user.name}`}\n      className=\"w-10 h-10 rounded-full border-2 border-emerald-500\" \n    />\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function Avatar({ user }) {\n  return (\n    <img \n      src={user.avatarUrl} \n      alt={`Profile picture of ${user.name}`}\n      className=\"w-10 h-10 rounded-full border-2 border-emerald-500\" \n    />\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Dynamic Attributes in JSX"
       },
       {
@@ -351,7 +351,7 @@ export const modulesData: ModuleItem[] = [
           "Attribute `style` ត្រូវតែជា JavaScript object មិនមែនជា CSS string ធម្មតាឡើយ។"
         ],
         "codeSnippet": "// Summary of Core JSX Rules:\n// 1. Single Root\nreturn <div className=\"card\">...</div>;\n\n// 2. Closed Tags\n<input type=\"text\" />\n\n// 3. camelCase\n<button onClick={handleClick} tabIndex={0}>Click</button>\n\n// 4. Expression braces\n<h1>{`Hello ${user.name}`}</h1>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JSX Core Rules Summary"
       },
       {
@@ -365,7 +365,7 @@ export const modulesData: ModuleItem[] = [
           "ជៀសវាងការប្រើប្រាស់ array index ជា `key` នៅពេលដែលបញ្ជីទិន្នន័យអាចមានការតម្រៀបឡើងវិញ (reorder) ឬលុបចេញ (remove)។"
         ],
         "codeSnippet": "// ❌ Pitfall: Renders the number \"0\" onto the webpage!\n{messages.length && <Badge count={messages.length} />}\n\n// ✅ Fix: Use explicit boolean comparison:\n{messages.length > 0 && <Badge count={messages.length} />}\n\n// ✅ Alternative: Use ternary operator:\n{messages.length > 0 ? <Badge count={messages.length} /> : null}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "The Logical AND Zero Bug",
         "pitfall": "ការសរសេរ `{count && <Element />}` នៅពេលដែល count មានតម្លៃស្មើ 0 នឹងបណ្តាលឱ្យអក្សរលេខ '0' លេចឡើងនៅលើ UI។ ត្រូវប្រើ `{count > 0 && <Element />}` ជានិច្ច។"
       }
@@ -384,14 +384,14 @@ export const modulesData: ModuleItem[] = [
         "number": "01",
         "title": "What is a Component?",
         "summary": "UI building block ស្នូលដែលមានភាពឯករាជ្យ អាចយកមកប្រើឡើងវិញបាន និងជាគ្រឹះចម្បងក្នុង React។",
-        "explanation": "Component គឺជា JavaScript function ដែលទទួល inputs ហៅថា 'props' ហើយ return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module តែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។",
+        "explanation": "Component គឺជា JavaScript function ដែល return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module ឯករាជ្យតែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។",
         "keyPoints": [
           "Components អនុញ្ញាតឱ្យអ្នកបំបែក UI ទាំងមូលឱ្យទៅជាបំណែកតូចៗដែលឯករាជ្យ និងអាចយកទៅប្រើឡើងវិញបាន (reusable)។",
-          "Components ត្រូវតែជា pure functions ធៀបទៅនឹង props របស់ពួកវា (inputs ដូចគ្នា ត្រូវតែផ្តល់ output ដូចគ្នា)។",
+          "Components ត្រូវតែជា pure functions (រាល់ពេល render ត្រូវតែផ្តល់ output ជាក់លាក់ និងគ្មាន side effects)។",
           "Component state អនុញ្ញាតឱ្យ UI មានភាព dynamic ផ្លាស់ប្តូរទិន្នន័យ និងឆ្លើយតបទៅនឹង interactions របស់អ្នកប្រើប្រាស់។"
         ],
         "codeSnippet": "export function WelcomeBanner() {\n  return (\n    <div className=\"bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-lg\">\n      <h1 className=\"text-2xl font-bold\">Welcome to Modern React</h1>\n      <p className=\"text-blue-100 mt-1\">Master components, hooks, and architecture.</p>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Basic Functional Component",
         "proTip": "គិតតាមបែប Lego blocks៖ UI ទាំងមូលកើតចេញពី component តូចៗផ្គុំគ្នា ដែលធ្វើឱ្យកូដងាយស្រួល scale, debug និង test។"
       },
@@ -400,30 +400,30 @@ export const modulesData: ModuleItem[] = [
         "number": "02",
         "title": "Functional Components",
         "summary": "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។",
-        "explanation": "Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ការគាំទ្រ TypeScript inference កាន់តែប្រសើរ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។",
+        "explanation": "Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។",
         "keyPoints": [
           "ប្រកាស component ដោយប្រើ `function ComponentName()` ធម្មតា ឬ arrow function syntax។",
           "React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។",
           "កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។"
         ],
-        "codeSnippet": "// Standard functional component with TypeScript props\ninterface BadgeProps {\n  label: string;\n  variant?: 'primary' | 'success' | 'warning';\n}\n\nexport const StatusBadge = ({ label, variant = 'primary' }: BadgeProps) => {\n  const styles = {\n    primary: 'bg-blue-950 text-blue-400 border-blue-800',\n    success: 'bg-emerald-950 text-emerald-400 border-emerald-800',\n    warning: 'bg-amber-950 text-amber-400 border-amber-800',\n  };\n\n  return (\n    <span className={`px-2 py-0.5 text-xs font-mono rounded border ${styles[variant]}`}>\n      {label}\n    </span>\n  );\n};",
-        "codeLanguage": "tsx",
-        "codeTitle": "Modern Functional Component with TypeScript",
-        "proTip": "ប្រើ named function declarations ឬ typed arrow functions ជាមួយ TypeScript interfaces ដើម្បីទទួលបាន type safety និង auto-completion យ៉ាងល្អឥតខ្ចោះ។"
+        "codeSnippet": "// 1. Function Declaration Component (No props)\nexport function AppHeader() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center\">\n      <h1 className=\"text-xl font-bold text-white\">React Course</h1>\n      <span className=\"text-xs px-2 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded\">\n        Active\n      </span>\n    </header>\n  );\n}\n\n// 2. Arrow Function Component (No props)\nexport const UserBadge = () => {\n  return (\n    <div className=\"inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full\">\n      <span className=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\" />\n      <span className=\"text-xs text-slate-300 font-medium\">Online</span>\n    </div>\n  );\n};",
+        "codeLanguage": "jsx",
+        "codeTitle": "Modern Functional Component Declarations",
+        "proTip": "អ្នកអាចប្រកាស component ដោយប្រើ function declaration ឬ arrow function បានយ៉ាងងាយស្រួល ទៅតាមចំណង់ចំណូលចិត្តនៃការសរសេរកូដ។"
       },
       {
         "id": "m03-03",
         "number": "03",
         "title": "Creating Components",
         "summary": "ការសរសេរ ការ export ការ import និងការរៀបចំ components ឆ្លងកាត់ files ផ្សេងៗក្នុងគម្រោង។",
-        "explanation": "បង្កើត components នៅក្នុង `.tsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។",
+        "explanation": "បង្កើត components នៅក្នុង `.jsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។",
         "keyPoints": [
           "ផ្តល់អាទិភាពដល់ Named Exports (`export function Header()`) ជាជាង Default Exports ដើម្បីបង្កើនភាពច្បាស់លាស់ពេល import។",
           "គួររក្សា file component នីមួយៗក្រោម ១៥០-២០០ បន្ទាត់ ដើម្បីធានាថាវាងាយស្រួលអាន និង maintain។",
-          "ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.tsx` សម្រាប់ `Header` component។"
+          "ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.jsx` សម្រាប់ `Header` component។"
         ],
-        "codeSnippet": "// src/components/Header.tsx\nexport function Header() {\n  return (\n    <header className=\"h-16 border-b border-slate-800 px-6 flex items-center justify-between\">\n      <span className=\"font-bold text-lg text-white\">ReactMaster</span>\n      <nav className=\"flex gap-4 text-sm text-slate-400\">\n        <a href=\"#modules\" className=\"hover:text-white\">Curriculum</a>\n        <a href=\"#projects\" className=\"hover:text-white\">Projects</a>\n      </nav>\n    </header>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// src/components/Header.jsx\nexport function Header() {\n  return (\n    <header className=\"h-16 border-b border-slate-800 px-6 flex items-center justify-between\">\n      <span className=\"font-bold text-lg text-white\">ReactMaster</span>\n      <nav className=\"flex gap-4 text-sm text-slate-400\">\n        <a href=\"#modules\" className=\"hover:text-white\">Curriculum</a>\n        <a href=\"#projects\" className=\"hover:text-white\">Projects</a>\n      </nav>\n    </header>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Exporting and Modularizing Components",
         "proTip": "ការប្រើ Named Exports ជួយការពារ typo ពេល import និងជួយឱ្យ refactoring tools អាច update ឈ្មោះ component គ្រប់ទីកន្លែងដោយស្វ័យប្រវត្តិ។"
       },
@@ -439,7 +439,7 @@ export const modulesData: ModuleItem[] = [
           "ដាក់ឈ្មោះឱ្យឆ្លុះបញ្ចាំងពីមុខងារជាក់ស្តែង (Domain-driven) ជៀសវាងឈ្មោះទូទៅពេកដូចជា `Item` ឬ `Data`។"
         ],
         "codeSnippet": "// ❌ Incorrect: Lowercase treated as unknown HTML element\n// function userProfile() { return <div>User</div>; }\n\n// ✅ Correct: PascalCase recognized as React component\nexport function UserProfile() {\n  return <div className=\"p-4 bg-slate-900 rounded\">User Profile</div>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "PascalCase Naming Rule",
         "pitfall": "ការសរសេរ `<userProfile />` ជំនួសឱ្យ `<UserProfile />` នឹងធ្វើឱ្យ React ស្វែងរក HTML tag ឈ្មោះ userProfile ដែលមិនមាននៅក្នុង browser!"
       },
@@ -447,49 +447,49 @@ export const modulesData: ModuleItem[] = [
         "id": "m03-05",
         "number": "05",
         "title": "Component Structure",
-        "summary": "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, types/interfaces, state, handlers និង JSX return។",
-        "explanation": "រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Props interfaces/types; ៣) Component declaration; ៤) State & hooks; ៥) Handlers & helper logic; ៦) JSX return statement។",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, state & hooks, handlers និង JSX return។",
+        "explanation": "រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) State & hooks; ៤) Handlers & helper logic; ៥) JSX return statement។",
         "keyPoints": [
           "ហៅ React Hooks ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ function (Top level) ជានិច្ច។",
           "ប្រកាស event handlers និង logic ផ្សេងៗមុនពេល return JSX។",
           "ញែក complex helper functions ដែលមិនពឹងផ្អែកលើ component state ចេញទៅក្រៅ function body។"
         ],
-        "codeSnippet": "// 1. Imports\nimport { useState } from 'react';\nimport { Heart } from 'lucide-react';\n\n// 2. Types\ninterface LikeButtonProps {\n  initialCount?: number;\n}\n\n// 3. Component Declaration\nexport function LikeButton({ initialCount = 0 }: LikeButtonProps) {\n  // 4. Hooks / State\n  const [likes, setLikes] = useState(initialCount);\n  const [liked, setLiked] = useState(false);\n\n  // 5. Handlers\n  const handleToggle = () => {\n    setLiked(!liked);\n    setLikes(prev => liked ? prev - 1 : prev + 1);\n  };\n\n  // 6. JSX Return\n  return (\n    <button \n      onClick={handleToggle}\n      className=\"flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500\"\n    >\n      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />\n      <span className=\"text-sm font-medium\">{likes}</span>\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// 1. Imports\nimport { useState } from 'react';\nimport { Heart } from 'lucide-react';\n\n// 2. Component Declaration (No props)\nexport function LikeButton() {\n  // 3. Hooks / State\n  const [likes, setLikes] = useState(0);\n  const [liked, setLiked] = useState(false);\n\n  // 4. Event Handlers\n  const handleToggle = () => {\n    setLiked(!liked);\n    setLikes(prev => liked ? prev - 1 : prev + 1);\n  };\n\n  // 5. JSX Return\n  return (\n    <button \n      onClick={handleToggle}\n      className=\"flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500\"\n    >\n      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />\n      <span className=\"text-sm font-medium\">{likes}</span>\n    </button>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Predictable Component Layout Structure",
-        "proTip": "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Types -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
+        "proTip": "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
       },
       {
         "id": "m03-06",
         "number": "06",
         "title": "Component Composition",
         "summary": "ការកសាង user interface ស្មុគស្មាញដោយការផ្គុំ atomic components តូចៗបញ្ចូលគ្នា។",
-        "explanation": "Composition គឺជាអានុភាពដ៏ខ្លាំងក្លាបំផុតរបស់ React (React's core superpower)។ ជំនួសឱ្យការបង្កើត monolithic component ដ៏ធំមួយដែលមាន props រាប់សិប វិធីសាស្ត្រត្រឹមត្រូវគឺការផ្គុំ components តូចៗដែលផ្តោតលើមុខងារតែមួយបញ្ចូលគ្នា (Favor Composition over Inheritance)។",
+        "explanation": "Composition គឺជាអានុភាពដ៏ខ្លាំងក្លាបំផុតរបស់ React (React's core superpower)។ ជំនួសឱ្យការសរសេរកូដ UI ទាំងអស់ចូលគ្នាក្នុង monolithic component ដ៏ធំមួយ វិធីសាស្ត្រត្រឹមត្រូវគឺការផ្គុំ components តូចៗដែលផ្តោតលើមុខងារតែមួយបញ្ចូលគ្នា។",
         "keyPoints": [
-          "ផ្តល់អាទិភាពលើ Composition ជាជាង Inheritance ក្នុងស្ថាបត្យកម្ម React UI។",
-          "បញ្ជូន components ជា props ឬប្រើប្រាស់ `children` prop ដើម្បី slot dynamic content តាមតម្រូវការ។",
-          "ជួយកាត់បន្ថយបញ្ហា Prop Drilling និងធ្វើឱ្យ components មានភាពឯករាជ្យខ្ពស់។"
+          "បំបែកអេក្រង់ធំៗឱ្យទៅជា components តូចៗដែលឯករាជ្យពីគ្នា។",
+          "ផ្គុំ components តូចៗទាំងនោះបញ្ចូលគ្នានៅក្នុង layout ឬ page component ធំមួយ។",
+          "ជួយបង្កើនភាពច្បាស់លាស់នៃកូដ និងងាយស្រួលក្នុងការ debug។"
         ],
-        "codeSnippet": "// Composing Layout with Header and Content\nexport function PageLayout({ header, children }: { header: React.ReactNode; children: React.ReactNode }) {\n  return (\n    <div className=\"min-h-screen bg-slate-950 text-slate-100\">\n      <header className=\"border-b border-slate-800\">{header}</header>\n      <main className=\"max-w-7xl mx-auto p-6\">{children}</main>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "function Header() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800\">\n      <h1 className=\"text-xl font-bold text-white\">Dashboard Overview</h1>\n    </header>\n  );\n}\n\nfunction Sidebar() {\n  return (\n    <aside className=\"w-64 p-4 bg-slate-900/50 border-r border-slate-800 text-slate-300\">\n      <nav className=\"space-y-2\">\n        <p className=\"text-sm font-semibold text-slate-400\">Navigation</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Analytics</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Settings</p>\n      </nav>\n    </aside>\n  );\n}\n\nfunction ContentArea() {\n  return (\n    <main className=\"flex-1 p-6 text-slate-200\">\n      <h2 className=\"text-lg font-semibold text-white\">Main Activity</h2>\n      <p className=\"text-sm text-slate-400 mt-1\">Here is your daily activity feed.</p>\n    </main>\n  );\n}\n\n// Composing multiple components together into a complete page (No props)\nexport function DashboardPage() {\n  return (\n    <div className=\"min-h-screen bg-slate-950 flex flex-col\">\n      <Header />\n      <div className=\"flex flex-1\">\n        <Sidebar />\n        <ContentArea />\n      </div>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Component Composition Pattern",
-        "proTip": "ប្រើប្រាស់ `children` ឬ slot props ដូចជា `header` និង `footer` ដើម្បីឱ្យ component របស់អ្នកអាចផ្ទុក content អ្វីក៏បានដោយមិនចាំបាច់ចងភ្ជាប់ logic តឹងរ៉ឹងពេក។"
+        "proTip": "ការផ្គុំ component តូចៗបញ្ចូលគ្នា ជួយឱ្យអ្នកអាចកែប្រែផ្នែកនីមួយៗនៃ UI ដោយឯករាជ្យ និងមិនប៉ះពាល់ដល់ផ្នែកផ្សេងទៀតឡើយ។"
       },
       {
         "id": "m03-07",
         "number": "07",
         "title": "Reusable Components",
-        "summary": "ការឌីហ្សាញ UI building blocks ដែលមានភាពបត់បែនខ្ពស់ ងាយស្រួល config និងអាចប្រើឡើងវិញបានច្រើនកន្លែង។",
-        "explanation": "Reusable component ដ៏ល្អមួយ ត្រូវតែមាន minimal required API, មានតម្លៃ default ត្រឹមត្រូវ និងអាចទទួល standard HTML attributes (ដូចជា `className`, `disabled`, `onClick`, `aria-*`) តាមរយៈ prop spreading។",
+        "summary": "ការបង្កើត UI components ដែលអាចយកទៅហៅប្រើប្រាស់ឡើងវិញបានច្រើនដងក្នុងកម្មវិធី។",
+        "explanation": "Reusable component គឺជា component ដែលត្រូវបានបង្កើតឡើងយ៉ាងមានរបៀបរៀបរយ ដើម្បីអាចយកទៅហៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែងនៅក្នុង application ដោយមិនបាច់សរសេរកូដ JSX ដដែលៗឡើងវិញឡើយ។",
         "keyPoints": [
-          "ពង្រីក standard HTML attributes ជាមួយ TypeScript ដូចជា `React.ButtonHTMLAttributes<HTMLButtonElement>`។",
-          "អនុញ្ញាតឱ្យមាន external styling បន្ថែមតាមរយៈការ merge `className` (ឧ. ប្រើ `clsx` ឬ `tailwind-merge`)។",
-          "ប្រើប្រាស់ variants (primary, secondary, danger) ដើម្បីគ្រប់គ្រង visual states ផ្សេងៗគ្នានៃ UI។"
+          "បង្កើត component តែមួយដង តែអាចយកទៅ reuse បាននៅគ្រប់ទីកន្លែងក្នុង application។",
+          "កាត់បន្ថយការចម្លង markup និង styles ដដែលៗ (DRY - Don't Repeat Yourself)។",
+          "ងាយស្រួលកែសម្រួល UI ពីព្រោះនៅពេលកែ component ដើមតែមួយ កន្លែងដែលបាន reuse ទាំងអស់នឹង update ដោយស្វ័យប្រវត្តិ។"
         ],
-        "codeSnippet": "import React from 'react';\nimport { cn } from '@/lib/utils';\n\ninterface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: 'primary' | 'secondary' | 'danger';\n}\n\nexport function Button({ variant = 'primary', className, ...props }: ButtonProps) {\n  const base = \"px-4 py-2 rounded-lg font-medium transition-colors focus:ring-2\";\n  const variants = {\n    primary: \"bg-blue-600 hover:bg-blue-700 text-white\",\n    secondary: \"bg-slate-800 hover:bg-slate-700 text-slate-200\",\n    danger: \"bg-rose-600 hover:bg-rose-700 text-white\",\n  };\n\n  return <button className={cn(base, variants[variant], className)} {...props} />;\n}",
-        "codeLanguage": "tsx",
-        "codeTitle": "Robust Reusable Button",
-        "proTip": "ប្រើ helper `cn()` (clsx + tailwind-merge) ដើម្បី merge Tailwind CSS classes ដោយជៀសវាងបញ្ហា style specificity conflicts។"
+        "codeSnippet": "// 1. Self-contained component with its own markup and styles (No props)\nexport function SubscribeCard() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3\">\n      <h3 className=\"font-semibold text-white\">Subscribe to Newsletter</h3>\n      <p className=\"text-xs text-slate-400\">Get modern React tips directly in your inbox.</p>\n      <button className=\"px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors\">\n        Subscribe Now\n      </button>\n    </div>\n  );\n}\n\n// 2. Reusing the exact same component in different pages/sections (No props)\nexport function HomePage() {\n  return (\n    <div className=\"space-y-6 max-w-xl mx-auto\">\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Main Content</h2>\n        <SubscribeCard />\n      </section>\n\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Sidebar Widget</h2>\n        <SubscribeCard />\n      </section>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "Reusing Components Across the UI",
+        "proTip": "ការបង្កើត component មួយដែល encapsulation ទាំង markup និង styling ជួយឱ្យអ្នកអាច reuse វាបានច្រើនដងដោយមិនចាំបាច់សរសេរកូដស្ទួនឡើយ (DRY)។"
       },
       {
         "id": "m03-08",
@@ -499,11 +499,11 @@ export const modulesData: ModuleItem[] = [
         "explanation": "យើងអាច render components បង្កប់គ្នាក្នុង parent-child hierarchy បានយ៉ាងងាយស្រួល។ ប៉ុន្តែសូមកុំប្រកាស (declare) function component មួយនៅខាងក្នុង body នៃ component មួយផ្សេងទៀតឱ្យសោះ ព្រោះវានឹងត្រូវ re-create ថ្មីរាល់ពេល render ដែលនាំឱ្យបាត់បង់ state ខាងក្នុង និងបញ្ហា performance ធ្ងន់ធ្ងរ។",
         "keyPoints": [
           "ត្រូវប្រកាស child components នៅ module scope (ខាងក្រៅ parent component) ជានិច្ច។",
-          "បញ្ជូនទិន្នន័យពី parent ទៅកាន់ child components តាមរយៈ props។",
-          "រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលតាមដាន data flow។"
+          "ហៅប្រើប្រាស់ child components នៅក្នុង JSX នៃ parent component តាមរយៈ syntax `<ChildComponent />`។",
+          "រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលអាន និងថែទាំ។"
         ],
-        "codeSnippet": "// ❌ Anti-pattern: Defining child inside parent\n/*\nfunction Parent() {\n  function Child() { return <div>Recreated every render!</div>; }\n  return <Child />;\n}\n*/\n\n// ✅ Correct: Declared at module scope\nfunction Child({ title }: { title: string }) {\n  return <li className=\"text-slate-300 py-1\">{title}</li>;\n}\n\nexport function Parent() {\n  return (\n    <ul className=\"list-disc pl-5\">\n      <Child title=\"First Topic\" />\n      <Child title=\"Second Topic\" />\n    </ul>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// ❌ Anti-pattern: Defining child component INSIDE parent component\n/*\nfunction Parent() {\n  // Re-declared on every single render!\n  function UserAvatar() { \n    return <div className=\"w-10 h-10 rounded-full bg-blue-500\" />; \n  }\n  return <UserAvatar />;\n}\n*/\n\n// ✅ Correct: Declared at module scope (outside parent, no props)\nfunction UserAvatar() {\n  return (\n    <div className=\"w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold\">\n      R\n    </div>\n  );\n}\n\nfunction UserDetails() {\n  return (\n    <div>\n      <p className=\"text-sm font-medium text-white\">Ratha Tech</p>\n      <p className=\"text-xs text-slate-400\">Full-Stack Developer</p>\n    </div>\n  );\n}\n\n// Parent rendering nested child components (No props)\nexport function UserCard() {\n  return (\n    <div className=\"flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <UserAvatar />\n      <UserDetails />\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Properly Nesting Components",
         "pitfall": "ការប្រកាស component function នៅខាងក្នុង body នៃ component មួយផ្សេងទៀត នឹងបណ្តាលឱ្យវាត្រូវបង្កើតឡើងវិញរាល់ពេល re-render ដែលនាំឱ្យបាត់បង់ input focus និង state ខាងក្នុង!"
       },
@@ -518,8 +518,8 @@ export const modulesData: ModuleItem[] = [
           "Compound Components: Modal, DropdownMenu, NavigationDrawer។",
           "Feature Components: StudentTable, CartDrawer, ProductGrid (ចងភ្ជាប់ជាមួយ feature logic)។"
         ],
-        "codeSnippet": "src/\n├── components/\n│   ├── ui/             # Primitives: Button.tsx, Input.tsx\n│   └── layout/         # Header.tsx, Sidebar.tsx\n└── features/\n    └── cart/           # CartDrawer.tsx, CartItem.tsx, CartSummary.tsx",
-        "codeLanguage": "tsx",
+        "codeSnippet": "src/\n├── components/\n│   ├── ui/             # Primitives: Button.jsx, Input.jsx\n│   └── layout/         # Header.jsx, Sidebar.jsx\n└── features/\n    └── cart/           # CartDrawer.jsx, CartItem.jsx, CartSummary.jsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Component Tier Hierarchy",
         "proTip": "ការបែងចែក components ជា tier ច្បាស់លាស់ជួយឱ្យ team ងាយដឹងថាតើ component ណាជា shared primitive និង component ណាជា business logic។"
       },
@@ -528,14 +528,14 @@ export const modulesData: ModuleItem[] = [
         "number": "10",
         "title": "Feature-based Components",
         "summary": "ការរៀបចំរចនាសម្ព័ន្ធតាម business domain capability ជំនួសឱ្យការបែងចែកតាម technical role។",
-        "explanation": "Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, types, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។",
+        "explanation": "Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, utils, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។",
         "keyPoints": [
           "បង្កើន maintainability នៃ project នៅពេលដែល codebase រីកធំឡើងលើសពី ១០០+ files។",
           "បង្កើតព្រំដែនច្បាស់លាស់រវាង feature-specific code និង shared reusable UI components។",
           "ងាយស្រួលក្នុងការធ្វើ code review, testing និង onboarding សមាជិកថ្មីក្នុងក្រុម។"
         ],
-        "codeSnippet": "features/auth/\n├── components/\n│   ├── LoginForm.tsx\n│   ├── RegisterModal.tsx\n│   └── PasswordStrength.tsx\n├── hooks/\n│   └── useAuth.ts\n├── services/\n│   └── authApi.ts\n└── types/\n    └── auth.ts",
-        "codeLanguage": "tsx",
+        "codeSnippet": "features/auth/\n├── components/\n│   ├── LoginForm.jsx\n│   ├── RegisterModal.jsx\n│   └── PasswordStrength.jsx\n├── hooks/\n│   └── useAuth.js\n├── services/\n│   └── authApi.js\n└── utils/\n    └── authHelper.js",
+        "codeLanguage": "jsx",
         "codeTitle": "Feature Folder Structure",
         "proTip": "នៅពេល feature មួយត្រូវលុបចោល អ្នកគ្រាន់តែលុប folder `features/feature-name` មួយប៉ុណ្ណោះ ដោយមិនបាច់ដើររក files រាយប៉ាយក្នុង folders ផ្សេងៗឡើយ។"
       },
@@ -543,31 +543,31 @@ export const modulesData: ModuleItem[] = [
         "id": "m03-11",
         "number": "11",
         "title": "Container vs Presentational Components",
-        "summary": "ការបំបែក data fetching និង business logic ចេញពី visual UI rendering ឱ្យដាច់ពីគ្នា។",
-        "explanation": "Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (ទទួល props និង render JSX)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (Fetching data ពី API, subscribing ទៅ store, និងដោះស្រាយ user mutations)។",
+        "summary": "ការបំបែករវាង logic/state management និង visual UI rendering ឱ្យដាច់ពីគ្នា។",
+        "explanation": "Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (គ្រប់គ្រង state, conditional rendering ឬ business logic)។",
         "keyPoints": [
-          "Presentational (Dumb / Pure UI): គ្មាន business state ងាយស្រួលសរសេរ test និង preview លើ Storybook។",
-          "Container (Smart / Logic): ផ្ទុក hooks, API queries, និង mutation handlers រួចបញ្ជូន data ទៅ UI component។",
-          "ជួយបង្កើន reusability ព្រោះថា UI ដដែលនេះអាចយកទៅប្រើប្រាស់ជាមួយ data source ផ្សេងគ្នាបាន។"
+          "Presentational (Pure UI): ផ្តោតលើ visual elements, CSS styles និង HTML structure។",
+          "Container (Smart / Logic): គ្រប់គ្រង state, handling business rules និងសម្រេចចិត្តថាតើពេលណាត្រូវ render UI component។",
+          "ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និងងាយស្រួលធ្វើ unit testing។"
         ],
-        "codeSnippet": "// Presentational Component (Dumb / Pure UI)\nexport function UserCardUI({ name, email, avatar }: UserProps) {\n  return (\n    <div className=\"flex items-center gap-3 p-3 bg-slate-900 rounded-lg\">\n      <img src={avatar} className=\"w-10 h-10 rounded-full\" alt={name} />\n      <div>\n        <p className=\"font-medium text-white\">{name}</p>\n        <p className=\"text-xs text-slate-400\">{email}</p>\n      </div>\n    </div>\n  );\n}\n\n// Container Component (Smart / Data Fetching)\nexport function UserCardContainer({ userId }: { userId: string }) {\n  const { data: user, isLoading } = useQuery(['user', userId], () => fetchUser(userId));\n  if (isLoading) return <Skeleton className=\"h-16 w-full\" />;\n  if (!user) return null;\n  return <UserCardUI name={user.name} email={user.email} avatar={user.avatar} />;\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "import { useState } from 'react';\n\n// 1. Presentational Component: Focuses purely on visual UI (No props)\nexport function ProfileCardUI() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-2xl text-center max-w-sm mx-auto\">\n      <div className=\"w-16 h-16 mx-auto rounded-full bg-indigo-600 flex items-center justify-center text-white text-xl font-bold\">\n        RT\n      </div>\n      <h3 className=\"mt-3 text-lg font-bold text-white\">Ratha Tech</h3>\n      <p className=\"text-sm text-slate-400\">Frontend Engineer</p>\n      <div className=\"mt-4 pt-3 border-t border-slate-800 flex justify-around text-xs text-slate-300\">\n        <span>12 Courses</span>\n        <span>48 Projects</span>\n      </div>\n    </div>\n  );\n}\n\n// 2. Container Component: Manages loading state and logic (No props)\nexport function ProfileContainer() {\n  const [isLoading, setIsLoading] = useState(false);\n\n  if (isLoading) {\n    return (\n      <div className=\"p-8 text-center text-slate-400 animate-pulse\">\n        Loading profile data...\n      </div>\n    );\n  }\n\n  return <ProfileCardUI />;\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Container vs Presentational Pattern",
-        "proTip": "ការបំបែក Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ styling ដោយមិនបារម្ភពីរឿង API integration។"
+        "proTip": "ការបំបែករវាង Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ visual design ដោយមិនបារម្ភពីរឿង state ឬ data logic ឡើយ។"
       },
       {
         "id": "m03-12",
         "number": "12",
         "title": "Component Best Practices",
-        "summary": "គោលការណ៍ Single Responsibility, Component Purity និងការគ្រប់គ្រងចំនួន props ឱ្យមានអនាម័យ។",
-        "explanation": "រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ប្រសិនបើ component មួយទទួល props លើសពី ៧-៨ props អ្នកគួរពិចារណាប្រមូលផ្តុំ props ទាំងនោះជា object តែមួយ ឬបំបែកវាទៅជា compound components។",
+        "summary": "គោលការណ៍ Single Responsibility, Component Purity និងការរៀបចំកូដឱ្យមានអនាម័យ។",
+        "explanation": "រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ជៀសវាងការសរសេរ component មួយឱ្យធ្វើការងារច្រើនពេក ឬផ្ទុក markup រាប់រយបន្ទាត់នៅក្នុង file តែមួយ។",
         "keyPoints": [
-          "រក្សា component ឱ្យមាន Purity៖ នៅពេលទទួលបាន props ដដែល ត្រូវតែ return JSX ដូចគ្នាជានិច្ច។",
+          "រក្សា component ឱ្យមាន Purity៖ រាល់ពេល component ដំណើរការ ត្រូវតែ return JSX ដូចគ្នា និងគ្មានផលប៉ះពាល់ចំហៀង (No side effects)។",
           "ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។",
           "កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។"
         ],
-        "codeSnippet": "// Golden Rule of React: Purity during render\n// ❌ Impure: Mutating external variables during render\nlet renderCount = 0;\nfunction BadComponent() {\n  renderCount++; // Side effect!\n  return <div>Render {renderCount}</div>;\n}\n\n// ✅ Pure: Rendering has no observable external mutations\nfunction GoodComponent({ title }: { title: string }) {\n  return <h2 className=\"text-xl font-semibold\">{title}</h2>;\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// Golden Rule of React: Purity during render\n\n// ❌ Impure: Mutating external variables during render\nlet renderCount = 0;\nfunction BadComponent() {\n  renderCount++; // Side effect: modifies external state on every render!\n  return <div>Render count: {renderCount}</div>;\n}\n\n// ✅ Pure: Rendering has no observable external mutations (No props)\nfunction GoodComponent() {\n  const currentTitle = \"Modern React Development\";\n  return <h2 className=\"text-xl font-semibold text-white\">{currentTitle}</h2>;\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Enforcing Component Purity",
         "proTip": "ចងចាំ Golden Rule របស់ React៖ Rendering phase ត្រូវតែ Pure ដោយគ្មានការកែប្រែ external variables ឬ trigger side effects ឡើយ។"
       }
@@ -590,11 +590,11 @@ export const modulesData: ModuleItem[] = [
         "keyPoints": [
           "Props ហូរតាមទិសដៅតែមួយ (Unidirectional) ពី parent ចុះទៅ child។",
           "Child components ដាច់ខាតមិនត្រូវកែប្រែ (mutate) តម្លៃ props របស់ខ្លួនឡើយ (Props are immutable)។",
-          "TypeScript interfaces ជួយផ្តល់នូវ autocomplete និង type safety យ៉ាងច្បាស់លាស់សម្រាប់ props។"
+          "Props អនុញ្ញាតឱ្យ component មួយអាចទទួលទិន្នន័យផ្សេងៗគ្នា ដើម្បីបង្ហាញ UI តាមតម្រូវការ។"
         ],
-        "codeSnippet": "interface AlertProps {\n  type: \"info\" | \"warning\" | \"error\";\n  message: string;\n}\n\nexport function Alert({ type, message }: AlertProps) {\n  const bg = type === \"error\" ? \"bg-rose-950/60 border-rose-800 text-rose-300\" \n           : type === \"warning\" ? \"bg-amber-950/60 border-amber-800 text-amber-300\"\n           : \"bg-blue-950/60 border-blue-800 text-blue-300\";\n\n  return <div className={`p-3 border rounded-lg ${bg}`}>{message}</div>;\n}",
-        "codeLanguage": "tsx",
-        "codeTitle": "Basic Props with TypeScript",
+        "codeSnippet": "export function Alert({ type, message }) {\n  const bg = type === \"error\" ? \"bg-rose-950/60 border-rose-800 text-rose-300\" \n           : type === \"warning\" ? \"bg-amber-950/60 border-amber-800 text-amber-300\"\n           : \"bg-blue-950/60 border-blue-800 text-blue-300\";\n\n  return <div className={`p-3 border rounded-lg ${bg}`}>{message}</div>;\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "Basic Props in Component",
         "proTip": "គិតពី props ដូចជា arguments នៃ function ធម្មតា៖ function ទទួល parameters មកគណនា តែមិនត្រូវទៅកែប្រែតម្លៃដើមនោះឡើយ។"
       },
       {
@@ -609,7 +609,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រសិនបើបញ្ជូន boolean prop ដោយមិនដាក់តម្លៃ (ឧ. `<Modal isOpen />`) នោះវាស្មើនឹង `isOpen={true}` ដោយស្វ័យប្រវត្តិ។"
         ],
         "codeSnippet": "<CourseCard \n  title=\"Advanced Next.js\"\n  moduleCount={27}\n  isPublished={true}\n  tags={[\"React\", \"Next.js\", \"Zustand\"]}\n  onEnroll={(id) => console.log(\"Enrolled in\", id)}\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Diverse Prop Types",
         "proTip": "ប្រើ shorthand `<Component isVisible />` ជំនួសឱ្យ `<Component isVisible={true} />` ដើម្បីឱ្យកូដកាន់តែខ្លីស្អាត។"
       },
@@ -621,12 +621,12 @@ export const modulesData: ModuleItem[] = [
         "explanation": "Argument ទីមួយនៃ functional component គឺជា `props` object។ អ្នកអាចទាញយក properties តាមរយៈ `props.title` ឬប្រើបច្ចេកទេស destructuring ដោយផ្ទាល់នៅត្រង់ parameters។",
         "keyPoints": [
           "Props គឺជា JavaScript object ធម្មតាដែលផ្ទុករាល់ attributes ទាំងអស់ដែលបានបញ្ជូនមកពី parent។",
-          "ត្រូវកំណត់ Type ឱ្យបានច្បាស់លាស់ជាមួយ TypeScript ដើម្បីជៀសវាងកំហុសពេល access properties ដែលគ្មាន។"
+          "អ្នកអាចពិនិត្យមើលតម្លៃ props ដោយប្រើ `console.log(props)` ដើម្បីយល់ច្បាស់ពីទិន្នន័យដែលបានបញ្ជូនមក។"
         ],
-        "codeSnippet": "export function CourseHeader(props: { title: string; subtitle: string }) {\n  return (\n    <div>\n      <h1 className=\"text-3xl font-bold text-white\">{props.title}</h1>\n      <p className=\"text-slate-400\">{props.subtitle}</p>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function CourseHeader(props) {\n  return (\n    <div>\n      <h1 className=\"text-3xl font-bold text-white\">{props.title}</h1>\n      <p className=\"text-slate-400\">{props.subtitle}</p>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Receiving the Props Object",
-        "proTip": "ការប្រើ TypeScript សម្រាប់ typing props ជួយឱ្យ editor បង្ហាញ IntelliSense និងការពារបញ្ហា runtime errors បានយ៉ាងមានប្រសិទ្ធភាព។"
+        "proTip": "អ្នកអាចចូលទៅកាន់ properties តាមរយៈ props.propertyName ឬប្រើ destructuring ដើម្បីឱ្យកូដកាន់តែខ្លីស្អាត។"
       },
       {
         "id": "m04-04",
@@ -639,7 +639,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រើ curly braces លុះត្រាតែ string នោះជា JavaScript variable ឬ template literal expression៖ `title={userName}` ឬ `title={\\`Hello \\${name}\\`}`។"
         ],
         "codeSnippet": "<UserProfile \n  name=\"Alice Doe\" \n  role=\"Senior Frontend Architect\" \n  country=\"Cambodia\" \n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "String Literal Props",
         "proTip": "សរសេរ `label=\"Submit\"` ជាជាង `label={\"Submit\"}` ដើម្បីរក្សាកូដឱ្យខ្លី និងអានស្រួល។"
       },
@@ -654,7 +654,7 @@ export const modulesData: ModuleItem[] = [
           "ជួយការពារបញ្ហា type coercion ក្នុង JavaScript (ដូចជា `5 + \"5\" = \"55\"`)។"
         ],
         "codeSnippet": "<RatingBadge \n  score={4.85} \n  totalReviews={1240} \n  stars={5} \n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Numeric Props",
         "pitfall": "ការសរសេរ `<Widget count=\"5\" />` នឹងបញ្ជូនជា string \"5\" មិនមែនជាលេខ 5 ឡើយ ដែលអាចបណ្តាលឱ្យមានបញ្ហាពេលយកទៅបូកលេខ (ឧ. \"5\" + 1 = \"51\")!"
       },
@@ -670,7 +670,7 @@ export const modulesData: ModuleItem[] = [
           "ជៀសវាងការបង្កើត inline objects ថ្មីរាល់ពេល render បើ component កូនត្រូវបាន memoize (អាចប៉ះពាល់ដល់ performance)។"
         ],
         "codeSnippet": "const currentUser = { id: \"u123\", name: \"Dara\", role: \"Instructor\" };\n\n// Pass variable or inline object:\n<AccountSettings \n  user={currentUser}\n  themeConfig={{ mode: \"dark\", accent: \"#3b82f6\" }}\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Object Props",
         "proTip": "បើ object មានទំហំធំ ឬប្រើប្រាស់ឡើងវិញច្រើនកន្លែង គួរប្រកាសជា variable នៅខាងក្រៅ ឬគ្រប់គ្រងដោយ state។"
       },
@@ -684,10 +684,10 @@ export const modulesData: ModuleItem[] = [
           "បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `users={userList}`។",
           "ពេលធ្វើការ loop/map array elements ក្នុង JSX ត្រូវផ្តល់ `key` prop ដ៏មានតម្លៃ unique ជានិច្ច។"
         ],
-        "codeSnippet": "export function TagList({ tags }: { tags: string[] }) {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      {tags.map((tag) => (\n        <span key={tag} className=\"px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300\">\n          #{tag}\n        </span>\n      ))}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function TagList({ tags }) {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      {tags.map((tag) => (\n        <span key={tag} className=\"px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300\">\n          #{tag}\n        </span>\n      ))}\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing and Iterating Arrays",
-        "proTip": "កំណត់ Type នៃ array ក្នុង TypeScript ឱ្យច្បាស់លាស់ ដូចជា `tags: string[]` ឬ `items: Product[]` ដើម្បីឱ្យ editor ជួយ auto-complete properties។"
+        "proTip": "ប្រើ Array method .map() ដោយផ្ទាល់លើ prop ដើម្បី render dynamic list យ៉ាងរហ័ស។"
       },
       {
         "id": "m04-08",
@@ -700,8 +700,8 @@ export const modulesData: ModuleItem[] = [
           "បញ្ជូន function reference (កុំ invoke function ដោយប្រើ `()` ក្នុងពេល render ឱ្យសោះ)។",
           "ដាក់ឈ្មោះ function props ដោយប្រើបុព្វបទ `on` (ដូចជា `onDelete`, `onSelect`, `onSubmit`)។"
         ],
-        "codeSnippet": "export function DeleteButton({ onDelete }: { onDelete: (id: string) => void }) {\n  return (\n    <button \n      onClick={() => onDelete(\"item-42\")}\n      className=\"px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm\"\n    >\n      Delete Record\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function DeleteButton({ onDelete }) {\n  return (\n    <button \n      onClick={() => onDelete(\"item-42\")}\n      className=\"px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm\"\n    >\n      Delete Record\n    </button>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Callback Function Props",
         "proTip": "ប្រើ convention ដាក់ឈ្មោះ `onEvent` សម្រាប់ prop (ឧ. `onDelete`) និង `handleEvent` សម្រាប់ handler function នៅក្នុង parent (ឧ. `handleDelete`)។"
       },
@@ -712,12 +712,12 @@ export const modulesData: ModuleItem[] = [
         "summary": "បច្ចេកទេសទាញយក props យ៉ាងខ្លីស្អាតនៅត្រង់ function signature។",
         "explanation": "ការធ្វើ Destructuring props ជួយឱ្យកូដខ្លី ស្អាត មិនបាច់សរសេរពាក្យ `props.` ដដែលៗ និងបង្ហាញយ៉ាងច្បាស់នូវរាល់ properties ណាខ្លះដែល component កំពុងប្រើប្រាស់។",
         "keyPoints": [
-          "ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend }: MetricProps)`។",
+          "ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend })`។",
           "អាចកំណត់ default fallback values ឬ rename properties បានយ៉ាងងាយស្រួល។",
           "អាចប្រើ Rest parameter `...rest` ដើម្បីចាប់យក props ដែលនៅសល់ទាំងអស់។"
         ],
-        "codeSnippet": "export function MetricCard({ \n  label, \n  value, \n  trend = \"up\" \n}: { \n  label: string; \n  value: number | string; \n  trend?: \"up\" | \"down\" \n}) {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <p className=\"text-sm text-slate-400\">{label}</p>\n      <div className=\"flex items-baseline gap-2 mt-1\">\n        <span className=\"text-2xl font-bold text-white\">{value}</span>\n        <span className={trend === \"up\" ? \"text-emerald-400 text-xs\" : \"text-rose-400 text-xs\"}>\n          {trend === \"up\" ? \"▲ +12%\" : \"▼ -4%\"}\n        </span>\n      </div>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function MetricCard({ \n  label, \n  value, \n  trend = \"up\" \n}) {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <p className=\"text-sm text-slate-400\">{label}</p>\n      <div className=\"flex items-baseline gap-2 mt-1\">\n        <span className=\"text-2xl font-bold text-white\">{value}</span>\n        <span className={trend === \"up\" ? \"text-emerald-400 text-xs\" : \"text-rose-400 text-xs\"}>\n          {trend === \"up\" ? \"▲ +12%\" : \"▼ -4%\"}\n        </span>\n      </div>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Destructuring in Function Signature",
         "proTip": "ការ destructure ជួយឱ្យ developer ផ្សេងទៀតអាចមើលដឹងភ្លាមៗថា component នេះត្រូវការព័ត៌មានអ្វីខ្លះ ដោយគ្រាន់តែក្រឡេកមើល function signature។"
       },
@@ -728,12 +728,12 @@ export const modulesData: ModuleItem[] = [
         "summary": "ការកំណត់ fallback values សម្រាប់ optional props ដោយប្រើ ES6 default parameters។",
         "explanation": "ក្នុង modern React សូមប្រើប្រាស់ JavaScript ES6 default parameter values ដោយផ្ទាល់នៅត្រង់ destructured props signature ជំនួសឱ្យការប្រើ static property `defaultProps` ដែលហួសសម័យ (deprecated/legacy)។",
         "keyPoints": [
-          "ES6 defaults ដំណើរការយ៉ាងរលូនជាមួយ TypeScript optional properties (`prop?: string`)។",
+          "ES6 defaults ផ្តល់នូវ syntax ខ្លី និងងាយស្រួលយល់សម្រាប់ props ដែលអាចមាន ឬគ្មាន (Optional)។",
           "Fallback value នឹងត្រូវយកមកប្រើ លុះត្រាតែ prop នោះមានតម្លៃ `undefined`។",
           "កាត់បន្ថយ runtime bugs នៅពេលដែល parent មិនបានបញ្ជូន prop ណាមួយមក។"
         ],
-        "codeSnippet": "interface ButtonProps {\n  label: string;\n  variant?: \"primary\" | \"secondary\";\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\n// Fallbacks assigned in destructuring:\nexport function Button({ \n  label, \n  variant = \"primary\", \n  size = \"md\" \n}: ButtonProps) {\n  return <button className={`btn-${variant} btn-${size}`}>{label}</button>;\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// Fallbacks assigned directly in destructuring:\nexport function Button({ \n  label, \n  variant = \"primary\", \n  size = \"md\" \n}) {\n  return <button className={`btn-${variant} btn-${size}`}>{label}</button>;\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "ES6 Default Props Pattern",
         "proTip": "កុំប្រើ `Component.defaultProps` ទៀតឡើយនៅក្នុង modern React ព្រោះវាត្រូវបាន deprecate ក្នុង React 19 ហើយត្រូវជំនួសដោយ ES6 default values ទាំងស្រុង។"
       },
@@ -744,12 +744,12 @@ export const modulesData: ModuleItem[] = [
         "summary": "ការផ្គុំ component tags ព័ទ្ធជុំវិញ nested JSX elements ដោយប្រើប្រាស់ `children` prop។",
         "explanation": "Prop ពិសេសឈ្មោះថា `children` តំណាងឱ្យរាល់ content ទាំងឡាយណាដែលត្រូវបានដាក់នៅចន្លោះ opening tag និង closing tag នៃ component មួយ ដូចជា៖ `<Card><h2>Title</h2><p>Body</p></Card>`។",
         "keyPoints": [
-          "កំណត់ Type ដោយប្រើ `React.ReactNode` នៅក្នុង TypeScript។",
+          "អាចផ្ទុក JSX elements, strings, numbers ឬ components ផ្សេងៗជាច្រើន។",
           "ជាគ្រឹះស្នូលសម្រាប់បង្កើត Wrapper components, Layouts, Cards, Modals និង Context Providers។",
           "អនុញ្ញាតឱ្យ component អាចទទួលអ្វីក៏បាន ចាប់ពី text ធម្មតា រហូតដល់ JSX elements ស្មុគស្មាញ។"
         ],
-        "codeSnippet": "interface CardProps {\n  title: string;\n  children: React.ReactNode;\n}\n\nexport function Card({ title, children }: CardProps) {\n  return (\n    <div className=\"bg-slate-900 border border-slate-800 rounded-xl p-5\">\n      <h3 className=\"text-lg font-semibold text-white mb-3\">{title}</h3>\n      <div className=\"text-slate-300\">{children}</div>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "export function Card({ title, children }) {\n  return (\n    <div className=\"bg-slate-900 border border-slate-800 rounded-xl p-5\">\n      <h3 className=\"text-lg font-semibold text-white mb-3\">{title}</h3>\n      <div className=\"text-slate-300\">{children}</div>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Children Prop Composition",
         "proTip": "ប្រើ `children` prop នៅពេលអ្នកចង់បង្កើត generic wrapper container ដែលមិនចាំបាច់ដឹងមុនថាតើ content ខាងក្នុងជារូបអ្វីនោះទេ។"
       },
@@ -765,7 +765,7 @@ export const modulesData: ModuleItem[] = [
           "ទាំង Props និង State នៅពេលមានការផ្លាស់ប្តូរ សុទ្ធតែធ្វើឱ្យ component ធ្វើការ re-render ដើម្បី update UI ដូចគ្នា។"
         ],
         "codeSnippet": "/*\n| លក្ខណៈពិសេស       | Props                          | State                         |\n|-------------------|--------------------------------|-------------------------------|\n| ប្រភពដើម          | បញ្ជូនមកពី parent              | កំណត់នៅខាងក្នុង component     |\n| ការកែប្រែតម្លៃ     | Read-only (មិនអាចកែបាន)        | កែប្រែតាមរយៈ setState function|\n| ភាពជាម្ចាស់ (Owner)| Parent ជាអ្នកគ្រប់គ្រងតម្លៃ      | Component ផ្ទាល់ជាម្ចាស់តម្លៃ   |\n| គោលបំណង          | Configuration & callbacks      | Interactivity & dynamic data  |\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Props vs State Comparison Matrix",
         "proTip": "បើទិន្នន័យត្រូវចែករំលែក ឬគ្រប់គ្រងដោយ parent ចូរប្រើ Props។ បើទិន្នន័យផ្លាស់ប្តូរតាមរយៈ user interaction ផ្ទៃក្នុង component នោះ ចូរប្រើ State។"
       },
@@ -781,7 +781,7 @@ export const modulesData: ModuleItem[] = [
           "Single Source of Truth៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងពិតប្រាកដតែមួយគត់ក្នុង component tree។"
         ],
         "codeSnippet": "// Parent maintains single source of truth\nexport function CounterApp() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div className=\"space-y-4\">\n      {/* Data flows down as props */}\n      <CountDisplay value={count} />\n      {/* Callback flows down to trigger state change */}\n      <CountControls onIncrement={() => setCount(c => c + 1)} onReset={() => setCount(0)} />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Unidirectional Data Flow Example",
         "proTip": "យន្តការ 'Data down, actions up' គឺជាបេះដូងនៃ React Architecture ដែលធានាថាកម្មវិធីរបស់អ្នកមានស្ថិរភាព និងងាយស្រួល scale។"
       }
@@ -806,7 +806,7 @@ export const modulesData: ModuleItem[] = [
           "Each top-level element in the array requires a unique `key` prop."
         ],
         "codeSnippet": "export function NumberList() {\n  const numbers = [10, 20, 30, 40, 50];\n  return (\n    <ul className=\"flex gap-2\">\n      {numbers.map((n) => (\n        <li key={n} className=\"px-3 py-1 bg-slate-800 rounded text-blue-400 font-mono\">\n          {n}\n        </li>\n      ))}\n    </ul>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Rendering Simple Arrays"
       },
       {
@@ -820,7 +820,7 @@ export const modulesData: ModuleItem[] = [
           "Keep mapping functions pure and concise."
         ],
         "codeSnippet": "interface Student {\n  id: string;\n  name: string;\n  score: number;\n}\n\nexport function Leaderboard({ students }: { students: Student[] }) {\n  return (\n    <div className=\"divide-y divide-slate-800\">\n      {students.map((student, index) => (\n        <div key={student.id} className=\"flex justify-between py-2 text-sm\">\n          <span className=\"text-slate-300\">#{index + 1} {student.name}</span>\n          <span className=\"font-bold text-emerald-400\">{student.score} pts</span>\n        </div>\n      ))}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Mapping Objects to JSX Elements"
       },
       {
@@ -834,7 +834,7 @@ export const modulesData: ModuleItem[] = [
           "Render specific properties or map over `Object.entries(obj)`."
         ],
         "codeSnippet": "// ❌ Error: Objects are not valid as a React child:\n// return <div>{user}</div>;\n\n// ✅ Correct:\nexport function UserProfile({ user }: { user: { name: string; email: string } }) {\n  return (\n    <div>\n      <h4 className=\"font-semibold text-white\">{user.name}</h4>\n      <p className=\"text-xs text-slate-400\">{user.email}</p>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Rendering Object Properties Correctly"
       },
       {
@@ -847,7 +847,7 @@ export const modulesData: ModuleItem[] = [
           "Extract list items into dedicated subcomponents for clarity and memoization."
         ],
         "codeSnippet": "export function ModuleGrid({ modules }: { modules: ModuleItem[] }) {\n  return (\n    <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n      {modules.map((mod) => (\n        <ModuleCard key={mod.id} module={mod} />\n      ))}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Rendering List of Grid Cards"
       },
       {
@@ -862,7 +862,7 @@ export const modulesData: ModuleItem[] = [
           "Avoid array index as key when list order can change."
         ],
         "codeSnippet": "// ✅ Use stable IDs from your database/backend\n{todos.map(todo => (\n  <TodoItem key={todo.id} todo={todo} />\n))}\n\n// ⚠️ Array index is acceptable ONLY if list is strictly static:\n{['Home', 'About', 'Contact'].map((item, idx) => (\n  <span key={idx}>{item}</span>\n))}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Correct Key Usage in React",
         "pitfall": "Using array index as key when deleting or sorting items causes state from one input item to persist in a different item after re-ordering!"
       },
@@ -876,7 +876,7 @@ export const modulesData: ModuleItem[] = [
           "Store components in a dictionary object and index with dynamic key."
         ],
         "codeSnippet": "import { CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';\n\nconst iconMap = {\n  success: CheckCircle,\n  warning: AlertTriangle,\n  error: XCircle,\n  info: Info,\n};\n\nexport function DynamicStatusIcon({ type }: { type: 'success' | 'warning' | 'error' | 'info' }) {\n  const IconComponent = iconMap[type];\n  return <IconComponent className=\"w-5 h-5\" />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dynamic Component Lookup Map"
       },
       {
@@ -890,7 +890,7 @@ export const modulesData: ModuleItem[] = [
           "Ternary for inline component switches."
         ],
         "codeSnippet": "export function AccountStatus({ status }: { status: 'loading' | 'verified' | 'unverified' }) {\n  if (status === 'loading') {\n    return <p className=\"text-slate-500\">Checking status...</p>;\n  }\n\n  return (\n    <div>\n      {status === 'verified' ? (\n        <span className=\"text-emerald-400\">Account Active ✓</span>\n      ) : (\n        <span className=\"text-amber-400\">Please verify your email address</span>\n      )}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Conditional Rendering Pattern"
       },
       {
@@ -903,7 +903,7 @@ export const modulesData: ModuleItem[] = [
           "Great for binary switches: Dark/Light theme, Active/Inactive tab."
         ],
         "codeSnippet": "<button className={isActive ? \"bg-blue-600 text-white\" : \"bg-slate-800 text-slate-400\"}>\n  {isActive ? \"Currently Selected\" : \"Select Option\"}\n</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Inline Ternary Operator"
       },
       {
@@ -916,7 +916,7 @@ export const modulesData: ModuleItem[] = [
           "Always ensure the left operand is a strict boolean: `Boolean(val)` or `val > 0`."
         ],
         "codeSnippet": "export function NotificationBanner({ hasDiscount, discountCode }: BannerProps) {\n  return (\n    <div>\n      {hasDiscount && (\n        <div className=\"bg-emerald-950/80 border border-emerald-800 p-2 text-emerald-300 text-xs rounded\">\n          Use code <strong>{discountCode}</strong> for 20% off!\n        </div>\n      )}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Logical AND Guard"
       },
       {
@@ -929,7 +929,7 @@ export const modulesData: ModuleItem[] = [
           "Include an icon, explanatory heading, and call to action (e.g. 'Create your first item')."
         ],
         "codeSnippet": "export function EmptyState({ onAction }: { onAction: () => void }) {\n  return (\n    <div className=\"text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl\">\n      <Inbox className=\"w-12 h-12 text-slate-600 mx-auto mb-3\" />\n      <h3 className=\"text-lg font-medium text-white\">No tasks created yet</h3>\n      <p className=\"text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4\">\n        Get started by creating your first task using the input above.\n      </p>\n      <button onClick={onAction} className=\"px-4 py-2 bg-blue-600 text-white rounded-lg text-sm\">\n        Add New Task\n      </button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Engaging Empty State Component"
       },
       {
@@ -942,7 +942,7 @@ export const modulesData: ModuleItem[] = [
           "Use Tailwind's `animate-pulse` utility for skeleton placeholders."
         ],
         "codeSnippet": "export function CardSkeleton() {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl animate-pulse space-y-3\">\n      <div className=\"h-5 bg-slate-800 rounded w-2/3\" />\n      <div className=\"h-4 bg-slate-800/60 rounded w-full\" />\n      <div className=\"h-4 bg-slate-800/60 rounded w-4/5\" />\n      <div className=\"h-8 bg-slate-800 rounded w-24 mt-4\" />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Tailwind Skeleton Loader"
       },
       {
@@ -955,7 +955,7 @@ export const modulesData: ModuleItem[] = [
           "Include error message and retry callback."
         ],
         "codeSnippet": "export function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {\n  return (\n    <div className=\"p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center\">\n      <p className=\"text-rose-300 font-medium\">{message}</p>\n      <button \n        onClick={onRetry}\n        className=\"mt-3 px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white rounded text-xs font-semibold\"\n      >\n        Retry Request\n      </button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Error Recovery Component"
       }
     ]
@@ -979,7 +979,7 @@ export const modulesData: ModuleItem[] = [
           "Named in camelCase: `onClick`, `onChange`, `onKeyDown`."
         ],
         "codeSnippet": "export function EventLogger() {\n  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {\n    console.log(\"Event Type:\", e.type);\n    console.log(\"Coordinates:\", e.clientX, e.clientY);\n  };\n\n  return <button onClick={handleClick}>Log Event</button>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "React SyntheticEvent Handling"
       },
       {
@@ -993,7 +993,7 @@ export const modulesData: ModuleItem[] = [
           "Pass inline arrow function if parameters are needed: `onClick={() => handleDelete(id)}`."
         ],
         "codeSnippet": "// ❌ Wrong: handleClick runs immediately on render!\n// <button onClick={handleClick()}>Click</button>\n\n// ✅ Correct: Function reference passed\n<button onClick={handleClick}>Click</button>\n\n// ✅ Correct: Arrow function wrapper for arguments\n<button onClick={() => handleDelete(item.id)}>Delete</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Function Reference vs Invocation"
       },
       {
@@ -1006,7 +1006,7 @@ export const modulesData: ModuleItem[] = [
           "Works with mouse, touchscreen, and keyboard accessibility."
         ],
         "codeSnippet": "<button \n  onClick={(e) => {\n    e.stopPropagation();\n    console.log(\"Clicked!\");\n  }}\n  className=\"px-4 py-2 bg-blue-600 rounded-lg text-white\"\n>\n  Click Me\n</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "onClick Handler"
       },
       {
@@ -1019,7 +1019,7 @@ export const modulesData: ModuleItem[] = [
           "Access input value via `e.target.value`."
         ],
         "codeSnippet": "export function SearchInput({ value, onChange }: SearchInputProps) {\n  return (\n    <input \n      type=\"text\" \n      value={value} \n      onChange={(e) => onChange(e.target.value)}\n      placeholder=\"Filter topics...\"\n      className=\"w-full bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-white\"\n    />\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "onChange Event Handler"
       },
       {
@@ -1033,7 +1033,7 @@ export const modulesData: ModuleItem[] = [
           "Attach `onSubmit` to `<form>` rather than `onClick` to submit button to allow Enter key submissions."
         ],
         "codeSnippet": "export function LoginForm() {\n  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {\n    e.preventDefault();\n    console.log(\"Form submitted safely without page reload!\");\n  };\n\n  return (\n    <form onSubmit={handleSubmit} className=\"space-y-3\">\n      <input type=\"email\" placeholder=\"Email\" required />\n      <button type=\"submit\" className=\"bg-blue-600 px-4 py-2 rounded text-white\">Log In</button>\n    </form>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "onSubmit Form Handler"
       },
       {
@@ -1046,7 +1046,7 @@ export const modulesData: ModuleItem[] = [
           "React's mouseEnter does not bubble, mimicking standard CSS hover."
         ],
         "codeSnippet": "export function HoverPreview() {\n  const [isHovered, setIsHovered] = useState(false);\n\n  return (\n    <div \n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => setIsHovered(false)}\n      className=\"p-4 border rounded-lg transition-colors bg-slate-900 hover:border-blue-500\"\n    >\n      Hover over me!\n      {isHovered && <p className=\"text-xs text-blue-400 mt-1\">✨ Tooltip content visible</p>}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Hover Handlers"
       },
       {
@@ -1059,7 +1059,7 @@ export const modulesData: ModuleItem[] = [
           "Naming convention: `onEvent` for props, `handleEvent` for functions."
         ],
         "codeSnippet": "interface TopicItemProps {\n  topic: TopicItem;\n  onSelectTopic: (topic: TopicItem) => void;\n}\n\nexport function TopicCard({ topic, onSelectTopic }: TopicItemProps) {\n  return (\n    <div onClick={() => onSelectTopic(topic)} className=\"cursor-pointer\">\n      <h4>{topic.title}</h4>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Event Callbacks"
       },
       {
@@ -1072,7 +1072,7 @@ export const modulesData: ModuleItem[] = [
           "Signature: `(e) => handleAction(id, e)`."
         ],
         "codeSnippet": "<button onClick={(e) => handleArchive(item.id, e)}>\n  Archive Item\n</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Passing Custom Parameters"
       },
       {
@@ -1085,7 +1085,7 @@ export const modulesData: ModuleItem[] = [
           "In React, returning `false` does not work; you must call `e.preventDefault()`."
         ],
         "codeSnippet": "const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {\n  e.preventDefault();\n  router.push('/custom-destination');\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "e.preventDefault() Usage"
       },
       {
@@ -1098,7 +1098,7 @@ export const modulesData: ModuleItem[] = [
           "Crucial when a card has an `onClick` but also contains a nested 'Delete' or 'Favorite' button."
         ],
         "codeSnippet": "export function CardWithAction() {\n  return (\n    <div onClick={() => console.log(\"Card opened\")} className=\"p-4 border rounded\">\n      <h3>Card Title</h3>\n      <button \n        onClick={(e) => {\n          e.stopPropagation(); // Prevents card opening!\n          console.log(\"Deleted\");\n        }}\n        className=\"text-rose-500\"\n      >\n        Delete\n      </button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "e.stopPropagation() in Nested Elements"
       },
       {
@@ -1111,7 +1111,7 @@ export const modulesData: ModuleItem[] = [
           "Use `e.key === 'Escape'` or `(e.metaKey || e.ctrlKey) && e.key === 'k'`."
         ],
         "codeSnippet": "useEffect(() => {\n  const handleKeyDown = (e: KeyboardEvent) => {\n    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {\n      e.preventDefault();\n      setIsSearchOpen(prev => !prev);\n    }\n  };\n  window.addEventListener('keydown', handleKeyDown);\n  return () => window.removeEventListener('keydown', handleKeyDown);\n}, []);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Global Keyboard Shortcut Listener"
       },
       {
@@ -1124,7 +1124,7 @@ export const modulesData: ModuleItem[] = [
           "Avoid side-effects inside JSX; keep handlers focused."
         ],
         "codeSnippet": "// Clean extracted handler pattern\nexport function RegistrationForm() {\n  const [email, setEmail] = useState('');\n  const [isSubmitting, setIsSubmitting] = useState(false);\n\n  const handleSubmit = async (e: React.FormEvent) => {\n    e.preventDefault();\n    if (isSubmitting) return; // Prevent double submit\n    setIsSubmitting(true);\n    try {\n      await registerUser(email);\n    } finally {\n      setIsSubmitting(false);\n    }\n  };\n\n  return <form onSubmit={handleSubmit}>...</form>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Best Practice Event Handler"
       }
     ]
@@ -1149,7 +1149,7 @@ export const modulesData: ModuleItem[] = [
           "Updating state triggers reconciliation."
         ],
         "codeSnippet": "import { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button onClick={() => setCount(count + 1)} className=\"px-4 py-2 bg-blue-600 text-white rounded\">\n      Count: {count}\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Basic State Declaration",
         "interactiveDemoKey": "StateDemo"
       },
@@ -1163,7 +1163,7 @@ export const modulesData: ModuleItem[] = [
           "Props are passed down; State is managed internally."
         ],
         "codeSnippet": "// Props: Read-only input from parent\nfunction Display({ message }: { message: string }) {\n  return <h1>{message}</h1>;\n}\n\n// State: Internal interactive value\nfunction Editor() {\n  const [text, setText] = useState(\"Hello\");\n  return <Display message={text} />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "State vs Props in Action"
       },
       {
@@ -1177,7 +1177,7 @@ export const modulesData: ModuleItem[] = [
           "Never call hooks inside loops, conditions, or nested functions."
         ],
         "codeSnippet": "const [isOpen, setIsOpen] = useState(false);\nconst [user, setUser] = useState<User | null>(null);\nconst [tags, setTags] = useState<string[]>([]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useState TypeScript Declarations"
       },
       {
@@ -1191,7 +1191,7 @@ export const modulesData: ModuleItem[] = [
           "Guarantees reading the most recent state value in asynchronous callbacks."
         ],
         "codeSnippet": "// ⚠️ Problem with direct state:\n// setCount(count + 1);\n// setCount(count + 1); // count is still stale; only increments by 1!\n\n// ✅ Solution: Functional updates\nsetCount(prev => prev + 1);\nsetCount(prev => prev + 1); // Increments by 2 safely!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Functional State Updates"
       },
       {
@@ -1205,7 +1205,7 @@ export const modulesData: ModuleItem[] = [
           "Always return a new object or array copy via spread operator."
         ],
         "codeSnippet": "// ❌ Bug: Mutating array in place fails to re-render\n/*\nitems.push(newItem);\nsetItems(items); // Identical reference! React does nothing.\n*/\n\n// ✅ Fix: Create new array reference via spread\nsetItems(prev => [...prev, newItem]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Immutability & Object.is() Comparison",
         "pitfall": "Directly mutating an array with `.push()` or `.splice()` will NOT trigger a re-render. Always use `[...prev, newItem]`."
       },
@@ -1219,7 +1219,7 @@ export const modulesData: ModuleItem[] = [
           "Pattern: `setUser(prev => ({ ...prev, name: 'New Name' }))`."
         ],
         "codeSnippet": "interface Profile {\n  name: string;\n  theme: 'light' | 'dark';\n  notifications: boolean;\n}\n\nconst [profile, setProfile] = useState<Profile>({\n  name: 'Alex',\n  theme: 'dark',\n  notifications: true,\n});\n\n// Update single field safely:\nconst toggleTheme = () => {\n  setProfile(prev => ({\n    ...prev,\n    theme: prev.theme === 'dark' ? 'light' : 'dark',\n  }));\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Updating Object State Immutably"
       },
       {
@@ -1234,7 +1234,7 @@ export const modulesData: ModuleItem[] = [
           "Update: `items.map(i => i.id === id ? { ...i, done: true } : i)`"
         ],
         "codeSnippet": "// Common Immutable Array Operations:\n// 1. Add\nsetTodos(prev => [...prev, newTodo]);\n\n// 2. Remove\nsetTodos(prev => prev.filter(todo => todo.id !== deleteId));\n\n// 3. Update single item\nsetTodos(prev => prev.map(todo => \n  todo.id === targetId ? { ...todo, completed: !todo.completed } : todo\n));",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Immutable Array Helpers"
       },
       {
@@ -1247,7 +1247,7 @@ export const modulesData: ModuleItem[] = [
           "Independent state variables make code easier to reason about and refactor."
         ],
         "codeSnippet": "// Good: Independent concerns kept separate\nconst [searchQuery, setSearchQuery] = useState('');\nconst [currentPage, setCurrentPage] = useState(1);\nconst [isLoading, setIsLoading] = useState(false);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Multiple State Slices"
       },
       {
@@ -1261,7 +1261,7 @@ export const modulesData: ModuleItem[] = [
           "Use `useMemo` only if derived calculation is computationally heavy."
         ],
         "codeSnippet": "// ❌ Redundant state anti-pattern:\n// const [items, setItems] = useState([]);\n// const [itemCount, setItemCount] = useState(0); // Redundant!\n\n// ✅ Derived state:\nexport function CartView({ items }: { items: CartItem[] }) {\n  // Purely derived calculation during render:\n  const itemCount = items.length;\n  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);\n\n  return <div>Total ({itemCount} items): ${totalPrice.toFixed(2)}</div>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Derived State Pattern",
         "proTip": "Ask yourself: Can I calculate this value from existing state or props? If yes, do NOT put it in useState!"
       },
@@ -1276,7 +1276,7 @@ export const modulesData: ModuleItem[] = [
           "`useState(() => computeValue())` runs ONLY on mount."
         ],
         "codeSnippet": "// Runs only once on initial mount:\nconst [savedTheme, setSavedTheme] = useState(() => {\n  if (typeof window === 'undefined') return 'dark';\n  return localStorage.getItem('theme') || 'dark';\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Lazy State Initialization Function"
       },
       {
@@ -1289,7 +1289,7 @@ export const modulesData: ModuleItem[] = [
           "Reduces unnecessary intermediate renders and boosts performance."
         ],
         "codeSnippet": "async function handleAsyncSave() {\n  await api.save();\n  // In React 18+, both updates batch into 1 single render:\n  setIsLoading(false);\n  setSuccess(true);\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Automatic Async Batching"
       },
       {
@@ -1302,7 +1302,7 @@ export const modulesData: ModuleItem[] = [
           "Colocate state with the components that render it."
         ],
         "codeSnippet": "// State Colocation Rule:\n// If only ComponentA needs 'isModalOpen', keep it inside ComponentA,\n// NOT in the global store or App root!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "State Colocation Rule"
       }
     ]
@@ -1325,7 +1325,7 @@ export const modulesData: ModuleItem[] = [
           "Controlled inputs bind `value` to state and `onChange` to state setters."
         ],
         "codeSnippet": "export function SimpleForm() {\n  const [name, setName] = useState('');\n  return (\n    <input \n      value={name} \n      onChange={(e) => setName(e.target.value)} \n      className=\"p-2 border rounded\"\n    />\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Input",
         "interactiveDemoKey": "FormValidationDemo"
       },
@@ -1340,7 +1340,7 @@ export const modulesData: ModuleItem[] = [
           "Mutations pass through `onChange` handler before reflecting on screen."
         ],
         "codeSnippet": "export function PhoneInput() {\n  const [phone, setPhone] = useState('');\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    // Only allow digits:\n    const cleaned = e.target.value.replace(/\\D/g, '').slice(0, 10);\n    setPhone(cleaned);\n  };\n\n  return <input value={phone} onChange={handleChange} placeholder=\"Digits only\" />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Input with Sanitization"
       },
       {
@@ -1353,7 +1353,7 @@ export const modulesData: ModuleItem[] = [
           "Use `type=\"email\"` or `type=\"password\"` with controlled values."
         ],
         "codeSnippet": "<input \n  type=\"password\"\n  value={password}\n  onChange={(e) => setPassword(e.target.value)}\n  placeholder=\"Enter secure password\"\n  className=\"px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white\"\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Password Input"
       },
       {
@@ -1366,7 +1366,7 @@ export const modulesData: ModuleItem[] = [
           "Use `value` attribute, not children."
         ],
         "codeSnippet": "<textarea \n  value={bio} \n  onChange={(e) => setBio(e.target.value)} \n  rows={4} \n  className=\"w-full bg-slate-900 border rounded-lg p-3 text-white\"\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Textarea"
       },
       {
@@ -1379,7 +1379,7 @@ export const modulesData: ModuleItem[] = [
           "`<select value={selected}>` defines active selection."
         ],
         "codeSnippet": "<select \n  value={role} \n  onChange={(e) => setRole(e.target.value)}\n  className=\"bg-slate-900 border border-slate-800 text-white rounded-lg p-2\"\n>\n  <option value=\"student\">Student</option>\n  <option value=\"instructor\">Instructor</option>\n  <option value=\"admin\">Administrator</option>\n</select>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Select Dropdown"
       },
       {
@@ -1392,7 +1392,7 @@ export const modulesData: ModuleItem[] = [
           "Read `e.target.checked`, not `e.target.value`."
         ],
         "codeSnippet": "<label className=\"flex items-center gap-2 cursor-pointer\">\n  <input \n    type=\"checkbox\" \n    checked={agreed} \n    onChange={(e) => setAgreed(e.target.checked)}\n    className=\"w-4 h-4 rounded text-blue-600\"\n  />\n  <span className=\"text-sm text-slate-300\">I accept terms and conditions</span>\n</label>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Checkbox"
       },
       {
@@ -1405,7 +1405,7 @@ export const modulesData: ModuleItem[] = [
           "Bind all radios in group to the same state string."
         ],
         "codeSnippet": "export function PlanSelector() {\n  const [plan, setPlan] = useState<'free' | 'pro'>('pro');\n\n  return (\n    <div className=\"flex gap-4\">\n      {['free', 'pro'].map((option) => (\n        <label key={option} className=\"flex items-center gap-2\">\n          <input \n            type=\"radio\" \n            name=\"plan\" \n            value={option} \n            checked={plan === option} \n            onChange={(e) => setPlan(e.target.value as 'free' | 'pro')} \n          />\n          <span className=\"capitalize\">{option} Plan</span>\n        </label>\n      ))}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Radio Group"
       },
       {
@@ -1418,7 +1418,7 @@ export const modulesData: ModuleItem[] = [
           "Always prevent default browser reload."
         ],
         "codeSnippet": "const handleSubmit = async (e: React.FormEvent) => {\n  e.preventDefault();\n  setIsSubmitting(true);\n  try {\n    await apiClient.post('/users', formData);\n    showSuccessToast('User registered successfully');\n  } catch (err) {\n    showErrorToast('Failed to register user');\n  } finally {\n    setIsSubmitting(false);\n  }\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Safe Form Submission Handler"
       },
       {
@@ -1431,7 +1431,7 @@ export const modulesData: ModuleItem[] = [
           "Dynamic object keys: `[e.target.name]: e.target.value`."
         ],
         "codeSnippet": "export function MultiFieldForm() {\n  const [form, setForm] = useState({ firstName: '', lastName: '', email: '' });\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    setForm(prev => ({\n      ...prev,\n      [e.target.name]: e.target.value,\n    }));\n  };\n\n  return (\n    <form className=\"space-y-2\">\n      <input name=\"firstName\" value={form.firstName} onChange={handleChange} placeholder=\"First Name\" />\n      <input name=\"lastName\" value={form.lastName} onChange={handleChange} placeholder=\"Last Name\" />\n      <input name=\"email\" value={form.email} onChange={handleChange} placeholder=\"Email\" />\n    </form>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Unified Multi-Field Form Handler"
       },
       {
@@ -1444,7 +1444,7 @@ export const modulesData: ModuleItem[] = [
           "Validate either `onChange`, `onBlur`, or `onSubmit`."
         ],
         "codeSnippet": "const validate = () => {\n  const newErrors: Record<string, string> = {};\n  if (!form.email.includes('@')) newErrors.email = 'Invalid email address';\n  if (form.password.length < 8) newErrors.password = 'Password must be at least 8 characters';\n  setErrors(newErrors);\n  return Object.keys(newErrors).length === 0;\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Synchronous Validation Logic"
       },
       {
@@ -1457,7 +1457,7 @@ export const modulesData: ModuleItem[] = [
           "Accessible error messages linked via `aria-describedby`."
         ],
         "codeSnippet": "<div>\n  <input \n    className={cn(\"border rounded p-2\", errors.email && \"border-rose-500 bg-rose-950/20\")}\n    value={email}\n    onChange={(e) => setEmail(e.target.value)}\n  />\n  {errors.email && <p className=\"text-xs text-rose-400 mt-1\">{errors.email}</p>}\n</div>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Inline Validation Error"
       },
       {
@@ -1470,7 +1470,7 @@ export const modulesData: ModuleItem[] = [
           "Extract `INITIAL_STATE` constant for easy resetting."
         ],
         "codeSnippet": "const INITIAL_FORM = { title: '', description: '' };\n\nexport function CreateTaskForm() {\n  const [form, setForm] = useState(INITIAL_FORM);\n\n  const handleSuccess = () => {\n    // Reset to blank:\n    setForm(INITIAL_FORM);\n  };\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Resetting Form State"
       },
       {
@@ -1483,7 +1483,7 @@ export const modulesData: ModuleItem[] = [
           "Massively cuts down boilerplate in enterprise apps."
         ],
         "codeSnippet": "interface FormFieldProps {\n  label: string;\n  error?: string;\n  children: React.ReactNode;\n}\n\nexport function FormField({ label, error, children }: FormFieldProps) {\n  return (\n    <div className=\"space-y-1\">\n      <label className=\"block text-xs font-semibold text-slate-300 uppercase tracking-wider\">{label}</label>\n      {children}\n      {error && <p className=\"text-xs text-rose-400 font-medium\">{error}</p>}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Reusable FormField Wrapper"
       }
     ]
@@ -1506,7 +1506,7 @@ export const modulesData: ModuleItem[] = [
           "Standard unidirectional data flow in React."
         ],
         "codeSnippet": "<ChildComponent message=\"Hello from parent!\" count={42} />",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Parent to Child Data Flow"
       },
       {
@@ -1519,7 +1519,7 @@ export const modulesData: ModuleItem[] = [
           "Children invoke callbacks with arguments."
         ],
         "codeSnippet": "// Parent:\n<ChildComponent onSelect={(itemId) => setSelected(itemId)} />\n\n// Child:\n<button onClick={() => onSelect('item-1')}>Select Item</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Child to Parent Notification"
       },
       {
@@ -1532,7 +1532,7 @@ export const modulesData: ModuleItem[] = [
           "Allows reusing child components across different features."
         ],
         "codeSnippet": "export function ActionToolbar({ onSave, onCancel }: ToolbarProps) {\n  return (\n    <div className=\"flex gap-2\">\n      <button onClick={onSave} className=\"bg-emerald-600 px-3 py-1 text-white rounded\">Save</button>\n      <button onClick={onCancel} className=\"bg-slate-700 px-3 py-1 text-white rounded\">Cancel</button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Callback Action Delegation"
       },
       {
@@ -1546,7 +1546,7 @@ export const modulesData: ModuleItem[] = [
           "Parent becomes single source of truth."
         ],
         "codeSnippet": "export function CommonParent() {\n  const [activeTab, setActiveTab] = useState('summary');\n\n  return (\n    <div>\n      <TabList activeTab={activeTab} onTabChange={setActiveTab} />\n      <TabContent activeTab={activeTab} />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Lifting State Up Pattern"
       },
       {
@@ -1559,7 +1559,7 @@ export const modulesData: ModuleItem[] = [
           "Maintains consistency across disparate panels on screen."
         ],
         "codeSnippet": "// Sibling 1 (Filter input) -> updates query in Parent -> Sibling 2 (Results list) receives filtered query",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Sibling State Sharing"
       },
       {
@@ -1572,7 +1572,7 @@ export const modulesData: ModuleItem[] = [
           "No direct peer-to-peer coupling."
         ],
         "codeSnippet": "/*\n             [Common Parent]  <── Holds state\n             /             \\\n      [Sibling A]       [Sibling B]\n     (Triggers update)   (Reflects update)\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Sibling Communication Architecture"
       },
       {
@@ -1585,7 +1585,7 @@ export const modulesData: ModuleItem[] = [
           "Solutions: Component composition (`children`), React Context, or Zustand store."
         ],
         "codeSnippet": "// Prop Drilling Anti-pattern:\n// <Page user={user}> -> <Dashboard user={user}> -> <Sidebar user={user}> -> <Avatar user={user}>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Prop Drilling Demonstration"
       },
       {
@@ -1598,7 +1598,7 @@ export const modulesData: ModuleItem[] = [
           "Intermediary components only render `{children}`, unaware of specific props."
         ],
         "codeSnippet": "// Instead of passing user through Sidebar:\n// <Sidebar><Avatar user={user} /></Sidebar>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Composition Solving Prop Drilling"
       },
       {
@@ -1611,7 +1611,7 @@ export const modulesData: ModuleItem[] = [
           "Use discriminating unions for mutually exclusive states."
         ],
         "codeSnippet": "type AlertProps = \n  | { variant: 'simple'; message: string }\n  | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Discriminated Union Props"
       }
     ]
@@ -1635,7 +1635,7 @@ export const modulesData: ModuleItem[] = [
           "Replaces componentDidMount, componentDidUpdate, and componentWillUnmount."
         ],
         "codeSnippet": "import { useEffect } from 'react';\n\nuseEffect(() => {\n  document.title = `React Course - ${topicTitle}`;\n}, [topicTitle]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Synchronizing Document Title"
       },
       {
@@ -1648,7 +1648,7 @@ export const modulesData: ModuleItem[] = [
           "Pure render functions must not execute side effects directly during render."
         ],
         "codeSnippet": "// Side effects belong in useEffect or event handlers, NOT in render body!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Side Effect Placement"
       },
       {
@@ -1661,7 +1661,7 @@ export const modulesData: ModuleItem[] = [
           "Dependency array controls when the effect re-runs."
         ],
         "codeSnippet": "useEffect(() => {\n  // Setup logic runs here\n  return () => {\n    // Optional cleanup logic runs here\n  };\n}, [/* dependencies */]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useEffect Anatomy"
       },
       {
@@ -1674,7 +1674,7 @@ export const modulesData: ModuleItem[] = [
           "Never lie to the dependency array; include every reactive variable used inside."
         ],
         "codeSnippet": "// 1. Runs after every single render (rarely desired):\nuseEffect(() => { console.log('Rendered'); });\n\n// 2. Runs once on initial mount:\nuseEffect(() => { console.log('Mounted'); }, []);\n\n// 3. Runs when count changes:\nuseEffect(() => { console.log('Count is', count); }, [count]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dependency Array Options"
       },
       {
@@ -1687,7 +1687,7 @@ export const modulesData: ModuleItem[] = [
           "Effects are non-blocking by default."
         ],
         "codeSnippet": "// Timeline:\n// 1. Render JSX -> 2. Browser Paints UI -> 3. useEffect Runs",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Effect Execution Timeline"
       },
       {
@@ -1700,7 +1700,7 @@ export const modulesData: ModuleItem[] = [
           "Triggers actions like auto-saving drafts when content changes."
         ],
         "codeSnippet": "useEffect(() => {\n  if (draftText) {\n    const timer = setTimeout(() => saveDraft(draftText), 1000);\n    return () => clearTimeout(timer);\n  }\n}, [draftText]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Auto-save on State Change"
       },
       {
@@ -1713,7 +1713,7 @@ export const modulesData: ModuleItem[] = [
           "Use prop values as dependencies to react to route parameter changes."
         ],
         "codeSnippet": "useEffect(() => {\n  fetchModuleDetails(moduleId);\n}, [moduleId]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Reacting to Prop Changes"
       },
       {
@@ -1726,7 +1726,7 @@ export const modulesData: ModuleItem[] = [
           "Crucial for `addEventListener`, `setInterval`, WebSocket connections, and aborting fetch requests."
         ],
         "codeSnippet": "useEffect(() => {\n  const interval = setInterval(() => {\n    setSeconds(s => s + 1);\n  }, 1000);\n\n  // Cleanup: Clears interval when unmounted\n  return () => clearInterval(interval);\n}, []);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Timer Cleanup Function"
       },
       {
@@ -1739,7 +1739,7 @@ export const modulesData: ModuleItem[] = [
           "Use `AbortController` to abort ongoing HTTP requests on unmount or dependency change."
         ],
         "codeSnippet": "useEffect(() => {\n  const controller = new AbortController();\n  setIsLoading(true);\n\n  fetch(`/api/topics/${topicId}`, { signal: controller.signal })\n    .then(res => res.json())\n    .then(data => {\n      setTopic(data);\n      setIsLoading(false);\n    })\n    .catch(err => {\n      if (err.name !== 'AbortError') setError(err.message);\n    });\n\n  return () => controller.abort(); // Cancel if topicId changes!\n}, [topicId]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Safe Data Fetching with AbortController"
       },
       {
@@ -1753,7 +1753,7 @@ export const modulesData: ModuleItem[] = [
           "Object dependency trap: Pass primitive values or memoize with `useCallback`/`useMemo`."
         ],
         "codeSnippet": "// ❌ Infinite Loop Bug:\n/*\nuseEffect(() => {\n  setCount(count + 1); // Triggers re-render -> runs effect -> triggers re-render...\n}, [count]);\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Infinite Loop Example",
         "pitfall": "Passing un-memoized functions or objects into the dependency array triggers the effect on EVERY render because their reference changes every time."
       },
@@ -1768,7 +1768,7 @@ export const modulesData: ModuleItem[] = [
           "Use TanStack Query for server fetching instead of manual `useEffect` fetching."
         ],
         "codeSnippet": "// ❌ Bad: Redundant effect for derived data\n/*\nuseEffect(() => {\n  setFullName(`${firstName} ${lastName}`);\n}, [firstName, lastName]);\n*/\n\n// ✅ Good: Compute directly during render!\nconst fullName = `${firstName} ${lastName}`;",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Avoiding Redundant Effects"
       }
     ]
@@ -1792,7 +1792,7 @@ export const modulesData: ModuleItem[] = [
           "Primary tool for DOM manipulation in React."
         ],
         "codeSnippet": "import { useRef } from 'react';\n\nconst renderCountRef = useRef(0);\nrenderCountRef.current++; // Mutated without causing re-render!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useRef Declaration"
       },
       {
@@ -1805,7 +1805,7 @@ export const modulesData: ModuleItem[] = [
           "Type parameter matches the HTML element: `HTMLInputElement`, `HTMLDivElement`."
         ],
         "codeSnippet": "const inputRef = useRef<HTMLInputElement>(null);\nreturn <input ref={inputRef} type=\"text\" />;",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useRef Syntax with TypeScript"
       },
       {
@@ -1818,7 +1818,7 @@ export const modulesData: ModuleItem[] = [
           "Always check `if (ref.current)` before accessing properties."
         ],
         "codeSnippet": "export function ScrollToBottom() {\n  const bottomRef = useRef<HTMLDivElement>(null);\n\n  const scrollToBottom = () => {\n    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });\n  };\n\n  return (\n    <div>\n      <button onClick={scrollToBottom}>Scroll Down</button>\n      <div style={{ height: 1000 }} />\n      <div ref={bottomRef} />\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "DOM Scroll into View via Ref"
       },
       {
@@ -1831,7 +1831,7 @@ export const modulesData: ModuleItem[] = [
           "Call `inputRef.current?.focus()` inside an effect or handler."
         ],
         "codeSnippet": "export function AutoFocusSearch() {\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    inputRef.current?.focus();\n  }, []);\n\n  return <input ref={inputRef} placeholder=\"Search topics...\" className=\"border p-2\" />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Programmatic Input Focus"
       },
       {
@@ -1844,7 +1844,7 @@ export const modulesData: ModuleItem[] = [
           "Ideal for storing `setInterval` or `setTimeout` handles."
         ],
         "codeSnippet": "export function Stopwatch() {\n  const [time, setTime] = useState(0);\n  const timerRef = useRef<NodeJS.Timeout | null>(null);\n\n  const start = () => {\n    if (timerRef.current !== null) return;\n    timerRef.current = setInterval(() => setTime(t => t + 1), 1000);\n  };\n\n  const stop = () => {\n    if (timerRef.current) {\n      clearInterval(timerRef.current);\n      timerRef.current = null;\n    }\n  };\n\n  return <div>Time: {time}s <button onClick={start}>Start</button> <button onClick={stop}>Stop</button></div>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Storing Timer Handle in useRef"
       },
       {
@@ -1858,7 +1858,7 @@ export const modulesData: ModuleItem[] = [
           "useRef -> Internal data storage / DOM node access."
         ],
         "codeSnippet": "/*\n| Need | Hook |\n|------|------|\n| Re-render UI on change | useState |\n| DOM element reference | useRef |\n| Store timer ID / socket | useRef |\n| Form input value | useState (controlled) |\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useRef vs useState Decision Guide"
       },
       {
@@ -1871,7 +1871,7 @@ export const modulesData: ModuleItem[] = [
           "Bridges declarative React with imperative external browser APIs."
         ],
         "codeSnippet": "export function VideoPlayer({ src }: { src: string }) {\n  const videoRef = useRef<HTMLVideoElement>(null);\n\n  return (\n    <div>\n      <video ref={videoRef} src={src} />\n      <button onClick={() => videoRef.current?.play()}>Play</button>\n      <button onClick={() => videoRef.current?.pause()}>Pause</button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlling HTML5 Video with useRef"
       },
       {
@@ -1884,7 +1884,7 @@ export const modulesData: ModuleItem[] = [
           "Mutating refs during render makes components non-deterministic."
         ],
         "codeSnippet": "// ❌ Impure: Writing to ref during render\n/*\nfunction Bad() {\n  myRef.current = 123; // Don't do this during render!\n  return <div>{myRef.current}</div>;\n}\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Do Not Mutate Refs During Render"
       }
     ]
@@ -1908,7 +1908,7 @@ export const modulesData: ModuleItem[] = [
           "Shares stateful logic, NOT shared state (each caller gets an independent state instance)."
         ],
         "codeSnippet": "// Basic Custom Hook:\nexport function useToggle(initialValue = false): [boolean, () => void] {\n  const [value, setValue] = useState(initialValue);\n  const toggle = () => setValue(v => !v);\n  return [value, toggle];\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Simple useToggle Custom Hook",
         "interactiveDemoKey": "CustomHookDemo"
       },
@@ -1923,7 +1923,7 @@ export const modulesData: ModuleItem[] = [
           "Decouples business logic from rendering."
         ],
         "codeSnippet": "// Component remains pure and concise:\nexport function SettingsView() {\n  const [isDarkMode, toggleTheme] = useToggle(true);\n  const [isNotificationsEnabled, toggleNotifications] = useToggle(false);\n\n  return (\n    <div>\n      <button onClick={toggleTheme}>Dark Mode: {isDarkMode ? 'ON' : 'OFF'}</button>\n      <button onClick={toggleNotifications}>Alerts: {isNotificationsEnabled ? 'ON' : 'OFF'}</button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Using Custom Hooks in Components"
       },
       {
@@ -1936,7 +1936,7 @@ export const modulesData: ModuleItem[] = [
           "Return tuples for 1-2 values; return objects for 3+ values."
         ],
         "codeSnippet": "// Return object with named properties:\nexport function useWindowDimensions() {\n  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });\n\n  useEffect(() => {\n    const handleResize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });\n    handleResize();\n    window.addEventListener('resize', handleResize);\n    return () => window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return dimensions;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useWindowDimensions Hook"
       },
       {
@@ -1949,7 +1949,7 @@ export const modulesData: ModuleItem[] = [
           "To share the SAME state across components, use React Context or Zustand."
         ],
         "codeSnippet": "// Component A has its own independent toggle state;\n// Component B has its own independent toggle state.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Isolated Hook State Instances"
       },
       {
@@ -1962,7 +1962,7 @@ export const modulesData: ModuleItem[] = [
           "Returns `{ data, isLoading, error, refetch }`."
         ],
         "codeSnippet": "export function useFetch<T>(url: string) {\n  const [data, setData] = useState<T | null>(null);\n  const [isLoading, setIsLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    let ignore = false;\n    setIsLoading(true);\n\n    fetch(url)\n      .then(res => res.json())\n      .then(result => {\n        if (!ignore) {\n          setData(result);\n          setIsLoading(false);\n        }\n      })\n      .catch(err => {\n        if (!ignore) {\n          setError(err.message);\n          setIsLoading(false);\n        }\n      });\n\n    return () => { ignore = true; };\n  }, [url]);\n\n  return { data, isLoading, error };\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Production useFetch Custom Hook"
       },
       {
@@ -1975,7 +1975,7 @@ export const modulesData: ModuleItem[] = [
           "Handles SSR guards (`typeof window !== 'undefined'`) and try/catch parsing."
         ],
         "codeSnippet": "export function useLocalStorage<T>(key: string, initialValue: T): [T, (val: T | ((prev: T) => T)) => void] {\n  const [storedValue, setStoredValue] = useState<T>(() => {\n    if (typeof window === 'undefined') return initialValue;\n    try {\n      const item = window.localStorage.getItem(key);\n      return item ? JSON.parse(item) : initialValue;\n    } catch (error) {\n      return initialValue;\n    }\n  });\n\n  const setValue = (value: T | ((prev: T) => T)) => {\n    try {\n      const valueToStore = value instanceof Function ? value(storedValue) : value;\n      setStoredValue(valueToStore);\n      if (typeof window !== 'undefined') {\n        window.localStorage.setItem(key, JSON.stringify(valueToStore));\n      }\n    } catch (error) {\n      console.error(error);\n    }\n  };\n\n  return [storedValue, setValue];\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Enterprise useLocalStorage Hook"
       },
       {
@@ -1988,7 +1988,7 @@ export const modulesData: ModuleItem[] = [
           "Essential for search query inputs and resize handlers."
         ],
         "codeSnippet": "export function useDebounce<T>(value: T, delay: number = 300): T {\n  const [debouncedValue, setDebouncedValue] = useState<T>(value);\n\n  useEffect(() => {\n    const handler = setTimeout(() => {\n      setDebouncedValue(value);\n    }, delay);\n\n    return () => clearTimeout(handler);\n  }, [value, delay]);\n\n  return debouncedValue;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useDebounce Custom Hook"
       },
       {
@@ -2001,7 +2001,7 @@ export const modulesData: ModuleItem[] = [
           "Colocate domain hooks in feature folders; put generic hooks in `@/hooks`."
         ],
         "codeSnippet": "src/\n├── hooks/\n│   ├── useLocalStorage.ts\n│   ├── useDebounce.ts\n│   └── useMediaQuery.ts\n└── features/students/hooks/\n    └── useStudentFilters.ts",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Hooks Folder Architecture"
       },
       {
@@ -2014,7 +2014,7 @@ export const modulesData: ModuleItem[] = [
           "Add `as const` to tuple returns for instant type inference."
         ],
         "codeSnippet": "// Using \"as const\" for tuple inference:\nexport function useCounter(initial = 0) {\n  const [count, setCount] = useState(initial);\n  const increment = () => setCount(c => c + 1);\n  return [count, increment] as const;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Tuple Return with as const"
       }
     ]
@@ -2038,7 +2038,7 @@ export const modulesData: ModuleItem[] = [
           "State persists in memory across route changes."
         ],
         "codeSnippet": "// Traditional Multi-Page App: Server returns full HTML page per URL.\n// Single Page App (SPA): Client-side JavaScript swaps view components on URL change.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "SPA Mental Model"
       },
       {
@@ -2051,7 +2051,7 @@ export const modulesData: ModuleItem[] = [
           "Version 6+ uses nested routes, data loaders, and elements."
         ],
         "codeSnippet": "npm install react-router-dom",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Installing React Router"
       },
       {
@@ -2064,7 +2064,7 @@ export const modulesData: ModuleItem[] = [
           "Place `<BrowserRouter>` at the root of your application."
         ],
         "codeSnippet": "import { BrowserRouter } from 'react-router-dom';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <BrowserRouter>\n    <App />\n  </BrowserRouter>\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "BrowserRouter Provider"
       },
       {
@@ -2077,7 +2077,7 @@ export const modulesData: ModuleItem[] = [
           "Matches are prioritized based on specificity."
         ],
         "codeSnippet": "import { Routes, Route } from 'react-router-dom';\nimport HomePage from './pages/HomePage';\nimport CurriculumPage from './pages/CurriculumPage';\nimport ProjectsPage from './pages/ProjectsPage';\n\nexport function AppRoutes() {\n  return (\n    <Routes>\n      <Route path=\"/\" element={<HomePage />} />\n      <Route path=\"/curriculum\" element={<CurriculumPage />} />\n      <Route path=\"/projects\" element={<ProjectsPage />} />\n    </Routes>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Configuring Routes"
       },
       {
@@ -2090,7 +2090,7 @@ export const modulesData: ModuleItem[] = [
           "Always use `<Link>` instead of `<a href=\"...\">` for internal links."
         ],
         "codeSnippet": "import { Link } from 'react-router-dom';\n\n<Link to=\"/projects\" className=\"text-blue-400 hover:underline\">\n  View Real-World Projects\n</Link>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Client Navigation with Link"
       },
       {
@@ -2103,7 +2103,7 @@ export const modulesData: ModuleItem[] = [
           "Makes active tab highlights declarative."
         ],
         "codeSnippet": "import { NavLink } from 'react-router-dom';\n\n<NavLink\n  to=\"/curriculum\"\n  className={({ isActive }) =>\n    cn(\n      \"px-3 py-2 rounded-md text-sm font-medium\",\n      isActive ? \"bg-slate-800 text-white\" : \"text-slate-400 hover:text-white\"\n    )\n  }\n>\n  Curriculum\n</NavLink>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Active Styling with NavLink"
       },
       {
@@ -2116,7 +2116,7 @@ export const modulesData: ModuleItem[] = [
           "Can navigate forwards, backwards (`navigate(-1)`), or with options (`{ replace: true }`)."
         ],
         "codeSnippet": "import { useNavigate } from 'react-router-dom';\n\nexport function LoginForm() {\n  const navigate = useNavigate();\n\n  const handleLoginSuccess = () => {\n    // Redirect to dashboard without back-button loop:\n    navigate('/dashboard', { replace: true });\n  };\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Programmatic Navigation with useNavigate"
       },
       {
@@ -2129,7 +2129,7 @@ export const modulesData: ModuleItem[] = [
           "Allows single component to handle thousands of dynamic URLs."
         ],
         "codeSnippet": "<Route path=\"/modules/:moduleId\" element={<ModuleDetailView />} />",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dynamic Route Parameter Definition"
       },
       {
@@ -2142,7 +2142,7 @@ export const modulesData: ModuleItem[] = [
           "Parameters are always strings."
         ],
         "codeSnippet": "import { useParams } from 'react-router-dom';\n\nexport function ModuleDetailView() {\n  const { moduleId } = useParams<{ moduleId: string }>();\n  return <h2>Displaying details for Module {moduleId}</h2>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Reading URL Parameters with useParams"
       },
       {
@@ -2154,8 +2154,8 @@ export const modulesData: ModuleItem[] = [
         "keyPoints": [
           "Hierarchical route structures mirror visual component nesting."
         ],
-        "codeSnippet": "// Route configuration:\n<Route path=\"/dashboard\" element={<DashboardLayout />}>\n  <Route index element={<DashboardOverview />} />\n  <Route path=\"analytics\" element={<AnalyticsView />} />\n  <Route path=\"settings\" element={<SettingsView />} />\n</Route>\n\n// Inside DashboardLayout.tsx:\nexport function DashboardLayout() {\n  return (\n    <div className=\"flex\">\n      <Sidebar />\n      <main className=\"flex-1 p-6\">\n        <Outlet /> {/* Child route renders here! */}\n      </main>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeSnippet": "// Route configuration:\n<Route path=\"/dashboard\" element={<DashboardLayout />}>\n  <Route index element={<DashboardOverview />} />\n  <Route path=\"analytics\" element={<AnalyticsView />} />\n  <Route path=\"settings\" element={<SettingsView />} />\n</Route>\n\n// Inside DashboardLayout.jsx:\nexport function DashboardLayout() {\n  return (\n    <div className=\"flex\">\n      <Sidebar />\n      <main className=\"flex-1 p-6\">\n        <Outlet /> {/* Child route renders here! */}\n      </main>\n    </div>\n  );\n}",
+        "codeLanguage": "jsx",
         "codeTitle": "Nested Routes and Outlet Layout"
       },
       {
@@ -2168,7 +2168,7 @@ export const modulesData: ModuleItem[] = [
           "Pathless layout routes cleanly group public vs authenticated layouts."
         ],
         "codeSnippet": "<Route element={<AuthLayout />}>\n  <Route path=\"/login\" element={<LoginPage />} />\n  <Route path=\"/register\" element={<RegisterPage />} />\n</Route>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Pathless Layout Route"
       },
       {
@@ -2181,7 +2181,7 @@ export const modulesData: ModuleItem[] = [
           "Always provide a helpful 404 page with a link back to home."
         ],
         "codeSnippet": "<Route path=\"*\" element={<NotFoundView />} />",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Catch-all 404 Route"
       },
       {
@@ -2194,7 +2194,7 @@ export const modulesData: ModuleItem[] = [
           "Include `state={{ from: location }}` to redirect user back after login."
         ],
         "codeSnippet": "import { Navigate, Outlet, useLocation } from 'react-router-dom';\n\nexport function ProtectedRoute({ isAuthenticated }: { isAuthenticated: boolean }) {\n  const location = useLocation();\n\n  if (!isAuthenticated) {\n    return <Navigate to=\"/login\" state={{ from: location }} replace />;\n  }\n\n  return <Outlet />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Protected Route Gate"
       },
       {
@@ -2207,7 +2207,7 @@ export const modulesData: ModuleItem[] = [
           "Synchronizes table filters with browser history."
         ],
         "codeSnippet": "import { useSearchParams } from 'react-router-dom';\n\nexport function SearchFilter() {\n  const [searchParams, setSearchParams] = useSearchParams();\n  const query = searchParams.get('q') || '';\n\n  const handleSearch = (newQuery: string) => {\n    setSearchParams({ q: newQuery });\n  };\n\n  return <input value={query} onChange={(e) => handleSearch(e.target.value)} />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Query Strings with useSearchParams"
       },
       {
@@ -2220,7 +2220,7 @@ export const modulesData: ModuleItem[] = [
           "Centralized route configuration improves refactoring speed."
         ],
         "codeSnippet": "export const ROUTES = {\n  HOME: '/',\n  CURRICULUM: '/curriculum',\n  PROJECTS: '/projects',\n  PROJECT_DETAIL: (id: string) => `/projects/${id}`,\n} as const;",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Centralized Route Constants"
       },
       {
@@ -2233,7 +2233,7 @@ export const modulesData: ModuleItem[] = [
           "Wrap lazy routes in `<Suspense fallback={<LoadingSkeleton />}>`."
         ],
         "codeSnippet": "import React, { Suspense } from 'react';\n\nconst ProjectsPage = React.lazy(() => import('./pages/ProjectsPage'));\n\n<Route \n  path=\"/projects\" \n  element={\n    <Suspense fallback={<PageSkeleton />}>\n      <ProjectsPage />\n    </Suspense>\n  } \n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Lazy-loaded Route with Suspense"
       }
     ]
@@ -2257,7 +2257,7 @@ export const modulesData: ModuleItem[] = [
           "Frontend only consumes API contracts."
         ],
         "codeSnippet": "// Client sends HTTP Request -> Server processes -> Server returns JSON Response",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "REST Architecture Model"
       },
       {
@@ -2270,7 +2270,7 @@ export const modulesData: ModuleItem[] = [
           "Native fetch does not reject promises on HTTP 404/500 status codes!"
         ],
         "codeSnippet": "// Native fetch requires manual ok check:\nconst response = await fetch('/api/products');\nif (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);\nconst data = await response.json();",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Native fetch() Error Checking"
       },
       {
@@ -2283,7 +2283,7 @@ export const modulesData: ModuleItem[] = [
           "Idempotent and safe HTTP method."
         ],
         "codeSnippet": "const fetchStudents = async () => {\n  const res = await axios.get('/api/students');\n  return res.data;\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios GET Request"
       },
       {
@@ -2296,7 +2296,7 @@ export const modulesData: ModuleItem[] = [
           "Transmits data in request body."
         ],
         "codeSnippet": "const createStudent = async (newStudent: StudentInput) => {\n  const res = await axios.post('/api/students', newStudent);\n  return res.data;\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios POST Request"
       },
       {
@@ -2309,7 +2309,7 @@ export const modulesData: ModuleItem[] = [
           "Idempotent update replacing all fields."
         ],
         "codeSnippet": "await axios.put(`/api/students/${id}`, fullStudentObject);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios PUT Request"
       },
       {
@@ -2322,7 +2322,7 @@ export const modulesData: ModuleItem[] = [
           "Saves bandwidth by sending only changed properties."
         ],
         "codeSnippet": "await axios.patch(`/api/todos/${id}`, { completed: true });",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios PATCH Request"
       },
       {
@@ -2335,7 +2335,7 @@ export const modulesData: ModuleItem[] = [
           "Check response status 200/204 to confirm deletion."
         ],
         "codeSnippet": "await axios.delete(`/api/todos/${id}`);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios DELETE Request"
       },
       {
@@ -2348,7 +2348,7 @@ export const modulesData: ModuleItem[] = [
           "Always use `finally` to ensure loading spinners disappear on error."
         ],
         "codeSnippet": "try {\n  setIsLoading(true);\n  const data = await fetchStudents();\n  setStudents(data);\n} catch (err) {\n  setError('Failed to load students');\n} finally {\n  setIsLoading(false);\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "In-Flight Loading Lifecycle"
       },
       {
@@ -2361,7 +2361,7 @@ export const modulesData: ModuleItem[] = [
           "Differentiate network failures from 400 validation errors."
         ],
         "codeSnippet": "catch (error: any) {\n  const message = error.response?.data?.message || error.message || 'Unknown network error';\n  toast.error(message);\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Parsing API Error Responses"
       },
       {
@@ -2374,7 +2374,7 @@ export const modulesData: ModuleItem[] = [
           "Decouples UI components from backend URLs and API changes."
         ],
         "codeSnippet": "// src/services/studentService.ts\nimport { apiClient } from './apiClient';\nimport { Student } from '@/types';\n\nexport const studentService = {\n  getAll: () => apiClient.get<Student[]>('/students').then(r => r.data),\n  getById: (id: string) => apiClient.get<Student>(`/students/${id}`).then(r => r.data),\n  create: (data: Omit<Student, 'id'>) => apiClient.post<Student>('/students', data).then(r => r.data),\n  delete: (id: string) => apiClient.delete(`/students/${id}`),\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dedicated Service Layer Pattern"
       },
       {
@@ -2387,7 +2387,7 @@ export const modulesData: ModuleItem[] = [
           "Single place to configure authorization headers."
         ],
         "codeSnippet": "import axios from 'axios';\n\nexport const apiClient = axios.create({\n  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.reactcourse.dev/v1',\n  timeout: 10000,\n  headers: {\n    'Content-Type': 'application/json',\n  },\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Axios Centralized Instance"
       },
       {
@@ -2400,7 +2400,7 @@ export const modulesData: ModuleItem[] = [
           "No need to manually pass headers in every service method."
         ],
         "codeSnippet": "apiClient.interceptors.request.use((config) => {\n  const token = localStorage.getItem('access_token');\n  if (token && config.headers) {\n    config.headers.Authorization = `Bearer ${token}`;\n  }\n  return config;\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JWT Request Interceptor"
       },
       {
@@ -2413,7 +2413,7 @@ export const modulesData: ModuleItem[] = [
           "Centralizes session expiration handling."
         ],
         "codeSnippet": "apiClient.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    if (error.response?.status === 401) {\n      // Trigger token refresh or logout\n      window.location.href = '/login?expired=true';\n    }\n    return Promise.reject(error);\n  }\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Response Error Interceptor"
       },
       {
@@ -2426,7 +2426,7 @@ export const modulesData: ModuleItem[] = [
           "Provides clean typed error models for UI components."
         ],
         "codeSnippet": "export interface ApiError {\n  statusCode: number;\n  message: string;\n  fieldErrors?: Record<string, string[]>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Strongly Typed ApiError Model"
       },
       {
@@ -2439,7 +2439,7 @@ export const modulesData: ModuleItem[] = [
           "Never commit secret API keys or database credentials to git."
         ],
         "codeSnippet": "NEXT_PUBLIC_API_URL=https://api.example.com\nNEXT_PUBLIC_APP_ENV=production",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Environment Variable Configuration"
       }
     ]
@@ -2462,7 +2462,7 @@ export const modulesData: ModuleItem[] = [
           "Server state requires caching, background refetching, deduplication, and stale-time policies."
         ],
         "codeSnippet": "// Client State: Modal isOpen, active tab, form inputs -> Zustand or useState\n// Server State: Products list, user profile, orders -> TanStack Query",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Client vs Server State Separation"
       },
       {
@@ -2476,7 +2476,7 @@ export const modulesData: ModuleItem[] = [
           "Automatic caching and garbage collection."
         ],
         "codeSnippet": "npm install @tanstack/react-query @tanstack/react-query-devtools",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Installing TanStack Query v5"
       },
       {
@@ -2489,7 +2489,7 @@ export const modulesData: ModuleItem[] = [
           "Configure default `staleTime` and retry policies."
         ],
         "codeSnippet": "import { QueryClient, QueryClientProvider } from '@tanstack/react-query';\n\nconst queryClient = new QueryClient({\n  defaultOptions: {\n    queries: {\n      staleTime: 1000 * 60 * 5, // Data fresh for 5 minutes\n      refetchOnWindowFocus: false,\n    },\n  },\n});\n\nexport function App() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <RouterProvider router={router} />\n    </QueryClientProvider>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "QueryClientProvider Setup"
       },
       {
@@ -2502,7 +2502,7 @@ export const modulesData: ModuleItem[] = [
           "Returns `{ data, isLoading, isError, error, refetch }`."
         ],
         "codeSnippet": "import { useQuery } from '@tanstack/react-query';\nimport { studentService } from '@/services/studentService';\n\nexport function StudentList() {\n  const { data: students, isLoading, isError } = useQuery({\n    queryKey: ['students'],\n    queryFn: studentService.getAll,\n  });\n\n  if (isLoading) return <LoadingSpinner />;\n  if (isError) return <ErrorMessage />;\n\n  return <ul>{students?.map(s => <li key={s.id}>{s.name}</li>)}</ul>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Basic useQuery Hook"
       },
       {
@@ -2516,7 +2516,7 @@ export const modulesData: ModuleItem[] = [
           "Hierarchical invalidation allows invalidating all `['students']` queries at once."
         ],
         "codeSnippet": "// Parameterized query key:\nconst { data } = useQuery({\n  queryKey: ['products', { category, sort, page }],\n  queryFn: () => productService.getList({ category, sort, page }),\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Hierarchical Query Keys"
       },
       {
@@ -2529,7 +2529,7 @@ export const modulesData: ModuleItem[] = [
           "Use `onSuccess` to invalidate cached queries and trigger refetches."
         ],
         "codeSnippet": "import { useMutation, useQueryClient } from '@tanstack/react-query';\n\nexport function AddStudentButton() {\n  const queryClient = useQueryClient();\n\n  const mutation = useMutation({\n    mutationFn: studentService.create,\n    onSuccess: () => {\n      // Invalidate and refetch student list automatically!\n      queryClient.invalidateQueries({ queryKey: ['students'] });\n      toast.success('Student added!');\n    },\n  });\n\n  return (\n    <button onClick={() => mutation.mutate({ name: 'Sophea', gpa: 3.8 })}>\n      {mutation.isPending ? 'Saving...' : 'Add Student'}\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useMutation with Cache Invalidation"
       },
       {
@@ -2542,7 +2542,7 @@ export const modulesData: ModuleItem[] = [
           "Display subtle background fetching spinners while showing cached data."
         ],
         "codeSnippet": "const { data, isPending, isFetching } = useQuery(...);\n// isPending: True on first fetch (show skeleton)\n// isFetching: True during background refresh (show subtle top indicator)",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "isPending vs isFetching"
       },
       {
@@ -2556,7 +2556,7 @@ export const modulesData: ModuleItem[] = [
           "Set `staleTime: 60_000` for data that changes infrequently."
         ],
         "codeSnippet": "const { data } = useQuery({\n  queryKey: ['systemConfig'],\n  queryFn: fetchConfig,\n  staleTime: 1000 * 60 * 30, // 30 minutes\n  gcTime: 1000 * 60 * 60,    // 1 hour\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "staleTime and gcTime Configuration"
       },
       {
@@ -2569,7 +2569,7 @@ export const modulesData: ModuleItem[] = [
           "Eliminates jarring layout shifts during table pagination."
         ],
         "codeSnippet": "import { keepPreviousData, useQuery } from '@tanstack/react-query';\n\nconst { data: pageData, isPlaceholderData } = useQuery({\n  queryKey: ['students', page],\n  queryFn: () => studentService.getPage(page),\n  placeholderData: keepPreviousData,\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Smooth Pagination with keepPreviousData"
       },
       {
@@ -2582,7 +2582,7 @@ export const modulesData: ModuleItem[] = [
           "Pairs with intersection observer for infinite scroll."
         ],
         "codeSnippet": "const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({\n  queryKey: ['feed'],\n  queryFn: ({ pageParam = 1 }) => fetchFeed(pageParam),\n  getNextPageParam: (lastPage) => lastPage.nextPage,\n  initialPageParam: 1,\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useInfiniteQuery Hook"
       },
       {
@@ -2596,7 +2596,7 @@ export const modulesData: ModuleItem[] = [
           "Always save previous cache snapshot in `onMutate` for rollback."
         ],
         "codeSnippet": "const toggleMutation = useMutation({\n  mutationFn: todoService.toggle,\n  onMutate: async (todoId) => {\n    await queryClient.cancelQueries({ queryKey: ['todos'] });\n    const previousTodos = queryClient.getQueryData(['todos']);\n\n    // Optimistically update cache:\n    queryClient.setQueryData(['todos'], (old: Todo[] = []) =>\n      old.map(t => t.id === todoId ? { ...t, completed: !t.completed } : t)\n    );\n\n    return { previousTodos }; // Context for rollback\n  },\n  onError: (err, newTodo, context) => {\n    // Rollback to previous state on error!\n    queryClient.setQueryData(['todos'], context?.previousTodos);\n  },\n  onSettled: () => {\n    queryClient.invalidateQueries({ queryKey: ['todos'] });\n  },\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Complete Optimistic Update Pattern"
       },
       {
@@ -2609,7 +2609,7 @@ export const modulesData: ModuleItem[] = [
           "Use exact or prefix matching."
         ],
         "codeSnippet": "queryClient.invalidateQueries({ queryKey: ['todos'] });",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Invalidating Query Cache"
       },
       {
@@ -2622,7 +2622,7 @@ export const modulesData: ModuleItem[] = [
           "Included in dev builds only; stripped in production."
         ],
         "codeSnippet": "import { ReactQueryDevtools } from '@tanstack/react-query-devtools';\n\n<QueryClientProvider client={queryClient}>\n  <App />\n  <ReactQueryDevtools initialIsOpen={false} />\n</QueryClientProvider>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Integrating ReactQueryDevtools"
       }
     ]
@@ -2646,7 +2646,7 @@ export const modulesData: ModuleItem[] = [
           "Designed for low-frequency global data: themes, authenticated user, locale."
         ],
         "codeSnippet": "import { createContext, useContext } from 'react';",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Context Imports"
       },
       {
@@ -2659,7 +2659,7 @@ export const modulesData: ModuleItem[] = [
           "The default value is only used if a component consumes context outside a Provider."
         ],
         "codeSnippet": "interface ThemeContextType {\n  theme: 'light' | 'dark';\n  toggleTheme: () => void;\n}\n\nexport const ThemeContext = createContext<ThemeContextType | undefined>(undefined);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Declaring Context with TypeScript"
       },
       {
@@ -2672,7 +2672,7 @@ export const modulesData: ModuleItem[] = [
           "All consumers re-render whenever the Provider's `value` prop changes."
         ],
         "codeSnippet": "export function ThemeProvider({ children }: { children: React.ReactNode }) {\n  const [theme, setTheme] = useState<'light' | 'dark'>('dark');\n  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      <div className={theme}>{children}</div>\n    </ThemeContext.Provider>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Custom Context Provider Component"
       },
       {
@@ -2685,7 +2685,7 @@ export const modulesData: ModuleItem[] = [
           "Always create a custom hook wrapper (e.g. `useTheme()`) with safety checks."
         ],
         "codeSnippet": "export function useTheme() {\n  const context = useContext(ThemeContext);\n  if (!context) {\n    throw new Error('useTheme must be used within a ThemeProvider');\n  }\n  return context;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Safe Custom Context Hook"
       },
       {
@@ -2698,7 +2698,7 @@ export const modulesData: ModuleItem[] = [
           "Ideal for app-wide settings that rarely change."
         ],
         "codeSnippet": "export function ThemeToggle() {\n  const { theme, toggleTheme } = useTheme();\n  return <button onClick={toggleTheme}>Active Theme: {theme}</button>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Consuming Context in Child"
       },
       {
@@ -2711,7 +2711,7 @@ export const modulesData: ModuleItem[] = [
           "Widely used in production SPA applications."
         ],
         "codeSnippet": "interface AuthContextType {\n  user: User | null;\n  isAuthenticated: boolean;\n  login: (credentials: Credentials) => Promise<void>;\n  logout: () => void;\n}\n\nexport const AuthContext = createContext<AuthContextType | undefined>(undefined);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Authentication Context Interface"
       },
       {
@@ -2724,7 +2724,7 @@ export const modulesData: ModuleItem[] = [
           "Leaf nodes access context directly."
         ],
         "codeSnippet": "// Intermediary components don't touch auth props!\n<AuthProvider>\n  <AppLayout>\n    <Sidebar />\n    <MainContent>\n      <UserAvatar /> {/* Consumes useAuth() directly */}\n    </MainContent>\n  </AppLayout>\n</AuthProvider>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Eliminating Prop Drilling with Context"
       },
       {
@@ -2738,7 +2738,7 @@ export const modulesData: ModuleItem[] = [
           "For high-frequency updates, use Zustand selectors instead."
         ],
         "codeSnippet": "// ⚠️ Bad: Bundling high-frequency state with low-frequency state:\n// <BigContext.Provider value={{ user, timerSeconds, theme, searchResults }}>\n\n// ✅ Good: Split contexts by concern:\n// <AuthProvider><ThemeProvider><App /></ThemeProvider></AuthProvider>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Context Splitting Strategy",
         "pitfall": "Using Context for high-frequency state (like an animation frame, mouse position, or rapidly typing text) will cause massive re-renders across the entire tree."
       },
@@ -2752,7 +2752,7 @@ export const modulesData: ModuleItem[] = [
           "Prevents re-renders caused by parent re-renders."
         ],
         "codeSnippet": "export function AuthProvider({ children }: { children: React.ReactNode }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  // Memoize value to stabilize object reference:\n  const value = useMemo(() => ({\n    user,\n    isAuthenticated: !!user,\n  }), [user]);\n\n  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Memoizing Provider Value"
       },
       {
@@ -2765,7 +2765,7 @@ export const modulesData: ModuleItem[] = [
           "Never use context for state that belongs locally."
         ],
         "codeSnippet": "// Golden Rule: If state is only used in one branch of the tree,\n// mount the Provider at that branch, NOT at the application root!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Localized Provider Placement"
       },
       {
@@ -2778,7 +2778,7 @@ export const modulesData: ModuleItem[] = [
           "Context = Dependency Injection tool; Zustand = State Management tool."
         ],
         "codeSnippet": "/*\nUse Context for: Low-frequency, broad data (Theme, Auth, Language).\nUse Zustand for: High-frequency, complex, or modular state (Cart, Filters, Media Player).\n*/",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Context vs External State Library"
       }
     ]
@@ -2802,7 +2802,7 @@ export const modulesData: ModuleItem[] = [
           "Keep stores lean, synchronous, and focused on UI state."
         ],
         "codeSnippet": "// Server Data -> TanStack Query (Query cache)\n// Client UI State -> Zustand (Global store)",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Modern Separation of State Responsibilities"
       },
       {
@@ -2815,7 +2815,7 @@ export const modulesData: ModuleItem[] = [
           "Zustand requires NO Provider wrapping; access stores anywhere!"
         ],
         "codeSnippet": "npm install zustand",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Installing Zustand"
       },
       {
@@ -2830,7 +2830,7 @@ export const modulesData: ModuleItem[] = [
           "Full TypeScript support with auto-inference."
         ],
         "codeSnippet": "import { create } from 'zustand';\n\ninterface CounterState {\n  count: number;\n  increment: () => void;\n  reset: () => void;\n}\n\nexport const useCounterStore = create<CounterState>((set) => ({\n  count: 0,\n  increment: () => set((state) => ({ count: state.count + 1 })),\n  reset: () => set({ count: 0 }),\n}));",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Basic Zustand Store",
         "interactiveDemoKey": "ZustandDemo"
       },
@@ -2844,7 +2844,7 @@ export const modulesData: ModuleItem[] = [
           "`set()` automatically merges state at the top level."
         ],
         "codeSnippet": "export const useUIStore = create<UIState>((set) => ({\n  isSidebarOpen: false,\n  activeModal: null,\n  toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),\n  openModal: (modalName) => set({ activeModal: modalName }),\n  closeModal: () => set({ activeModal: null }),\n}));",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Colocating State and Actions"
       },
       {
@@ -2857,7 +2857,7 @@ export const modulesData: ModuleItem[] = [
           "Always pass a selector to avoid subscribing to the entire store."
         ],
         "codeSnippet": "export function SidebarToggle() {\n  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);\n  const toggleSidebar = useUIStore((state) => state.toggleSidebar);\n\n  return <button onClick={toggleSidebar}>{isSidebarOpen ? 'Close' : 'Open'}</button>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Consuming Zustand Store"
       },
       {
@@ -2870,7 +2870,7 @@ export const modulesData: ModuleItem[] = [
           "Components re-render ONLY when their selected slice changes."
         ],
         "codeSnippet": "// ✅ Optimal: Subscribes ONLY to 'itemsCount':\nconst count = useCartStore(state => state.items.length);\n\n// ❌ Suboptimal: Subscribes to ENTIRE store object:\n// const store = useCartStore(); // Re-renders on ANY change in store!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Selector Subscription Pattern",
         "proTip": "Always use selectors like `state => state.property`. Never call `const store = useMyStore()` without a selector in performance-critical UI."
       },
@@ -2884,7 +2884,7 @@ export const modulesData: ModuleItem[] = [
           "Use `get()` to read current values during async flows."
         ],
         "codeSnippet": "export const useCartStore = create<CartState>((set, get) => ({\n  items: [],\n  addItem: (item) => {\n    const currentItems = get().items;\n    const existing = currentItems.find(i => i.id === item.id);\n    if (existing) {\n      set({\n        items: currentItems.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i)\n      });\n    } else {\n      set({ items: [...currentItems, { ...item, qty: 1 }] });\n    }\n  },\n}));",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Using set and get in Actions"
       },
       {
@@ -2898,7 +2898,7 @@ export const modulesData: ModuleItem[] = [
           "Use `partialize` to choose which fields to persist."
         ],
         "codeSnippet": "import { create } from 'zustand';\nimport { persist } from 'zustand/middleware';\n\nexport const useCartStore = create<CartStore>()(\n  persist(\n    (set) => ({\n      cartItems: [],\n      addToCart: (item) => set((s) => ({ cartItems: [...s.cartItems, item] })),\n      clearCart: () => set({ cartItems: [] }),\n    }),\n    {\n      name: 'react-course-cart-storage', // localStorage key\n    }\n  )\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Zustand with persist Middleware"
       },
       {
@@ -2911,7 +2911,7 @@ export const modulesData: ModuleItem[] = [
           "Use `useStore.getState()` and `useStore.setState()` outside React."
         ],
         "codeSnippet": "// In an Axios interceptor or pure utility file:\nimport { useAuthStore } from '@/store/authStore';\n\n// Read token without React:\nconst token = useAuthStore.getState().token;\n\n// Update state directly outside components:\nuseAuthStore.getState().logout();",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Zustand Outside React Components"
       },
       {
@@ -2924,7 +2924,7 @@ export const modulesData: ModuleItem[] = [
           "Named actions appear in DevTools timeline."
         ],
         "codeSnippet": "import { devtools } from 'zustand/middleware';\n\nexport const useStore = create<MyState>()(\n  devtools((set) => ({\n    // actions...\n  }))\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Zustand DevTools Middleware"
       },
       {
@@ -2937,7 +2937,7 @@ export const modulesData: ModuleItem[] = [
           "Completely safe for concurrent mode."
         ],
         "codeSnippet": "// Zustand is built natively on React's useSyncExternalStore API.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Concurrent Safety Guarantee"
       },
       {
@@ -2950,7 +2950,7 @@ export const modulesData: ModuleItem[] = [
           "Modular domain stores keep logic cleanly isolated."
         ],
         "codeSnippet": "src/store/\n├── useAuthStore.ts\n├── useCartStore.ts\n├── useUIStore.ts\n└── useCourseProgressStore.ts",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Modular Store Architecture"
       }
     ]
@@ -2974,7 +2974,7 @@ export const modulesData: ModuleItem[] = [
           "Rendering is not the same as DOM painting; if JSX output is identical, no DOM mutation occurs."
         ],
         "codeSnippet": "// When Parent re-renders, Child re-renders by default:\nfunction Parent() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n      <ExpensiveChild /> {/* Re-renders on every click unless memoized! */}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Default Cascade Re-render Behavior"
       },
       {
@@ -2988,7 +2988,7 @@ export const modulesData: ModuleItem[] = [
           "Fails to prevent re-renders if you pass un-memoized object literals or inline functions as props!"
         ],
         "codeSnippet": "import React from 'react';\n\nexport const ExpensiveTableRow = React.memo(function TableRow({ item }: { item: Student }) {\n  // Only re-renders if 'item' reference changes!\n  return <tr><td>{item.name}</td><td>{item.gpa}</td></tr>;\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Memoizing Component with React.memo"
       },
       {
@@ -3002,7 +3002,7 @@ export const modulesData: ModuleItem[] = [
           "Do not overuse on cheap calculations; `useMemo` itself has memory and comparison overhead."
         ],
         "codeSnippet": "// Only re-calculates filtered items when 'query' or 'items' changes:\nconst filteredStudents = useMemo(() => {\n  return items.filter(item => \n    item.name.toLowerCase().includes(query.toLowerCase())\n  );\n}, [items, query]);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useMemo for Array Filtering"
       },
       {
@@ -3016,7 +3016,7 @@ export const modulesData: ModuleItem[] = [
           "Prevents child re-renders caused by passing freshly recreated function instances."
         ],
         "codeSnippet": "// Stable function reference passed to memoized child:\nconst handleDelete = useCallback((id: string) => {\n  setStudents(prev => prev.filter(s => s.id !== id));\n}, []); // Empty deps because functional setter is used!\n\nreturn <MemoizedStudentTable onDelete={handleDelete} />;",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useCallback with Functional Setter"
       },
       {
@@ -3030,7 +3030,7 @@ export const modulesData: ModuleItem[] = [
           "Pass static trees as `{children}`."
         ],
         "codeSnippet": "// Moving state down into dedicated component:\nexport function App() {\n  return (\n    <div>\n      <InputWithState /> {/* Only this small input re-renders as user types */}\n      <VeryExpensiveTree /> {/* Never re-renders when user types! */}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "State Down Optimization Pattern"
       },
       {
@@ -3044,7 +3044,7 @@ export const modulesData: ModuleItem[] = [
           "DOM contains only visible elements + small buffer."
         ],
         "codeSnippet": "// Virtualized windowing:\n// Total rows: 50,000\n// Rendered DOM elements: 20 visible + 5 buffer = 25 nodes total!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Virtual List Concept"
       },
       {
@@ -3057,7 +3057,7 @@ export const modulesData: ModuleItem[] = [
           "Significantly reduces initial page load JavaScript size (First Contentful Paint)."
         ],
         "codeSnippet": "import React, { Suspense, useState } from 'react';\n\nconst HeavyChart = React.lazy(() => import('./HeavyAnalyticsChart'));\n\nexport function AnalyticsDashboard() {\n  const [showChart, setShowChart] = useState(false);\n\n  return (\n    <div>\n      <button onClick={() => setShowChart(true)}>Show Chart</button>\n      {showChart && (\n        <Suspense fallback={<div className=\"h-64 animate-pulse bg-slate-800\" />}>\n          <HeavyChart />\n        </Suspense>\n      )}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "On-demand Lazy Component Loading"
       },
       {
@@ -3070,7 +3070,7 @@ export const modulesData: ModuleItem[] = [
           "Use 'Record why each component rendered while profiling' in DevTools settings."
         ],
         "codeSnippet": "// Use the Profiler component programmatically if needed:\nimport { Profiler } from 'react';\n\n<Profiler id=\"CourseTable\" onRender={(id, phase, actualDuration) => {\n  console.log(`${id} [${phase}] took ${actualDuration}ms`);\n}}>\n  <CourseTable />\n</Profiler>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "React Profiler API"
       },
       {
@@ -3083,7 +3083,7 @@ export const modulesData: ModuleItem[] = [
           "Always test with CPU throttling (4x / 6x slowdown) in DevTools."
         ],
         "codeSnippet": "// 1. Don't optimize until you measure bottlenecks.\n// 2. Colocate state before reaching for memo/useCallback.\n// 3. Virtualize lists > 100 items.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Performance Golden Rules"
       },
       {
@@ -3096,7 +3096,7 @@ export const modulesData: ModuleItem[] = [
           "Debounce: Search inputs; Throttle: Window scroll / resize."
         ],
         "codeSnippet": "// Debounced handler:\nconst debouncedSearch = useMemo(\n  () => debounce((val: string) => api.search(val), 300),\n  []\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Debounced API Handler"
       },
       {
@@ -3109,7 +3109,7 @@ export const modulesData: ModuleItem[] = [
           "Use `startTransition` in React 18/19 for non-urgent UI updates."
         ],
         "codeSnippet": "import { startTransition } from 'react';\n\n// Non-urgent update won't block typing input:\nstartTransition(() => {\n  setFilteredResults(heavyCalculation(query));\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "startTransition for Responsive INP"
       },
       {
@@ -3122,7 +3122,7 @@ export const modulesData: ModuleItem[] = [
           "Avoid importing massive monolithic libraries like moment.js."
         ],
         "codeSnippet": "// ❌ Bad: Imports entire package\n// import * as Icons from 'lucide-react';\n\n// ✅ Good: Tree-shakable named imports\nimport { Check, AlertCircle } from 'lucide-react';",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Tree-shakable Module Imports"
       }
     ]
@@ -3146,7 +3146,7 @@ export const modulesData: ModuleItem[] = [
           "Allow consumers to inject custom classNames via `cn()` utility."
         ],
         "codeSnippet": "// Example Shadcn-inspired Badge:\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nexport const badgeVariants = cva(\n  \"inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-blue-600 text-white\",\n        secondary: \"bg-slate-800 text-slate-300\",\n        destructive: \"bg-rose-600 text-white\",\n        outline: \"border border-slate-700 text-slate-300\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Class Variance Authority (CVA) Component Pattern"
       },
       {
@@ -3160,7 +3160,7 @@ export const modulesData: ModuleItem[] = [
           "Eliminates prop-drilling within the widget."
         ],
         "codeSnippet": "// Usage of Compound Tabs:\n<Tabs defaultValue=\"overview\">\n  <TabsList>\n    <TabsTrigger value=\"overview\">Overview</TabsTrigger>\n    <TabsTrigger value=\"curriculum\">Curriculum</TabsTrigger>\n  </TabsList>\n  <TabsContent value=\"overview\">Overview Details</TabsContent>\n  <TabsContent value=\"curriculum\">Curriculum List</TabsContent>\n</Tabs>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Compound Component Pattern Usage"
       },
       {
@@ -3173,7 +3173,7 @@ export const modulesData: ModuleItem[] = [
           "Sub-components can be attached as static properties or named exports."
         ],
         "codeSnippet": "const TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);\n\nexport function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {\n  const [active, setActive] = useState(defaultValue);\n  return <TabsContext.Provider value={{ active, setActive }}>{children}</TabsContext.Provider>;\n}\n\nexport function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {\n  const ctx = useContext(TabsContext)!;\n  const isSelected = ctx.active === value;\n  return (\n    <button \n      onClick={() => ctx.setActive(value)}\n      className={isSelected ? \"border-b-2 border-blue-500 font-bold\" : \"text-slate-400\"}\n    >\n      {children}\n    </button>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Compound Component Implementation"
       },
       {
@@ -3186,7 +3186,7 @@ export const modulesData: ModuleItem[] = [
           "Precursor to custom hooks, still valuable for template customization."
         ],
         "codeSnippet": "export function MouseTracker({ render }: { render: (pos: { x: number; y: number }) => React.ReactNode }) {\n  const [pos, setPos] = useState({ x: 0, y: 0 });\n  return (\n    <div onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}>\n      {render(pos)}\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Render Props Pattern"
       },
       {
@@ -3199,7 +3199,7 @@ export const modulesData: ModuleItem[] = [
           "Total styling freedom without reinventing accessibility."
         ],
         "codeSnippet": "// Radix UI Headless Dialog wrapped in Tailwind:\nimport * as Dialog from '@radix-ui/react-dialog';\n\nexport function Modal({ isOpen, onClose, title, children }: ModalProps) {\n  return (\n    <Dialog.Root open={isOpen} onOpenChange={onClose}>\n      <Dialog.Portal>\n        <Dialog.Overlay className=\"fixed inset-0 bg-black/70 backdrop-blur-sm\" />\n        <Dialog.Content className=\"fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full\">\n          <Dialog.Title className=\"text-xl font-bold text-white\">{title}</Dialog.Title>\n          {children}\n        </Dialog.Content>\n      </Dialog.Portal>\n    </Dialog.Root>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Headless Modal Component"
       },
       {
@@ -3214,7 +3214,7 @@ export const modulesData: ModuleItem[] = [
           "Restore body scroll when closed."
         ],
         "codeSnippet": "import { createPortal } from 'react-dom';\n\nexport function PortalModal({ isOpen, onClose, children }: ModalProps) {\n  if (!isOpen) return null;\n  return createPortal(\n    <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80\">\n      <div className=\"bg-slate-900 p-6 rounded-xl border border-slate-800 max-w-md w-full\">\n        {children}\n      </div>\n    </div>,\n    document.body\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "React Portal Modal"
       },
       {
@@ -3227,7 +3227,7 @@ export const modulesData: ModuleItem[] = [
           "Use mousedown listener on `document` to detect clicks outside."
         ],
         "codeSnippet": "export function useClickOutside(ref: React.RefObject<HTMLElement | null>, handler: () => void) {\n  useEffect(() => {\n    const listener = (event: MouseEvent | TouchEvent) => {\n      if (!ref.current || ref.current.contains(event.target as Node)) return;\n      handler();\n    };\n    document.addEventListener('mousedown', listener);\n    return () => document.removeEventListener('mousedown', listener);\n  }, [ref, handler]);\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useClickOutside Custom Hook"
       },
       {
@@ -3240,7 +3240,7 @@ export const modulesData: ModuleItem[] = [
           "Keyboard left/right arrows switch active tab."
         ],
         "codeSnippet": "<div role=\"tablist\" className=\"flex border-b border-slate-800\">\n  <button role=\"tab\" aria-selected={active === 'code'} onClick={() => setActive('code')}>\n    Code\n  </button>\n</div>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Accessible Tab ARIA Attributes"
       },
       {
@@ -3253,7 +3253,7 @@ export const modulesData: ModuleItem[] = [
           "Powers enterprise management dashboards."
         ],
         "codeSnippet": "interface Column<T> {\n  header: string;\n  accessorKey: keyof T;\n  render?: (item: T) => React.ReactNode;\n}\n\nexport function DataTable<T extends { id: string }>({ data, columns }: { data: T[]; columns: Column<T>[] }) {\n  return (\n    <table className=\"w-full text-left text-sm text-slate-300\">\n      <thead className=\"bg-slate-900 border-b border-slate-800 text-xs uppercase text-slate-400\">\n        <tr>{columns.map(c => <th key={String(c.accessorKey)} className=\"p-3\">{c.header}</th>)}</tr>\n      </thead>\n      <tbody className=\"divide-y divide-slate-800\">\n        {data.map(row => (\n          <tr key={row.id}>\n            {columns.map(c => (\n              <td key={String(c.accessorKey)} className=\"p-3\">\n                {c.render ? c.render(row) : String(row[c.accessorKey])}\n              </td>\n            ))}\n          </tr>\n        ))}\n      </tbody>\n    </table>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Generic Reusable DataTable Component"
       },
       {
@@ -3266,7 +3266,7 @@ export const modulesData: ModuleItem[] = [
           "Calculates total pages from `totalItems` and `pageSize`."
         ],
         "codeSnippet": "export function Pagination({ current, total, onChange }: PaginationProps) {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <button disabled={current <= 1} onClick={() => onChange(current - 1)}>Prev</button>\n      <span>Page {current} of {total}</span>\n      <button disabled={current >= total} onClick={() => onChange(current + 1)}>Next</button>\n    </div>\n  );\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Pagination Component"
       },
       {
@@ -3279,7 +3279,7 @@ export const modulesData: ModuleItem[] = [
           "Managed via Zustand store or React Sonner."
         ],
         "codeSnippet": "toast.success('Project 01 completed successfully!');",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Triggering Toasts"
       },
       {
@@ -3292,7 +3292,7 @@ export const modulesData: ModuleItem[] = [
           "The `asChild` pattern popularized by Radix UI."
         ],
         "codeSnippet": "// Polymorphic button can render as an <a> link or <button>\n<Button as=\"a\" href=\"/curriculum\">Go to Curriculum</Button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Polymorphic Component Concept"
       }
     ]
@@ -3316,7 +3316,7 @@ export const modulesData: ModuleItem[] = [
           "Sessions: Stateful server-side session IDs stored in database."
         ],
         "codeSnippet": "// JWT Structure: header.payload.signature\n// Decoded payload contains: { sub: \"u123\", role: \"admin\", exp: 1735689600 }",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "JWT Token Structure"
       },
       {
@@ -3329,7 +3329,7 @@ export const modulesData: ModuleItem[] = [
           "Never store passwords in plain text."
         ],
         "codeSnippet": "export function LoginForm() {\n  const [showPassword, setShowPassword] = useState(false);\n  // Form submission with credentials...\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Login Interface Pattern"
       },
       {
@@ -3342,7 +3342,7 @@ export const modulesData: ModuleItem[] = [
           "Security rule: Avoid storing raw JWT tokens in localStorage if vulnerable to XSS."
         ],
         "codeSnippet": "interface AuthState {\n  user: UserProfile | null;\n  token: string | null;\n  isAuthenticated: boolean;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Auth State Shape"
       },
       {
@@ -3355,7 +3355,7 @@ export const modulesData: ModuleItem[] = [
           "Redirect preserves intended destination URL."
         ],
         "codeSnippet": "export function ProtectedLayout() {\n  const { isAuthenticated, isLoading } = useAuth();\n  if (isLoading) return <LoadingScreen />;\n  if (!isAuthenticated) return <Navigate to=\"/login\" replace />;\n  return <Outlet />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Protected Layout Route"
       },
       {
@@ -3369,7 +3369,7 @@ export const modulesData: ModuleItem[] = [
           "Refresh token: Sent to `/auth/refresh` endpoint."
         ],
         "codeSnippet": "// Token Lifecycle:\n// 1. User logs in -> Receives Access Token (15m) + Refresh Token (7d)\n// 2. Access Token expires -> App calls /refresh -> Receives new Access Token\n// 3. User remains logged in seamlessly!",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Token Rotation Lifecycle"
       },
       {
@@ -3383,7 +3383,7 @@ export const modulesData: ModuleItem[] = [
           "Requires CORS configuration with `withCredentials: true`."
         ],
         "codeSnippet": "// Axios configuration for HttpOnly cookie sessions:\nexport const apiClient = axios.create({\n  baseURL: '/api',\n  withCredentials: true, // Sends and receives secure cookies!\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Configuring Axios for HttpOnly Cookies"
       },
       {
@@ -3396,7 +3396,7 @@ export const modulesData: ModuleItem[] = [
           "Queue simultaneous requests while refresh is in flight to prevent duplicate refresh calls."
         ],
         "codeSnippet": "apiClient.interceptors.response.use(\n  (res) => res,\n  async (error) => {\n    const originalRequest = error.config;\n    if (error.response?.status === 401 && !originalRequest._retry) {\n      originalRequest._retry = true;\n      const newAccessToken = await refreshAuthToken();\n      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;\n      return apiClient(originalRequest); // Retry original request!\n    }\n    return Promise.reject(error);\n  }\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Automatic 401 Token Refresh Interceptor"
       },
       {
@@ -3409,7 +3409,7 @@ export const modulesData: ModuleItem[] = [
           "Always enforce authorization on the backend; frontend RBAC is solely for UX!"
         ],
         "codeSnippet": "export function RoleGate({ allowedRoles, children }: { allowedRoles: string[]; children: React.ReactNode }) {\n  const { user } = useAuth();\n  if (!user || !allowedRoles.includes(user.role)) return null;\n  return <>{children}</>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Declarative RoleGate Component"
       },
       {
@@ -3422,7 +3422,7 @@ export const modulesData: ModuleItem[] = [
           "Clear TanStack Query cache on logout to avoid leaking user data to subsequent logins."
         ],
         "codeSnippet": "const logout = async () => {\n  try {\n    await apiClient.post('/auth/logout');\n  } finally {\n    queryClient.clear(); // Purge all cached user data!\n    useAuthStore.getState().reset();\n    window.location.href = '/login';\n  }\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Complete Secure Logout Sequence"
       },
       {
@@ -3434,8 +3434,8 @@ export const modulesData: ModuleItem[] = [
         "keyPoints": [
           "Clean encapsulation of security concerns."
         ],
-        "codeSnippet": "features/auth/\n├── components/LoginForm.tsx, RoleGate.tsx\n├── hooks/useAuth.ts\n├── services/authService.ts\n└── store/useAuthStore.ts",
-        "codeLanguage": "tsx",
+        "codeSnippet": "features/auth/\n├── components/LoginForm.jsx, RoleGate.jsx\n├── hooks/useAuth.js\n├── services/authService.js\n└── store/useAuthStore.js",
+        "codeLanguage": "jsx",
         "codeTitle": "Auth Feature Directory Layout"
       }
     ]
@@ -3458,7 +3458,7 @@ export const modulesData: ModuleItem[] = [
           "Zero typing latency even in forms with 50+ fields."
         ],
         "codeSnippet": "npm install react-hook-form zod @hookform/resolvers",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Installing RHF and Zod"
       },
       {
@@ -3471,7 +3471,7 @@ export const modulesData: ModuleItem[] = [
           "Single source of truth for both TypeScript types and runtime validation."
         ],
         "codeSnippet": "import { z } from 'zod';\n\nexport const studentSchema = z.object({\n  name: z.string().min(2, \"Name must be at least 2 characters\"),\n  email: z.string().email(\"Invalid email address\"),\n  gpa: z.coerce.number().min(0, \"GPA >= 0\").max(4.0, \"GPA <= 4.0\"),\n  major: z.enum([\"Computer Science\", \"Software Engineering\", \"Cybersecurity\"]),\n  agreeTerms: z.literal(true, {\n    errorMap: () => ({ message: \"You must accept terms\" }),\n  }),\n});\n\nexport type StudentFormData = z.infer<typeof studentSchema>;",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Complete Zod Validation Schema"
       },
       {
@@ -3484,7 +3484,7 @@ export const modulesData: ModuleItem[] = [
           "Automatic typed submission handler `handleSubmit(onSubmit)`."
         ],
         "codeSnippet": "import { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\n\nexport function StudentForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n    reset,\n  } = useForm<StudentFormData>({\n    resolver: zodResolver(studentSchema),\n    defaultValues: {\n      name: '',\n      email: '',\n      gpa: 3.5,\n    },\n  });\n\n  const onSubmit = async (data: StudentFormData) => {\n    await studentService.create(data);\n    reset();\n  };\n\n  return <form onSubmit={handleSubmit(onSubmit)}>...</form>;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "useForm with zodResolver"
       },
       {
@@ -3497,7 +3497,7 @@ export const modulesData: ModuleItem[] = [
           "No manual `value` or `onChange` state wiring required."
         ],
         "codeSnippet": "<div>\n  <label className=\"block text-sm font-medium text-slate-300\">Full Name</label>\n  <input \n    {...register('name')} \n    className=\"w-full bg-slate-900 border border-slate-800 p-2 rounded text-white\" \n  />\n  {errors.name && <p className=\"text-xs text-rose-400 mt-1\">{errors.name.message}</p>}\n</div>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Input Registration and Error Display"
       },
       {
@@ -3510,7 +3510,7 @@ export const modulesData: ModuleItem[] = [
           "Crucial for order forms, tags, and multi-phone inputs."
         ],
         "codeSnippet": "import { useFieldArray } from 'react-hook-form';\n\nconst { fields, append, remove } = useFieldArray({\n  control,\n  name: \"phoneNumbers\",\n});\n\n// Render dynamic items:\n{fields.map((field, index) => (\n  <div key={field.id} className=\"flex gap-2\">\n    <input {...register(`phoneNumbers.${index}.number`)} />\n    <button type=\"button\" onClick={() => remove(index)}>Remove</button>\n  </div>\n))}\n<button type=\"button\" onClick={() => append({ number: '' })}>Add Phone</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dynamic Inputs with useFieldArray"
       },
       {
@@ -3524,7 +3524,7 @@ export const modulesData: ModuleItem[] = [
           "Validate current step before allowing 'Next' button click."
         ],
         "codeSnippet": "const handleNextStep = async () => {\n  // Only validate step 1 fields:\n  const isValid = await trigger(['name', 'email']);\n  if (isValid) setStep(s => s + 1);\n};",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Step Validation with trigger()"
       },
       {
@@ -3537,7 +3537,7 @@ export const modulesData: ModuleItem[] = [
           "`Controller` bridges custom UI widgets with form state."
         ],
         "codeSnippet": "import { Controller } from 'react-hook-form';\n\n<Controller\n  name=\"theme\"\n  control={control}\n  render={({ field }) => (\n    <CustomSelect value={field.value} onChange={field.onChange} />\n  )}\n/>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Controlled Custom Widget via Controller"
       }
     ]
@@ -3561,7 +3561,7 @@ export const modulesData: ModuleItem[] = [
           "Semantic color naming (`primary`, `muted`, `accent`, `destructive`)."
         ],
         "codeSnippet": ":root {\n  --background: 222.2 84% 4.9%;\n  --foreground: 210 40% 98%;\n  --primary: 217.2 91.2% 59.8%;\n  --destructive: 0 62.8% 30.6%;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "CSS Variable Design Tokens"
       },
       {
@@ -3574,7 +3574,7 @@ export const modulesData: ModuleItem[] = [
           "Standard pattern used by Shadcn UI."
         ],
         "codeSnippet": "const buttonVariants = cva(\n  \"inline-flex items-center justify-center font-medium rounded-lg transition-colors\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-blue-600 text-white hover:bg-blue-700\",\n        ghost: \"hover:bg-slate-800 text-slate-300\",\n        outline: \"border border-slate-700 hover:bg-slate-800\",\n      },\n      size: {\n        sm: \"h-8 px-3 text-xs\",\n        md: \"h-10 px-4 text-sm\",\n        lg: \"h-12 px-6 text-base\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"md\",\n    },\n  }\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "CVA Button Variants"
       },
       {
@@ -3587,7 +3587,7 @@ export const modulesData: ModuleItem[] = [
           "Avoid fixed pixel widths that cause horizontal scrollbars on mobile."
         ],
         "codeSnippet": "<div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n  {/* Automatically responsive cards */}\n</div>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Mobile-First Grid Layout"
       },
       {
@@ -3600,7 +3600,7 @@ export const modulesData: ModuleItem[] = [
           "Persist theme in `localStorage` and detect `prefers-color-scheme`."
         ],
         "codeSnippet": "export function toggleDarkMode() {\n  const isDark = document.documentElement.classList.toggle('dark');\n  localStorage.setItem('theme', isDark ? 'dark' : 'light');\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Dark Mode Class Toggle"
       },
       {
@@ -3614,7 +3614,7 @@ export const modulesData: ModuleItem[] = [
           "Use semantic `<header>`, `<main>`, `<nav>`, and `<button>` elements."
         ],
         "codeSnippet": "<button \n  className=\"focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none\"\n  aria-label=\"Close dialog\"\n>\n  <X className=\"w-5 h-5\" />\n</button>",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Accessible Focus Ring"
       }
     ]
@@ -3638,7 +3638,7 @@ export const modulesData: ModuleItem[] = [
           "Feature boundaries keep mental overhead low."
         ],
         "codeSnippet": "src/\n├── app/                  # Route layouts and pages\n├── components/ui/        # Reusable design system primitives\n├── features/\n│   ├── auth/             # Login, Register, useAuth, authService\n│   ├── catalog/          # ProductList, CategoryFilter, useProducts\n│   └── cart/             # CartDrawer, CartItem, useCartStore\n├── lib/                  # Shared utilities (cn, date formatters)\n└── types/                # Global TypeScript definitions",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Enterprise Feature-Based Layout"
       },
       {
@@ -3651,7 +3651,7 @@ export const modulesData: ModuleItem[] = [
           "Makes copying and moving files between folders painless."
         ],
         "codeSnippet": "// tsconfig.json\n{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  }\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Path Alias tsconfig Configuration"
       },
       {
@@ -3664,7 +3664,7 @@ export const modulesData: ModuleItem[] = [
           "Enforce consistent code style across engineering teams."
         ],
         "codeSnippet": "// tsconfig.json\n\"compilerOptions\": {\n  \"strict\": true,\n  \"noUncheckedIndexedAccess\": true\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Strict TypeScript Configuration"
       }
     ]
@@ -3687,7 +3687,7 @@ export const modulesData: ModuleItem[] = [
           "'The more your tests resemble the way your software is used, the more confidence they can give you.' — Kent C. Dodds"
         ],
         "codeSnippet": "npm install -D vitest @testing-library/react @testing-library/user-event jsdom",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Installing Testing Stack"
       },
       {
@@ -3701,7 +3701,7 @@ export const modulesData: ModuleItem[] = [
           "Tests break only when user experience breaks, not when refactoring implementation."
         ],
         "codeSnippet": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { Counter } from './Counter';\n\ntest('increments counter on button click', async () => {\n  const user = userEvent.setup();\n  render(<Counter />);\n\n  const button = screen.getByRole('button', { name: /clicks: 0/i });\n  await user.click(button);\n\n  expect(screen.getByRole('button', { name: /clicks: 1/i })).toBeInTheDocument();\n});",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "RTL User Interaction Test"
       },
       {
@@ -3714,7 +3714,7 @@ export const modulesData: ModuleItem[] = [
           "Provides highest confidence testing for loading, error, and data states."
         ],
         "codeSnippet": "import { http, HttpResponse } from 'msw';\nimport { setupServer } from 'msw/node';\n\nexport const server = setupServer(\n  http.get('/api/students', () => {\n    return HttpResponse.json([{ id: '1', name: 'Alice', gpa: 3.9 }]);\n  })\n);",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Mock Service Worker Server Handler"
       }
     ]
@@ -3737,7 +3737,7 @@ export const modulesData: ModuleItem[] = [
           "Automatic string escaping prevents HTML injection."
         ],
         "codeSnippet": "// If userInput is \"<script>alert('hack')</script>\",\n// React renders it as safe plain text: &lt;script&gt;...",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Automatic XSS Escaping"
       },
       {
@@ -3750,7 +3750,7 @@ export const modulesData: ModuleItem[] = [
           "Never pass un-sanitized user input to `dangerouslySetInnerHTML`."
         ],
         "codeSnippet": "import DOMPurify from 'dompurify';\n\nexport function SafeHtml({ rawContent }: { rawContent: string }) {\n  const cleanHtml = DOMPurify.sanitize(rawContent);\n  return <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />;\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Safe HTML Sanitization with DOMPurify",
         "pitfall": "Passing raw strings to dangerouslySetInnerHTML allows attackers to execute arbitrary JavaScript in your users' browser sessions."
       },
@@ -3765,7 +3765,7 @@ export const modulesData: ModuleItem[] = [
           "Secret env vars: Database keys, payment secret keys."
         ],
         "codeSnippet": "// ❌ DANGEROUS: Leaked to browser client!\n// NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_12345\n\n// ✅ Safe: Only accessible in server environments / API routes:\n// STRIPE_SECRET_KEY=sk_live_12345",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Securing Environment Variables"
       }
     ]
@@ -3788,7 +3788,7 @@ export const modulesData: ModuleItem[] = [
           "Build bundles are hashed for immutable browser caching."
         ],
         "codeSnippet": "npm run build && npm run start",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Production Build Command"
       },
       {
@@ -3802,7 +3802,7 @@ export const modulesData: ModuleItem[] = [
           "A failure in a sidebar should never crash the main application view."
         ],
         "codeSnippet": "import { Component, ErrorInfo, ReactNode } from 'react';\n\nexport class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {\n  state = { hasError: false };\n\n  static getDerivedStateFromError() {\n    return { hasError: true };\n  }\n\n  componentDidCatch(error: Error, info: ErrorInfo) {\n    console.error(\"Caught in ErrorBoundary:\", error, info);\n  }\n\n  render() {\n    if (this.state.hasError) return this.props.fallback;\n    return this.props.children;\n  }\n}",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "React Error Boundary Component"
       },
       {
@@ -3815,7 +3815,7 @@ export const modulesData: ModuleItem[] = [
           "Ensure zero unresolved TypeScript or ESLint warnings."
         ],
         "codeSnippet": "// Production Pre-Flight:\n// [x] TypeScript build passes without any errors\n// [x] ESLint checks clean\n// [x] All images have alt tags and width/height attributes\n// [x] Error Boundaries installed around core routes",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Production Deployment Checklist"
       }
     ]
@@ -3839,7 +3839,7 @@ export const modulesData: ModuleItem[] = [
           "Real-time search query matching."
         ],
         "codeSnippet": "// Available in interactive demo tab! Check the Right Panel or Projects tab.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 01 Overview",
         "interactiveDemoKey": "TodoAppDemo"
       },
@@ -3854,7 +3854,7 @@ export const modulesData: ModuleItem[] = [
           "Modal add/edit forms with error handling."
         ],
         "codeSnippet": "// Features: Student List, Add/Edit Modal, Delete confirmation, Search, Filter, Pagination.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 02 Overview"
       },
       {
@@ -3868,7 +3868,7 @@ export const modulesData: ModuleItem[] = [
           "Product inventory metrics cards."
         ],
         "codeSnippet": "// Features: REST API, Axios client, Category tree filter, Price slider, Inventory metrics.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 03 Overview"
       },
       {
@@ -3882,7 +3882,7 @@ export const modulesData: ModuleItem[] = [
           "Protected layout routes and role guards."
         ],
         "codeSnippet": "// Features: JWT auth, Axios 401 interceptors, ProtectedRoute, RBAC gates, User Profile.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 04 Overview"
       },
       {
@@ -3896,7 +3896,7 @@ export const modulesData: ModuleItem[] = [
           "Multi-step checkout pipeline."
         ],
         "codeSnippet": "// Features: Dynamic catalog, Product detail, Zustand Cart Store, Wishlist, Checkout Wizard.",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 05 Overview"
       },
       {
@@ -3910,7 +3910,7 @@ export const modulesData: ModuleItem[] = [
           "Production-ready build with Vitest testing suite."
         ],
         "codeSnippet": "// Complete multi-tier architecture:\n// React/Next.js -> TanStack Query -> Zustand -> React Hook Form + Zod -> REST API",
-        "codeLanguage": "tsx",
+        "codeLanguage": "jsx",
         "codeTitle": "Project 06 Final Capstone"
       }
     ]

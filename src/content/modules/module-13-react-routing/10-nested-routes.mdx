@@ -19,7 +19,7 @@ Parent routes can render common layouts (e.g. sidebar and header), with `<Outlet
 
 ### Code Example: Nested Routes and Outlet Layout
 
-```tsx
+```jsx
 // Route configuration:
 <Route path="/dashboard" element={<DashboardLayout />}>
   <Route index element={<DashboardOverview />} />
@@ -27,7 +27,7 @@ Parent routes can render common layouts (e.g. sidebar and header), with `<Outlet
   <Route path="settings" element={<SettingsView />} />
 </Route>
 
-// Inside DashboardLayout.tsx:
+// Inside DashboardLayout.jsx:
 export function DashboardLayout() {
   return (
     <div className="flex">

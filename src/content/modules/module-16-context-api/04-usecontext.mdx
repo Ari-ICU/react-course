@@ -19,7 +19,7 @@ The `useContext(MyContext)` hook returns the current value passed to the nearest
 
 ### Code Example: Safe Custom Context Hook
 
-```tsx
+```jsx
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {

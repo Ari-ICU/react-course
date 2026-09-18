@@ -16,25 +16,19 @@ codeTitle: "ES6 Default Props Pattern"
 
 ### Key Concepts & Rules:
 
-- ES6 defaults ដំណើរការយ៉ាងរលូនជាមួយ TypeScript optional properties (`prop?: string`)។
+- ES6 defaults ផ្តល់នូវ syntax ខ្លី និងងាយស្រួលយល់សម្រាប់ props ដែលអាចមាន ឬគ្មាន (Optional)។
 - Fallback value នឹងត្រូវយកមកប្រើ លុះត្រាតែ prop នោះមានតម្លៃ `undefined`។
 - កាត់បន្ថយ runtime bugs នៅពេលដែល parent មិនបានបញ្ជូន prop ណាមួយមក។
 
 ### Code Example: ES6 Default Props Pattern
 
-```tsx
-interface ButtonProps {
-  label: string;
-  variant?: "primary" | "secondary";
-  size?: "sm" | "md" | "lg";
-}
-
-// Fallbacks assigned in destructuring:
+```jsx
+// Fallbacks assigned directly in destructuring:
 export function Button({ 
   label, 
   variant = "primary", 
   size = "md" 
-}: ButtonProps) {
+}) {
   return <button className={`btn-${variant} btn-${size}`}>{label}</button>;
 }
 ```

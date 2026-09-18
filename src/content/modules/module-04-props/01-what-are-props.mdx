@@ -7,7 +7,7 @@ moduleNumber: "04"
 category: "Fundamentals"
 summary: "ទិន្នន័យ (Arguments) បញ្ជូនទៅកាន់ React components ដើម្បីកំណត់ឥរិយាបថ និងការ render UI។"
 proTip: "គិតពី props ដូចជា arguments នៃ function ធម្មតា៖ function ទទួល parameters មកគណនា តែមិនត្រូវទៅកែប្រែតម្លៃដើមនោះឡើយ។"
-codeTitle: "Basic Props with TypeScript"
+codeTitle: "Basic Props in Component"
 ---
 
 # What are Props?
@@ -18,17 +18,12 @@ Props (មកពីពាក្យ properties) គឺជាយន្តការ
 
 - Props ហូរតាមទិសដៅតែមួយ (Unidirectional) ពី parent ចុះទៅ child។
 - Child components ដាច់ខាតមិនត្រូវកែប្រែ (mutate) តម្លៃ props របស់ខ្លួនឡើយ (Props are immutable)។
-- TypeScript interfaces ជួយផ្តល់នូវ autocomplete និង type safety យ៉ាងច្បាស់លាស់សម្រាប់ props។
+- Props អនុញ្ញាតឱ្យ component មួយអាចទទួលទិន្នន័យផ្សេងៗគ្នា ដើម្បីបង្ហាញ UI តាមតម្រូវការ។
 
-### Code Example: Basic Props with TypeScript
+### Code Example: Basic Props in Component
 
-```tsx
-interface AlertProps {
-  type: "info" | "warning" | "error";
-  message: string;
-}
-
-export function Alert({ type, message }: AlertProps) {
+```jsx
+export function Alert({ type, message }) {
   const bg = type === "error" ? "bg-rose-950/60 border-rose-800 text-rose-300" 
            : type === "warning" ? "bg-amber-950/60 border-amber-800 text-amber-300"
            : "bg-blue-950/60 border-blue-800 text-blue-300";

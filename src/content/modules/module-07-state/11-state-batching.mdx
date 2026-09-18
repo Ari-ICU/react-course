@@ -19,7 +19,7 @@ React automatically batches state updates across async boundaries (setTimeout, f
 
 ### Code Example: Automatic Async Batching
 
-```tsx
+```jsx
 async function handleAsyncSave() {
   await api.save();
   // In React 18+, both updates batch into 1 single render:

@@ -5,39 +5,51 @@ title: "Reusable Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ការឌីហ្សាញ UI building blocks ដែលមានភាពបត់បែនខ្ពស់ ងាយស្រួល config និងអាចប្រើឡើងវិញបានច្រើនកន្លែង។"
-proTip: "ប្រើ helper `cn()` (clsx + tailwind-merge) ដើម្បី merge Tailwind CSS classes ដោយជៀសវាងបញ្ហា style specificity conflicts។"
-codeTitle: "Robust Reusable Button"
+summary: "ការបង្កើត UI components ដែលអាចយកទៅហៅប្រើប្រាស់ឡើងវិញបានច្រើនដងក្នុងកម្មវិធី។"
+proTip: "ការបង្កើត component មួយដែល encapsulation ទាំង markup និង styling ជួយឱ្យអ្នកអាច reuse វាបានច្រើនដងដោយមិនចាំបាច់សរសេរកូដស្ទួនឡើយ (DRY)។"
+codeTitle: "Reusing Components Across the UI"
 ---
 
 # Reusable Components
 
-Reusable component ដ៏ល្អមួយ ត្រូវតែមាន minimal required API, មានតម្លៃ default ត្រឹមត្រូវ និងអាចទទួល standard HTML attributes (ដូចជា `className`, `disabled`, `onClick`, `aria-*`) តាមរយៈ prop spreading។
+Reusable component គឺជា component ដែលត្រូវបានបង្កើតឡើងយ៉ាងមានរបៀបរៀបរយ ដើម្បីអាចយកទៅហៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែងនៅក្នុង application ដោយមិនបាច់សរសេរកូដ JSX ដដែលៗឡើងវិញឡើយ។
 
 ### Key Concepts & Rules:
 
-- ពង្រីក standard HTML attributes ជាមួយ TypeScript ដូចជា `React.ButtonHTMLAttributes<HTMLButtonElement>`។
-- អនុញ្ញាតឱ្យមាន external styling បន្ថែមតាមរយៈការ merge `className` (ឧ. ប្រើ `clsx` ឬ `tailwind-merge`)។
-- ប្រើប្រាស់ variants (primary, secondary, danger) ដើម្បីគ្រប់គ្រង visual states ផ្សេងៗគ្នានៃ UI។
+- បង្កើត component តែមួយដង តែអាចយកទៅ reuse បាននៅគ្រប់ទីកន្លែងក្នុង application។
+- កាត់បន្ថយការចម្លង markup និង styles ដដែលៗ (DRY - Don't Repeat Yourself)។
+- ងាយស្រួលកែសម្រួល UI ពីព្រោះនៅពេលកែ component ដើមតែមួយ កន្លែងដែលបាន reuse ទាំងអស់នឹង update ដោយស្វ័យប្រវត្តិ។
 
-### Code Example: Robust Reusable Button
+### Code Example: Reusing Components Across the UI
 
-```tsx
-import React from 'react';
-import { cn } from '@/lib/utils';
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger';
+```jsx
+// 1. Self-contained component with its own markup and styles (No props)
+export function SubscribeCard() {
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3">
+      <h3 className="font-semibold text-white">Subscribe to Newsletter</h3>
+      <p className="text-xs text-slate-400">Get modern React tips directly in your inbox.</p>
+      <button className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors">
+        Subscribe Now
+      </button>
+    </div>
+  );
 }
 
-export function Button({ variant = 'primary', className, ...props }: ButtonProps) {
-  const base = "px-4 py-2 rounded-lg font-medium transition-colors focus:ring-2";
-  const variants = {
-    primary: "bg-blue-600 hover:bg-blue-700 text-white",
-    secondary: "bg-slate-800 hover:bg-slate-700 text-slate-200",
-    danger: "bg-rose-600 hover:bg-rose-700 text-white",
-  };
+// 2. Reusing the exact same component in different pages/sections (No props)
+export function HomePage() {
+  return (
+    <div className="space-y-6 max-w-xl mx-auto">
+      <section className="p-4 bg-slate-950 border border-slate-800 rounded-lg">
+        <h2 className="text-sm font-semibold text-slate-400 mb-3">Main Content</h2>
+        <SubscribeCard />
+      </section>
 
-  return <button className={cn(base, variants[variant], className)} {...props} />;
+      <section className="p-4 bg-slate-950 border border-slate-800 rounded-lg">
+        <h2 className="text-sm font-semibold text-slate-400 mb-3">Sidebar Widget</h2>
+        <SubscribeCard />
+      </section>
+    </div>
+  );
 }
 ```

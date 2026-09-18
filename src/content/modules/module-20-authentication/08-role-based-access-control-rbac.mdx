@@ -19,7 +19,7 @@ Hide or disable actions (like Delete, Edit, or Admin Dashboard) based on whether
 
 ### Code Example: Declarative RoleGate Component
 
-```tsx
+```jsx
 export function RoleGate({ allowedRoles, children }: { allowedRoles: string[]; children: React.ReactNode }) {
   const { user } = useAuth();
   if (!user || !allowedRoles.includes(user.role)) return null;

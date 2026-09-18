@@ -19,7 +19,7 @@ Extract error messages from `error.response?.data?.message` to give users action
 
 ### Code Example: Parsing API Error Responses
 
-```tsx
+```jsx
 catch (error: any) {
   const message = error.response?.data?.message || error.message || 'Unknown network error';
   toast.error(message);

@@ -19,7 +19,7 @@ Allows deferring the loading of heavy components (like rich text editors, charts
 
 ### Code Example: On-demand Lazy Component Loading
 
-```tsx
+```jsx
 import React, { Suspense, useState } from 'react';
 
 const HeavyChart = React.lazy(() => import('./HeavyAnalyticsChart'));

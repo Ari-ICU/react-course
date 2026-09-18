@@ -19,7 +19,7 @@ When fetching data inside `useEffect`, fast user clicks can create race conditio
 
 ### Code Example: Safe Data Fetching with AbortController
 
-```tsx
+```jsx
 useEffect(() => {
   const controller = new AbortController();
   setIsLoading(true);

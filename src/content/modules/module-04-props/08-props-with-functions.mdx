@@ -22,8 +22,8 @@ codeTitle: "Passing Callback Function Props"
 
 ### Code Example: Passing Callback Function Props
 
-```tsx
-export function DeleteButton({ onDelete }: { onDelete: (id: string) => void }) {
+```jsx
+export function DeleteButton({ onDelete }) {
   return (
     <button 
       onClick={() => onDelete("item-42")}

@@ -20,7 +20,7 @@ Choose between early return, ternary operators, or switch statements depending o
 
 ### Code Example: Conditional Rendering Pattern
 
-```tsx
+```jsx
 export function AccountStatus({ status }: { status: 'loading' | 'verified' | 'unverified' }) {
   if (status === 'loading') {
     return <p className="text-slate-500">Checking status...</p>;

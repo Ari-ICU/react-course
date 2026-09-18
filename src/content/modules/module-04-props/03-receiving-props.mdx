@@ -6,7 +6,7 @@ moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
 summary: "ការចាប់យក props object តាមរយៈ parameters នៃ component function។"
-proTip: "ការប្រើ TypeScript សម្រាប់ typing props ជួយឱ្យ editor បង្ហាញ IntelliSense និងការពារបញ្ហា runtime errors បានយ៉ាងមានប្រសិទ្ធភាព។"
+proTip: "អ្នកអាចចូលទៅកាន់ properties តាមរយៈ props.propertyName ឬប្រើ destructuring ដើម្បីឱ្យកូដកាន់តែខ្លីស្អាត។"
 codeTitle: "Receiving the Props Object"
 ---
 
@@ -17,12 +17,12 @@ Argument ទីមួយនៃ functional component គឺជា `props` object�
 ### Key Concepts & Rules:
 
 - Props គឺជា JavaScript object ធម្មតាដែលផ្ទុករាល់ attributes ទាំងអស់ដែលបានបញ្ជូនមកពី parent។
-- ត្រូវកំណត់ Type ឱ្យបានច្បាស់លាស់ជាមួយ TypeScript ដើម្បីជៀសវាងកំហុសពេល access properties ដែលគ្មាន។
+- អ្នកអាចពិនិត្យមើលតម្លៃ props ដោយប្រើ `console.log(props)` ដើម្បីយល់ច្បាស់ពីទិន្នន័យដែលបានបញ្ជូនមក។
 
 ### Code Example: Receiving the Props Object
 
-```tsx
-export function CourseHeader(props: { title: string; subtitle: string }) {
+```jsx
+export function CourseHeader(props) {
   return (
     <div>
       <h1 className="text-3xl font-bold text-white">{props.title}</h1>

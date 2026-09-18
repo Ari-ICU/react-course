@@ -19,7 +19,7 @@ Detecting keys like `Enter`, `Escape`, or `MetaKey` to build accessible keyboard
 
 ### Code Example: Global Keyboard Shortcut Listener
 
-```tsx
+```jsx
 useEffect(() => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {

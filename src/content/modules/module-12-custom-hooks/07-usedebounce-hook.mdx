@@ -19,7 +19,7 @@ Prevents making an API request on every keystroke by delaying the updated value 
 
 ### Code Example: useDebounce Custom Hook
 
-```tsx
+```jsx
 export function useDebounce<T>(value: T, delay: number = 300): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 

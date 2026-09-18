@@ -12,18 +12,18 @@ codeTitle: "Exporting and Modularizing Components"
 
 # Creating Components
 
-បង្កើត components នៅក្នុង `.tsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។
+បង្កើត components នៅក្នុង `.jsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។
 
 ### Key Concepts & Rules:
 
 - ផ្តល់អាទិភាពដល់ Named Exports (`export function Header()`) ជាជាង Default Exports ដើម្បីបង្កើនភាពច្បាស់លាស់ពេល import។
 - គួររក្សា file component នីមួយៗក្រោម ១៥០-២០០ បន្ទាត់ ដើម្បីធានាថាវាងាយស្រួលអាន និង maintain។
-- ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.tsx` សម្រាប់ `Header` component។
+- ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.jsx` សម្រាប់ `Header` component។
 
 ### Code Example: Exporting and Modularizing Components
 
-```tsx
-// src/components/Header.tsx
+```jsx
+// src/components/Header.jsx
 export function Header() {
   return (
     <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between">

@@ -20,7 +20,7 @@ codeTitle: "JavaScript Functions in JSX"
 
 ### Code Example: JavaScript Functions in JSX
 
-```tsx
+```jsx
 export function ProductPrice({ priceInCents }: { priceInCents: number }) {
   const formatCurrency = (cents: number) => 
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);

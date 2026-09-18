@@ -20,7 +20,7 @@ When new state depends on previous state, always pass an updater function: `setC
 
 ### Code Example: Functional State Updates
 
-```tsx
+```jsx
 // ⚠️ Problem with direct state:
 // setCount(count + 1);
 // setCount(count + 1); // count is still stale; only increments by 1!

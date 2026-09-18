@@ -20,7 +20,7 @@ codeTitle: "useCallback with Functional Setter"
 
 ### Code Example: useCallback with Functional Setter
 
-```tsx
+```jsx
 // Stable function reference passed to memoized child:
 const handleDelete = useCallback((id: string) => {
   setStudents(prev => prev.filter(s => s.id !== id));

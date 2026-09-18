@@ -16,21 +16,17 @@ codeTitle: "Destructuring in Function Signature"
 
 ### Key Concepts & Rules:
 
-- ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend }: MetricProps)`។
+- ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend })`។
 - អាចកំណត់ default fallback values ឬ rename properties បានយ៉ាងងាយស្រួល។
 - អាចប្រើ Rest parameter `...rest` ដើម្បីចាប់យក props ដែលនៅសល់ទាំងអស់។
 
 ### Code Example: Destructuring in Function Signature
 
-```tsx
+```jsx
 export function MetricCard({ 
   label, 
   value, 
   trend = "up" 
-}: { 
-  label: string; 
-  value: number | string; 
-  trend?: "up" | "down" 
 }) {
   return (
     <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">

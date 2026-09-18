@@ -19,7 +19,7 @@ Components invoke the store hook: `const isSidebarOpen = useUIStore(state => sta
 
 ### Code Example: Consuming Zustand Store
 
-```tsx
+```jsx
 export function SidebarToggle() {
   const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);
   const toggleSidebar = useUIStore((state) => state.toggleSidebar);

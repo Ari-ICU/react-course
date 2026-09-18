@@ -5,14 +5,14 @@ title: "Component Structure"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, types/interfaces, state, handlers និង JSX return។"
-proTip: "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Types -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
+summary: "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, state & hooks, handlers និង JSX return។"
+proTip: "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
 codeTitle: "Predictable Component Layout Structure"
 ---
 
 # Component Structure
 
-រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Props interfaces/types; ៣) Component declaration; ៤) State & hooks; ៥) Handlers & helper logic; ៦) JSX return statement។
+រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) State & hooks; ៤) Handlers & helper logic; ៥) JSX return statement។
 
 ### Key Concepts & Rules:
 
@@ -22,29 +22,24 @@ codeTitle: "Predictable Component Layout Structure"
 
 ### Code Example: Predictable Component Layout Structure
 
-```tsx
+```jsx
 // 1. Imports
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
 
-// 2. Types
-interface LikeButtonProps {
-  initialCount?: number;
-}
-
-// 3. Component Declaration
-export function LikeButton({ initialCount = 0 }: LikeButtonProps) {
-  // 4. Hooks / State
-  const [likes, setLikes] = useState(initialCount);
+// 2. Component Declaration (No props)
+export function LikeButton() {
+  // 3. Hooks / State
+  const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
 
-  // 5. Handlers
+  // 4. Event Handlers
   const handleToggle = () => {
     setLiked(!liked);
     setLikes(prev => liked ? prev - 1 : prev + 1);
   };
 
-  // 6. JSX Return
+  // 5. JSX Return
   return (
     <button 
       onClick={handleToggle}

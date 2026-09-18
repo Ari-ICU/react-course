@@ -19,7 +19,7 @@ On logout: 1) Call backend `/auth/logout` to revoke refresh token; 2) Clear clie
 
 ### Code Example: Complete Secure Logout Sequence
 
-```tsx
+```jsx
 const logout = async () => {
   try {
     await apiClient.post('/auth/logout');

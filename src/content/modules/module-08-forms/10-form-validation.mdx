@@ -19,7 +19,7 @@ Validate inputs against rules (minimum length, email regex, required fields) and
 
 ### Code Example: Synchronous Validation Logic
 
-```tsx
+```jsx
 const validate = () => {
   const newErrors: Record<string, string> = {};
   if (!form.email.includes('@')) newErrors.email = 'Invalid email address';

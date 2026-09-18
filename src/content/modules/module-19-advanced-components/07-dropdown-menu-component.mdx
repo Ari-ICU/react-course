@@ -19,7 +19,7 @@ Dropdowns toggle on click, listen for outside clicks to auto-close, and support 
 
 ### Code Example: useClickOutside Custom Hook
 
-```tsx
+```jsx
 export function useClickOutside(ref: React.RefObject<HTMLElement | null>, handler: () => void) {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {

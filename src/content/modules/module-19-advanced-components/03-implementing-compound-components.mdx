@@ -19,7 +19,7 @@ Create an internal context to share the active value and setter between the pare
 
 ### Code Example: Compound Component Implementation
 
-```tsx
+```jsx
 const TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);
 
 export function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {

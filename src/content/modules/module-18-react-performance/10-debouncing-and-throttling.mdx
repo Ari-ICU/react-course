@@ -19,7 +19,7 @@ Debounce delays execution until silence; Throttle limits execution to at most on
 
 ### Code Example: Debounced API Handler
 
-```tsx
+```jsx
 // Debounced handler:
 const debouncedSearch = useMemo(
   () => debounce((val: string) => api.search(val), 300),

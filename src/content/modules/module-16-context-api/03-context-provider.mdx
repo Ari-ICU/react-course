@@ -19,7 +19,7 @@ Every Context object comes with a Provider React component that accepts a `value
 
 ### Code Example: Custom Context Provider Component
 
-```tsx
+```jsx
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');

@@ -19,7 +19,7 @@ Allows distant child components to read and update shared state.
 
 ### Code Example: Consuming Context in Child
 
-```tsx
+```jsx
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   return <button onClick={toggleTheme}>Active Theme: {theme}</button>;

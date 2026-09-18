@@ -19,7 +19,7 @@ Modern browsers have native `fetch()`, but Axios or TanStack Query simplify erro
 
 ### Code Example: Native fetch() Error Checking
 
-```tsx
+```jsx
 // Native fetch requires manual ok check:
 const response = await fetch('/api/products');
 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);

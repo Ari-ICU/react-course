@@ -6,7 +6,7 @@ moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
 summary: "ការបញ្ជូនបញ្ជីទិន្នន័យ (Lists) ទៅកាន់ components សម្រាប់ធ្វើការ iterate/map។"
-proTip: "កំណត់ Type នៃ array ក្នុង TypeScript ឱ្យច្បាស់លាស់ ដូចជា `tags: string[]` ឬ `items: Product[]` ដើម្បីឱ្យ editor ជួយ auto-complete properties។"
+proTip: "ប្រើ Array method .map() ដោយផ្ទាល់លើ prop ដើម្បី render dynamic list យ៉ាងរហ័ស។"
 codeTitle: "Passing and Iterating Arrays"
 ---
 
@@ -21,8 +21,8 @@ codeTitle: "Passing and Iterating Arrays"
 
 ### Code Example: Passing and Iterating Arrays
 
-```tsx
-export function TagList({ tags }: { tags: string[] }) {
+```jsx
+export function TagList({ tags }) {
   return (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (

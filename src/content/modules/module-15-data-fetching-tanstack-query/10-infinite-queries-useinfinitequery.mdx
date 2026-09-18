@@ -19,7 +19,7 @@ Manages paginated data as an array of pages, providing `fetchNextPage` and `hasN
 
 ### Code Example: useInfiniteQuery Hook
 
-```tsx
+```jsx
 const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
   queryKey: ['feed'],
   queryFn: ({ pageParam = 1 }) => fetchFeed(pageParam),

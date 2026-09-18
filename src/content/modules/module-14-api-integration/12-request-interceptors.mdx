@@ -19,7 +19,7 @@ Axios request interceptors run before every outgoing request, injecting the late
 
 ### Code Example: JWT Request Interceptor
 
-```tsx
+```jsx
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
   if (token && config.headers) {

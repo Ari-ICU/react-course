@@ -12,7 +12,7 @@ codeTitle: "Feature Folder Structure"
 
 # Feature-based Components
 
-Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, types, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។
+Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, utils, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។
 
 ### Key Concepts & Rules:
 
@@ -22,16 +22,16 @@ Feature folders ជួយប្រមូលផ្តុំរាល់អ្វ�
 
 ### Code Example: Feature Folder Structure
 
-```tsx
+```jsx
 features/auth/
 ├── components/
-│   ├── LoginForm.tsx
-│   ├── RegisterModal.tsx
-│   └── PasswordStrength.tsx
+│   ├── LoginForm.jsx
+│   ├── RegisterModal.jsx
+│   └── PasswordStrength.jsx
 ├── hooks/
-│   └── useAuth.ts
+│   └── useAuth.js
 ├── services/
-│   └── authApi.ts
-└── types/
-    └── auth.ts
+│   └── authApi.js
+└── utils/
+    └── authHelper.js
 ```

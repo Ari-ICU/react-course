@@ -19,7 +19,7 @@ Catch 401 Unauthorized responses globally to refresh access tokens or redirect t
 
 ### Code Example: Response Error Interceptor
 
-```tsx
+```jsx
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {

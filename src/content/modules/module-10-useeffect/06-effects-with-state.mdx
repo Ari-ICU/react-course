@@ -19,7 +19,7 @@ Run effects whenever specific state variables transition.
 
 ### Code Example: Auto-save on State Change
 
-```tsx
+```jsx
 useEffect(() => {
   if (draftText) {
     const timer = setTimeout(() => saveDraft(draftText), 1000);

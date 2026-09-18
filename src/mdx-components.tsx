@@ -60,7 +60,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <CodeBlock
           code={String(children).replace(/\n$/, "")}
-          language={match ? match[1] : "tsx"}
+          language={match ? match[1] : "jsx"}
         />
       );
     },

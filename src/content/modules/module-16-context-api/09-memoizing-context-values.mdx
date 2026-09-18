@@ -19,7 +19,7 @@ Wrap the context value object in `useMemo` so its object reference remains stabl
 
 ### Code Example: Memoizing Provider Value
 
-```tsx
+```jsx
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 

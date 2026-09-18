@@ -6,13 +6,13 @@ moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
 summary: "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។"
-proTip: "ប្រើ named function declarations ឬ typed arrow functions ជាមួយ TypeScript interfaces ដើម្បីទទួលបាន type safety និង auto-completion យ៉ាងល្អឥតខ្ចោះ។"
-codeTitle: "Modern Functional Component with TypeScript"
+proTip: "អ្នកអាចប្រកាស component ដោយប្រើ function declaration ឬ arrow function បានយ៉ាងងាយស្រួល ទៅតាមចំណង់ចំណូលចិត្តនៃការសរសេរកូដ។"
+codeTitle: "Modern Functional Component Declarations"
 ---
 
 # Functional Components
 
-Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ការគាំទ្រ TypeScript inference កាន់តែប្រសើរ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។
+Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។
 
 ### Key Concepts & Rules:
 
@@ -20,26 +20,28 @@ Class components ត្រូវបានចាត់ទុកជា legacy ក�
 - React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។
 - កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។
 
-### Code Example: Modern Functional Component with TypeScript
+### Code Example: Modern Functional Component Declarations
 
-```tsx
-// Standard functional component with TypeScript props
-interface BadgeProps {
-  label: string;
-  variant?: 'primary' | 'success' | 'warning';
+```jsx
+// 1. Function Declaration Component (No props)
+export function AppHeader() {
+  return (
+    <header className="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center">
+      <h1 className="text-xl font-bold text-white">React Course</h1>
+      <span className="text-xs px-2 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded">
+        Active
+      </span>
+    </header>
+  );
 }
 
-export const StatusBadge = ({ label, variant = 'primary' }: BadgeProps) => {
-  const styles = {
-    primary: 'bg-blue-950 text-blue-400 border-blue-800',
-    success: 'bg-emerald-950 text-emerald-400 border-emerald-800',
-    warning: 'bg-amber-950 text-amber-400 border-amber-800',
-  };
-
+// 2. Arrow Function Component (No props)
+export const UserBadge = () => {
   return (
-    <span className={`px-2 py-0.5 text-xs font-mono rounded border ${styles[variant]}`}>
-      {label}
-    </span>
+    <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full">
+      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+      <span className="text-xs text-slate-300 font-medium">Online</span>
+    </div>
   );
 };
 ```

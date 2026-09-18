@@ -19,7 +19,7 @@ When an API request returns 401, pause the failed requests, call `/refresh`, upd
 
 ### Code Example: Automatic 401 Token Refresh Interceptor
 
-```tsx
+```jsx
 apiClient.interceptors.response.use(
   (res) => res,
   async (error) => {

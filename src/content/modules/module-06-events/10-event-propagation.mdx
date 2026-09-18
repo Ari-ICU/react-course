@@ -19,7 +19,7 @@ Events bubble up the React tree. Calling `e.stopPropagation()` prevents parent h
 
 ### Code Example: e.stopPropagation() in Nested Elements
 
-```tsx
+```jsx
 export function CardWithAction() {
   return (
     <div onClick={() => console.log("Card opened")} className="p-4 border rounded">

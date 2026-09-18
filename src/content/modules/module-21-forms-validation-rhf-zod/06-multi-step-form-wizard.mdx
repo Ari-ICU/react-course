@@ -20,7 +20,7 @@ Break long forms into steps (Personal Info -> Address -> Payment -> Review). Val
 
 ### Code Example: Step Validation with trigger()
 
-```tsx
+```jsx
 const handleNextStep = async () => {
   // Only validate step 1 fields:
   const isValid = await trigger(['name', 'email']);

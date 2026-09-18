@@ -5,42 +5,55 @@ title: "Container vs Presentational Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ការបំបែក data fetching និង business logic ចេញពី visual UI rendering ឱ្យដាច់ពីគ្នា។"
-proTip: "ការបំបែក Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ styling ដោយមិនបារម្ភពីរឿង API integration។"
+summary: "ការបំបែករវាង logic/state management និង visual UI rendering ឱ្យដាច់ពីគ្នា។"
+proTip: "ការបំបែករវាង Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ visual design ដោយមិនបារម្ភពីរឿង state ឬ data logic ឡើយ។"
 codeTitle: "Container vs Presentational Pattern"
 ---
 
 # Container vs Presentational Components
 
-Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (ទទួល props និង render JSX)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (Fetching data ពី API, subscribing ទៅ store, និងដោះស្រាយ user mutations)។
+Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (គ្រប់គ្រង state, conditional rendering ឬ business logic)។
 
 ### Key Concepts & Rules:
 
-- Presentational (Dumb / Pure UI): គ្មាន business state ងាយស្រួលសរសេរ test និង preview លើ Storybook។
-- Container (Smart / Logic): ផ្ទុក hooks, API queries, និង mutation handlers រួចបញ្ជូន data ទៅ UI component។
-- ជួយបង្កើន reusability ព្រោះថា UI ដដែលនេះអាចយកទៅប្រើប្រាស់ជាមួយ data source ផ្សេងគ្នាបាន។
+- Presentational (Pure UI): ផ្តោតលើ visual elements, CSS styles និង HTML structure។
+- Container (Smart / Logic): គ្រប់គ្រង state, handling business rules និងសម្រេចចិត្តថាតើពេលណាត្រូវ render UI component។
+- ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និងងាយស្រួលធ្វើ unit testing។
 
 ### Code Example: Container vs Presentational Pattern
 
-```tsx
-// Presentational Component (Dumb / Pure UI)
-export function UserCardUI({ name, email, avatar }: UserProps) {
+```jsx
+import { useState } from 'react';
+
+// 1. Presentational Component: Focuses purely on visual UI (No props)
+export function ProfileCardUI() {
   return (
-    <div className="flex items-center gap-3 p-3 bg-slate-900 rounded-lg">
-      <img src={avatar} className="w-10 h-10 rounded-full" alt={name} />
-      <div>
-        <p className="font-medium text-white">{name}</p>
-        <p className="text-xs text-slate-400">{email}</p>
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl text-center max-w-sm mx-auto">
+      <div className="w-16 h-16 mx-auto rounded-full bg-indigo-600 flex items-center justify-center text-white text-xl font-bold">
+        RT
+      </div>
+      <h3 className="mt-3 text-lg font-bold text-white">Ratha Tech</h3>
+      <p className="text-sm text-slate-400">Frontend Engineer</p>
+      <div className="mt-4 pt-3 border-t border-slate-800 flex justify-around text-xs text-slate-300">
+        <span>12 Courses</span>
+        <span>48 Projects</span>
       </div>
     </div>
   );
 }
 
-// Container Component (Smart / Data Fetching)
-export function UserCardContainer({ userId }: { userId: string }) {
-  const { data: user, isLoading } = useQuery(['user', userId], () => fetchUser(userId));
-  if (isLoading) return <Skeleton className="h-16 w-full" />;
-  if (!user) return null;
-  return <UserCardUI name={user.name} email={user.email} avatar={user.avatar} />;
+// 2. Container Component: Manages loading state and logic (No props)
+export function ProfileContainer() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="p-8 text-center text-slate-400 animate-pulse">
+        Loading profile data...
+      </div>
+    );
+  }
+
+  return <ProfileCardUI />;
 }
 ```

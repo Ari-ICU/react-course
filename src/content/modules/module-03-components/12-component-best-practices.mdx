@@ -5,34 +5,36 @@ title: "Component Best Practices"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "គោលការណ៍ Single Responsibility, Component Purity និងការគ្រប់គ្រងចំនួន props ឱ្យមានអនាម័យ។"
+summary: "គោលការណ៍ Single Responsibility, Component Purity និងការរៀបចំកូដឱ្យមានអនាម័យ។"
 proTip: "ចងចាំ Golden Rule របស់ React៖ Rendering phase ត្រូវតែ Pure ដោយគ្មានការកែប្រែ external variables ឬ trigger side effects ឡើយ។"
 codeTitle: "Enforcing Component Purity"
 ---
 
 # Component Best Practices
 
-រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ប្រសិនបើ component មួយទទួល props លើសពី ៧-៨ props អ្នកគួរពិចារណាប្រមូលផ្តុំ props ទាំងនោះជា object តែមួយ ឬបំបែកវាទៅជា compound components។
+រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ជៀសវាងការសរសេរ component មួយឱ្យធ្វើការងារច្រើនពេក ឬផ្ទុក markup រាប់រយបន្ទាត់នៅក្នុង file តែមួយ។
 
 ### Key Concepts & Rules:
 
-- រក្សា component ឱ្យមាន Purity៖ នៅពេលទទួលបាន props ដដែល ត្រូវតែ return JSX ដូចគ្នាជានិច្ច។
+- រក្សា component ឱ្យមាន Purity៖ រាល់ពេល component ដំណើរការ ត្រូវតែ return JSX ដូចគ្នា និងគ្មានផលប៉ះពាល់ចំហៀង (No side effects)។
 - ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។
 - កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។
 
 ### Code Example: Enforcing Component Purity
 
-```tsx
+```jsx
 // Golden Rule of React: Purity during render
+
 // ❌ Impure: Mutating external variables during render
 let renderCount = 0;
 function BadComponent() {
-  renderCount++; // Side effect!
-  return <div>Render {renderCount}</div>;
+  renderCount++; // Side effect: modifies external state on every render!
+  return <div>Render count: {renderCount}</div>;
 }
 
-// ✅ Pure: Rendering has no observable external mutations
-function GoodComponent({ title }: { title: string }) {
-  return <h2 className="text-xl font-semibold">{title}</h2>;
+// ✅ Pure: Rendering has no observable external mutations (No props)
+function GoodComponent() {
+  const currentTitle = "Modern React Development";
+  return <h2 className="text-xl font-semibold text-white">{currentTitle}</h2>;
 }
 ```

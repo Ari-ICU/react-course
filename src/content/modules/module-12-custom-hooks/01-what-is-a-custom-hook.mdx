@@ -21,7 +21,7 @@ A custom hook is a standard JavaScript function whose name starts with `use` and
 
 ### Code Example: Simple useToggle Custom Hook
 
-```tsx
+```jsx
 // Basic Custom Hook:
 export function useToggle(initialValue = false): [boolean, () => void] {
   const [value, setValue] = useState(initialValue);

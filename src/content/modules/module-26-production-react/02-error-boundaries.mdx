@@ -20,7 +20,7 @@ An Error Boundary catches JavaScript errors anywhere in its child component tree
 
 ### Code Example: React Error Boundary Component
 
-```tsx
+```jsx
 import { Component, ErrorInfo, ReactNode } from 'react';
 
 export class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {

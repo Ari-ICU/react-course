@@ -12,17 +12,17 @@ codeTitle: "Basic Functional Component"
 
 # What is a Component?
 
-Component គឺជា JavaScript function ដែលទទួល inputs ហៅថា 'props' ហើយ return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module តែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។
+Component គឺជា JavaScript function ដែល return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module ឯករាជ្យតែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។
 
 ### Key Concepts & Rules:
 
 - Components អនុញ្ញាតឱ្យអ្នកបំបែក UI ទាំងមូលឱ្យទៅជាបំណែកតូចៗដែលឯករាជ្យ និងអាចយកទៅប្រើឡើងវិញបាន (reusable)។
-- Components ត្រូវតែជា pure functions ធៀបទៅនឹង props របស់ពួកវា (inputs ដូចគ្នា ត្រូវតែផ្តល់ output ដូចគ្នា)។
+- Components ត្រូវតែជា pure functions (រាល់ពេល render ត្រូវតែផ្តល់ output ជាក់លាក់ និងគ្មាន side effects)។
 - Component state អនុញ្ញាតឱ្យ UI មានភាព dynamic ផ្លាស់ប្តូរទិន្នន័យ និងឆ្លើយតបទៅនឹង interactions របស់អ្នកប្រើប្រាស់។
 
 ### Code Example: Basic Functional Component
 
-```tsx
+```jsx
 export function WelcomeBanner() {
   return (
     <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-lg">

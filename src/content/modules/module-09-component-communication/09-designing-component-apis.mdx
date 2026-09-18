@@ -19,7 +19,7 @@ Design props like a public library API: keep them minimal, provide sensible defa
 
 ### Code Example: Discriminated Union Props
 
-```tsx
+```jsx
 type AlertProps = 
   | { variant: 'simple'; message: string }
   | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };
