@@ -57,17 +57,20 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-02",
         "number": "02",
         "title": "Why React?",
-        "summary": "ស្វែងយល់ពីមូលហេតុចម្បងដែល React គ្រងតំណែងនាំមុខគេក្នុង modern web ecosystem និង developer tooling។",
-        "explanation": "React ទទួលបានការគាំទ្រយ៉ាងខ្លាំងពីសហគមន៍ developer ទូទាំងពិភពលោក និងក្រុមហ៊ុនបច្ចេកវិទ្យាធំៗ។ ជាមួយនឹង fiber reconciler algorithms ដែលមាន performance ខ្ពស់ រួមផ្សំនឹង ecosystem ដ៏សំបូរបែប ចាប់ពី Next.js រហូតដល់ Tailwind CSS និង Shadcn UI ធ្វើឱ្យ React ក្លាយជាជម្រើសទីមួយក្នុងការបង្កើត web application កម្រិត enterprise។",
+        "summary": "ស្វែងយល់ពីមូលហេតុចម្បងដែលធ្វើឱ្យ ReactJS ក្លាយជាជម្រើសដ៏ល្អបំផុតសម្រាប់ modern projects រួមមាន Performance, Scalability, Speed និង Long-term flexibility។",
+        "explanation": "React ទទួលបានការគាំទ្រយ៉ាងខ្លាំងពីសហគមន៍ developer ទូទាំងពិភពលោក និងក្រុមហ៊ុនបច្ចេកវិទ្យាឈានមុខគេ។ មូលហេតុចម្បងដែលធ្វើឱ្យ ReactJS ក្លាយជាជម្រើសដំបូងសម្រាប់ modern projects គឺដោយសារគុណសម្បត្តិសំខាន់ៗទាំង ៤ យ៉ាង៖",
         "keyPoints": [
-          "Component Reusability: ងាយស្រួលបង្កើត និងចែករំលែក design system components ក្នុងចំណោមក្រុមការងារវិស្វកម្មកម្មវិធី។",
-          "Predictable Debugging: ភាពងាយស្រួលក្នុងការត្រួតពិនិត្យ និង debug កូដ ដោយសារ unidirectional data flow និងឧបករណ៍ React DevTools។",
-          "Universal Ecosystem: ភាពសម្បូរបែបនៃ libraries ស្តង់ដារដូចជា TanStack Query, Zustand, React Hook Form និង Framer Motion។"
+          "Performance: បង្កើនល្បឿន render តាមរយៈ Virtual DOM និង Fiber reconciler algorithm ដែល update តែផ្នែកនៃ DOM ណាដែលប្រែប្រួល។",
+          "Scalability: រចនាសម្ព័ន្ធ modular និង component-driven architecture ជួយឱ្យ application ងាយស្រួលពង្រីកពី prototype តូចៗរហូតដល់ enterprise systems ដ៏ស្មុគស្មាញ។",
+          "Speed: បង្កើនល្បឿនក្នុងការ develop កម្មវិធីដោយសារ reusable components, hot reloading, និង tooling ទំនើបៗដូចជា Vite និង Next.js។",
+          "Long-term Flexibility: ភាពបត់បែនខ្ពស់ក្នុងការ integrate ជាមួយ backend APIs និង libraries ផ្សេងៗ ព្រមទាំងអាច reuse logic សម្រាប់ mobile app តាមរយៈ React Native។"
         ],
-        "codeSnippet": "// The React ecosystem enables composable, modular features\nimport { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";\nimport { Badge } from \"@/components/ui/badge\";\n\nexport function CourseCard({ title, level, studentCount }) {\n  return (\n    <Card className=\"border border-slate-800 bg-slate-900/60 p-5 rounded-xl\">\n      <CardHeader className=\"flex items-center justify-between pb-2\">\n        <CardTitle className=\"text-xl font-bold text-white\">{title}</CardTitle>\n        <Badge variant=\"outline\" className=\"text-emerald-400 border-emerald-500/30\">\n          {level}\n        </Badge>\n      </CardHeader>\n      <CardContent className=\"text-slate-400 text-sm\">\n        Over {studentCount.toLocaleString()} developers enrolled.\n      </CardContent>\n    </Card>\n  );\n}",
+        "codeSnippet": "",
         "codeLanguage": "jsx",
-        "codeTitle": "Composable Component Pattern",
-        "proTip": "ការរៀន React ជួយឱ្យអ្នកមានលទ្ធភាពប្រើប្រាស់ ecosystem ដ៏ធំបំផុតនៅលើពិភពលោក ដែលពោរពេញទៅដោយ production-tested packages និង UI patterns កម្រិតខ្ពស់។"
+        "codeTitle": "Why Use ReactJS for Modern Projects",
+        "proTip": "ការរៀន React ជួយឱ្យអ្នកមានលទ្ធភាពប្រើប្រាស់ ecosystem ដ៏ធំបំផុតនៅលើពិភពលោក ដែលពោរពេញទៅដោយ production-tested packages និង UI patterns កម្រិតខ្ពស់។",
+        "pitfall": "កុំមើលរំលង state architecture និង component modularity នៅពេល project ចាប់ផ្តើមរីកធំ ព្រោះវាអាចជះឥទ្ធិពលដល់ scalability និង performance។",
+        "image": "/images/why-react.png"
       },
       {
         "id": "m01-03",
