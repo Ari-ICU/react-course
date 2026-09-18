@@ -76,18 +76,22 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-03",
         "number": "03",
         "title": "React Features",
-        "summary": "លក្ខណៈពិសេសចម្បងៗរួមមាន JSX, Virtual DOM, React Fiber Reconciler និង Server Components។",
-        "explanation": "ចំណុចពិសេសស្នូលរបស់ React រួមមាន syntax extension គឺ JSX ក្បួនដោះស្រាយ Virtual DOM diffing algorithm ដែលកាត់បន្ថយការគណនា layout ឡើងវិញរបស់ browser ព្រមទាំងសមត្ថភាព concurrent features ទំនើបក្នុង React 19 ជាមួយ automatic batching។",
+        "summary": "ស្វែងយល់ពីលក្ខណៈពិសេសស្នូលទាំង ៦ របស់ React រួមមាន Virtual DOM, Reusable Components, Seamless Updates, DevTools, Ease of Use និង Open Source។",
+        "explanation": "React ត្រូវបានរចនាឡើងជាមួយនឹងលក្ខណៈពិសេសស្នូលជាច្រើន ដែលជួយឱ្យការបង្កើត modern web applications កាន់តែមានប្រសិទ្ធភាព និងរហ័សរហួន។ ខាងក្រោមនេះជាលក្ខណៈពិសេសសំខាន់ៗទាំង ៦ របស់ React៖",
         "keyPoints": [
-          "JSX: គឺជា syntax extension ដែលអនុញ្ញាតឱ្យយើងសរសេរ HTML នៅខាងក្នុង JavaScript ជាមួយ compile-time type safety ខ្ពស់។",
-          "Virtual DOM & Reconciliation: រចនាសម្ព័ន្ធ memory representation ត្រូវបានប្រៀបធៀបដោយប្រើ O(n) diffing heuristics ដើម្បីធ្វើបច្ចុប្បន្នភាពតែចំណុចណាដែលចាំបាច់។",
-          "Hooks: មុខងារចែករំលែក stateful logic និង lifecycle ដោយប្រើ functional components ដោយមិនចាំបាច់ប្រើ class components។",
-          "Automatic Batching: ប្រមូលផ្តុំការ update state ច្រើនបញ្ចូលគ្នាក្នុងពេលតែមួយ ដើម្បីកាត់បន្ថយការ re-render ឥតប្រយោជន៍។"
+          "Ease of Use: ភាពងាយស្រួលក្នុងការរៀនសូត្រ និងអភិវឌ្ឍន៍ ដោយសារ declarative syntax (JSX) ដែលបញ្ចូល JavaScript និង HTML ជាមួយគ្នា។",
+          "Open Source: ជា open-source library ដ៏ធំដែលមានការគាំទ្រពី Meta និងសហគមន៍ global developers រាប់លាននាក់។",
+          "Reusable Components: បង្កើត UI ជាបំណែកឯករាជ្យដែលអាច reuse បានគ្រប់កន្លែង កាត់បន្ថយការសរសេរកូដដដែលៗ (code duplication)។",
+          "Developer Tools: មាន React DevTools សម្រាប់ inspect component tree, track props, state updates និង optimize performance។",
+          "The Virtual DOM: រក្សា representation នៃ UI ក្នុង memory និង update តែ node ណាដែលផ្លាស់ប្តូរនៅលើ real DOM ជួយឱ្យល្បឿន render ដំណើរការលឿន។",
+          "Seamless Updates: ការ update ទិន្នន័យលើ screen ធ្វើឡើងដោយស្វ័យប្រវត្តិ និងរលូន (reactive state & automatic batching) ដោយពុំចាំបាច់ reload page ឡើយ។"
         ],
-        "codeSnippet": "// React 18+ automatic batching example\nimport { useState } from 'react';\n\nexport function BatchingDemo() {\n  const [count, setCount] = useState(0);\n  const [flag, setFlag] = useState(false);\n\n  function handleClick() {\n    // Both state updates are queued and trigger only ONE single re-render!\n    setCount((c) => c + 1);\n    setFlag((f) => !f);\n  }\n\n  return (\n    <button onClick={handleClick}>\n      Count: {count} | Flag: {flag ? 'ON' : 'OFF'}\n    </button>\n  );\n}",
+        "codeSnippet": "",
         "codeLanguage": "jsx",
-        "codeTitle": "Automatic Batching in React",
-        "proTip": "គួរប្រើ functional updates `setCount(prev => prev + 1)` ជានិច្ចនៅពេលដែល state ថ្មីអាស្រ័យដោយផ្ទាល់លើតម្លៃនៃ state ចាស់។"
+        "codeTitle": "Core Features of React",
+        "proTip": "ការយល់ដឹងច្បាស់ពី Virtual DOM និង Component Lifecycle ជួយឱ្យអ្នកសរសេរ UI ដែលមាន performance ខ្ពស់ និងជៀសវាងការ re-render មិនចាំបាច់។",
+        "pitfall": "កុំធ្វើការ mutate state ដោយផ្ទាល់ ព្រោះ React ពឹងផ្អែកលើ shallow equality check ដើម្បីដឹងថាតើត្រូវ re-render component ឬអត់។",
+        "image": "/images/react-features.png"
       },
       {
         "id": "m01-04",
