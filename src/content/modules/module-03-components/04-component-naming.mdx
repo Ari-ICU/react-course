@@ -5,18 +5,20 @@ title: "Component Naming"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "PascalCase convention and domain naming guidelines."
+summary: "ក្បួនដាក់ឈ្មោះជា PascalCase និងគោលការណ៍ណែនាំដាក់ឈ្មោះតាម domain business។"
+pitfall: "ការសរសេរ `<userProfile />` ជំនួសឱ្យ `<UserProfile />` នឹងធ្វើឱ្យ React ស្វែងរក HTML tag ឈ្មោះ userProfile ដែលមិនមាននៅក្នុង browser!"
 codeTitle: "PascalCase Naming Rule"
 ---
 
 # Component Naming
 
-React components MUST start with an uppercase letter (`PascalCase`). If a component starts with a lowercase letter, JSX treats it as a built-in HTML tag like `<div>` or `<header>`.
+React components ត្រូវតែចាប់ផ្តើមដោយអក្សរធំជានិច្ច (`PascalCase`)។ ប្រសិនបើ component ចាប់ផ្តើមដោយអក្សរតូច JSX នឹងចាត់ទុកវាជា built-in HTML tag ធម្មតាដូចជា `<div>`, `<span>` ឬ `<header>` ដែលបណ្តាលឱ្យ React មិនអាចស្គាល់ component របស់អ្នកបានឡើយ។
 
 ### Key Concepts & Rules:
 
-- Always use PascalCase: `UserProfile`, `NavigationDrawer`, `ProductCard`.
-- Prefix or suffix helper components logically: `CardHeader`, `CardFooter`.
+- ប្រើប្រាស់ PascalCase ជានិច្ចសម្រាប់ React components ដូចជា `UserProfile`, `NavigationDrawer`, `ProductCard`។
+- ដាក់ឈ្មោះ helper/child components ឱ្យមានលំដាប់លំដោយសមហេតុផលដូចជា `CardHeader`, `CardBody`, `CardFooter`។
+- ដាក់ឈ្មោះឱ្យឆ្លុះបញ្ចាំងពីមុខងារជាក់ស្តែង (Domain-driven) ជៀសវាងឈ្មោះទូទៅពេកដូចជា `Item` ឬ `Data`។
 
 ### Code Example: PascalCase Naming Rule
 

@@ -5,19 +5,20 @@ title: "Nested Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Rendering child components inside parent trees without defining them inline."
-pitfall: "Declaring a component inside another component's body causes it to be re-instantiated on every re-render, resetting input focus and state!"
+summary: "ការ render child components នៅខាងក្នុង parent tree ដោយជៀសវាងការប្រកាស component នៅខាងក្នុង function body។"
+pitfall: "ការប្រកាស component function នៅខាងក្នុង body នៃ component មួយផ្សេងទៀត នឹងបណ្តាលឱ្យវាត្រូវបង្កើតឡើងវិញរាល់ពេល re-render ដែលនាំឱ្យបាត់បង់ input focus និង state ខាងក្នុង!"
 codeTitle: "Properly Nesting Components"
 ---
 
 # Nested Components
 
-You can nest components inside other components. NEVER declare a component function inside another component function, as it will be recreated on every single render and lose internal state.
+យើងអាច render components បង្កប់គ្នាក្នុង parent-child hierarchy បានយ៉ាងងាយស្រួល។ ប៉ុន្តែសូមកុំប្រកាស (declare) function component មួយនៅខាងក្នុង body នៃ component មួយផ្សេងទៀតឱ្យសោះ ព្រោះវានឹងត្រូវ re-create ថ្មីរាល់ពេល render ដែលនាំឱ្យបាត់បង់ state ខាងក្នុង និងបញ្ហា performance ធ្ងន់ធ្ងរ។
 
 ### Key Concepts & Rules:
 
-- Keep child component definitions outside the parent component body.
-- Pass data to nested children via props.
+- ត្រូវប្រកាស child components នៅ module scope (ខាងក្រៅ parent component) ជានិច្ច។
+- បញ្ជូនទិន្នន័យពី parent ទៅកាន់ child components តាមរយៈ props។
+- រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលតាមដាន data flow។
 
 ### Code Example: Properly Nesting Components
 

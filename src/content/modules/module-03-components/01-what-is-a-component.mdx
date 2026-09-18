@@ -5,19 +5,20 @@ title: "What is a Component?"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "The primary reusable, self-contained UI building block in React."
+summary: "UI building block ស្នូលដែលមានភាពឯករាជ្យ អាចយកមកប្រើឡើងវិញបាន និងជាគ្រឹះចម្បងក្នុង React។"
+proTip: "គិតតាមបែប Lego blocks៖ UI ទាំងមូលកើតចេញពី component តូចៗផ្គុំគ្នា ដែលធ្វើឱ្យកូដងាយស្រួល scale, debug និង test។"
 codeTitle: "Basic Functional Component"
 ---
 
 # What is a Component?
 
-A component is a JavaScript function that accepts arbitrary inputs called 'props' and returns a React element describing what should appear on the screen. Components encapsulate markup, logic, and styles into independent modules.
+Component គឺជា JavaScript function ដែលទទួល inputs ហៅថា 'props' ហើយ return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module តែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។
 
 ### Key Concepts & Rules:
 
-- Components let you split the UI into independent, reusable pieces.
-- Components must be pure functions with respect to their props.
-- Component state allows dynamic behavior and interactivity.
+- Components អនុញ្ញាតឱ្យអ្នកបំបែក UI ទាំងមូលឱ្យទៅជាបំណែកតូចៗដែលឯករាជ្យ និងអាចយកទៅប្រើឡើងវិញបាន (reusable)។
+- Components ត្រូវតែជា pure functions ធៀបទៅនឹង props របស់ពួកវា (inputs ដូចគ្នា ត្រូវតែផ្តល់ output ដូចគ្នា)។
+- Component state អនុញ្ញាតឱ្យ UI មានភាព dynamic ផ្លាស់ប្តូរទិន្នន័យ និងឆ្លើយតបទៅនឹង interactions របស់អ្នកប្រើប្រាស់។
 
 ### Code Example: Basic Functional Component
 

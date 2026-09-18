@@ -5,18 +5,20 @@ title: "Creating Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Writing, exporting, importing, and organizing components across files."
+summary: "ការសរសេរ ការ export ការ import និងការរៀបចំ components ឆ្លងកាត់ files ផ្សេងៗក្នុងគម្រោង។"
+proTip: "ការប្រើ Named Exports ជួយការពារ typo ពេល import និងជួយឱ្យ refactoring tools អាច update ឈ្មោះ component គ្រប់ទីកន្លែងដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Exporting and Modularizing Components"
 ---
 
 # Creating Components
 
-Create components in dedicated `.tsx` files. Use named exports to improve refactoring safety in editors like VS Code.
+បង្កើត components នៅក្នុង `.tsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។
 
 ### Key Concepts & Rules:
 
-- Prefer named exports (`export function Header()`) over default exports for clearer imports.
-- Keep each component file under 150-200 lines to preserve readability.
+- ផ្តល់អាទិភាពដល់ Named Exports (`export function Header()`) ជាជាង Default Exports ដើម្បីបង្កើនភាពច្បាស់លាស់ពេល import។
+- គួររក្សា file component នីមួយៗក្រោម ១៥០-២០០ បន្ទាត់ ដើម្បីធានាថាវាងាយស្រួលអាន និង maintain។
+- ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.tsx` សម្រាប់ `Header` component។
 
 ### Code Example: Exporting and Modularizing Components
 

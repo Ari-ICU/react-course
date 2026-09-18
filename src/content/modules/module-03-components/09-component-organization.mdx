@@ -5,19 +5,20 @@ title: "Component Organization"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Organizing generic UI components vs page-specific components."
+summary: "ការរៀបចំ generic UI components និង page-specific components ឱ្យមានរបៀបរៀបរយ។"
+proTip: "ការបែងចែក components ជា tier ច្បាស់លាស់ជួយឱ្យ team ងាយដឹងថាតើ component ណាជា shared primitive និង component ណាជា business logic។"
 codeTitle: "Component Tier Hierarchy"
 ---
 
 # Component Organization
 
-Keep generic atomic components in `@/components/ui`, complex compound widgets in `@/components`, and domain-specific logic in `@/features`.
+រក្សា atomic primitives ទូទៅនៅក្នុង `@/components/ui` (ដូចជា Button, Input), រក្សា composite widgets នៅក្នុង `@/components` (ដូចជា Header, Sidebar) និងរក្សា domain-specific components នៅក្នុង `@/features` (ដូចជា CartDrawer, StudentTable)។
 
 ### Key Concepts & Rules:
 
-- Atomic primitives: Button, Input, Checkbox, Badge.
-- Compound components: Modal, DropdownMenu, NavigationDrawer.
-- Feature components: StudentTable, CartDrawer, ProductGrid.
+- Atomic Primitives: Button, Input, Checkbox, Badge (មិនមាន business logic)។
+- Compound Components: Modal, DropdownMenu, NavigationDrawer។
+- Feature Components: StudentTable, CartDrawer, ProductGrid (ចងភ្ជាប់ជាមួយ feature logic)។
 
 ### Code Example: Component Tier Hierarchy
 

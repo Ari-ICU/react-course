@@ -376,179 +376,200 @@ export const modulesData: ModuleItem[] = [
     "number": "03",
     "title": "Components",
     "category": "Fundamentals",
-    "summary": "Functional components, naming conventions, component composition, nested architectures, and container vs presentational patterns.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី Functional Components, ក្បួនដាក់ឈ្មោះ PascalCase, យុទ្ធសាស្ត្រ Component Composition, រចនាសម្ព័ន្ធ Nested Architecture និង Container vs Presentational patterns។",
     "iconName": "Layers",
     "topics": [
       {
         "id": "m03-01",
         "number": "01",
         "title": "What is a Component?",
-        "summary": "The primary reusable, self-contained UI building block in React.",
-        "explanation": "A component is a JavaScript function that accepts arbitrary inputs called 'props' and returns a React element describing what should appear on the screen. Components encapsulate markup, logic, and styles into independent modules.",
+        "summary": "UI building block ស្នូលដែលមានភាពឯករាជ្យ អាចយកមកប្រើឡើងវិញបាន និងជាគ្រឹះចម្បងក្នុង React។",
+        "explanation": "Component គឺជា JavaScript function ដែលទទួល inputs ហៅថា 'props' ហើយ return ត្រឡប់មកវិញនូវ React element ដើម្បីកំណត់ថាតើអ្វីខ្លះត្រូវបង្ហាញនៅលើ screen។ Components ជួយប្រមូលផ្តុំ markup (JSX), logic និង styles ឱ្យស្ថិតនៅក្នុង module តែមួយយ៉ាងមានសណ្តាប់ធ្នាប់។",
         "keyPoints": [
-          "Components let you split the UI into independent, reusable pieces.",
-          "Components must be pure functions with respect to their props.",
-          "Component state allows dynamic behavior and interactivity."
+          "Components អនុញ្ញាតឱ្យអ្នកបំបែក UI ទាំងមូលឱ្យទៅជាបំណែកតូចៗដែលឯករាជ្យ និងអាចយកទៅប្រើឡើងវិញបាន (reusable)។",
+          "Components ត្រូវតែជា pure functions ធៀបទៅនឹង props របស់ពួកវា (inputs ដូចគ្នា ត្រូវតែផ្តល់ output ដូចគ្នា)។",
+          "Component state អនុញ្ញាតឱ្យ UI មានភាព dynamic ផ្លាស់ប្តូរទិន្នន័យ និងឆ្លើយតបទៅនឹង interactions របស់អ្នកប្រើប្រាស់។"
         ],
         "codeSnippet": "export function WelcomeBanner() {\n  return (\n    <div className=\"bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-lg\">\n      <h1 className=\"text-2xl font-bold\">Welcome to Modern React</h1>\n      <p className=\"text-blue-100 mt-1\">Master components, hooks, and architecture.</p>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Basic Functional Component"
+        "codeTitle": "Basic Functional Component",
+        "proTip": "គិតតាមបែប Lego blocks៖ UI ទាំងមូលកើតចេញពី component តូចៗផ្គុំគ្នា ដែលធ្វើឱ្យកូដងាយស្រួល scale, debug និង test។"
       },
       {
         "id": "m03-02",
         "number": "02",
         "title": "Functional Components",
-        "summary": "Modern standard for React components using standard JavaScript functions.",
-        "explanation": "Class components are now considered legacy. Functional components combined with React Hooks provide cleaner syntax, superior TypeScript inference, easier unit testing, and smaller bundle sizes.",
+        "summary": "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។",
+        "explanation": "Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ការគាំទ្រ TypeScript inference កាន់តែប្រសើរ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។",
         "keyPoints": [
-          "Declare with standard `function ComponentName()` or arrow functions.",
-          "Hooks (useState, useEffect) can only be called inside functional components."
+          "ប្រកាស component ដោយប្រើ `function ComponentName()` ធម្មតា ឬ arrow function syntax។",
+          "React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។",
+          "កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។"
         ],
         "codeSnippet": "// Standard functional component with TypeScript props\ninterface BadgeProps {\n  label: string;\n  variant?: 'primary' | 'success' | 'warning';\n}\n\nexport const StatusBadge = ({ label, variant = 'primary' }: BadgeProps) => {\n  const styles = {\n    primary: 'bg-blue-950 text-blue-400 border-blue-800',\n    success: 'bg-emerald-950 text-emerald-400 border-emerald-800',\n    warning: 'bg-amber-950 text-amber-400 border-amber-800',\n  };\n\n  return (\n    <span className={`px-2 py-0.5 text-xs font-mono rounded border ${styles[variant]}`}>\n      {label}\n    </span>\n  );\n};",
         "codeLanguage": "tsx",
-        "codeTitle": "Modern Functional Component with TypeScript"
+        "codeTitle": "Modern Functional Component with TypeScript",
+        "proTip": "ប្រើ named function declarations ឬ typed arrow functions ជាមួយ TypeScript interfaces ដើម្បីទទួលបាន type safety និង auto-completion យ៉ាងល្អឥតខ្ចោះ។"
       },
       {
         "id": "m03-03",
         "number": "03",
         "title": "Creating Components",
-        "summary": "Writing, exporting, importing, and organizing components across files.",
-        "explanation": "Create components in dedicated `.tsx` files. Use named exports to improve refactoring safety in editors like VS Code.",
+        "summary": "ការសរសេរ ការ export ការ import និងការរៀបចំ components ឆ្លងកាត់ files ផ្សេងៗក្នុងគម្រោង។",
+        "explanation": "បង្កើត components នៅក្នុង `.tsx` file ដាច់ដោយឡែក។ គួរប្រើប្រាស់ Named Exports ជាជាង Default Exports ដើម្បីឱ្យ editor (ដូចជា VS Code) អាចធ្វើ auto-import និង safe refactoring បានត្រឹមត្រូវ ដោយមិនបារម្ភពីការច្រឡំឈ្មោះ។",
         "keyPoints": [
-          "Prefer named exports (`export function Header()`) over default exports for clearer imports.",
-          "Keep each component file under 150-200 lines to preserve readability."
+          "ផ្តល់អាទិភាពដល់ Named Exports (`export function Header()`) ជាជាង Default Exports ដើម្បីបង្កើនភាពច្បាស់លាស់ពេល import។",
+          "គួររក្សា file component នីមួយៗក្រោម ១៥០-២០០ បន្ទាត់ ដើម្បីធានាថាវាងាយស្រួលអាន និង maintain។",
+          "ដាក់ឈ្មោះ file ឱ្យដូចគ្នានឹងឈ្មោះ Component ឧទាហរណ៍ `Header.tsx` សម្រាប់ `Header` component។"
         ],
         "codeSnippet": "// src/components/Header.tsx\nexport function Header() {\n  return (\n    <header className=\"h-16 border-b border-slate-800 px-6 flex items-center justify-between\">\n      <span className=\"font-bold text-lg text-white\">ReactMaster</span>\n      <nav className=\"flex gap-4 text-sm text-slate-400\">\n        <a href=\"#modules\" className=\"hover:text-white\">Curriculum</a>\n        <a href=\"#projects\" className=\"hover:text-white\">Projects</a>\n      </nav>\n    </header>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Exporting and Modularizing Components"
+        "codeTitle": "Exporting and Modularizing Components",
+        "proTip": "ការប្រើ Named Exports ជួយការពារ typo ពេល import និងជួយឱ្យ refactoring tools អាច update ឈ្មោះ component គ្រប់ទីកន្លែងដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m03-04",
         "number": "04",
         "title": "Component Naming",
-        "summary": "PascalCase convention and domain naming guidelines.",
-        "explanation": "React components MUST start with an uppercase letter (`PascalCase`). If a component starts with a lowercase letter, JSX treats it as a built-in HTML tag like `<div>` or `<header>`.",
+        "summary": "ក្បួនដាក់ឈ្មោះជា PascalCase និងគោលការណ៍ណែនាំដាក់ឈ្មោះតាម domain business។",
+        "explanation": "React components ត្រូវតែចាប់ផ្តើមដោយអក្សរធំជានិច្ច (`PascalCase`)។ ប្រសិនបើ component ចាប់ផ្តើមដោយអក្សរតូច JSX នឹងចាត់ទុកវាជា built-in HTML tag ធម្មតាដូចជា `<div>`, `<span>` ឬ `<header>` ដែលបណ្តាលឱ្យ React មិនអាចស្គាល់ component របស់អ្នកបានឡើយ។",
         "keyPoints": [
-          "Always use PascalCase: `UserProfile`, `NavigationDrawer`, `ProductCard`.",
-          "Prefix or suffix helper components logically: `CardHeader`, `CardFooter`."
+          "ប្រើប្រាស់ PascalCase ជានិច្ចសម្រាប់ React components ដូចជា `UserProfile`, `NavigationDrawer`, `ProductCard`។",
+          "ដាក់ឈ្មោះ helper/child components ឱ្យមានលំដាប់លំដោយសមហេតុផលដូចជា `CardHeader`, `CardBody`, `CardFooter`។",
+          "ដាក់ឈ្មោះឱ្យឆ្លុះបញ្ចាំងពីមុខងារជាក់ស្តែង (Domain-driven) ជៀសវាងឈ្មោះទូទៅពេកដូចជា `Item` ឬ `Data`។"
         ],
         "codeSnippet": "// ❌ Incorrect: Lowercase treated as unknown HTML element\n// function userProfile() { return <div>User</div>; }\n\n// ✅ Correct: PascalCase recognized as React component\nexport function UserProfile() {\n  return <div className=\"p-4 bg-slate-900 rounded\">User Profile</div>;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "PascalCase Naming Rule"
+        "codeTitle": "PascalCase Naming Rule",
+        "pitfall": "ការសរសេរ `<userProfile />` ជំនួសឱ្យ `<UserProfile />` នឹងធ្វើឱ្យ React ស្វែងរក HTML tag ឈ្មោះ userProfile ដែលមិនមាននៅក្នុង browser!"
       },
       {
         "id": "m03-05",
         "number": "05",
         "title": "Component Structure",
-        "summary": "Internal organization: imports, interfaces, state, handlers, and JSX return.",
-        "explanation": "A standard component structure keeps code predictable: 1) Imports; 2) Props interface; 3) Component declaration; 4) State & hooks; 5) Derived state; 6) Handlers; 7) JSX return.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, types/interfaces, state, handlers និង JSX return។",
+        "explanation": "រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Props interfaces/types; ៣) Component declaration; ៤) State & hooks; ៥) Handlers & helper logic; ៦) JSX return statement។",
         "keyPoints": [
-          "Keep hooks at the very top of the function.",
-          "Declare handlers before the JSX return."
+          "ហៅ React Hooks ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ function (Top level) ជានិច្ច។",
+          "ប្រកាស event handlers និង logic ផ្សេងៗមុនពេល return JSX។",
+          "ញែក complex helper functions ដែលមិនពឹងផ្អែកលើ component state ចេញទៅក្រៅ function body។"
         ],
         "codeSnippet": "// 1. Imports\nimport { useState } from 'react';\nimport { Heart } from 'lucide-react';\n\n// 2. Types\ninterface LikeButtonProps {\n  initialCount?: number;\n}\n\n// 3. Component Declaration\nexport function LikeButton({ initialCount = 0 }: LikeButtonProps) {\n  // 4. Hooks / State\n  const [likes, setLikes] = useState(initialCount);\n  const [liked, setLiked] = useState(false);\n\n  // 5. Handlers\n  const handleToggle = () => {\n    setLiked(!liked);\n    setLikes(prev => liked ? prev - 1 : prev + 1);\n  };\n\n  // 6. JSX Return\n  return (\n    <button \n      onClick={handleToggle}\n      className=\"flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500\"\n    >\n      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />\n      <span className=\"text-sm font-medium\">{likes}</span>\n    </button>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Predictable Component Layout Structure"
+        "codeTitle": "Predictable Component Layout Structure",
+        "proTip": "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Types -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
       },
       {
         "id": "m03-06",
         "number": "06",
         "title": "Component Composition",
-        "summary": "Building complex interfaces by assembling smaller atomic pieces.",
-        "explanation": "Composition is React's core superpower. Instead of building monolithic components with hundreds of props, compose focused components together.",
+        "summary": "ការកសាង user interface ស្មុគស្មាញដោយការផ្គុំ atomic components តូចៗបញ្ចូលគ្នា។",
+        "explanation": "Composition គឺជាអានុភាពដ៏ខ្លាំងក្លាបំផុតរបស់ React (React's core superpower)។ ជំនួសឱ្យការបង្កើត monolithic component ដ៏ធំមួយដែលមាន props រាប់សិប វិធីសាស្ត្រត្រឹមត្រូវគឺការផ្គុំ components តូចៗដែលផ្តោតលើមុខងារតែមួយបញ្ចូលគ្នា (Favor Composition over Inheritance)។",
         "keyPoints": [
-          "Favor composition over inheritance.",
-          "Pass components as props or use `children` to slot content dynamically."
+          "ផ្តល់អាទិភាពលើ Composition ជាជាង Inheritance ក្នុងស្ថាបត្យកម្ម React UI។",
+          "បញ្ជូន components ជា props ឬប្រើប្រាស់ `children` prop ដើម្បី slot dynamic content តាមតម្រូវការ។",
+          "ជួយកាត់បន្ថយបញ្ហា Prop Drilling និងធ្វើឱ្យ components មានភាពឯករាជ្យខ្ពស់។"
         ],
         "codeSnippet": "// Composing Layout with Header and Content\nexport function PageLayout({ header, children }: { header: React.ReactNode; children: React.ReactNode }) {\n  return (\n    <div className=\"min-h-screen bg-slate-950 text-slate-100\">\n      <header className=\"border-b border-slate-800\">{header}</header>\n      <main className=\"max-w-7xl mx-auto p-6\">{children}</main>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Component Composition Pattern"
+        "codeTitle": "Component Composition Pattern",
+        "proTip": "ប្រើប្រាស់ `children` ឬ slot props ដូចជា `header` និង `footer` ដើម្បីឱ្យ component របស់អ្នកអាចផ្ទុក content អ្វីក៏បានដោយមិនចាំបាច់ចងភ្ជាប់ logic តឹងរ៉ឹងពេក។"
       },
       {
         "id": "m03-07",
         "number": "07",
         "title": "Reusable Components",
-        "summary": "Designing flexible, configurable UI building blocks.",
-        "explanation": "A good reusable component has a minimal required API, sensible defaults, and accepts standard HTML attributes (like `className`, `disabled`, `onClick`).",
+        "summary": "ការឌីហ្សាញ UI building blocks ដែលមានភាពបត់បែនខ្ពស់ ងាយស្រួល config និងអាចប្រើឡើងវិញបានច្រើនកន្លែង។",
+        "explanation": "Reusable component ដ៏ល្អមួយ ត្រូវតែមាន minimal required API, មានតម្លៃ default ត្រឹមត្រូវ និងអាចទទួល standard HTML attributes (ដូចជា `className`, `disabled`, `onClick`, `aria-*`) តាមរយៈ prop spreading។",
         "keyPoints": [
-          "Extend HTML attributes using TypeScript: `React.ButtonHTMLAttributes<HTMLButtonElement>`.",
-          "Allow external styling via `className` merging."
+          "ពង្រីក standard HTML attributes ជាមួយ TypeScript ដូចជា `React.ButtonHTMLAttributes<HTMLButtonElement>`។",
+          "អនុញ្ញាតឱ្យមាន external styling បន្ថែមតាមរយៈការ merge `className` (ឧ. ប្រើ `clsx` ឬ `tailwind-merge`)។",
+          "ប្រើប្រាស់ variants (primary, secondary, danger) ដើម្បីគ្រប់គ្រង visual states ផ្សេងៗគ្នានៃ UI។"
         ],
         "codeSnippet": "import React from 'react';\nimport { cn } from '@/lib/utils';\n\ninterface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: 'primary' | 'secondary' | 'danger';\n}\n\nexport function Button({ variant = 'primary', className, ...props }: ButtonProps) {\n  const base = \"px-4 py-2 rounded-lg font-medium transition-colors focus:ring-2\";\n  const variants = {\n    primary: \"bg-blue-600 hover:bg-blue-700 text-white\",\n    secondary: \"bg-slate-800 hover:bg-slate-700 text-slate-200\",\n    danger: \"bg-rose-600 hover:bg-rose-700 text-white\",\n  };\n\n  return <button className={cn(base, variants[variant], className)} {...props} />;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Robust Reusable Button"
+        "codeTitle": "Robust Reusable Button",
+        "proTip": "ប្រើ helper `cn()` (clsx + tailwind-merge) ដើម្បី merge Tailwind CSS classes ដោយជៀសវាងបញ្ហា style specificity conflicts។"
       },
       {
         "id": "m03-08",
         "number": "08",
         "title": "Nested Components",
-        "summary": "Rendering child components inside parent trees without defining them inline.",
-        "explanation": "You can nest components inside other components. NEVER declare a component function inside another component function, as it will be recreated on every single render and lose internal state.",
+        "summary": "ការ render child components នៅខាងក្នុង parent tree ដោយជៀសវាងការប្រកាស component នៅខាងក្នុង function body។",
+        "explanation": "យើងអាច render components បង្កប់គ្នាក្នុង parent-child hierarchy បានយ៉ាងងាយស្រួល។ ប៉ុន្តែសូមកុំប្រកាស (declare) function component មួយនៅខាងក្នុង body នៃ component មួយផ្សេងទៀតឱ្យសោះ ព្រោះវានឹងត្រូវ re-create ថ្មីរាល់ពេល render ដែលនាំឱ្យបាត់បង់ state ខាងក្នុង និងបញ្ហា performance ធ្ងន់ធ្ងរ។",
         "keyPoints": [
-          "Keep child component definitions outside the parent component body.",
-          "Pass data to nested children via props."
+          "ត្រូវប្រកាស child components នៅ module scope (ខាងក្រៅ parent component) ជានិច្ច។",
+          "បញ្ជូនទិន្នន័យពី parent ទៅកាន់ child components តាមរយៈ props។",
+          "រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលតាមដាន data flow។"
         ],
         "codeSnippet": "// ❌ Anti-pattern: Defining child inside parent\n/*\nfunction Parent() {\n  function Child() { return <div>Recreated every render!</div>; }\n  return <Child />;\n}\n*/\n\n// ✅ Correct: Declared at module scope\nfunction Child({ title }: { title: string }) {\n  return <li className=\"text-slate-300 py-1\">{title}</li>;\n}\n\nexport function Parent() {\n  return (\n    <ul className=\"list-disc pl-5\">\n      <Child title=\"First Topic\" />\n      <Child title=\"Second Topic\" />\n    </ul>\n  );\n}",
         "codeLanguage": "tsx",
         "codeTitle": "Properly Nesting Components",
-        "pitfall": "Declaring a component inside another component's body causes it to be re-instantiated on every re-render, resetting input focus and state!"
+        "pitfall": "ការប្រកាស component function នៅខាងក្នុង body នៃ component មួយផ្សេងទៀត នឹងបណ្តាលឱ្យវាត្រូវបង្កើតឡើងវិញរាល់ពេល re-render ដែលនាំឱ្យបាត់បង់ input focus និង state ខាងក្នុង!"
       },
       {
         "id": "m03-09",
         "number": "09",
         "title": "Component Organization",
-        "summary": "Organizing generic UI components vs page-specific components.",
-        "explanation": "Keep generic atomic components in `@/components/ui`, complex compound widgets in `@/components`, and domain-specific logic in `@/features`.",
+        "summary": "ការរៀបចំ generic UI components និង page-specific components ឱ្យមានរបៀបរៀបរយ។",
+        "explanation": "រក្សា atomic primitives ទូទៅនៅក្នុង `@/components/ui` (ដូចជា Button, Input), រក្សា composite widgets នៅក្នុង `@/components` (ដូចជា Header, Sidebar) និងរក្សា domain-specific components នៅក្នុង `@/features` (ដូចជា CartDrawer, StudentTable)។",
         "keyPoints": [
-          "Atomic primitives: Button, Input, Checkbox, Badge.",
-          "Compound components: Modal, DropdownMenu, NavigationDrawer.",
-          "Feature components: StudentTable, CartDrawer, ProductGrid."
+          "Atomic Primitives: Button, Input, Checkbox, Badge (មិនមាន business logic)។",
+          "Compound Components: Modal, DropdownMenu, NavigationDrawer។",
+          "Feature Components: StudentTable, CartDrawer, ProductGrid (ចងភ្ជាប់ជាមួយ feature logic)។"
         ],
         "codeSnippet": "src/\n├── components/\n│   ├── ui/             # Primitives: Button.tsx, Input.tsx\n│   └── layout/         # Header.tsx, Sidebar.tsx\n└── features/\n    └── cart/           # CartDrawer.tsx, CartItem.tsx, CartSummary.tsx",
         "codeLanguage": "tsx",
-        "codeTitle": "Component Tier Hierarchy"
+        "codeTitle": "Component Tier Hierarchy",
+        "proTip": "ការបែងចែក components ជា tier ច្បាស់លាស់ជួយឱ្យ team ងាយដឹងថាតើ component ណាជា shared primitive និង component ណាជា business logic។"
       },
       {
         "id": "m03-10",
         "number": "10",
         "title": "Feature-based Components",
-        "summary": "Structuring by business capability rather than technical role.",
-        "explanation": "Feature folders colocate everything related to a domain: components, hooks, types, and API calls. When you delete or modify a feature, all relevant files are in one spot.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធតាម business domain capability ជំនួសឱ្យការបែងចែកតាម technical role។",
+        "explanation": "Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, types, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។",
         "keyPoints": [
-          "Improves project maintainability as codebases grow beyond 100+ files.",
-          "Clear boundary between feature-specific code and shared UI."
+          "បង្កើន maintainability នៃ project នៅពេលដែល codebase រីកធំឡើងលើសពី ១០០+ files។",
+          "បង្កើតព្រំដែនច្បាស់លាស់រវាង feature-specific code និង shared reusable UI components។",
+          "ងាយស្រួលក្នុងការធ្វើ code review, testing និង onboarding សមាជិកថ្មីក្នុងក្រុម។"
         ],
         "codeSnippet": "features/auth/\n├── components/\n│   ├── LoginForm.tsx\n│   ├── RegisterModal.tsx\n│   └── PasswordStrength.tsx\n├── hooks/\n│   └── useAuth.ts\n├── services/\n│   └── authApi.ts\n└── types/\n    └── auth.ts",
         "codeLanguage": "tsx",
-        "codeTitle": "Feature Folder Structure"
+        "codeTitle": "Feature Folder Structure",
+        "proTip": "នៅពេល feature មួយត្រូវលុបចោល អ្នកគ្រាន់តែលុប folder `features/feature-name` មួយប៉ុណ្ណោះ ដោយមិនបាច់ដើររក files រាយប៉ាយក្នុង folders ផ្សេងៗឡើយ។"
       },
       {
         "id": "m03-11",
         "number": "11",
         "title": "Container vs Presentational Components",
-        "summary": "Separating data fetching and business logic from visual rendering.",
-        "explanation": "Presentational components care only about how things look (receiving props and rendering UI). Container components care about how things work (fetching data, subscribing to stores).",
+        "summary": "ការបំបែក data fetching និង business logic ចេញពី visual UI rendering ឱ្យដាច់ពីគ្នា។",
+        "explanation": "Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (ទទួល props និង render JSX)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (Fetching data ពី API, subscribing ទៅ store, និងដោះស្រាយ user mutations)។",
         "keyPoints": [
-          "Presentational: Stateless or UI-state only, highly testable with Storybook.",
-          "Container: Hooks, API queries, mutation handlers."
+          "Presentational (Dumb / Pure UI): គ្មាន business state ងាយស្រួលសរសេរ test និង preview លើ Storybook។",
+          "Container (Smart / Logic): ផ្ទុក hooks, API queries, និង mutation handlers រួចបញ្ជូន data ទៅ UI component។",
+          "ជួយបង្កើន reusability ព្រោះថា UI ដដែលនេះអាចយកទៅប្រើប្រាស់ជាមួយ data source ផ្សេងគ្នាបាន។"
         ],
         "codeSnippet": "// Presentational Component (Dumb / Pure UI)\nexport function UserCardUI({ name, email, avatar }: UserProps) {\n  return (\n    <div className=\"flex items-center gap-3 p-3 bg-slate-900 rounded-lg\">\n      <img src={avatar} className=\"w-10 h-10 rounded-full\" alt={name} />\n      <div>\n        <p className=\"font-medium text-white\">{name}</p>\n        <p className=\"text-xs text-slate-400\">{email}</p>\n      </div>\n    </div>\n  );\n}\n\n// Container Component (Smart / Data Fetching)\nexport function UserCardContainer({ userId }: { userId: string }) {\n  const { data: user, isLoading } = useQuery(['user', userId], () => fetchUser(userId));\n  if (isLoading) return <Skeleton className=\"h-16 w-full\" />;\n  if (!user) return null;\n  return <UserCardUI name={user.name} email={user.email} avatar={user.avatar} />;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Container vs Presentational Pattern"
+        "codeTitle": "Container vs Presentational Pattern",
+        "proTip": "ការបំបែក Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ styling ដោយមិនបារម្ភពីរឿង API integration។"
       },
       {
         "id": "m03-12",
         "number": "12",
         "title": "Component Best Practices",
-        "summary": "Single responsibility principle, purity, and prop count hygiene.",
-        "explanation": "Keep components small and focused on a single responsibility. If a component accepts more than 7-8 props, consider grouping related props into objects or breaking it down into compound components.",
+        "summary": "គោលការណ៍ Single Responsibility, Component Purity និងការគ្រប់គ្រងចំនួន props ឱ្យមានអនាម័យ។",
+        "explanation": "រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ប្រសិនបើ component មួយទទួល props លើសពី ៧-៨ props អ្នកគួរពិចារណាប្រមូលផ្តុំ props ទាំងនោះជា object តែមួយ ឬបំបែកវាទៅជា compound components។",
         "keyPoints": [
-          "Keep components pure: given identical props, always return identical JSX.",
-          "Avoid side effects during rendering; perform them in useEffect or event handlers."
+          "រក្សា component ឱ្យមាន Purity៖ នៅពេលទទួលបាន props ដដែល ត្រូវតែ return JSX ដូចគ្នាជានិច្ច។",
+          "ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។",
+          "កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។"
         ],
         "codeSnippet": "// Golden Rule of React: Purity during render\n// ❌ Impure: Mutating external variables during render\nlet renderCount = 0;\nfunction BadComponent() {\n  renderCount++; // Side effect!\n  return <div>Render {renderCount}</div>;\n}\n\n// ✅ Pure: Rendering has no observable external mutations\nfunction GoodComponent({ title }: { title: string }) {\n  return <h2 className=\"text-xl font-semibold\">{title}</h2>;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Enforcing Component Purity"
+        "codeTitle": "Enforcing Component Purity",
+        "proTip": "ចងចាំ Golden Rule របស់ React៖ Rendering phase ត្រូវតែ Pure ដោយគ្មានការកែប្រែ external variables ឬ trigger side effects ឡើយ។"
       }
     ]
   },

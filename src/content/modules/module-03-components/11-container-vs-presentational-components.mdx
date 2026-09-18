@@ -5,18 +5,20 @@ title: "Container vs Presentational Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Separating data fetching and business logic from visual rendering."
+summary: "ការបំបែក data fetching និង business logic ចេញពី visual UI rendering ឱ្យដាច់ពីគ្នា។"
+proTip: "ការបំបែក Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ styling ដោយមិនបារម្ភពីរឿង API integration។"
 codeTitle: "Container vs Presentational Pattern"
 ---
 
 # Container vs Presentational Components
 
-Presentational components care only about how things look (receiving props and rendering UI). Container components care about how things work (fetching data, subscribing to stores).
+Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (ទទួល props និង render JSX)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (Fetching data ពី API, subscribing ទៅ store, និងដោះស្រាយ user mutations)។
 
 ### Key Concepts & Rules:
 
-- Presentational: Stateless or UI-state only, highly testable with Storybook.
-- Container: Hooks, API queries, mutation handlers.
+- Presentational (Dumb / Pure UI): គ្មាន business state ងាយស្រួលសរសេរ test និង preview លើ Storybook។
+- Container (Smart / Logic): ផ្ទុក hooks, API queries, និង mutation handlers រួចបញ្ជូន data ទៅ UI component។
+- ជួយបង្កើន reusability ព្រោះថា UI ដដែលនេះអាចយកទៅប្រើប្រាស់ជាមួយ data source ផ្សេងគ្នាបាន។
 
 ### Code Example: Container vs Presentational Pattern
 

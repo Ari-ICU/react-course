@@ -5,18 +5,20 @@ title: "Functional Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Modern standard for React components using standard JavaScript functions."
+summary: "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។"
+proTip: "ប្រើ named function declarations ឬ typed arrow functions ជាមួយ TypeScript interfaces ដើម្បីទទួលបាន type safety និង auto-completion យ៉ាងល្អឥតខ្ចោះ។"
 codeTitle: "Modern Functional Component with TypeScript"
 ---
 
 # Functional Components
 
-Class components are now considered legacy. Functional components combined with React Hooks provide cleaner syntax, superior TypeScript inference, easier unit testing, and smaller bundle sizes.
+Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ការគាំទ្រ TypeScript inference កាន់តែប្រសើរ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។
 
 ### Key Concepts & Rules:
 
-- Declare with standard `function ComponentName()` or arrow functions.
-- Hooks (useState, useEffect) can only be called inside functional components.
+- ប្រកាស component ដោយប្រើ `function ComponentName()` ធម្មតា ឬ arrow function syntax។
+- React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។
+- កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។
 
 ### Code Example: Modern Functional Component with TypeScript
 

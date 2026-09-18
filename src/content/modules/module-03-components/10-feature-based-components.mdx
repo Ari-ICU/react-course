@@ -5,18 +5,20 @@ title: "Feature-based Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Structuring by business capability rather than technical role."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធតាម business domain capability ជំនួសឱ្យការបែងចែកតាម technical role។"
+proTip: "នៅពេល feature មួយត្រូវលុបចោល អ្នកគ្រាន់តែលុប folder `features/feature-name` មួយប៉ុណ្ណោះ ដោយមិនបាច់ដើររក files រាយប៉ាយក្នុង folders ផ្សេងៗឡើយ។"
 codeTitle: "Feature Folder Structure"
 ---
 
 # Feature-based Components
 
-Feature folders colocate everything related to a domain: components, hooks, types, and API calls. When you delete or modify a feature, all relevant files are in one spot.
+Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, types, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។
 
 ### Key Concepts & Rules:
 
-- Improves project maintainability as codebases grow beyond 100+ files.
-- Clear boundary between feature-specific code and shared UI.
+- បង្កើន maintainability នៃ project នៅពេលដែល codebase រីកធំឡើងលើសពី ១០០+ files។
+- បង្កើតព្រំដែនច្បាស់លាស់រវាង feature-specific code និង shared reusable UI components។
+- ងាយស្រួលក្នុងការធ្វើ code review, testing និង onboarding សមាជិកថ្មីក្នុងក្រុម។
 
 ### Code Example: Feature Folder Structure
 

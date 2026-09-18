@@ -5,18 +5,20 @@ title: "Component Structure"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Internal organization: imports, interfaces, state, handlers, and JSX return."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, types/interfaces, state, handlers និង JSX return។"
+proTip: "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Types -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
 codeTitle: "Predictable Component Layout Structure"
 ---
 
 # Component Structure
 
-A standard component structure keeps code predictable: 1) Imports; 2) Props interface; 3) Component declaration; 4) State & hooks; 5) Derived state; 6) Handlers; 7) JSX return.
+រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Props interfaces/types; ៣) Component declaration; ៤) State & hooks; ៥) Handlers & helper logic; ៦) JSX return statement។
 
 ### Key Concepts & Rules:
 
-- Keep hooks at the very top of the function.
-- Declare handlers before the JSX return.
+- ហៅ React Hooks ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ function (Top level) ជានិច្ច។
+- ប្រកាស event handlers និង logic ផ្សេងៗមុនពេល return JSX។
+- ញែក complex helper functions ដែលមិនពឹងផ្អែកលើ component state ចេញទៅក្រៅ function body។
 
 ### Code Example: Predictable Component Layout Structure
 

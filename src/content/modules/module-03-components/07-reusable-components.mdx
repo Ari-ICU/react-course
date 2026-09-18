@@ -5,18 +5,20 @@ title: "Reusable Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Designing flexible, configurable UI building blocks."
+summary: "ការឌីហ្សាញ UI building blocks ដែលមានភាពបត់បែនខ្ពស់ ងាយស្រួល config និងអាចប្រើឡើងវិញបានច្រើនកន្លែង។"
+proTip: "ប្រើ helper `cn()` (clsx + tailwind-merge) ដើម្បី merge Tailwind CSS classes ដោយជៀសវាងបញ្ហា style specificity conflicts។"
 codeTitle: "Robust Reusable Button"
 ---
 
 # Reusable Components
 
-A good reusable component has a minimal required API, sensible defaults, and accepts standard HTML attributes (like `className`, `disabled`, `onClick`).
+Reusable component ដ៏ល្អមួយ ត្រូវតែមាន minimal required API, មានតម្លៃ default ត្រឹមត្រូវ និងអាចទទួល standard HTML attributes (ដូចជា `className`, `disabled`, `onClick`, `aria-*`) តាមរយៈ prop spreading។
 
 ### Key Concepts & Rules:
 
-- Extend HTML attributes using TypeScript: `React.ButtonHTMLAttributes<HTMLButtonElement>`.
-- Allow external styling via `className` merging.
+- ពង្រីក standard HTML attributes ជាមួយ TypeScript ដូចជា `React.ButtonHTMLAttributes<HTMLButtonElement>`។
+- អនុញ្ញាតឱ្យមាន external styling បន្ថែមតាមរយៈការ merge `className` (ឧ. ប្រើ `clsx` ឬ `tailwind-merge`)។
+- ប្រើប្រាស់ variants (primary, secondary, danger) ដើម្បីគ្រប់គ្រង visual states ផ្សេងៗគ្នានៃ UI។
 
 ### Code Example: Robust Reusable Button
 

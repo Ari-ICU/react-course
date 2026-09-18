@@ -5,18 +5,20 @@ title: "Component Best Practices"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Single responsibility principle, purity, and prop count hygiene."
+summary: "គោលការណ៍ Single Responsibility, Component Purity និងការគ្រប់គ្រងចំនួន props ឱ្យមានអនាម័យ។"
+proTip: "ចងចាំ Golden Rule របស់ React៖ Rendering phase ត្រូវតែ Pure ដោយគ្មានការកែប្រែ external variables ឬ trigger side effects ឡើយ។"
 codeTitle: "Enforcing Component Purity"
 ---
 
 # Component Best Practices
 
-Keep components small and focused on a single responsibility. If a component accepts more than 7-8 props, consider grouping related props into objects or breaking it down into compound components.
+រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ប្រសិនបើ component មួយទទួល props លើសពី ៧-៨ props អ្នកគួរពិចារណាប្រមូលផ្តុំ props ទាំងនោះជា object តែមួយ ឬបំបែកវាទៅជា compound components។
 
 ### Key Concepts & Rules:
 
-- Keep components pure: given identical props, always return identical JSX.
-- Avoid side effects during rendering; perform them in useEffect or event handlers.
+- រក្សា component ឱ្យមាន Purity៖ នៅពេលទទួលបាន props ដដែល ត្រូវតែ return JSX ដូចគ្នាជានិច្ច។
+- ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។
+- កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។
 
 ### Code Example: Enforcing Component Purity
 

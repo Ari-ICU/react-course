@@ -5,18 +5,20 @@ title: "Component Composition"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "Building complex interfaces by assembling smaller atomic pieces."
+summary: "ការកសាង user interface ស្មុគស្មាញដោយការផ្គុំ atomic components តូចៗបញ្ចូលគ្នា។"
+proTip: "ប្រើប្រាស់ `children` ឬ slot props ដូចជា `header` និង `footer` ដើម្បីឱ្យ component របស់អ្នកអាចផ្ទុក content អ្វីក៏បានដោយមិនចាំបាច់ចងភ្ជាប់ logic តឹងរ៉ឹងពេក។"
 codeTitle: "Component Composition Pattern"
 ---
 
 # Component Composition
 
-Composition is React's core superpower. Instead of building monolithic components with hundreds of props, compose focused components together.
+Composition គឺជាអានុភាពដ៏ខ្លាំងក្លាបំផុតរបស់ React (React's core superpower)។ ជំនួសឱ្យការបង្កើត monolithic component ដ៏ធំមួយដែលមាន props រាប់សិប វិធីសាស្ត្រត្រឹមត្រូវគឺការផ្គុំ components តូចៗដែលផ្តោតលើមុខងារតែមួយបញ្ចូលគ្នា (Favor Composition over Inheritance)។
 
 ### Key Concepts & Rules:
 
-- Favor composition over inheritance.
-- Pass components as props or use `children` to slot content dynamically.
+- ផ្តល់អាទិភាពលើ Composition ជាជាង Inheritance ក្នុងស្ថាបត្យកម្ម React UI។
+- បញ្ជូន components ជា props ឬប្រើប្រាស់ `children` prop ដើម្បី slot dynamic content តាមតម្រូវការ។
+- ជួយកាត់បន្ថយបញ្ហា Prop Drilling និងធ្វើឱ្យ components មានភាពឯករាជ្យខ្ពស់។
 
 ### Code Example: Component Composition Pattern
 
