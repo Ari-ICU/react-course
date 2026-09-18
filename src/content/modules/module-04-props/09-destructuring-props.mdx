@@ -5,18 +5,20 @@ title: "Destructuring Props"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Clean prop extraction in function signature."
+summary: "បច្ចេកទេសទាញយក props យ៉ាងខ្លីស្អាតនៅត្រង់ function signature។"
+proTip: "ការ destructure ជួយឱ្យ developer ផ្សេងទៀតអាចមើលដឹងភ្លាមៗថា component នេះត្រូវការព័ត៌មានអ្វីខ្លះ ដោយគ្រាន់តែក្រឡេកមើល function signature។"
 codeTitle: "Destructuring in Function Signature"
 ---
 
 # Destructuring Props
 
-Destructuring props makes components concise and explicitly documents which properties are consumed.
+ការធ្វើ Destructuring props ជួយឱ្យកូដខ្លី ស្អាត មិនបាច់សរសេរពាក្យ `props.` ដដែលៗ និងបង្ហាញយ៉ាងច្បាស់នូវរាល់ properties ណាខ្លះដែល component កំពុងប្រើប្រាស់។
 
 ### Key Concepts & Rules:
 
-- Destructure directly in function parameters: `({ title, count }: Props)`.
-- You can rename properties or assign default fallback values.
+- ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend }: MetricProps)`។
+- អាចកំណត់ default fallback values ឬ rename properties បានយ៉ាងងាយស្រួល។
+- អាចប្រើ Rest parameter `...rest` ដើម្បីចាប់យក props ដែលនៅសល់ទាំងអស់។
 
 ### Code Example: Destructuring in Function Signature
 

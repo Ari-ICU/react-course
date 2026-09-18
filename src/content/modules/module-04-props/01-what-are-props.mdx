@@ -5,19 +5,20 @@ title: "What are Props?"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Arguments passed into React components to customize their behavior and rendering."
+summary: "ទិន្នន័យ (Arguments) បញ្ជូនទៅកាន់ React components ដើម្បីកំណត់ឥរិយាបថ និងការ render UI។"
+proTip: "គិតពី props ដូចជា arguments នៃ function ធម្មតា៖ function ទទួល parameters មកគណនា តែមិនត្រូវទៅកែប្រែតម្លៃដើមនោះឡើយ។"
 codeTitle: "Basic Props with TypeScript"
 ---
 
 # What are Props?
 
-Props (short for properties) are the mechanism by which parent components pass data and callback functions downward to child components. Props are strictly read-only (immutable) within the child component.
+Props (មកពីពាក្យ properties) គឺជាយន្តការដែល parent components ប្រើដើម្បីបញ្ជូនទិន្នន័យ និង callback functions ចុះក្រោមទៅកាន់ child components។ Props មានលក្ខណៈ strictly read-only (immutable) មិនអាចកែប្រែដោយផ្ទាល់នៅខាងក្នុង child component បានឡើយ។
 
 ### Key Concepts & Rules:
 
-- Props flow unidirectionally from parent to child.
-- Components must never modify their own props directly.
-- TypeScript interfaces provide autocomplete and type safety for props.
+- Props ហូរតាមទិសដៅតែមួយ (Unidirectional) ពី parent ចុះទៅ child។
+- Child components ដាច់ខាតមិនត្រូវកែប្រែ (mutate) តម្លៃ props របស់ខ្លួនឡើយ (Props are immutable)។
+- TypeScript interfaces ជួយផ្តល់នូវ autocomplete និង type safety យ៉ាងច្បាស់លាស់សម្រាប់ props។
 
 ### Code Example: Basic Props with TypeScript
 

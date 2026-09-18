@@ -5,17 +5,19 @@ title: "Props with Arrays"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Passing lists of items to components for iteration."
+summary: "ការបញ្ជូនបញ្ជីទិន្នន័យ (Lists) ទៅកាន់ components សម្រាប់ធ្វើការ iterate/map។"
+proTip: "កំណត់ Type នៃ array ក្នុង TypeScript ឱ្យច្បាស់លាស់ ដូចជា `tags: string[]` ឬ `items: Product[]` ដើម្បីឱ្យ editor ជួយ auto-complete properties។"
 codeTitle: "Passing and Iterating Arrays"
 ---
 
 # Props with Arrays
 
-Pass arrays to components to render lists, menus, or tag clouds.
+បញ្ជូន arrays ទៅកាន់ components ដើម្បី render បញ្ជីទិន្នន័យ (Lists), navigations, menus ឬ tag clouds តាមរយៈ method `.map()`។
 
 ### Key Concepts & Rules:
 
-- Pass arrays inside curly braces: `items={['A', 'B', 'C']}`.
+- បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `users={userList}`។
+- ពេលធ្វើការ loop/map array elements ក្នុង JSX ត្រូវផ្តល់ `key` prop ដ៏មានតម្លៃ unique ជានិច្ច។
 
 ### Code Example: Passing and Iterating Arrays
 

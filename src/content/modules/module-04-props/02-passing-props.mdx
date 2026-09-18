@@ -5,18 +5,20 @@ title: "Passing Props"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Supplying values to components via JSX attributes."
+summary: "ការបញ្ជូនតម្លៃផ្សេងៗទៅកាន់ components តាមរយៈ JSX attributes។"
+proTip: "ប្រើ shorthand `<Component isVisible />` ជំនួសឱ្យ `<Component isVisible={true} />` ដើម្បីឱ្យកូដកាន់តែខ្លីស្អាត។"
 codeTitle: "Passing Diverse Prop Types"
 ---
 
 # Passing Props
 
-You pass props to components the same way you add attributes to HTML tags: `<Header title="Dashboard" count={42} isVisible />`.
+អ្នកអាចបញ្ជូន props ទៅកាន់ components ដូចគ្នានឹងការកំណត់ attributes ទៅឱ្យ HTML tags ដែរ៖ `<Header title="Dashboard" count={42} isVisible />`។
 
 ### Key Concepts & Rules:
 
-- Pass strings with literal quotes: `title="React"`.
-- Pass numbers, booleans, objects, arrays, and functions with curly braces: `count={10}`.
+- បញ្ជូន string literals ដោយប្រើប្រាស់ quotes ធម្មតា៖ `title="React"`។
+- បញ្ជូន numbers, booleans, objects, arrays និង functions ដោយប្រើរង្វង់ក្រចកទោល (curly braces)៖ `count={10}`, `isActive={true}`។
+- ប្រសិនបើបញ្ជូន boolean prop ដោយមិនដាក់តម្លៃ (ឧ. `<Modal isOpen />`) នោះវាស្មើនឹង `isOpen={true}` ដោយស្វ័យប្រវត្តិ។
 
 ### Code Example: Passing Diverse Prop Types
 

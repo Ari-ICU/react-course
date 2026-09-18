@@ -578,185 +578,212 @@ export const modulesData: ModuleItem[] = [
     "number": "04",
     "title": "Props",
     "category": "Fundamentals",
-    "summary": "Passing and receiving props, destructuring, children props, default values, one-way data flow, and props vs state.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពីការបញ្ជូន និងទទួល Props, Destructuring, Children Props, Default Values, One-way Data Flow និងភាពខុសគ្នារវាង Props vs State។",
     "iconName": "ArrowDownRight",
     "topics": [
       {
         "id": "m04-01",
         "number": "01",
         "title": "What are Props?",
-        "summary": "Arguments passed into React components to customize their behavior and rendering.",
-        "explanation": "Props (short for properties) are the mechanism by which parent components pass data and callback functions downward to child components. Props are strictly read-only (immutable) within the child component.",
+        "summary": "ទិន្នន័យ (Arguments) បញ្ជូនទៅកាន់ React components ដើម្បីកំណត់ឥរិយាបថ និងការ render UI។",
+        "explanation": "Props (មកពីពាក្យ properties) គឺជាយន្តការដែល parent components ប្រើដើម្បីបញ្ជូនទិន្នន័យ និង callback functions ចុះក្រោមទៅកាន់ child components។ Props មានលក្ខណៈ strictly read-only (immutable) មិនអាចកែប្រែដោយផ្ទាល់នៅខាងក្នុង child component បានឡើយ។",
         "keyPoints": [
-          "Props flow unidirectionally from parent to child.",
-          "Components must never modify their own props directly.",
-          "TypeScript interfaces provide autocomplete and type safety for props."
+          "Props ហូរតាមទិសដៅតែមួយ (Unidirectional) ពី parent ចុះទៅ child។",
+          "Child components ដាច់ខាតមិនត្រូវកែប្រែ (mutate) តម្លៃ props របស់ខ្លួនឡើយ (Props are immutable)។",
+          "TypeScript interfaces ជួយផ្តល់នូវ autocomplete និង type safety យ៉ាងច្បាស់លាស់សម្រាប់ props។"
         ],
         "codeSnippet": "interface AlertProps {\n  type: \"info\" | \"warning\" | \"error\";\n  message: string;\n}\n\nexport function Alert({ type, message }: AlertProps) {\n  const bg = type === \"error\" ? \"bg-rose-950/60 border-rose-800 text-rose-300\" \n           : type === \"warning\" ? \"bg-amber-950/60 border-amber-800 text-amber-300\"\n           : \"bg-blue-950/60 border-blue-800 text-blue-300\";\n\n  return <div className={`p-3 border rounded-lg ${bg}`}>{message}</div>;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Basic Props with TypeScript"
+        "codeTitle": "Basic Props with TypeScript",
+        "proTip": "គិតពី props ដូចជា arguments នៃ function ធម្មតា៖ function ទទួល parameters មកគណនា តែមិនត្រូវទៅកែប្រែតម្លៃដើមនោះឡើយ។"
       },
       {
         "id": "m04-02",
         "number": "02",
         "title": "Passing Props",
-        "summary": "Supplying values to components via JSX attributes.",
-        "explanation": "You pass props to components the same way you add attributes to HTML tags: `<Header title=\"Dashboard\" count={42} isVisible />`.",
+        "summary": "ការបញ្ជូនតម្លៃផ្សេងៗទៅកាន់ components តាមរយៈ JSX attributes។",
+        "explanation": "អ្នកអាចបញ្ជូន props ទៅកាន់ components ដូចគ្នានឹងការកំណត់ attributes ទៅឱ្យ HTML tags ដែរ៖ `<Header title=\"Dashboard\" count={42} isVisible />`។",
         "keyPoints": [
-          "Pass strings with literal quotes: `title=\"React\"`.",
-          "Pass numbers, booleans, objects, arrays, and functions with curly braces: `count={10}`."
+          "បញ្ជូន string literals ដោយប្រើប្រាស់ quotes ធម្មតា៖ `title=\"React\"`។",
+          "បញ្ជូន numbers, booleans, objects, arrays និង functions ដោយប្រើរង្វង់ក្រចកទោល (curly braces)៖ `count={10}`, `isActive={true}`។",
+          "ប្រសិនបើបញ្ជូន boolean prop ដោយមិនដាក់តម្លៃ (ឧ. `<Modal isOpen />`) នោះវាស្មើនឹង `isOpen={true}` ដោយស្វ័យប្រវត្តិ។"
         ],
         "codeSnippet": "<CourseCard \n  title=\"Advanced Next.js\"\n  moduleCount={27}\n  isPublished={true}\n  tags={[\"React\", \"Next.js\", \"Zustand\"]}\n  onEnroll={(id) => console.log(\"Enrolled in\", id)}\n/>",
         "codeLanguage": "tsx",
-        "codeTitle": "Passing Diverse Prop Types"
+        "codeTitle": "Passing Diverse Prop Types",
+        "proTip": "ប្រើ shorthand `<Component isVisible />` ជំនួសឱ្យ `<Component isVisible={true} />` ដើម្បីឱ្យកូដកាន់តែខ្លីស្អាត។"
       },
       {
         "id": "m04-03",
         "number": "03",
         "title": "Receiving Props",
-        "summary": "Accessing the props object in the component function parameter.",
-        "explanation": "The first argument of a functional component is the `props` object. You can access properties via `props.title` or destructure them directly.",
+        "summary": "ការចាប់យក props object តាមរយៈ parameters នៃ component function។",
+        "explanation": "Argument ទីមួយនៃ functional component គឺជា `props` object។ អ្នកអាចទាញយក properties តាមរយៈ `props.title` ឬប្រើបច្ចេកទេស destructuring ដោយផ្ទាល់នៅត្រង់ parameters។",
         "keyPoints": [
-          "Props is a plain JavaScript object containing all passed attributes."
+          "Props គឺជា JavaScript object ធម្មតាដែលផ្ទុករាល់ attributes ទាំងអស់ដែលបានបញ្ជូនមកពី parent។",
+          "ត្រូវកំណត់ Type ឱ្យបានច្បាស់លាស់ជាមួយ TypeScript ដើម្បីជៀសវាងកំហុសពេល access properties ដែលគ្មាន។"
         ],
         "codeSnippet": "export function CourseHeader(props: { title: string; subtitle: string }) {\n  return (\n    <div>\n      <h1 className=\"text-3xl font-bold text-white\">{props.title}</h1>\n      <p className=\"text-slate-400\">{props.subtitle}</p>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Receiving the Props Object"
+        "codeTitle": "Receiving the Props Object",
+        "proTip": "ការប្រើ TypeScript សម្រាប់ typing props ជួយឱ្យ editor បង្ហាញ IntelliSense និងការពារបញ្ហា runtime errors បានយ៉ាងមានប្រសិទ្ធភាព។"
       },
       {
         "id": "m04-04",
         "number": "04",
         "title": "Props with Strings",
-        "summary": "Passing string literals directly using double quotes.",
-        "explanation": "String props can be passed without curly braces when literal: `<Button label=\"Save Changes\" />`.",
+        "summary": "ការបញ្ជូន static strings ដោយផ្ទាល់ដោយប្រើប្រាស់ double quotes ធម្មតា។",
+        "explanation": "String props អាចបញ្ជូនបានយ៉ាងងាយស្រួលដោយមិនចាំបាច់ប្រើ curly braces ឡើយ នៅពេលដែលវាជា static literal value៖ `<Button label=\"Save Changes\" />`។",
         "keyPoints": [
-          "No curly braces needed for static strings."
+          "មិនចាំបាច់ប្រើ curly braces សម្រាប់ static string literals ឡើយ។",
+          "ប្រើ curly braces លុះត្រាតែ string នោះជា JavaScript variable ឬ template literal expression៖ `title={userName}` ឬ `title={\\`Hello \\${name}\\`}`។"
         ],
         "codeSnippet": "<UserProfile \n  name=\"Alice Doe\" \n  role=\"Senior Frontend Architect\" \n  country=\"Cambodia\" \n/>",
         "codeLanguage": "tsx",
-        "codeTitle": "String Literal Props"
+        "codeTitle": "String Literal Props",
+        "proTip": "សរសេរ `label=\"Submit\"` ជាជាង `label={\"Submit\"}` ដើម្បីរក្សាកូដឱ្យខ្លី និងអានស្រួល។"
       },
       {
         "id": "m04-05",
         "number": "05",
         "title": "Props with Numbers",
-        "summary": "Passing numeric values using curly brace expressions.",
-        "explanation": "Numbers MUST be passed inside curly braces (e.g. `rating={4.9}`), otherwise they are parsed as literal strings.",
+        "summary": "ការបញ្ជូនតម្លៃជាលេខ (Numeric values) ដោយប្រើប្រាស់ curly brace expressions។",
+        "explanation": "តម្លៃជាលេខ (Numbers) ត្រូវតែបញ្ជូននៅខាងក្នុង curly braces ជានិច្ច (ឧទាហរណ៍ `rating={4.9}`)។ ប្រសិនបើសរសេរក្នុង double quotes នោះ JSX នឹងចាត់ទុកវាជា string literal ទៅវិញ។",
         "keyPoints": [
-          "`<Widget count=5 />` is invalid syntax; write `<Widget count={5} />`."
+          "`<Widget count=5 />` គឺជា invalid syntax ក្នុង JSX — ត្រូវសរសេរ `<Widget count={5} />`។",
+          "ជួយការពារបញ្ហា type coercion ក្នុង JavaScript (ដូចជា `5 + \"5\" = \"55\"`)។"
         ],
         "codeSnippet": "<RatingBadge \n  score={4.85} \n  totalReviews={1240} \n  stars={5} \n/>",
         "codeLanguage": "tsx",
-        "codeTitle": "Passing Numeric Props"
+        "codeTitle": "Passing Numeric Props",
+        "pitfall": "ការសរសេរ `<Widget count=\"5\" />` នឹងបញ្ជូនជា string \"5\" មិនមែនជាលេខ 5 ឡើយ ដែលអាចបណ្តាលឱ្យមានបញ្ហាពេលយកទៅបូកលេខ (ឧ. \"5\" + 1 = \"51\")!"
       },
       {
         "id": "m04-06",
         "number": "06",
         "title": "Props with Objects",
-        "summary": "Passing complex objects and configuring nested structures.",
-        "explanation": "Pass objects inside curly braces: `user={{ name: 'Alice', age: 28 }}`. Note the double curly braces.",
+        "summary": "ការបញ្ជូន objects ស្មុគស្មាញ និងការកំណត់ nested configuration structures។",
+        "explanation": "បញ្ជូន objects នៅខាងក្នុង curly braces៖ `user={{ name: 'Alice', age: 28 }}`។ សូមកត់សម្គាល់ការប្រើប្រាស់ double curly braces `{{ ... }}`។",
         "keyPoints": [
-          "Outer curly braces denote JSX expression; inner braces denote object literal."
+          "រង្វង់ក្រចកខាងក្រៅ `{}` បញ្ជាក់ថាជា JSX expression ចំណែកឯរង្វង់ក្រចកខាងក្នុង `{}` បញ្ជាក់ថាជា JavaScript object literal។",
+          "អាចបញ្ជូនតាមរយៈ variable ផ្ទាល់ ឬសរសេរជា inline object។",
+          "ជៀសវាងការបង្កើត inline objects ថ្មីរាល់ពេល render បើ component កូនត្រូវបាន memoize (អាចប៉ះពាល់ដល់ performance)។"
         ],
         "codeSnippet": "const currentUser = { id: \"u123\", name: \"Dara\", role: \"Instructor\" };\n\n// Pass variable or inline object:\n<AccountSettings \n  user={currentUser}\n  themeConfig={{ mode: \"dark\", accent: \"#3b82f6\" }}\n/>",
         "codeLanguage": "tsx",
-        "codeTitle": "Passing Object Props"
+        "codeTitle": "Passing Object Props",
+        "proTip": "បើ object មានទំហំធំ ឬប្រើប្រាស់ឡើងវិញច្រើនកន្លែង គួរប្រកាសជា variable នៅខាងក្រៅ ឬគ្រប់គ្រងដោយ state។"
       },
       {
         "id": "m04-07",
         "number": "07",
         "title": "Props with Arrays",
-        "summary": "Passing lists of items to components for iteration.",
-        "explanation": "Pass arrays to components to render lists, menus, or tag clouds.",
+        "summary": "ការបញ្ជូនបញ្ជីទិន្នន័យ (Lists) ទៅកាន់ components សម្រាប់ធ្វើការ iterate/map។",
+        "explanation": "បញ្ជូន arrays ទៅកាន់ components ដើម្បី render បញ្ជីទិន្នន័យ (Lists), navigations, menus ឬ tag clouds តាមរយៈ method `.map()`។",
         "keyPoints": [
-          "Pass arrays inside curly braces: `items={['A', 'B', 'C']}`."
+          "បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `users={userList}`។",
+          "ពេលធ្វើការ loop/map array elements ក្នុង JSX ត្រូវផ្តល់ `key` prop ដ៏មានតម្លៃ unique ជានិច្ច។"
         ],
         "codeSnippet": "export function TagList({ tags }: { tags: string[] }) {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      {tags.map((tag) => (\n        <span key={tag} className=\"px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300\">\n          #{tag}\n        </span>\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Passing and Iterating Arrays"
+        "codeTitle": "Passing and Iterating Arrays",
+        "proTip": "កំណត់ Type នៃ array ក្នុង TypeScript ឱ្យច្បាស់លាស់ ដូចជា `tags: string[]` ឬ `items: Product[]` ដើម្បីឱ្យ editor ជួយ auto-complete properties។"
       },
       {
         "id": "m04-08",
         "number": "08",
         "title": "Props with Functions",
-        "summary": "Passing callback functions to handle user actions.",
-        "explanation": "Passing functions down as props allows children to notify parents when events occur (e.g., button clicked, input changed).",
+        "summary": "ការបញ្ជូន callback functions ដើម្បីឆ្លើយតបទៅនឹង user events និង actions។",
+        "explanation": "ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចប្រាប់ដំណឹង (notify) ទៅកាន់ parent component វិញបាន នៅពេលដែលមាន event កើតឡើង (ដូចជាពេលចុច button ឬវាយបញ្ចូលអក្សរក្នុង input)។",
         "keyPoints": [
-          "Enables child-to-parent communication.",
-          "Pass function references; do not invoke them during render."
+          "ដើរតួជាយន្តការទំនាក់ទំនងពី Child ទៅ Parent (Child-to-parent communication)។",
+          "បញ្ជូន function reference (កុំ invoke function ដោយប្រើ `()` ក្នុងពេល render ឱ្យសោះ)។",
+          "ដាក់ឈ្មោះ function props ដោយប្រើបុព្វបទ `on` (ដូចជា `onDelete`, `onSelect`, `onSubmit`)។"
         ],
         "codeSnippet": "export function DeleteButton({ onDelete }: { onDelete: (id: string) => void }) {\n  return (\n    <button \n      onClick={() => onDelete(\"item-42\")}\n      className=\"px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm\"\n    >\n      Delete Record\n    </button>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Passing Callback Function Props"
+        "codeTitle": "Passing Callback Function Props",
+        "proTip": "ប្រើ convention ដាក់ឈ្មោះ `onEvent` សម្រាប់ prop (ឧ. `onDelete`) និង `handleEvent` សម្រាប់ handler function នៅក្នុង parent (ឧ. `handleDelete`)។"
       },
       {
         "id": "m04-09",
         "number": "09",
         "title": "Destructuring Props",
-        "summary": "Clean prop extraction in function signature.",
-        "explanation": "Destructuring props makes components concise and explicitly documents which properties are consumed.",
+        "summary": "បច្ចេកទេសទាញយក props យ៉ាងខ្លីស្អាតនៅត្រង់ function signature។",
+        "explanation": "ការធ្វើ Destructuring props ជួយឱ្យកូដខ្លី ស្អាត មិនបាច់សរសេរពាក្យ `props.` ដដែលៗ និងបង្ហាញយ៉ាងច្បាស់នូវរាល់ properties ណាខ្លះដែល component កំពុងប្រើប្រាស់។",
         "keyPoints": [
-          "Destructure directly in function parameters: `({ title, count }: Props)`.",
-          "You can rename properties or assign default fallback values."
+          "ធ្វើ Destructure ដោយផ្ទាល់នៅត្រង់ parameters នៃ function៖ `({ label, value, trend }: MetricProps)`។",
+          "អាចកំណត់ default fallback values ឬ rename properties បានយ៉ាងងាយស្រួល។",
+          "អាចប្រើ Rest parameter `...rest` ដើម្បីចាប់យក props ដែលនៅសល់ទាំងអស់។"
         ],
         "codeSnippet": "export function MetricCard({ \n  label, \n  value, \n  trend = \"up\" \n}: { \n  label: string; \n  value: number | string; \n  trend?: \"up\" | \"down\" \n}) {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <p className=\"text-sm text-slate-400\">{label}</p>\n      <div className=\"flex items-baseline gap-2 mt-1\">\n        <span className=\"text-2xl font-bold text-white\">{value}</span>\n        <span className={trend === \"up\" ? \"text-emerald-400 text-xs\" : \"text-rose-400 text-xs\"}>\n          {trend === \"up\" ? \"▲ +12%\" : \"▼ -4%\"}\n        </span>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Destructuring in Function Signature"
+        "codeTitle": "Destructuring in Function Signature",
+        "proTip": "ការ destructure ជួយឱ្យ developer ផ្សេងទៀតអាចមើលដឹងភ្លាមៗថា component នេះត្រូវការព័ត៌មានអ្វីខ្លះ ដោយគ្រាន់តែក្រឡេកមើល function signature។"
       },
       {
         "id": "m04-10",
         "number": "10",
         "title": "Default Props",
-        "summary": "Setting fallback values for optional props using ES6 default parameters.",
-        "explanation": "Use standard JavaScript default parameter values in the destructured signature instead of obsolete `defaultProps` static properties.",
+        "summary": "ការកំណត់ fallback values សម្រាប់ optional props ដោយប្រើ ES6 default parameters។",
+        "explanation": "ក្នុង modern React សូមប្រើប្រាស់ JavaScript ES6 default parameter values ដោយផ្ទាល់នៅត្រង់ destructured props signature ជំនួសឱ្យការប្រើ static property `defaultProps` ដែលហួសសម័យ (deprecated/legacy)។",
         "keyPoints": [
-          "ES6 defaults work cleanly with TypeScript optional properties (`prop?: string`)."
+          "ES6 defaults ដំណើរការយ៉ាងរលូនជាមួយ TypeScript optional properties (`prop?: string`)។",
+          "Fallback value នឹងត្រូវយកមកប្រើ លុះត្រាតែ prop នោះមានតម្លៃ `undefined`។",
+          "កាត់បន្ថយ runtime bugs នៅពេលដែល parent មិនបានបញ្ជូន prop ណាមួយមក។"
         ],
         "codeSnippet": "interface ButtonProps {\n  label: string;\n  variant?: \"primary\" | \"secondary\";\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\n// Fallbacks assigned in destructuring:\nexport function Button({ \n  label, \n  variant = \"primary\", \n  size = \"md\" \n}: ButtonProps) {\n  return <button className={`btn-${variant} btn-${size}`}>{label}</button>;\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "ES6 Default Props Pattern"
+        "codeTitle": "ES6 Default Props Pattern",
+        "proTip": "កុំប្រើ `Component.defaultProps` ទៀតឡើយនៅក្នុង modern React ព្រោះវាត្រូវបាន deprecate ក្នុង React 19 ហើយត្រូវជំនួសដោយ ES6 default values ទាំងស្រុង។"
       },
       {
         "id": "m04-11",
         "number": "11",
         "title": "Children Props",
-        "summary": "Composing component tags around nested JSX elements using children.",
-        "explanation": "The `children` prop represents whatever content is placed between the opening and closing tags of a component: `<Modal><h2>Title</h2><p>Body</p></Modal>`.",
+        "summary": "ការផ្គុំ component tags ព័ទ្ធជុំវិញ nested JSX elements ដោយប្រើប្រាស់ `children` prop។",
+        "explanation": "Prop ពិសេសឈ្មោះថា `children` តំណាងឱ្យរាល់ content ទាំងឡាយណាដែលត្រូវបានដាក់នៅចន្លោះ opening tag និង closing tag នៃ component មួយ ដូចជា៖ `<Card><h2>Title</h2><p>Body</p></Card>`។",
         "keyPoints": [
-          "Type with `React.ReactNode` in TypeScript.",
-          "Foundation of wrapper layouts, cards, modals, and providers."
+          "កំណត់ Type ដោយប្រើ `React.ReactNode` នៅក្នុង TypeScript។",
+          "ជាគ្រឹះស្នូលសម្រាប់បង្កើត Wrapper components, Layouts, Cards, Modals និង Context Providers។",
+          "អនុញ្ញាតឱ្យ component អាចទទួលអ្វីក៏បាន ចាប់ពី text ធម្មតា រហូតដល់ JSX elements ស្មុគស្មាញ។"
         ],
         "codeSnippet": "interface CardProps {\n  title: string;\n  children: React.ReactNode;\n}\n\nexport function Card({ title, children }: CardProps) {\n  return (\n    <div className=\"bg-slate-900 border border-slate-800 rounded-xl p-5\">\n      <h3 className=\"text-lg font-semibold text-white mb-3\">{title}</h3>\n      <div className=\"text-slate-300\">{children}</div>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Children Prop Composition"
+        "codeTitle": "Children Prop Composition",
+        "proTip": "ប្រើ `children` prop នៅពេលអ្នកចង់បង្កើត generic wrapper container ដែលមិនចាំបាច់ដឹងមុនថាតើ content ខាងក្នុងជារូបអ្វីនោះទេ។"
       },
       {
         "id": "m04-12",
         "number": "12",
         "title": "Props vs State",
-        "summary": "External immutable data vs internal mutable reactive data.",
-        "explanation": "Props are passed from the parent (like function parameters) and cannot be changed by the child. State is internal and managed by the component itself (like local function variables) via `useState`.",
+        "summary": "ការប្រៀបធៀបទិន្នន័យខាងក្រៅដែលមិនអាចកែប្រែបាន (Props) និងទិន្នន័យខាងក្នុងដែលមានប្រតិកម្មរហ័ស (State)។",
+        "explanation": "Props ត្រូវបានបញ្ជូនមកពី parent (ប្រៀបដូចជា function parameters) ហើយមិនអាចកែប្រែដោយ child បានឡើយ។ រីឯ State គឺជាទិន្នន័យខាងក្នុងដែលគ្រប់គ្រងដោយ component ផ្ទាល់ (ប្រៀបដូចជា local variables) តាមរយៈ hook `useState`។",
         "keyPoints": [
-          "Props: Controlled by parent, immutable to child.",
-          "State: Controlled by component, mutated via setter functions."
+          "Props: គ្រប់គ្រងដោយ parent, child គ្រាន់តែអាន (Read-only/Immutable)។",
+          "State: គ្រប់គ្រងដោយ component ផ្ទាល់, កែប្រែតាមរយៈ setter functions (`setCount`)។",
+          "ទាំង Props និង State នៅពេលមានការផ្លាស់ប្តូរ សុទ្ធតែធ្វើឱ្យ component ធ្វើការ re-render ដើម្បី update UI ដូចគ្នា។"
         ],
-        "codeSnippet": "/*\n| Characteristic | Props                          | State                         |\n|----------------|--------------------------------|-------------------------------|\n| Origin         | Passed from parent             | Initialized inside component  |\n| Mutability     | Read-only (immutable)          | Mutated via setState function |\n| Ownership      | Parent controls value          | Component owns value          |\n| Purpose        | Configuration & callbacks      | Interactivity & dynamic data  |\n*/",
+        "codeSnippet": "/*\n| លក្ខណៈពិសេស       | Props                          | State                         |\n|-------------------|--------------------------------|-------------------------------|\n| ប្រភពដើម          | បញ្ជូនមកពី parent              | កំណត់នៅខាងក្នុង component     |\n| ការកែប្រែតម្លៃ     | Read-only (មិនអាចកែបាន)        | កែប្រែតាមរយៈ setState function|\n| ភាពជាម្ចាស់ (Owner)| Parent ជាអ្នកគ្រប់គ្រងតម្លៃ      | Component ផ្ទាល់ជាម្ចាស់តម្លៃ   |\n| គោលបំណង          | Configuration & callbacks      | Interactivity & dynamic data  |\n*/",
         "codeLanguage": "tsx",
-        "codeTitle": "Props vs State Comparison Matrix"
+        "codeTitle": "Props vs State Comparison Matrix",
+        "proTip": "បើទិន្នន័យត្រូវចែករំលែក ឬគ្រប់គ្រងដោយ parent ចូរប្រើ Props។ បើទិន្នន័យផ្លាស់ប្តូរតាមរយៈ user interaction ផ្ទៃក្នុង component នោះ ចូរប្រើ State។"
       },
       {
         "id": "m04-13",
         "number": "13",
         "title": "One-way Data Flow",
-        "summary": "Unidirectional data binding prevents circular dependency bugs.",
-        "explanation": "In React, data flows strictly downwards through props. If a child needs to modify data, it calls a callback function passed by the parent, triggering parent state updates which flow back down.",
+        "summary": "លំហូរទិន្នន័យតែមួយទិស (Unidirectional) ការពារបញ្ហា circular dependency bugs ក្នុងកម្មវិធី។",
+        "explanation": "នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) តាមរយៈ props ជានិច្ច។ ប្រសិនបើ child component ត្រូវការកែប្រែទិន្នន័យ វានឹងហៅ callback function ដែល parent បានបញ្ជូនមក ដើម្បីស្នើសុំឱ្យ parent ធ្វើបច្ចុប្បន្នភាព state របស់ខ្លួន ហើយទិន្នន័យថ្មីនោះនឹងហូរចុះក្រោមមកវិញ។",
         "keyPoints": [
-          "Makes state changes predictable and easy to trace in DevTools.",
-          "Prevents synchronization conflicts found in two-way data-binding frameworks."
+          "ធ្វើឱ្យការផ្លាស់ប្តូរ state មានភាពច្បាស់លាស់ និងងាយស្រួលតាមដាន (traceable) តាមរយៈ React DevTools។",
+          "ការពារបញ្ហា synchronization conflicts និង circular dependencies ដែលតែងកើតឡើងលើ two-way data-binding frameworks។",
+          "Single Source of Truth៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងពិតប្រាកដតែមួយគត់ក្នុង component tree។"
         ],
         "codeSnippet": "// Parent maintains single source of truth\nexport function CounterApp() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div className=\"space-y-4\">\n      {/* Data flows down as props */}\n      <CountDisplay value={count} />\n      {/* Callback flows down to trigger state change */}\n      <CountControls onIncrement={() => setCount(c => c + 1)} onReset={() => setCount(0)} />\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
-        "codeTitle": "Unidirectional Data Flow Example"
+        "codeTitle": "Unidirectional Data Flow Example",
+        "proTip": "យន្តការ 'Data down, actions up' គឺជាបេះដូងនៃ React Architecture ដែលធានាថាកម្មវិធីរបស់អ្នកមានស្ថិរភាព និងងាយស្រួល scale។"
       }
     ]
   },

@@ -5,17 +5,20 @@ title: "Props with Objects"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Passing complex objects and configuring nested structures."
+summary: "ការបញ្ជូន objects ស្មុគស្មាញ និងការកំណត់ nested configuration structures។"
+proTip: "បើ object មានទំហំធំ ឬប្រើប្រាស់ឡើងវិញច្រើនកន្លែង គួរប្រកាសជា variable នៅខាងក្រៅ ឬគ្រប់គ្រងដោយ state។"
 codeTitle: "Passing Object Props"
 ---
 
 # Props with Objects
 
-Pass objects inside curly braces: `user={{ name: 'Alice', age: 28 }}`. Note the double curly braces.
+បញ្ជូន objects នៅខាងក្នុង curly braces៖ `user={{ name: 'Alice', age: 28 }}`។ សូមកត់សម្គាល់ការប្រើប្រាស់ double curly braces `{{ ... }}`។
 
 ### Key Concepts & Rules:
 
-- Outer curly braces denote JSX expression; inner braces denote object literal.
+- រង្វង់ក្រចកខាងក្រៅ `{}` បញ្ជាក់ថាជា JSX expression ចំណែកឯរង្វង់ក្រចកខាងក្នុង `{}` បញ្ជាក់ថាជា JavaScript object literal។
+- អាចបញ្ជូនតាមរយៈ variable ផ្ទាល់ ឬសរសេរជា inline object។
+- ជៀសវាងការបង្កើត inline objects ថ្មីរាល់ពេល render បើ component កូនត្រូវបាន memoize (អាចប៉ះពាល់ដល់ performance)។
 
 ### Code Example: Passing Object Props
 

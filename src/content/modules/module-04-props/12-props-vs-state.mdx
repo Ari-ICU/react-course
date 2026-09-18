@@ -5,28 +5,30 @@ title: "Props vs State"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "External immutable data vs internal mutable reactive data."
+summary: "ការប្រៀបធៀបទិន្នន័យខាងក្រៅដែលមិនអាចកែប្រែបាន (Props) និងទិន្នន័យខាងក្នុងដែលមានប្រតិកម្មរហ័ស (State)។"
+proTip: "បើទិន្នន័យត្រូវចែករំលែក ឬគ្រប់គ្រងដោយ parent ចូរប្រើ Props។ បើទិន្នន័យផ្លាស់ប្តូរតាមរយៈ user interaction ផ្ទៃក្នុង component នោះ ចូរប្រើ State។"
 codeTitle: "Props vs State Comparison Matrix"
 ---
 
 # Props vs State
 
-Props are passed from the parent (like function parameters) and cannot be changed by the child. State is internal and managed by the component itself (like local function variables) via `useState`.
+Props ត្រូវបានបញ្ជូនមកពី parent (ប្រៀបដូចជា function parameters) ហើយមិនអាចកែប្រែដោយ child បានឡើយ។ រីឯ State គឺជាទិន្នន័យខាងក្នុងដែលគ្រប់គ្រងដោយ component ផ្ទាល់ (ប្រៀបដូចជា local variables) តាមរយៈ hook `useState`។
 
 ### Key Concepts & Rules:
 
-- Props: Controlled by parent, immutable to child.
-- State: Controlled by component, mutated via setter functions.
+- Props: គ្រប់គ្រងដោយ parent, child គ្រាន់តែអាន (Read-only/Immutable)។
+- State: គ្រប់គ្រងដោយ component ផ្ទាល់, កែប្រែតាមរយៈ setter functions (`setCount`)។
+- ទាំង Props និង State នៅពេលមានការផ្លាស់ប្តូរ សុទ្ធតែធ្វើឱ្យ component ធ្វើការ re-render ដើម្បី update UI ដូចគ្នា។
 
 ### Code Example: Props vs State Comparison Matrix
 
 ```tsx
 /*
-| Characteristic | Props                          | State                         |
-|----------------|--------------------------------|-------------------------------|
-| Origin         | Passed from parent             | Initialized inside component  |
-| Mutability     | Read-only (immutable)          | Mutated via setState function |
-| Ownership      | Parent controls value          | Component owns value          |
-| Purpose        | Configuration & callbacks      | Interactivity & dynamic data  |
+| លក្ខណៈពិសេស       | Props                          | State                         |
+|-------------------|--------------------------------|-------------------------------|
+| ប្រភពដើម          | បញ្ជូនមកពី parent              | កំណត់នៅខាងក្នុង component     |
+| ការកែប្រែតម្លៃ     | Read-only (មិនអាចកែបាន)        | កែប្រែតាមរយៈ setState function|
+| ភាពជាម្ចាស់ (Owner)| Parent ជាអ្នកគ្រប់គ្រងតម្លៃ      | Component ផ្ទាល់ជាម្ចាស់តម្លៃ   |
+| គោលបំណង          | Configuration & callbacks      | Interactivity & dynamic data  |
 */
 ```

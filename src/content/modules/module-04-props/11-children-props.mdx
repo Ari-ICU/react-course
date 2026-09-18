@@ -5,18 +5,20 @@ title: "Children Props"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Composing component tags around nested JSX elements using children."
+summary: "ការផ្គុំ component tags ព័ទ្ធជុំវិញ nested JSX elements ដោយប្រើប្រាស់ `children` prop។"
+proTip: "ប្រើ `children` prop នៅពេលអ្នកចង់បង្កើត generic wrapper container ដែលមិនចាំបាច់ដឹងមុនថាតើ content ខាងក្នុងជារូបអ្វីនោះទេ។"
 codeTitle: "Children Prop Composition"
 ---
 
 # Children Props
 
-The `children` prop represents whatever content is placed between the opening and closing tags of a component: `<Modal><h2>Title</h2><p>Body</p></Modal>`.
+Prop ពិសេសឈ្មោះថា `children` តំណាងឱ្យរាល់ content ទាំងឡាយណាដែលត្រូវបានដាក់នៅចន្លោះ opening tag និង closing tag នៃ component មួយ ដូចជា៖ `<Card><h2>Title</h2><p>Body</p></Card>`។
 
 ### Key Concepts & Rules:
 
-- Type with `React.ReactNode` in TypeScript.
-- Foundation of wrapper layouts, cards, modals, and providers.
+- កំណត់ Type ដោយប្រើ `React.ReactNode` នៅក្នុង TypeScript។
+- ជាគ្រឹះស្នូលសម្រាប់បង្កើត Wrapper components, Layouts, Cards, Modals និង Context Providers។
+- អនុញ្ញាតឱ្យ component អាចទទួលអ្វីក៏បាន ចាប់ពី text ធម្មតា រហូតដល់ JSX elements ស្មុគស្មាញ។
 
 ### Code Example: Children Prop Composition
 

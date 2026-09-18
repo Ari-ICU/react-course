@@ -5,17 +5,20 @@ title: "Default Props"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Setting fallback values for optional props using ES6 default parameters."
+summary: "ការកំណត់ fallback values សម្រាប់ optional props ដោយប្រើ ES6 default parameters។"
+proTip: "កុំប្រើ `Component.defaultProps` ទៀតឡើយនៅក្នុង modern React ព្រោះវាត្រូវបាន deprecate ក្នុង React 19 ហើយត្រូវជំនួសដោយ ES6 default values ទាំងស្រុង។"
 codeTitle: "ES6 Default Props Pattern"
 ---
 
 # Default Props
 
-Use standard JavaScript default parameter values in the destructured signature instead of obsolete `defaultProps` static properties.
+ក្នុង modern React សូមប្រើប្រាស់ JavaScript ES6 default parameter values ដោយផ្ទាល់នៅត្រង់ destructured props signature ជំនួសឱ្យការប្រើ static property `defaultProps` ដែលហួសសម័យ (deprecated/legacy)។
 
 ### Key Concepts & Rules:
 
-- ES6 defaults work cleanly with TypeScript optional properties (`prop?: string`).
+- ES6 defaults ដំណើរការយ៉ាងរលូនជាមួយ TypeScript optional properties (`prop?: string`)។
+- Fallback value នឹងត្រូវយកមកប្រើ លុះត្រាតែ prop នោះមានតម្លៃ `undefined`។
+- កាត់បន្ថយ runtime bugs នៅពេលដែល parent មិនបានបញ្ជូន prop ណាមួយមក។
 
 ### Code Example: ES6 Default Props Pattern
 

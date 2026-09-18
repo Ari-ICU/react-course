@@ -5,17 +5,19 @@ title: "Receiving Props"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Accessing the props object in the component function parameter."
+summary: "ការចាប់យក props object តាមរយៈ parameters នៃ component function។"
+proTip: "ការប្រើ TypeScript សម្រាប់ typing props ជួយឱ្យ editor បង្ហាញ IntelliSense និងការពារបញ្ហា runtime errors បានយ៉ាងមានប្រសិទ្ធភាព។"
 codeTitle: "Receiving the Props Object"
 ---
 
 # Receiving Props
 
-The first argument of a functional component is the `props` object. You can access properties via `props.title` or destructure them directly.
+Argument ទីមួយនៃ functional component គឺជា `props` object។ អ្នកអាចទាញយក properties តាមរយៈ `props.title` ឬប្រើបច្ចេកទេស destructuring ដោយផ្ទាល់នៅត្រង់ parameters។
 
 ### Key Concepts & Rules:
 
-- Props is a plain JavaScript object containing all passed attributes.
+- Props គឺជា JavaScript object ធម្មតាដែលផ្ទុករាល់ attributes ទាំងអស់ដែលបានបញ្ជូនមកពី parent។
+- ត្រូវកំណត់ Type ឱ្យបានច្បាស់លាស់ជាមួយ TypeScript ដើម្បីជៀសវាងកំហុសពេល access properties ដែលគ្មាន។
 
 ### Code Example: Receiving the Props Object
 

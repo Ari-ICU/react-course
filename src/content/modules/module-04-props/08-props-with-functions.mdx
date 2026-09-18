@@ -5,18 +5,20 @@ title: "Props with Functions"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Passing callback functions to handle user actions."
+summary: "ការបញ្ជូន callback functions ដើម្បីឆ្លើយតបទៅនឹង user events និង actions។"
+proTip: "ប្រើ convention ដាក់ឈ្មោះ `onEvent` សម្រាប់ prop (ឧ. `onDelete`) និង `handleEvent` សម្រាប់ handler function នៅក្នុង parent (ឧ. `handleDelete`)។"
 codeTitle: "Passing Callback Function Props"
 ---
 
 # Props with Functions
 
-Passing functions down as props allows children to notify parents when events occur (e.g., button clicked, input changed).
+ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចប្រាប់ដំណឹង (notify) ទៅកាន់ parent component វិញបាន នៅពេលដែលមាន event កើតឡើង (ដូចជាពេលចុច button ឬវាយបញ្ចូលអក្សរក្នុង input)។
 
 ### Key Concepts & Rules:
 
-- Enables child-to-parent communication.
-- Pass function references; do not invoke them during render.
+- ដើរតួជាយន្តការទំនាក់ទំនងពី Child ទៅ Parent (Child-to-parent communication)។
+- បញ្ជូន function reference (កុំ invoke function ដោយប្រើ `()` ក្នុងពេល render ឱ្យសោះ)។
+- ដាក់ឈ្មោះ function props ដោយប្រើបុព្វបទ `on` (ដូចជា `onDelete`, `onSelect`, `onSubmit`)។
 
 ### Code Example: Passing Callback Function Props
 

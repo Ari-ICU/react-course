@@ -5,18 +5,20 @@ title: "One-way Data Flow"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Unidirectional data binding prevents circular dependency bugs."
+summary: "លំហូរទិន្នន័យតែមួយទិស (Unidirectional) ការពារបញ្ហា circular dependency bugs ក្នុងកម្មវិធី។"
+proTip: "យន្តការ 'Data down, actions up' គឺជាបេះដូងនៃ React Architecture ដែលធានាថាកម្មវិធីរបស់អ្នកមានស្ថិរភាព និងងាយស្រួល scale។"
 codeTitle: "Unidirectional Data Flow Example"
 ---
 
 # One-way Data Flow
 
-In React, data flows strictly downwards through props. If a child needs to modify data, it calls a callback function passed by the parent, triggering parent state updates which flow back down.
+នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) តាមរយៈ props ជានិច្ច។ ប្រសិនបើ child component ត្រូវការកែប្រែទិន្នន័យ វានឹងហៅ callback function ដែល parent បានបញ្ជូនមក ដើម្បីស្នើសុំឱ្យ parent ធ្វើបច្ចុប្បន្នភាព state របស់ខ្លួន ហើយទិន្នន័យថ្មីនោះនឹងហូរចុះក្រោមមកវិញ។
 
 ### Key Concepts & Rules:
 
-- Makes state changes predictable and easy to trace in DevTools.
-- Prevents synchronization conflicts found in two-way data-binding frameworks.
+- ធ្វើឱ្យការផ្លាស់ប្តូរ state មានភាពច្បាស់លាស់ និងងាយស្រួលតាមដាន (traceable) តាមរយៈ React DevTools។
+- ការពារបញ្ហា synchronization conflicts និង circular dependencies ដែលតែងកើតឡើងលើ two-way data-binding frameworks។
+- Single Source of Truth៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងពិតប្រាកដតែមួយគត់ក្នុង component tree។
 
 ### Code Example: Unidirectional Data Flow Example
 

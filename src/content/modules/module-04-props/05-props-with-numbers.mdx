@@ -5,17 +5,19 @@ title: "Props with Numbers"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "Passing numeric values using curly brace expressions."
+summary: "ការបញ្ជូនតម្លៃជាលេខ (Numeric values) ដោយប្រើប្រាស់ curly brace expressions។"
+pitfall: "ការសរសេរ `<Widget count=\"5\" />` នឹងបញ្ជូនជា string \"5\" មិនមែនជាលេខ 5 ឡើយ ដែលអាចបណ្តាលឱ្យមានបញ្ហាពេលយកទៅបូកលេខ (ឧ. \"5\" + 1 = \"51\")!"
 codeTitle: "Passing Numeric Props"
 ---
 
 # Props with Numbers
 
-Numbers MUST be passed inside curly braces (e.g. `rating={4.9}`), otherwise they are parsed as literal strings.
+តម្លៃជាលេខ (Numbers) ត្រូវតែបញ្ជូននៅខាងក្នុង curly braces ជានិច្ច (ឧទាហរណ៍ `rating={4.9}`)។ ប្រសិនបើសរសេរក្នុង double quotes នោះ JSX នឹងចាត់ទុកវាជា string literal ទៅវិញ។
 
 ### Key Concepts & Rules:
 
-- `<Widget count=5 />` is invalid syntax; write `<Widget count={5} />`.
+- `<Widget count=5 />` គឺជា invalid syntax ក្នុង JSX — ត្រូវសរសេរ `<Widget count={5} />`។
+- ជួយការពារបញ្ហា type coercion ក្នុង JavaScript (ដូចជា `5 + "5" = "55"`)។
 
 ### Code Example: Passing Numeric Props
 
