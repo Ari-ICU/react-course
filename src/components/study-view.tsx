@@ -5,6 +5,7 @@ import { BookOpen, CheckCircle2, ChevronRight, Search } from "lucide-react";
 import { modulesData, ModuleItem, TopicItem } from "@/data/modules-data";
 import { CodeBlock } from "@/components/code-block";
 import { FormattedText } from "@/components/formatted-text";
+import { getAssetPath } from "@/lib/utils";
 
 interface StudyViewProps {
   currentModuleId: string;
@@ -161,7 +162,7 @@ export function StudyView({
                   <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs p-6 flex flex-col items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={topic.image}
+                      src={getAssetPath(topic.image)}
                       alt={topic.title}
                       className="max-h-[320px] w-auto object-contain rounded-xl"
                     />

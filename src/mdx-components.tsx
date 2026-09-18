@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import React from "react";
 import { CodeBlock } from "@/components/code-block";
+import { getAssetPath } from "@/lib/utils";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -68,7 +69,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <div className="my-6 rounded-2xl overflow-hidden border border-slate-200 bg-white p-4 shadow-xs flex flex-col items-center justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src}
+          src={getAssetPath(src)}
           alt={alt || "Illustration"}
           className="max-h-[380px] w-auto object-contain rounded-xl"
           {...props}

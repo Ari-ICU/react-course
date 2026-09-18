@@ -4,6 +4,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CodeBlock } from "./code-block";
+import { getAssetPath } from "@/lib/utils";
 
 interface MDXContentProps {
   content: string;
@@ -82,6 +83,22 @@ export function MDXContent({ content, className, inline = false }: MDXContentPro
             >
               {children}
             </a>
+          ),
+          img: ({ src, alt, ...props }) => (
+            <div className="my-4 rounded-2xl overflow-hidden border border-slate-200 bg-white p-4 shadow-xs flex flex-col items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={getAssetPath(src)}
+                alt={alt || "Illustration"}
+                className="max-h-[380px] w-auto object-contain rounded-xl"
+                {...props}
+              />
+              {alt && (
+                <p className="mt-2 text-xs sm:text-sm text-slate-500 italic text-center">
+                  {alt}
+                </p>
+              )}
+            </div>
           ),
         }}
       >

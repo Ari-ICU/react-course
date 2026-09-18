@@ -16,6 +16,7 @@ import confetti from "canvas-confetti";
 import { ModuleItem, TopicItem } from "@/data/modules-data";
 import { CodeBlock } from "@/components/code-block";
 import { FormattedText } from "@/components/formatted-text";
+import { getAssetPath } from "@/lib/utils";
 import { StateDemo } from "@/components/interactive-demos/state-demo";
 import { FormValidationDemo } from "@/components/interactive-demos/form-validation-demo";
 import { ZustandDemo } from "@/components/interactive-demos/zustand-demo";
@@ -200,7 +201,7 @@ export function SlideView({
               <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm p-6 sm:p-8 flex flex-col items-center justify-center min-h-[360px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={topic.image}
+                  src={getAssetPath(topic.image)}
                   alt={topic.title}
                   className="max-h-[340px] w-auto object-contain rounded-xl drop-shadow-sm transition-transform hover:scale-[1.02]"
                 />
