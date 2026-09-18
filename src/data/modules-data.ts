@@ -97,16 +97,20 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-04",
         "number": "04",
         "title": "React vs Traditional JavaScript",
-        "summary": "ការប្រៀបធៀបរវាង direct DOM manipulation និង state-driven reconciliation model របស់ React។",
-        "explanation": "ការសរសេរ Vanilla JavaScript បែបបុរាណតម្រូវឱ្យ developer តាមដាន និងគ្រប់គ្រង DOM elements ដោយផ្ទាល់ (query selectors, update attributes, sync state)។ រីឯ React ចាត់ទុក UI គឺជាលទ្ធផលដែលឆ្លុះបញ្ចាំងចេញពី state ដោយផ្ទាល់ (`UI = f(State)`)។",
+        "summary": "ការប្រៀបធៀបស៊ីជម្រៅរវាងការគ្រប់គ្រង DOM បែប Imperative ក្នុង Vanilla JavaScript និង Declarative Paradigm ក្នុង ReactJS។",
+        "explanation": "ការសរសេរ Traditional JavaScript (Vanilla JS) តម្រូវឱ្យ developer តាមដាន និងគ្រប់គ្រង DOM elements ដោយផ្ទាល់ (Imperative approach) តាមរយៈ query selectors, event listeners, និង manual DOM updates។ ចំណែកឯ ReactJS ប្រើប្រាស់វិធីសាស្ត្រ Declarative Paradigm ដែលចាត់ទុក UI គឺជាលទ្ធផលឆ្លុះបញ្ចាំងចេញពី State (`UI = f(State)`)។",
         "keyPoints": [
-          "Vanilla JS តម្រូវឱ្យ developer ធ្វើការ sync រវាង UI និង memory state ដោយដៃ (manual bookkeeping)។",
-          "React ធ្វើបច្ចុប្បន្នភាព UI ដោយស្វ័យប្រវត្តិតាមរយៈ reactive state bindings។",
-          "លុបបំបាត់បញ្ហា spaghetti code ដែលកើតឡើងដោយសារកូដ DOM mutations រាយប៉ាយពាសពេញ file។"
+          "Imperative vs Declarative: Vanilla JS បញ្ជា DOM មួយជំហានម្តងៗ ('របៀបធ្វើ') រីឯ React កំណត់ទម្រង់ UI ចុងក្រោយដែលចង់បាន ('អ្វីដែលចង់បាន')។",
+          "Manual DOM Manipulation: Traditional JS ធ្វើបច្ចុប្បន្នភាព DOM ដោយដៃ (Manual Bookkeeping) ដែលងាយបង្កបញ្ហា bug និង spaghetti code។",
+          "Virtual DOM & Automatic Reconciliation: React ប្រើ Virtual DOM គណនាការផ្លាស់ប្តូរក្នុង memory រួច update DOM ពិតប្រាកដយ៉ាងមានប្រសិទ្ធភាពខ្ពស់។",
+          "Component-Based Architecture: React បំបែក UI ទៅជា components ដាច់ដោយឡែកពីគ្នា ខណៈដែល traditional JS ច្រើនសរសេរកូដរាយប៉ាយលាយឡំ HTML, CSS និង JS។"
         ],
-        "codeSnippet": "// Comparison: Updating a dynamic badge\n// Vanilla JS\nfunction updateBadge(unreadCount) {\n  const el = document.getElementById('badge');\n  if (unreadCount > 0) {\n    el.innerText = unreadCount;\n    el.style.display = 'inline-block';\n  } else {\n    el.style.display = 'none';\n  }\n}\n\n// React: purely declarative projection\nfunction UnreadBadge({ count }) {\n  if (count <= 0) return null;\n  return <span className=\"bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full\">{count}</span>;\n}",
+        "codeSnippet": "",
         "codeLanguage": "jsx",
-        "codeTitle": "Vanilla JS vs Declarative React"
+        "codeTitle": "ReactJS vs JavaScript Overview",
+        "proTip": "ចងចាំរូបមន្ត `UI = f(State)`៖ ក្នុង React អ្នកគ្រាន់តែផ្លាស់ប្តូរ state ហើយ React នឹងគណនាដើម្បី update DOM ឱ្យត្រូវគ្នាដោយស្វ័យប្រវត្តិ។",
+        "pitfall": "ជៀសវាងការសរសេរកូដលាយគ្នាដោយប្រើ `document.getElementById()` ឬ DOM query ផ្ទាល់នៅក្នុង React components។",
+        "image": "/images/react-vs-javascript.png"
       },
       {
         "id": "m01-05",
