@@ -5,32 +5,24 @@ title: "React Project Structure"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "ការរៀបចំ folder structure កម្រិត enterprise សម្រាប់ scalable React និង Next.js applications។"
-codeTitle: "Recommended React Folder Structure"
+summary: "ស្វែងយល់អំពីរចនាសម្ព័ន្ធ folder និង file ស្តង់ដារនៅក្នុង React project រួមមាន node_modules, public, src និង root configuration files។"
+proTip: "គួររៀបចំ folder ក្នុង `src/` ឱ្យមានរបៀបរៀបរយតាមបែប feature-based ឬ modular structure ដើម្បីងាយស្រួលថែទាំ និងពង្រីក project ពេលធំឡើង។"
+pitfall: "កុំដាក់ source code ឬ dynamic components នៅក្នុង folder `public/` ឱ្យសោះ ព្រោះ `public/` សម្រាប់តែ static assets ដែលមិនឆ្លងកាត់ build bundler តែប៉ុណ្ណោះ។"
+codeTitle: "Standard React Project File Tree"
+image: "/images/react-project-structure.png"
 ---
 
 # React Project Structure
 
-ការជ្រើសរើសទម្រង់ domain-driven ឬ feature-based folder structure ជួយការពារកុំឱ្យ project ក្លាយជា monolith រញ៉េរញ៉ៃ។ គួររៀបចំ folder ទៅតាម `components/`, `features/`, `hooks/`, `services/`, និង `types/`។
+ការយល់ដឹងពីរចនាសម្ព័ន្ធ folder និង file នៅក្នុង React គឺជាមូលដ្ឋានគ្រឹះដ៏សំខាន់ក្នុងការចាប់ផ្តើមអភិវឌ្ឍន៍ web application។ កម្មវិធី React ស្តង់ដារត្រូវបានបែងចែកជាផ្នែកចម្បងៗរួមមាន `node_modules/`, `public/`, `src/`, និង configuration files នៅ root directory៖
 
 ### Key Concepts & Rules:
 
-- រក្សាទុក component styles, tests, និង sub-components ជាមួយគ្នានៅក្នុង feature folder ជាក់លាក់មួយ (colocation)។
-- រក្សាទុក reusable UI primitives ទូទៅនៅក្នុង `@/components/ui`។
-- រក្សាទុក business domain logic នៅក្នុង `@/features/<feature-name>`។
+- `node_modules/`: ផ្ទុក libraries និង dependencies ទាំងអស់ដែលបានដំឡើងតាមរយៈ npm ឬ yarn។
+- `public/`: ផ្ទុក static assets ដូចជា `index.html` (root HTML file), `favicon.ico`, `manifest.json`, និង `robots.txt` ដែលមិនត្រូវការ build bundling។
+- `src/`: ផ្ទុក source code ចម្បងរបស់កម្មវិធី React រួមមាន `App.js` (Root Component), `index.js` (Entry point ដែល render App ទៅក្នុង DOM), CSS styles, និង test files។
+- Configuration Files: `.gitignore` (កំណត់ file ដែលមិនត្រូវ push ទៅ git), `package.json` (បញ្ជី dependencies និង scripts), និង `README.md`។
 
-### Code Example: Recommended React Folder Structure
+### Standard React Project File Tree
 
-```jsx
-src/
-├── app/              # App Router routes and page layouts
-├── components/       # Cross-cutting reusable UI primitives
-│   └── ui/           # Button, Card, Dialog, Badge (Shadcn style)
-├── features/         # Feature slices (auth, courses, cart)
-│   ├── components/
-│   ├── hooks/
-│   └── services/
-├── hooks/            # Global custom hooks (useDebounce, useTheme)
-├── lib/              # Utilities (cn, formatters, api client)
-└── utils/            # Helper functions and constants
-```
+![Standard React Project File Tree](/images/react-project-structure.png)
