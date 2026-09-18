@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx scripts/sync-modules.ts --compile",
     "build": "next build",
     "build:content": "tsx scripts/sync-modules.ts --compile",
     "export:content": "tsx scripts/sync-modules.ts",
