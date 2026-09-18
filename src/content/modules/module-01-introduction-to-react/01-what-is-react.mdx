@@ -6,9 +6,10 @@ moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
 summary: "JavaScript library បែប declarative និង component-based សម្រាប់បង្កើត interactive user interfaces បង្កើតឡើងដោយ Meta។"
-proTip: "គិតតាមបែប state transitions៖ កំណត់ទិន្នន័យរបស់អ្នកថាតើវាផ្លាស់ប្តូរយ៉ាងដូចម្តេច ហើយទុកឱ្យ React គណនា និងអនុវត្តការផ្លាស់ប្តូរនៅលើ DOM ដោយស្វ័យប្រវត្តិ។"
+proTip: "គិតតាមបែប component-driven mental model៖ UI កើតចេញពីបំណែកឯករាជ្យផ្គុំគ្នា ដែលធ្វើឱ្យកូដងាយស្រួល scale និងថែទាំ។"
 pitfall: "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។"
-codeTitle: "Imperative vs Declarative Example"
+codeTitle: "React JS Architecture & Logo"
+image: "/images/react-js.png"
 ---
 
 # What is React?
@@ -22,33 +23,6 @@ React គឺជា open-source JavaScript library មួយដែលផ្តោ
 - Learn Once, Write Anywhere: គោលគំនិត mental models របស់ React អាចយកទៅអនុវត្តលើ React Native សម្រាប់ mobile apps និង Next.js សម្រាប់ full-stack web apps។
 - Unidirectional Data Flow: ទិន្នន័យហូរចុះក្រោមតាមរយៈ props ចំណែកឯ events ហូរឡើងលើវិញតាមរយៈ callbacks។
 
-### Code Example: Imperative vs Declarative Example
+### React JS Overview
 
-```jsx
-// Imperative DOM manipulation vs React Declarative UI
-// ❌ Traditional Imperative JavaScript:
-const btn = document.createElement('button');
-btn.innerText = 'Clicks: 0';
-let count = 0;
-btn.addEventListener('click', () => {
-  count++;
-  btn.innerText = `Clicks: ${count}`;
-});
-document.body.appendChild(btn);
-
-// ✅ Modern Declarative React Component:
-import { useState } from 'react';
-
-export function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <button 
-      onClick={() => setCount(count + 1)}
-      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-    >
-      Clicks: {count}
-    </button>
-  );
-}
-```
+![React JS](/images/react-js.png)

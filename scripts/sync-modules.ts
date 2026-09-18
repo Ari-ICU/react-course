@@ -92,8 +92,8 @@ ${mod.topics.map((t) => `- **Lesson ${t.number}**: ${t.title} - *${t.summary}*`)
       if (topic.codeTitle) {
         frontmatterLines.push(`codeTitle: ${yamlString(topic.codeTitle)}`);
       }
-      if (topic.codeLanguage) {
-        frontmatterLines.push(`codeLanguage: ${yamlString(topic.codeLanguage)}`);
+      if (topic.image) {
+        frontmatterLines.push(`image: ${yamlString(topic.image)}`);
       }
 
       frontmatterLines.push("---");
@@ -102,9 +102,13 @@ ${mod.topics.map((t) => `- **Lesson ${t.number}**: ${t.title} - *${t.summary}*`)
         ? `\n\n### Key Concepts & Rules:\n\n${topic.keyPoints.map((kp) => `- ${kp}`).join("\n")}`
         : "";
 
+      const imageSection = topic.image
+        ? `\n\n### ${topic.codeTitle || topic.title}\n\n![${topic.title}](${topic.image})`
+        : "";
+
       const codeBlockSection = topic.codeSnippet
         ? `\n\n### Code Example: ${topic.codeTitle || topic.title}\n\n\`\`\`${topic.codeLanguage || "jsx"}\n${topic.codeSnippet}\n\`\`\``
-        : "";
+        : imageSection;
 
       const lessonContent = `${frontmatterLines.join("\n")}
 
@@ -245,9 +249,18 @@ export function compileFromMDX() {
         }
       }
 
-      // Explanation is everything between Title and Key Concepts / Code Example
+      // Look for image in frontmatter or in markdown
+      let image = frontmatter.image || "";
+      const imageMatch = rest.match(/!\[.*?\]\((.*?)\)/);
+      if (!image && imageMatch) {
+        image = imageMatch[1];
+      }
+
+      // Explanation is everything between Title and Key Concepts / Code Example / Image
       let explEndIdx = rest.indexOf("### Key Concepts");
       if (explEndIdx === -1) explEndIdx = rest.indexOf("### Code Example");
+      if (explEndIdx === -1) explEndIdx = rest.indexOf("### ");
+      if (explEndIdx === -1) explEndIdx = rest.indexOf("![");
       if (explEndIdx === -1) explEndIdx = rest.indexOf("```");
       if (explEndIdx !== -1) {
         explanation = rest.slice(0, explEndIdx).trim();
@@ -268,6 +281,7 @@ export function compileFromMDX() {
         proTip: frontmatter.proTip,
         pitfall: frontmatter.pitfall,
         interactiveDemoKey: frontmatter.interactiveDemoKey,
+        image: image || undefined,
       };
 
       topics.push(topicItem);
@@ -308,6 +322,7 @@ export interface TopicItem {
   proTip?: string;
   pitfall?: string;
   interactiveDemoKey?: string;
+  image?: string;
 }
 
 export interface ModuleItem {

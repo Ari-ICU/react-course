@@ -6,6 +6,7 @@ moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
 summary: "របៀបដែល Vite ប្រើប្រាស់ native ESM និង Rollup ដើម្បីផ្តល់ build speed យ៉ាងលឿនបំផុត។"
+proTip: "Vite គាំទ្រ JSX តាមរយៈ file extension `.jsx` ដោយស្វ័យប្រវត្តិតាមរយៈ `@vitejs/plugin-react`។"
 codeTitle: "Vite Configuration with Path Aliases"
 ---
 
@@ -16,13 +17,13 @@ Vite បម្រើ source code តាមរយៈ native ESM ក្នុង�
 ### Key Concepts & Rules:
 
 - ចាប់ផ្តើម dev server ភ្លាមៗ (instant server start) ដោយមិនចាំបាច់ pre-bundle project ទាំងមូល។
-- ដំណើរការ transpile TypeScript យ៉ាងលឿនដោយប្រើប្រាស់ esbuild។
+- ដំណើរការ compile JSX និង JavaScript យ៉ាងរហ័សដោយប្រើប្រាស់ esbuild engine។
 - ដំណើរការ Rollup production bundling ប្រកបដោយប្រសិទ្ធភាពដើម្បីឱ្យ production code មានទំហំតូចបំផុត។
 
 ### Code Example: Vite Configuration with Path Aliases
 
 ```jsx
-// vite.config.ts
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';

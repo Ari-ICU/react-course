@@ -10,6 +10,7 @@ import {
   Play,
   Code2,
   Sparkles,
+  Image as ImageIcon,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { ModuleItem, TopicItem } from "@/data/modules-data";
@@ -168,8 +169,8 @@ export function SlideView({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <Code2 className="w-4 h-4" />
-                <span>Code Example</span>
+                {topic.image ? <ImageIcon className="w-4 h-4" /> : <Code2 className="w-4 h-4" />}
+                <span>{topic.image ? "Overview & Visual" : "Code Example"}</span>
               </button>
 
               <button
@@ -189,17 +190,33 @@ export function SlideView({
             </div>
 
             <span className="text-xs sm:text-sm font-mono text-slate-500 pr-3 font-medium">
-              {topic.codeTitle || "Standard Implementation"}
+              {topic.codeTitle || (topic.image ? "Visual Illustration" : "Standard Implementation")}
             </span>
           </div>
 
           {/* Tab Content */}
           {activeTab === "code" ? (
-            <CodeBlock
-              code={topic.codeSnippet}
-              language={topic.codeLanguage || "tsx"}
-              title={topic.codeTitle}
-            />
+            topic.image ? (
+              <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm p-6 sm:p-8 flex flex-col items-center justify-center min-h-[360px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={topic.image}
+                  alt={topic.title}
+                  className="max-h-[340px] w-auto object-contain rounded-xl drop-shadow-sm transition-transform hover:scale-[1.02]"
+                />
+                {topic.codeTitle && (
+                  <p className="mt-4 text-xs sm:text-sm font-semibold text-slate-600 font-mono tracking-tight text-center">
+                    {topic.codeTitle}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <CodeBlock
+                code={topic.codeSnippet}
+                language={topic.codeLanguage || "jsx"}
+                title={topic.codeTitle}
+              />
+            )
           ) : (
             <div className="animate-in fade-in duration-200">
               {renderInteractiveDemo()}

@@ -12,6 +12,7 @@ export interface TopicItem {
   proTip?: string;
   pitfall?: string;
   interactiveDemoKey?: string;
+  image?: string;
 }
 
 export interface ModuleItem {
@@ -45,11 +46,12 @@ export const modulesData: ModuleItem[] = [
           "Learn Once, Write Anywhere: គោលគំនិត mental models របស់ React អាចយកទៅអនុវត្តលើ React Native សម្រាប់ mobile apps និង Next.js សម្រាប់ full-stack web apps។",
           "Unidirectional Data Flow: ទិន្នន័យហូរចុះក្រោមតាមរយៈ props ចំណែកឯ events ហូរឡើងលើវិញតាមរយៈ callbacks។"
         ],
-        "codeSnippet": "// Imperative DOM manipulation vs React Declarative UI\n// ❌ Traditional Imperative JavaScript:\nconst btn = document.createElement('button');\nbtn.innerText = 'Clicks: 0';\nlet count = 0;\nbtn.addEventListener('click', () => {\n  count++;\n  btn.innerText = `Clicks: ${count}`;\n});\ndocument.body.appendChild(btn);\n\n// ✅ Modern Declarative React Component:\nimport { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button \n      onClick={() => setCount(count + 1)}\n      className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\"\n    >\n      Clicks: {count}\n    </button>\n  );\n}",
+        "codeSnippet": "",
         "codeLanguage": "jsx",
-        "codeTitle": "Imperative vs Declarative Example",
-        "proTip": "គិតតាមបែប state transitions៖ កំណត់ទិន្នន័យរបស់អ្នកថាតើវាផ្លាស់ប្តូរយ៉ាងដូចម្តេច ហើយទុកឱ្យ React គណនា និងអនុវត្តការផ្លាស់ប្តូរនៅលើ DOM ដោយស្វ័យប្រវត្តិ។",
-        "pitfall": "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។"
+        "codeTitle": "React JS Architecture & Logo",
+        "proTip": "គិតតាមបែប component-driven mental model៖ UI កើតចេញពីបំណែកឯករាជ្យផ្គុំគ្នា ដែលធ្វើឱ្យកូដងាយស្រួល scale និងថែទាំ។",
+        "pitfall": "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។",
+        "image": "/images/react-js.png"
       },
       {
         "id": "m01-02",
@@ -133,15 +135,17 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-07",
         "number": "07",
         "title": "Creating a React Application",
-        "summary": "ជម្រើស scaffolding ពេញនិយមរួមមាន Vite, Next.js និង modern React toolchains។",
-        "explanation": "ទោះបីជា Create-React-App ត្រូវបាន deprecated ក៏ដោយ developer សម័យទំនើបប្រើប្រាស់ Vite សម្រាប់បង្កើត Client-Side Single Page Application (SPA) ដែលមានល្បឿនលឿន ឬ Next.js សម្រាប់បង្កើត full-stack web application ដែលគាំទ្រ SEO យ៉ាងល្អប្រសើរ។",
+        "summary": "របៀបបង្កើតគម្រោង React ស្តង់ដារ (JavaScript / JSX) ដោយប្រើប្រាស់ Vite Scaffolding Tool ទំនើប និងរហ័ស។",
+        "explanation": "ទោះបីជា Create-React-App (CRA) ត្រូវបានចាត់ទុកជា deprecated ក៏ដោយ developer សម័យទំនើបប្រើប្រាស់ **Vite** ជាជម្រើសទីមួយក្នុងការបង្កើត Client-Side Single Page Application (SPA) ដែលមានល្បឿនលឿន និង build time រហ័សបំផុត។ សម្រាប់វគ្គសិក្សានេះ យើងបង្កើតគម្រោង React ធម្មតា (Standard JavaScript / JSX) ដោយមិនចាំបាច់ប្រើ TypeScript (`react-ts`) ឡើយ។",
         "keyPoints": [
-          "Vite: ផ្តល់នូវ Hot Module Replacement (HMR) យ៉ាងរហ័សផ្អែកលើ native ES modules និង esbuild។",
-          "Next.js: Full-stack framework ជាមួយ App Router, Server-Side Rendering (SSR), Static Site Generation (SSG) និង Server Actions។"
+          "**Vite Scaffolding**: ប្រើ `npm create vite@latest` ជាមួយ `--template react` ដើម្បីទាញយក template React ស្តង់ដារដែលប្រើ JavaScript (`.jsx`)។",
+          "**Fast Development**: ផ្តល់នូវ Hot Module Replacement (HMR) យ៉ាងលឿនបំផុត ជួយឱ្យការកូដមានភាពរលូន។",
+          "**Project Setup Workflow**: ៣ ជំហានងាយៗគឺ `create -> cd & npm install -> npm run dev`។"
         ],
-        "codeSnippet": "// Scaffolding a modern SPA with Vite:\nnpm create vite@latest my-react-app -- --template react-ts\n\n// Scaffolding an enterprise full-stack app with Next.js:\nnpx create-next-app@latest my-next-app --typescript --tailwind --eslint --app",
-        "codeLanguage": "jsx",
-        "codeTitle": "Scaffolding Modern React Applications"
+        "codeSnippet": "# 1. បង្កើត React project ធម្មតា (JavaScript / JSX) ដោយប្រើ Vite\nnpm create vite@latest my-react-app -- --template react\n\n# 2. ចូលទៅកាន់ folder នៃ project\ncd my-react-app\n\n# 3. ដំឡើង packages/dependencies ដែលចាំបាច់\nnpm install\n\n# 4. ដំណើរការ development server\nnpm run dev",
+        "codeLanguage": "bash",
+        "codeTitle": "Creating a Standard React App with Vite",
+        "proTip": "ប្រើ `--template react` សម្រាប់បង្កើតគម្រោង React ស្តង់ដារជាមួយ JavaScript / JSX ធម្មតាដោយមិនចាំបាច់ប្រើ TypeScript (react-ts) ឡើយ។"
       },
       {
         "id": "m01-08",
@@ -151,12 +155,13 @@ export const modulesData: ModuleItem[] = [
         "explanation": "Vite បម្រើ source code តាមរយៈ native ESM ក្នុងពេល development ដោយមិនចាំបាច់ឆ្លងកាត់ដំណើរការ bundle ទាំងមូលជាមុនឡើយ។ យន្តការនេះធានាថា Hot Module Replacement (HMR) នៅតែមានល្បឿនលឿនភ្លាមៗ ទោះបីជា application មានទំហំធំប៉ុនណាក៏ដោយ។",
         "keyPoints": [
           "ចាប់ផ្តើម dev server ភ្លាមៗ (instant server start) ដោយមិនចាំបាច់ pre-bundle project ទាំងមូល។",
-          "ដំណើរការ transpile TypeScript យ៉ាងលឿនដោយប្រើប្រាស់ esbuild។",
+          "ដំណើរការ compile JSX និង JavaScript យ៉ាងរហ័សដោយប្រើប្រាស់ esbuild engine។",
           "ដំណើរការ Rollup production bundling ប្រកបដោយប្រសិទ្ធភាពដើម្បីឱ្យ production code មានទំហំតូចបំផុត។"
         ],
-        "codeSnippet": "// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport path from 'path';\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: {\n      '@': path.resolve(__dirname, './src'),\n    },\n  },\n});",
+        "codeSnippet": "// vite.config.js\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport path from 'path';\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: {\n      '@': path.resolve(__dirname, './src'),\n    },\n  },\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Vite Configuration with Path Aliases"
+        "codeTitle": "Vite Configuration with Path Aliases",
+        "proTip": "Vite គាំទ្រ JSX តាមរយៈ file extension `.jsx` ដោយស្វ័យប្រវត្តិតាមរយៈ `@vitejs/plugin-react`។"
       },
       {
         "id": "m01-09",

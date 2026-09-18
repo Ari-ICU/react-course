@@ -156,14 +156,28 @@ export function StudyView({
                   ))}
                 </div>
 
-                {/* Code Snippet */}
-                {topic.codeSnippet && (
+                {/* Image or Code Snippet */}
+                {topic.image ? (
+                  <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs p-6 flex flex-col items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={topic.image}
+                      alt={topic.title}
+                      className="max-h-[320px] w-auto object-contain rounded-xl"
+                    />
+                    {topic.codeTitle && (
+                      <p className="mt-3 text-xs font-semibold text-slate-500 font-mono">
+                        {topic.codeTitle}
+                      </p>
+                    )}
+                  </div>
+                ) : topic.codeSnippet ? (
                   <CodeBlock
                     code={topic.codeSnippet}
-                    language={topic.codeLanguage || "tsx"}
+                    language={topic.codeLanguage || "jsx"}
                     title={topic.codeTitle}
                   />
-                )}
+                ) : null}
               </article>
             );
           })}

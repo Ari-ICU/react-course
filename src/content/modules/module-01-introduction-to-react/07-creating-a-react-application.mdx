@@ -5,25 +5,33 @@ title: "Creating a React Application"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "ជម្រើស scaffolding ពេញនិយមរួមមាន Vite, Next.js និង modern React toolchains។"
-codeTitle: "Scaffolding Modern React Applications"
+summary: "របៀបបង្កើតគម្រោង React ស្តង់ដារ (JavaScript / JSX) ដោយប្រើប្រាស់ Vite Scaffolding Tool ទំនើប និងរហ័ស។"
+proTip: "ប្រើ `--template react` សម្រាប់បង្កើតគម្រោង React ស្តង់ដារជាមួយ JavaScript / JSX ធម្មតាដោយមិនចាំបាច់ប្រើ TypeScript (react-ts) ឡើយ។"
+codeTitle: "Creating a Standard React App with Vite"
 ---
 
 # Creating a React Application
 
-ទោះបីជា Create-React-App ត្រូវបាន deprecated ក៏ដោយ developer សម័យទំនើបប្រើប្រាស់ Vite សម្រាប់បង្កើត Client-Side Single Page Application (SPA) ដែលមានល្បឿនលឿន ឬ Next.js សម្រាប់បង្កើត full-stack web application ដែលគាំទ្រ SEO យ៉ាងល្អប្រសើរ។
+ទោះបីជា Create-React-App (CRA) ត្រូវបានចាត់ទុកជា deprecated ក៏ដោយ developer សម័យទំនើបប្រើប្រាស់ **Vite** ជាជម្រើសទីមួយក្នុងការបង្កើត Client-Side Single Page Application (SPA) ដែលមានល្បឿនលឿន និង build time រហ័សបំផុត។ សម្រាប់វគ្គសិក្សានេះ យើងបង្កើតគម្រោង React ធម្មតា (Standard JavaScript / JSX) ដោយមិនចាំបាច់ប្រើ TypeScript (`react-ts`) ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Vite: ផ្តល់នូវ Hot Module Replacement (HMR) យ៉ាងរហ័សផ្អែកលើ native ES modules និង esbuild។
-- Next.js: Full-stack framework ជាមួយ App Router, Server-Side Rendering (SSR), Static Site Generation (SSG) និង Server Actions។
+- **Vite Scaffolding**: ប្រើ `npm create vite@latest` ជាមួយ `--template react` ដើម្បីទាញយក template React ស្តង់ដារដែលប្រើ JavaScript (`.jsx`)។
+- **Fast Development**: ផ្តល់នូវ Hot Module Replacement (HMR) យ៉ាងលឿនបំផុត ជួយឱ្យការកូដមានភាពរលូន។
+- **Project Setup Workflow**: ៣ ជំហានងាយៗគឺ `create -> cd & npm install -> npm run dev`។
 
-### Code Example: Scaffolding Modern React Applications
+### Code Example: Creating a Standard React App with Vite
 
-```jsx
-// Scaffolding a modern SPA with Vite:
-npm create vite@latest my-react-app -- --template react-ts
+```bash
+# 1. បង្កើត React project ធម្មតា (JavaScript / JSX) ដោយប្រើ Vite
+npm create vite@latest my-react-app -- --template react
 
-// Scaffolding an enterprise full-stack app with Next.js:
-npx create-next-app@latest my-next-app --typescript --tailwind --eslint --app
+# 2. ចូលទៅកាន់ folder នៃ project
+cd my-react-app
+
+# 3. ដំឡើង packages/dependencies ដែលចាំបាច់
+npm install
+
+# 4. ដំណើរការ development server
+npm run dev
 ```
