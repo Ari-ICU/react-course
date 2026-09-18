@@ -5,8 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getAssetPath(path?: string): string {
+export function getAssetPath(path?: string | null | Blob): string {
   if (!path) return "";
+  if (typeof path !== "string") {
+    return "";
+  }
   // Return early for external URLs or data URIs
   if (
     path.startsWith("http://") ||
