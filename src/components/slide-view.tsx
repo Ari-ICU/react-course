@@ -5,8 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
-  Lightbulb,
-  AlertTriangle,
   Play,
   Code2,
   Sparkles,

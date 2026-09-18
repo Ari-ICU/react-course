@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BookOpen, CheckCircle2, ChevronRight, Search } from "lucide-react";
-import { modulesData, ModuleItem, TopicItem } from "@/data/modules-data";
+import { modulesData } from "@/data/modules-data";
 import { CodeBlock } from "@/components/code-block";
 import { FormattedText } from "@/components/formatted-text";
 import { getAssetPath } from "@/lib/utils";
