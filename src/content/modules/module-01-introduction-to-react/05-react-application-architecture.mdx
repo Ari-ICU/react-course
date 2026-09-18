@@ -5,19 +5,19 @@ title: "React Application Architecture"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "Understanding the unidirectional data tree and component hierarchy."
+summary: "ស្វែងយល់អំពីរចនាសម្ព័ន្ធ unidirectional data tree និង component hierarchy។"
 codeTitle: "Component Tree Architecture"
 ---
 
 # React Application Architecture
 
-React applications are structured as a tree of components. Root components pass props downwards to leaf components. Events trigger state updates which trigger downward reconciliation.
+កម្មវិធី React ត្រូវបានរៀបចំឡើងជាទម្រង់មែកធាង (component tree)។ Root component នឹងបញ្ជូន props ចុះក្រោមទៅកាន់ child components ហើយរាល់ events នឹង trigger ឱ្យមាន state updates ដែលបង្កឱ្យមាន downward reconciliation។
 
 ### Key Concepts & Rules:
 
-- Root component (`App` or Root Layout) anchors the entire virtual DOM tree.
-- Unidirectional props travel from top to bottom.
-- Lifting state up allows sharing state between sibling nodes.
+- Root component (`App` ឬ Root Layout) ដើរតួជាគ្រឹះបង្គោលសម្រាប់ Virtual DOM tree ទាំងមូល។
+- Unidirectional props ហូរពីលើចុះក្រោម (top-to-bottom)។
+- Lifting state up គឺជាបច្ចេកទេសលើក state ទៅកាន់ parent component រួម ដើម្បីចែករំលែកទិន្នន័យរវាង sibling nodes។
 
 ### Code Example: Component Tree Architecture
 

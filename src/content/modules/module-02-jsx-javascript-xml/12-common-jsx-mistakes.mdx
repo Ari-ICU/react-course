@@ -5,19 +5,19 @@ title: "Common JSX Mistakes"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Rendering 0 with logical AND `&&`, forgetting keys, and class vs className."
-pitfall: "Writing `{count && <Element />}` when count is 0 prints the character '0' to your UI. Always use `{count > 0 && <Element />}`."
+summary: "កំហុសទូទៅដូចជាការ render ចេញលេខ 0 ពេលប្រើ logical AND `&&`, ការភ្លេចដាក់ keys និងបញ្ហា class vs className។"
+pitfall: "ការសរសេរ `{count && <Element />}` នៅពេលដែល count មានតម្លៃស្មើ 0 នឹងបណ្តាលឱ្យអក្សរលេខ '0' លេចឡើងនៅលើ UI។ ត្រូវប្រើ `{count > 0 && <Element />}` ជានិច្ច។"
 codeTitle: "The Logical AND Zero Bug"
 ---
 
 # Common JSX Mistakes
 
-The most famous JSX gotcha is `count && <Component />`: if `count` is `0`, JavaScript evaluates `0 && ...` to `0`, causing the number `0` to render on screen rather than nothing!
+កំហុសដែលកើតឡើងញឹកញាប់បំផុតនៅក្នុង JSX គឺការប្រើប្រាស់ `count && <Component />`៖ ប្រសិនបើ `count` ស្មើ `0` នោះ JavaScript នឹង evaluate `0 && ...` ស្មើ `0` ដែលធ្វើឱ្យលេខ `0` បង្ហាញលើអេក្រង់ជំនួសឱ្យការលាក់បាត់!
 
 ### Key Concepts & Rules:
 
-- Never write `items.length && <List />` -> use `items.length > 0 && <List />` or ternary `items.length ? <List /> : null`.
-- Avoid using array index as `key` when list items can be reordered or removed.
+- មិនត្រូវសរសេរ `items.length && <List />` ឡើយ -> ត្រូវប្តូរមកប្រើ `items.length > 0 && <List />` ឬប្រើ ternary `items.length ? <List /> : null`។
+- ជៀសវាងការប្រើប្រាស់ array index ជា `key` នៅពេលដែលបញ្ជីទិន្នន័យអាចមានការតម្រៀបឡើងវិញ (reorder) ឬលុបចេញ (remove)។
 
 ### Code Example: The Logical AND Zero Bug
 

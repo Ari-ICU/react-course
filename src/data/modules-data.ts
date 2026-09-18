@@ -30,70 +30,70 @@ export const modulesData: ModuleItem[] = [
     "number": "01",
     "title": "Introduction to React",
     "category": "Fundamentals",
-    "summary": "Understand what React is, its declarative mental model, virtual DOM mechanics, modern Vite tooling, and development environment setup.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី React គោលគំនិត declarative mental model យន្តការ Virtual DOM ឧបករណ៍ modern Vite tooling និងការរៀបចំ development environment ប្រកបដោយប្រសិទ្ធភាព។",
     "iconName": "Atom",
     "topics": [
       {
         "id": "m01-01",
         "number": "01",
         "title": "What is React?",
-        "summary": "A declarative, component-based JavaScript library for building interactive user interfaces created by Meta.",
-        "explanation": "React is an open-source JavaScript library focused exclusively on the view layer (V in MVC). Instead of manually querying and mutating DOM nodes using imperative APIs like `document.getElementById` and `element.appendChild`, React introduces a declarative paradigm where you describe what the UI should look like for any given state, and React handles the low-level DOM mutations efficiently.",
+        "summary": "JavaScript library បែប declarative និង component-based សម្រាប់បង្កើត interactive user interfaces បង្កើតឡើងដោយ Meta។",
+        "explanation": "React គឺជា open-source JavaScript library មួយដែលផ្តោតយ៉ាងសំខាន់ទៅលើ view layer (អក្សរ V នៅក្នុង MVC architecture)។ ជំនួសឱ្យការសរសេរកូដបែប manual ដើម្បី query និង mutate DOM nodes ដោយផ្ទាល់តាមរយៈ imperative APIs ដូចជា `document.getElementById` ឬ `element.appendChild` React ណែនាំនូវវិធីសាស្ត្រថ្មីហៅថា declarative paradigm ដែលអ្នកគ្រាន់តែកំណត់ថាតើ UI គួរមានទម្រង់បែបណាសម្រាប់ state នីមួយៗ ហើយ React នឹងទទួលបន្ទុកធ្វើបច្ចុប្បន្នភាពលើ low-level DOM ដោយស្វ័យប្រវត្តិ និងមានប្រសិទ្ធភាពខ្ពស់។",
         "keyPoints": [
-          "Declarative UI: Describe the desired final UI state, not step-by-step imperative mutations.",
-          "Component-Based: Break complex screens into isolated, reusable, and testable building blocks.",
-          "Learn Once, Write Anywhere: Core mental models transfer to React Native for mobile apps and Next.js for full-stack apps.",
-          "Unidirectional Data Flow: Data flows down through props, while events bubble up through callbacks."
+          "Declarative UI: កំណត់ទម្រង់ UI ចុងក្រោយដែលចង់បាន (State) ដោយមិនចាំបាច់សរសេរកូដបញ្ជា DOM មួយជំហានម្តងៗឡើយ។",
+          "Component-Based: បំបែកអេក្រង់ដ៏ស្មុគស្មាញឱ្យទៅជាបំណែកតូចៗ (components) ដែលឯករាជ្យ អាចយកមកប្រើឡើងវិញបាន (reusable) និងងាយស្រួលក្នុងការធ្វើ test។",
+          "Learn Once, Write Anywhere: គោលគំនិត mental models របស់ React អាចយកទៅអនុវត្តលើ React Native សម្រាប់ mobile apps និង Next.js សម្រាប់ full-stack web apps។",
+          "Unidirectional Data Flow: ទិន្នន័យហូរចុះក្រោមតាមរយៈ props ចំណែកឯ events ហូរឡើងលើវិញតាមរយៈ callbacks។"
         ],
         "codeSnippet": "// Imperative DOM manipulation vs React Declarative UI\n// ❌ Traditional Imperative JavaScript:\nconst btn = document.createElement('button');\nbtn.innerText = 'Clicks: 0';\nlet count = 0;\nbtn.addEventListener('click', () => {\n  count++;\n  btn.innerText = `Clicks: ${count}`;\n});\ndocument.body.appendChild(btn);\n\n// ✅ Modern Declarative React Component:\nimport { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button \n      onClick={() => setCount(count + 1)}\n      className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\"\n    >\n      Clicks: {count}\n    </button>\n  );\n}",
         "codeLanguage": "tsx",
         "codeTitle": "Imperative vs Declarative Example",
-        "proTip": "Think in state transitions: define how your data changes, and let React calculate and apply the necessary DOM transformations.",
-        "pitfall": "Do not attempt to directly query or mutate DOM elements (e.g. innerHTML or querySelector) inside React components."
+        "proTip": "គិតតាមបែប state transitions៖ កំណត់ទិន្នន័យរបស់អ្នកថាតើវាផ្លាស់ប្តូរយ៉ាងដូចម្តេច ហើយទុកឱ្យ React គណនា និងអនុវត្តការផ្លាស់ប្តូរនៅលើ DOM ដោយស្វ័យប្រវត្តិ។",
+        "pitfall": "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។"
       },
       {
         "id": "m01-02",
         "number": "02",
         "title": "Why React?",
-        "summary": "Learn why React dominates the modern web ecosystem and developer tooling.",
-        "explanation": "React provides unmatched ecosystem support, massive community backing, top-tier performance through fiber reconciler algorithms, and a vibrant ecosystem ranging from Next.js to Tailwind CSS and Shadcn UI.",
+        "summary": "ស្វែងយល់ពីមូលហេតុចម្បងដែល React គ្រងតំណែងនាំមុខគេក្នុង modern web ecosystem និង developer tooling។",
+        "explanation": "React ទទួលបានការគាំទ្រយ៉ាងខ្លាំងពីសហគមន៍ developer ទូទាំងពិភពលោក និងក្រុមហ៊ុនបច្ចេកវិទ្យាធំៗ។ ជាមួយនឹង fiber reconciler algorithms ដែលមាន performance ខ្ពស់ រួមផ្សំនឹង ecosystem ដ៏សំបូរបែប ចាប់ពី Next.js រហូតដល់ Tailwind CSS និង Shadcn UI ធ្វើឱ្យ React ក្លាយជាជម្រើសទីមួយក្នុងការបង្កើត web application កម្រិត enterprise។",
         "keyPoints": [
-          "High reusability of design system components across enterprise teams.",
-          "Predictable debugging with unidirectional data flow and React DevTools.",
-          "Universal ecosystem with libraries like TanStack Query, Zustand, React Hook Form, and Framer Motion."
+          "Component Reusability: ងាយស្រួលបង្កើត និងចែករំលែក design system components ក្នុងចំណោមក្រុមការងារវិស្វកម្មកម្មវិធី។",
+          "Predictable Debugging: ភាពងាយស្រួលក្នុងការត្រួតពិនិត្យ និង debug កូដ ដោយសារ unidirectional data flow និងឧបករណ៍ React DevTools។",
+          "Universal Ecosystem: ភាពសម្បូរបែបនៃ libraries ស្តង់ដារដូចជា TanStack Query, Zustand, React Hook Form និង Framer Motion។"
         ],
         "codeSnippet": "// The React ecosystem enables composable, modular features\nimport { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";\nimport { Badge } from \"@/components/ui/badge\";\n\nexport function CourseCard({ title, level, studentCount }: CourseCardProps) {\n  return (\n    <Card className=\"border border-slate-800 bg-slate-900/60 p-5 rounded-xl\">\n      <CardHeader className=\"flex items-center justify-between pb-2\">\n        <CardTitle className=\"text-xl font-bold text-white\">{title}</CardTitle>\n        <Badge variant=\"outline\" className=\"text-emerald-400 border-emerald-500/30\">\n          {level}\n        </Badge>\n      </CardHeader>\n      <CardContent className=\"text-slate-400 text-sm\">\n        Over {studentCount.toLocaleString()} developers enrolled.\n      </CardContent>\n    </Card>\n  );\n}",
         "codeLanguage": "tsx",
         "codeTitle": "Composable Component Pattern",
-        "proTip": "Investing in React gives you access to the largest repository of production-tested packages and UI patterns in the JavaScript ecosystem."
+        "proTip": "ការរៀន React ជួយឱ្យអ្នកមានលទ្ធភាពប្រើប្រាស់ ecosystem ដ៏ធំបំផុតនៅលើពិភពលោក ដែលពោរពេញទៅដោយ production-tested packages និង UI patterns កម្រិតខ្ពស់។"
       },
       {
         "id": "m01-03",
         "number": "03",
         "title": "React Features",
-        "summary": "JSX, Virtual DOM, React Fiber Reconciler, and Server Components.",
-        "explanation": "Key features include JSX syntax extension, the Virtual DOM diffing algorithm that minimizes expensive browser layout recalcs, and React 19 concurrent features with automatic batching.",
+        "summary": "លក្ខណៈពិសេសចម្បងៗរួមមាន JSX, Virtual DOM, React Fiber Reconciler និង Server Components។",
+        "explanation": "ចំណុចពិសេសស្នូលរបស់ React រួមមាន syntax extension គឺ JSX ក្បួនដោះស្រាយ Virtual DOM diffing algorithm ដែលកាត់បន្ថយការគណនា layout ឡើងវិញរបស់ browser ព្រមទាំងសមត្ថភាព concurrent features ទំនើបក្នុង React 19 ជាមួយ automatic batching។",
         "keyPoints": [
-          "JSX: Expressive HTML-in-JavaScript syntax with compile-time type safety.",
-          "Virtual DOM & Reconciliation: Memory representation compared via O(n) diffing heuristics.",
-          "Hooks: Functional state and lifecycle logic sharing without class components.",
-          "Automatic Batching: Groups multiple state updates together to prevent superfluous re-renders."
+          "JSX: គឺជា syntax extension ដែលអនុញ្ញាតឱ្យយើងសរសេរ HTML នៅខាងក្នុង JavaScript ជាមួយ compile-time type safety ខ្ពស់។",
+          "Virtual DOM & Reconciliation: រចនាសម្ព័ន្ធ memory representation ត្រូវបានប្រៀបធៀបដោយប្រើ O(n) diffing heuristics ដើម្បីធ្វើបច្ចុប្បន្នភាពតែចំណុចណាដែលចាំបាច់។",
+          "Hooks: មុខងារចែករំលែក stateful logic និង lifecycle ដោយប្រើ functional components ដោយមិនចាំបាច់ប្រើ class components។",
+          "Automatic Batching: ប្រមូលផ្តុំការ update state ច្រើនបញ្ចូលគ្នាក្នុងពេលតែមួយ ដើម្បីកាត់បន្ថយការ re-render ឥតប្រយោជន៍។"
         ],
         "codeSnippet": "// React 18+ automatic batching example\nimport { useState } from 'react';\n\nexport function BatchingDemo() {\n  const [count, setCount] = useState(0);\n  const [flag, setFlag] = useState(false);\n\n  function handleClick() {\n    // Both state updates are queued and trigger only ONE single re-render!\n    setCount((c) => c + 1);\n    setFlag((f) => !f);\n  }\n\n  return (\n    <button onClick={handleClick}>\n      Count: {count} | Flag: {flag ? 'ON' : 'OFF'}\n    </button>\n  );\n}",
         "codeLanguage": "tsx",
         "codeTitle": "Automatic Batching in React",
-        "proTip": "Use functional updates `setCount(prev => prev + 1)` whenever the new state derives directly from the previous state."
+        "proTip": "គួរប្រើ functional updates `setCount(prev => prev + 1)` ជានិច្ចនៅពេលដែល state ថ្មីអាស្រ័យដោយផ្ទាល់លើតម្លៃនៃ state ចាស់។"
       },
       {
         "id": "m01-04",
         "number": "04",
         "title": "React vs Traditional JavaScript",
-        "summary": "Direct DOM manipulation vs React's state-driven reconciliation model.",
-        "explanation": "Traditional vanilla JavaScript requires manual bookkeeping: tracking elements, querying selectors, and updating attributes. React treats UI as a pure projection of state (`UI = f(State)`).",
+        "summary": "ការប្រៀបធៀបរវាង direct DOM manipulation និង state-driven reconciliation model របស់ React។",
+        "explanation": "ការសរសេរ Vanilla JavaScript បែបបុរាណតម្រូវឱ្យ developer តាមដាន និងគ្រប់គ្រង DOM elements ដោយផ្ទាល់ (query selectors, update attributes, sync state)។ រីឯ React ចាត់ទុក UI គឺជាលទ្ធផលដែលឆ្លុះបញ្ចាំងចេញពី state ដោយផ្ទាល់ (`UI = f(State)`)។",
         "keyPoints": [
-          "Vanilla JS requires sync between UI and memory state manually.",
-          "React automates UI updates via reactive state bindings.",
-          "Eliminates typical spaghetti code caused by scattered DOM mutation queries."
+          "Vanilla JS តម្រូវឱ្យ developer ធ្វើការ sync រវាង UI និង memory state ដោយដៃ (manual bookkeeping)។",
+          "React ធ្វើបច្ចុប្បន្នភាព UI ដោយស្វ័យប្រវត្តិតាមរយៈ reactive state bindings។",
+          "លុបបំបាត់បញ្ហា spaghetti code ដែលកើតឡើងដោយសារកូដ DOM mutations រាយប៉ាយពាសពេញ file។"
         ],
         "codeSnippet": "// Comparison: Updating a dynamic badge\n// Vanilla JS\nfunction updateBadge(unreadCount) {\n  const el = document.getElementById('badge');\n  if (unreadCount > 0) {\n    el.innerText = unreadCount;\n    el.style.display = 'inline-block';\n  } else {\n    el.style.display = 'none';\n  }\n}\n\n// React: purely declarative projection\nfunction UnreadBadge({ count }: { count: number }) {\n  if (count <= 0) return null;\n  return <span className=\"bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full\">{count}</span>;\n}",
         "codeLanguage": "tsx",
@@ -103,12 +103,12 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-05",
         "number": "05",
         "title": "React Application Architecture",
-        "summary": "Understanding the unidirectional data tree and component hierarchy.",
-        "explanation": "React applications are structured as a tree of components. Root components pass props downwards to leaf components. Events trigger state updates which trigger downward reconciliation.",
+        "summary": "ស្វែងយល់អំពីរចនាសម្ព័ន្ធ unidirectional data tree និង component hierarchy។",
+        "explanation": "កម្មវិធី React ត្រូវបានរៀបចំឡើងជាទម្រង់មែកធាង (component tree)។ Root component នឹងបញ្ជូន props ចុះក្រោមទៅកាន់ child components ហើយរាល់ events នឹង trigger ឱ្យមាន state updates ដែលបង្កឱ្យមាន downward reconciliation។",
         "keyPoints": [
-          "Root component (`App` or Root Layout) anchors the entire virtual DOM tree.",
-          "Unidirectional props travel from top to bottom.",
-          "Lifting state up allows sharing state between sibling nodes."
+          "Root component (`App` ឬ Root Layout) ដើរតួជាគ្រឹះបង្គោលសម្រាប់ Virtual DOM tree ទាំងមូល។",
+          "Unidirectional props ហូរពីលើចុះក្រោម (top-to-bottom)។",
+          "Lifting state up គឺជាបច្ចេកទេសលើក state ទៅកាន់ parent component រួម ដើម្បីចែករំលែកទិន្នន័យរវាង sibling nodes។"
         ],
         "codeSnippet": "/*\n        [App Root]\n         ├── [Header]\n         │    ├── [Logo]\n         │    └── [NavMenu]\n         ├── [CourseView]\n         │    ├── [ModuleList]  <── (State: selectedModule)\n         │    └── [SlideDisplay]\n         └── [Footer]\n*/",
         "codeLanguage": "tsx",
@@ -118,12 +118,12 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-06",
         "number": "06",
         "title": "React Project Structure",
-        "summary": "Scalable folder layouts for enterprise React and Next.js applications.",
-        "explanation": "Adopting a domain-driven or feature-based structure prevents monolith folders. Organize by `components/`, `features/`, `hooks/`, `services/`, and `types/`.",
+        "summary": "ការរៀបចំ folder structure កម្រិត enterprise សម្រាប់ scalable React និង Next.js applications។",
+        "explanation": "ការជ្រើសរើសទម្រង់ domain-driven ឬ feature-based folder structure ជួយការពារកុំឱ្យ project ក្លាយជា monolith រញ៉េរញ៉ៃ។ គួររៀបចំ folder ទៅតាម `components/`, `features/`, `hooks/`, `services/`, និង `types/`។",
         "keyPoints": [
-          "Colocate component styles, tests, and sub-components when feature-specific.",
-          "Shared generic UI primitives live in `@/components/ui`.",
-          "Business domain features live in `@/features/<feature-name>`."
+          "រក្សាទុក component styles, tests, និង sub-components ជាមួយគ្នានៅក្នុង feature folder ជាក់លាក់មួយ (colocation)។",
+          "រក្សាទុក reusable UI primitives ទូទៅនៅក្នុង `@/components/ui`។",
+          "រក្សាទុក business domain logic នៅក្នុង `@/features/<feature-name>`។"
         ],
         "codeSnippet": "src/\n├── app/              # App Router routes and page layouts\n├── components/       # Cross-cutting reusable UI primitives\n│   └── ui/           # Button, Card, Dialog, Badge (Shadcn style)\n├── features/         # Feature slices (auth, courses, cart)\n│   ├── components/\n│   ├── hooks/\n│   └── services/\n├── hooks/            # Global custom hooks (useDebounce, useTheme)\n├── lib/              # Utilities (cn, formatters, api client)\n└── types/            # TypeScript models and interfaces",
         "codeLanguage": "tsx",
@@ -133,11 +133,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-07",
         "number": "07",
         "title": "Creating a React Application",
-        "summary": "Scaffolding options: Vite, Next.js, and modern React toolchains.",
-        "explanation": "While Create-React-App is deprecated, modern developers use Vite for lightning-fast Client-Side SPAs or Next.js for full-stack, SEO-ready web applications.",
+        "summary": "ជម្រើស scaffolding ពេញនិយមរួមមាន Vite, Next.js និង modern React toolchains។",
+        "explanation": "ទោះបីជា Create-React-App ត្រូវបាន deprecated ក៏ដោយ developer សម័យទំនើបប្រើប្រាស់ Vite សម្រាប់បង្កើត Client-Side Single Page Application (SPA) ដែលមានល្បឿនលឿន ឬ Next.js សម្រាប់បង្កើត full-stack web application ដែលគាំទ្រ SEO យ៉ាងល្អប្រសើរ។",
         "keyPoints": [
-          "Vite: Lightning-fast HMR based on native ES modules and esbuild.",
-          "Next.js: Full-stack framework with App Router, SSR, SSG, and Server Actions."
+          "Vite: ផ្តល់នូវ Hot Module Replacement (HMR) យ៉ាងរហ័សផ្អែកលើ native ES modules និង esbuild។",
+          "Next.js: Full-stack framework ជាមួយ App Router, Server-Side Rendering (SSR), Static Site Generation (SSG) និង Server Actions។"
         ],
         "codeSnippet": "// Scaffolding a modern SPA with Vite:\nnpm create vite@latest my-react-app -- --template react-ts\n\n// Scaffolding an enterprise full-stack app with Next.js:\nnpx create-next-app@latest my-next-app --typescript --tailwind --eslint --app",
         "codeLanguage": "tsx",
@@ -147,12 +147,12 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-08",
         "number": "08",
         "title": "Vite + React",
-        "summary": "How Vite leverages native ESM and Rollup for instant developer builds.",
-        "explanation": "Vite serves source code over native ESM during development, skipping bundle steps. This ensures Hot Module Replacement (HMR) stays instant regardless of application size.",
+        "summary": "របៀបដែល Vite ប្រើប្រាស់ native ESM និង Rollup ដើម្បីផ្តល់ build speed យ៉ាងលឿនបំផុត។",
+        "explanation": "Vite បម្រើ source code តាមរយៈ native ESM ក្នុងពេល development ដោយមិនចាំបាច់ឆ្លងកាត់ដំណើរការ bundle ទាំងមូលជាមុនឡើយ។ យន្តការនេះធានាថា Hot Module Replacement (HMR) នៅតែមានល្បឿនលឿនភ្លាមៗ ទោះបីជា application មានទំហំធំប៉ុនណាក៏ដោយ។",
         "keyPoints": [
-          "Instant server start without pre-bundling the whole project.",
-          "Fast TypeScript transpilation via esbuild.",
-          "Optimized Rollup production bundling for small bundle sizes."
+          "ចាប់ផ្តើម dev server ភ្លាមៗ (instant server start) ដោយមិនចាំបាច់ pre-bundle project ទាំងមូល។",
+          "ដំណើរការ transpile TypeScript យ៉ាងលឿនដោយប្រើប្រាស់ esbuild។",
+          "ដំណើរការ Rollup production bundling ប្រកបដោយប្រសិទ្ធភាពដើម្បីឱ្យ production code មានទំហំតូចបំផុត។"
         ],
         "codeSnippet": "// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport path from 'path';\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: {\n      '@': path.resolve(__dirname, './src'),\n    },\n  },\n});",
         "codeLanguage": "tsx",
@@ -162,11 +162,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-09",
         "number": "09",
         "title": "Running a React Application",
-        "summary": "Development server, hot reloading, port binding, and build scripts.",
-        "explanation": "Understanding `npm run dev` for dev server with HMR, `npm run build` for optimized production bundles, and `npm run preview` / `npm start` for production serving.",
+        "summary": "ការដំណើរការ development server, hot reloading (HMR), port binding និង build scripts ផ្សេងៗ។",
+        "explanation": "ការយល់ដឹងអំពី scripts ដូចជា `npm run dev` សម្រាប់ dev server ជាមួយ HMR, `npm run build` សម្រាប់បង្កើត optimized production bundles, និង `npm run preview` ឬ `npm start` សម្រាប់ serve production build ក្នុងការធ្វើតេស្ត។",
         "keyPoints": [
-          "Fast Refresh maintains component state across edits.",
-          "Source maps provide clean browser DevTools debugging."
+          "Fast Refresh រក្សាទុក state របស់ component មិនឱ្យបាត់បង់ពេលកែប្រែកូដ (instant feedback)។",
+          "Source maps ជួយសម្រួលដល់ការ debug កូដនៅលើ browser DevTools ឱ្យឃើញកូដដើមយ៉ាងច្បាស់។"
         ],
         "codeSnippet": "// package.json scripts\n\"scripts\": {\n  \"dev\": \"next dev\",           // Starts local development server\n  \"build\": \"next build\",       // Compiles production-optimized code\n  \"start\": \"next start\",       // Runs production server\n  \"lint\": \"eslint .\"           // Code quality inspection\n}",
         "codeLanguage": "tsx",
@@ -176,16 +176,16 @@ export const modulesData: ModuleItem[] = [
         "id": "m01-10",
         "number": "10",
         "title": "Understanding the React Development Environment",
-        "summary": "React DevTools, React StrictMode, and double-rendering behavior.",
-        "explanation": "In development, React StrictMode deliberately mounts and unmounts components twice to uncover accidental side-effects and missing cleanup functions in effects.",
+        "summary": "ការយល់ដឹងពី React DevTools, React StrictMode និងការស្វែងយល់ពី double-rendering behavior ក្នុង development។",
+        "explanation": "នៅក្នុង development mode ឧបករណ៍ React StrictMode នឹង mount និង unmount components ចំនួនពីរដងដោយចេតនា ដើម្បីជួយស្វែងរក accidental side-effects និងកន្លែងដែលខ្វះ cleanup functions នៅក្នុង effects។",
         "keyPoints": [
-          "StrictMode runs effects twice in dev mode to enforce idempotency.",
-          "React Developer Tools browser extension allows inspecting props, state, and render timelines."
+          "StrictMode ដំណើរការ effects ពីរដងក្នុង dev mode ដើម្បីពង្រឹងគោលការណ៍ idempotency នៃកូដ។",
+          "React Developer Tools browser extension អនុញ្ញាតឱ្យ developer ពិនិត្យមើល props, state, និង render timeline នៃ components នីមួយៗបានយ៉ាងងាយស្រួល។"
         ],
         "codeSnippet": "// React.StrictMode wraps your application tree\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);",
         "codeLanguage": "tsx",
         "codeTitle": "React StrictMode Wrapper",
-        "proTip": "If you see your console.log executing twice in useEffect, remember that is intentional in StrictMode to verify your effect cleanup!"
+        "proTip": "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅក្នុង `useEffect` កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីផ្ទៀងផ្ទាត់ cleanup function របស់អ្នកប៉ុណ្ណោះ!"
       }
     ]
   },
@@ -194,19 +194,19 @@ export const modulesData: ModuleItem[] = [
     "number": "02",
     "title": "JSX (JavaScript XML)",
     "category": "Fundamentals",
-    "summary": "Master JSX syntax rules, expressions, attribute mappings, inline styling, Fragments, and conditional rendering techniques.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី JSX syntax rules ការប្រើប្រាស់ expressions ការកំណត់ attributes ការប្រើប្រាស់ inline styles, Fragments និងបច្ចេកទេស conditional rendering ទំនើបៗ។",
     "iconName": "Code2",
     "topics": [
       {
         "id": "m02-01",
         "number": "01",
         "title": "What is JSX?",
-        "summary": "Syntax extension for JavaScript that looks like HTML and compiles to React elements.",
-        "explanation": "JSX provides a syntactic sugar on top of `React.createElement` or modern JSX runtime transforms (`jsx(...)`). It allows writing component markup directly alongside rendering logic.",
+        "summary": "Syntax extension សម្រាប់ JavaScript ដែលមានទម្រង់ដូច HTML និងត្រូវបាន compile ទៅជា React elements។",
+        "explanation": "JSX (JavaScript XML) គឺជា syntactic sugar មួយដែលដំណើរការនៅលើ `React.createElement` ឬ modern JSX runtime transforms (`jsx(...)`)។ វាអនុញ្ញាតឱ្យ developer សរសេរ markup រួមគ្នាជាមួយ logic នៃការ render នៅកន្លែងតែមួយយ៉ាងមានរបៀបរៀបរយ។",
         "keyPoints": [
-          "JSX compiles to JavaScript functions before reaching the browser.",
-          "Allows seamless embedding of full JavaScript expressions within `{}`.",
-          "Provides compile-time syntax validation and auto-escaping against XSS attacks."
+          "JSX ត្រូវបាន compiler (ដូចជា Babel ឬ SWC/esbuild) បំប្លែងទៅជា JavaScript functions ធម្មតាមុនពេលកូដទៅដល់ browser។",
+          "អនុញ្ញាតឱ្យយើងបង្កប់កូដ JavaScript expressions យ៉ាងទូលំទូលាយនៅខាងក្នុងរង្វង់ក្រចកទោល `{}`។",
+          "ផ្តល់នូវ compile-time syntax validation និងការពារប្រព័ន្ធពីការវាយប្រហារ XSS (Cross-Site Scripting) ដោយស្វ័យប្រវត្តិតាមរយៈ auto-escaping។"
         ],
         "codeSnippet": "// JSX syntax:\nconst element = <h1 className=\"text-2xl font-bold\">Hello React</h1>;\n\n// What the compiler outputs behind the scenes:\nimport { jsx as _jsx } from \"react/jsx-runtime\";\nconst element = _jsx(\"h1\", { \n  className: \"text-2xl font-bold\", \n  children: \"Hello React\" \n});",
         "codeLanguage": "tsx",
@@ -216,12 +216,12 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-02",
         "number": "02",
         "title": "JSX Syntax",
-        "summary": "Tags must close, self-closing tags, and single parent element rules.",
-        "explanation": "Unlike relaxed HTML parsers, JSX follows strict XML parsing rules: all void tags (`<img />`, `<input />`, `<br />`) must be explicitly self-closed, and every component must return a single top-level node.",
+        "summary": "គោលការណ៍បិទ tags ឱ្យបានត្រឹមត្រូវ self-closing tags និងច្បាប់នៃ single parent element។",
+        "explanation": "ខុសពី HTML parser ធម្មតា JSX អនុវត្តតាមច្បាប់ XML parsing យ៉ាងតឹងរ៉ឹង៖ រាល់ void tags (ដូចជា `<img />`, `<input />`, `<br />`) ត្រូវតែបិទជា self-closed ដោយផ្ទាល់ ហើយរាល់ component ទាំងអស់ត្រូវតែ return នូវ single top-level node តែមួយគត់។",
         "keyPoints": [
-          "Tags are case-sensitive: lowercase tags are HTML elements, uppercase are React components.",
-          "Self-closing is required for empty tags: `<input />`, `<img />`.",
-          "Single parent node return is enforced by JavaScript syntax (a function can only return one value)."
+          "Tags មានលក្ខណៈ case-sensitive៖ tags អក្សរតូចជា standard HTML elements (ដូចជា `div`, `span`) រីឯ tags អក្សរធំដើមជា React components (ដូចជា `<Header />`, `<Card />`)។",
+          "Self-closing គឺតម្រូវជាចាំបាច់សម្រាប់ tags ដែលគ្មាន children៖ ឧទាហរណ៍ `<input />`, `<img />`។",
+          "ច្បាប់ single parent node return កើតឡើងដោយសារ JavaScript syntax ផ្ទាល់ (ព្រោះ function មួយអាច return តម្លៃបានតែមួយប៉ុណ្ណោះក្នុងពេលតែមួយ)។"
         ],
         "codeSnippet": "// ❌ Invalid JSX: Unclosed tag and multiple root nodes\n/*\nreturn (\n  <h1>Title</h1>\n  <input type=\"text\">\n);\n*/\n\n// ✅ Valid JSX: Wrapped in a single parent or Fragment with closed tags\nexport function SearchBar() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <h1 className=\"text-lg font-medium\">Search:</h1>\n      <input \n        type=\"text\" \n        placeholder=\"Type here...\" \n        className=\"px-3 py-1 border rounded\"\n      />\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
@@ -231,11 +231,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-03",
         "number": "03",
         "title": "JSX Expressions",
-        "summary": "Embedding dynamic expressions, calculations, and variables inside curly braces.",
-        "explanation": "Any valid JavaScript expression (variables, math, function calls, ternary operators) can be placed between curly braces `{}` inside JSX.",
+        "summary": "ការបង្កប់ dynamic expressions ការគណនា និង variables នៅខាងក្នុង curly braces `{}`។",
+        "explanation": "រាល់ JavaScript expression ត្រឹមត្រូវ (ដូចជា variables, ការគណនាគណិតវិទ្យា, function calls, ឬ ternary operators) អាចដាក់នៅចន្លោះសញ្ញា curly braces `{}` នៅក្នុង JSX បានទាំងអស់។",
         "keyPoints": [
-          "Statements like `if`, `for`, `while` are not valid inside `{}`; use ternary or array methods instead.",
-          "Numbers and strings render directly; booleans, `null`, and `undefined` are safely ignored."
+          "Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ array methods (ដូចជា `.map()`, `.filter()`) ជំនួសវិញ។",
+          "Numbers និង strings នឹងត្រូវបង្ហាញលើ UI ដោយផ្ទាល់ ចំណែកឯ booleans (`true`/`false`), `null`, និង `undefined` ត្រូវបាន React ignore (មិនបង្ហាញលើអេក្រង់ឡើយ)។"
         ],
         "codeSnippet": "export function UserGreeting({ username, points }: { username: string; points: number }) {\n  const multiplier = 1.5;\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg text-white\">\n      <h2 className=\"text-xl\">Welcome back, {username.toUpperCase()}!</h2>\n      <p className=\"text-slate-400\">\n        Adjusted score: {(points * multiplier).toFixed(0)} XP\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
@@ -245,11 +245,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-04",
         "number": "04",
         "title": "JavaScript inside JSX",
-        "summary": "Function invocation, template literals, and object references.",
-        "explanation": "Curly braces act as a portal into pure JavaScript. You can call utility functions, format dates, and calculate styles dynamically.",
+        "summary": "ការហៅ function ដំណើរការ ការប្រើប្រាស់ template literals និងការទាញយក object properties។",
+        "explanation": "សញ្ញា Curly braces `{}` ដើរតួជាស្ពានតភ្ជាប់ទៅកាន់ពិភព JavaScript ពេញលេញ។ អ្នកអាចហៅ utility functions, format កាលបរិច្ឆេទ, និងគណនា styling បានយ៉ាងរលូន។",
         "keyPoints": [
-          "Format dates and numbers on the fly with standard JavaScript functions.",
-          "Pass callback references directly to handlers without invoking them immediately."
+          "អាច format កាលបរិច្ឆេទ និងលេខទិន្នន័យបានភ្លាមៗដោយប្រើ standard JavaScript APIs ដូចជា `Intl.NumberFormat` ឬ `Intl.DateTimeFormat`។",
+          "បញ្ជូន callback function reference ទៅកាន់ event handlers ដោយផ្ទាល់ ដោយមិនត្រូវហៅ function ដំណើរការភ្លាមៗពេល render នោះឡើយ (ឧ. `onClick={handleClick}` មិនមែន `onClick={handleClick()}`)។"
         ],
         "codeSnippet": "export function ProductPrice({ priceInCents }: { priceInCents: number }) {\n  const formatCurrency = (cents: number) => \n    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);\n\n  return (\n    <span className=\"font-semibold text-emerald-400\">\n      {formatCurrency(priceInCents)}\n    </span>\n  );\n}",
         "codeLanguage": "tsx",
@@ -259,11 +259,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-05",
         "number": "05",
         "title": "JSX Attributes",
-        "summary": "camelCase property naming conventions and boolean props.",
-        "explanation": "HTML attributes are converted to camelCase in JSX (e.g. `onclick` becomes `onClick`, `tabindex` becomes `tabIndex`). Passing a prop without a value defaults to `true`.",
+        "summary": "ក្បួនដាក់ឈ្មោះ attributes ជាទម្រង់ camelCase និងការប្រើប្រាស់ boolean props។",
+        "explanation": "HTML attributes ត្រូវបានបំប្លែងទៅជាទម្រង់ camelCase នៅក្នុង JSX (ឧទាហរណ៍ `onclick` ក្លាយជា `onClick`, `tabindex` ក្លាយជា `tabIndex`)។ ការបញ្ជូន prop ដោយមិនកំណត់តម្លៃ គឺមានតម្លៃស្មើនឹង `true` ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Attribute names follow camelCase: `tabIndex`, `autoFocus`, `aria-*` (hyphenated).",
-          "Boolean shorthand: `<button disabled>` is equivalent to `<button disabled={true}>`."
+          "ឈ្មោះ attribute ត្រូវតែសរសេរជា camelCase៖ ដូចជា `tabIndex`, `autoFocus`, `aria-*` (រក្សាសញ្ញា hyphen ដដែល)។",
+          "Boolean prop shorthand៖ ការសរសេរ `<button disabled>` គឺដូចគ្នាទៅនឹងការសរសេរ `<button disabled={true}>`។"
         ],
         "codeSnippet": "<input \n  id=\"user-email\"\n  type=\"email\"\n  autoComplete=\"email\"\n  autoFocus\n  disabled={false}\n  tabIndex={1}\n  aria-label=\"User Email Address\"\n  className=\"w-full px-4 py-2 border rounded-md\"\n/>",
         "codeLanguage": "tsx",
@@ -273,11 +273,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-06",
         "number": "06",
         "title": "className",
-        "summary": "Why React uses className instead of class for CSS styling.",
-        "explanation": "Because `class` is a reserved keyword in JavaScript (used to declare ES6 classes), React uses `className` to specify CSS classes on elements.",
+        "summary": "មូលហេតុដែល React ប្រើប្រាស់ className ជំនួសឱ្យ class សម្រាប់កំណត់ CSS styling។",
+        "explanation": "ដោយសារពាក្យ `class` គឺជា reserved keyword នៅក្នុង JavaScript (ប្រើសម្រាប់ប្រកាស ES6 classes) ដូចនេះ React ប្រើប្រាស់ `className` ជំនួសវិញសម្រាប់កំណត់ឈ្មោះ CSS classes ទៅលើ elements។",
         "keyPoints": [
-          "Use `className` for all CSS classes.",
-          "Use the `cn()` utility (clsx + tailwind-merge) for conditional and dynamic class names."
+          "ប្រើ `className` សម្រាប់គ្រប់ CSS classes ទាំងអស់។",
+          "ប្រើ utility function `cn()` (ការរួមបញ្ចូលគ្នារវាង `clsx` និង `tailwind-merge`) ដើម្បីគ្រប់គ្រង conditional និង dynamic class names ឱ្យមានរបៀបរៀបរយ និងមិនជាន់គ្នា។"
         ],
         "codeSnippet": "import { cn } from \"@/lib/utils\";\n\nexport function StatusBadge({ status }: { status: \"active\" | \"inactive\" | \"pending\" }) {\n  return (\n    <span\n      className={cn(\n        \"px-2.5 py-1 text-xs font-semibold rounded-full border\",\n        status === \"active\" && \"bg-emerald-950/50 text-emerald-400 border-emerald-800\",\n        status === \"pending\" && \"bg-amber-950/50 text-amber-400 border-amber-800\",\n        status === \"inactive\" && \"bg-rose-950/50 text-rose-400 border-rose-800\"\n      )}\n    >\n      {status.toUpperCase()}\n    </span>\n  );\n}",
         "codeLanguage": "tsx",
@@ -287,11 +287,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-07",
         "number": "07",
         "title": "Inline Styles",
-        "summary": "Passing style objects with camelCase keys to the style attribute.",
-        "explanation": "Inline styles in JSX require a JavaScript object where CSS properties are camelCased (e.g., `backgroundColor` instead of `background-color`) and numeric units default to pixels (`px`).",
+        "summary": "ការបញ្ជូន style objects ដោយប្រើ camelCase keys ទៅកាន់ style attribute។",
+        "explanation": "Inline styles នៅក្នុង JSX តម្រូវឱ្យបញ្ជូនជា JavaScript object ដែល CSS properties ត្រូវតែសរសេរជា camelCase (ឧទាហរណ៍ `backgroundColor` ជំនួសឱ្យ `background-color`) ហើយតម្លៃលេខសុទ្ធនឹងត្រូវគិតជា pixels (`px`) ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Inline styles use double curly braces: `style={{ margin: 16, backgroundColor: '#000' }}`.",
-          "Inline styles do not support media queries or pseudo-classes (:hover, :focus); use Tailwind CSS or CSS modules instead."
+          "Inline styles ប្រើប្រាស់ double curly braces៖ `style={{ margin: 16, backgroundColor: '#000' }}` (ស្រទាប់ក្រៅជា JSX expression, ស្រទាប់ក្នុងជា JavaScript object)។",
+          "Inline styles មិនគាំទ្រ media queries ឬ pseudo-classes (`:hover`, `:focus`) ឡើយ ដូច្នេះគួរប្រើ Tailwind CSS ឬ CSS modules សម្រាប់ styling ទូទៅ។"
         ],
         "codeSnippet": "export function CustomProgressBar({ progress }: { progress: number }) {\n  return (\n    <div className=\"w-full bg-slate-800 h-3 rounded-full overflow-hidden\">\n      <div \n        className=\"h-full bg-blue-500 transition-all duration-300\"\n        style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}\n      />\n    </div>\n  );\n}",
         "codeLanguage": "tsx",
@@ -301,11 +301,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-08",
         "number": "08",
         "title": "JSX Fragments",
-        "summary": "Grouping lists of children without adding extra wrapper DOM nodes.",
-        "explanation": "Fragments (`<React.Fragment>` or shorthand `<>...</>`) allow returning multiple sibling components without injecting superfluous `<div>` tags into the DOM layout.",
+        "summary": "ការប្រមូលផ្តុំបញ្ជី children ច្រើនបញ្ចូលគ្នាដោយមិនបាច់បន្ថែម wrapper DOM nodes ឥតប្រយោជន៍។",
+        "explanation": "Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling components ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។",
         "keyPoints": [
-          "Shorthand syntax `<>...</>` adds zero DOM overhead.",
-          "Use the full `<React.Fragment key={item.id}>` when rendering fragments in a loop that requires a `key` prop."
+          "ការសរសេរកាត់ `<>...</>` មិនបង្កើត DOM node បន្ថែមឡើយ (zero DOM overhead)។",
+          "ត្រូវប្រើ syntax ពេញ `<React.Fragment key={item.id}>` នៅពេល render fragments នៅក្នុង loop ដែលទាមទារឱ្យមាន `key` prop។"
         ],
         "codeSnippet": "import React from 'react';\n\nexport function TableRowGroup({ items }: { items: { id: string; label: string; value: string }[] }) {\n  return (\n    <dl className=\"grid grid-cols-2 gap-2\">\n      {items.map((item) => (\n        // Key is required here, so use explicit React.Fragment:\n        <React.Fragment key={item.id}>\n          <dt className=\"text-slate-400 font-medium\">{item.label}</dt>\n          <dd className=\"text-white text-right\">{item.value}</dd>\n        </React.Fragment>\n      ))}\n    </dl>\n  );\n}",
         "codeLanguage": "tsx",
@@ -315,11 +315,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-09",
         "number": "09",
         "title": "Conditional JSX",
-        "summary": "Ternary operators, early returns, and logical short-circuiting.",
-        "explanation": "Conditional rendering lets you display different UI branches based on state or prop flags using ternary expressions `? :` or early `return` guards.",
+        "summary": "ការប្រើប្រាស់ ternary operators, early returns និង logical short-circuiting។",
+        "explanation": "Conditional rendering អនុញ្ញាតឱ្យយើងបង្ហាញ UI ផ្សេងៗគ្នាទៅតាមតម្លៃនៃ state ឬ props ដោយប្រើប្រាស់ ternary expressions (`? :`) ឬ early `return` guards។",
         "keyPoints": [
-          "Use early return guards for loading and error UI to keep main component logic clean.",
-          "Use ternary operators for inline binary toggles."
+          "ប្រើ early return guards សម្រាប់ loading state និង error UI ដើម្បីរក្សាកូដក្នុង main component ឱ្យខ្លី និងងាយអាន។",
+          "ប្រើ ternary operators សម្រាប់ការប្តូរ UI ពីរសណ្ឋាន (binary toggles) នៅខាងក្នុង markup ដោយផ្ទាល់។"
         ],
         "codeSnippet": "export function AuthButton({ isLoggedIn, onLogin, onLogout }: AuthButtonProps) {\n  return isLoggedIn ? (\n    <button onClick={onLogout} className=\"px-3 py-1.5 bg-rose-600 text-white rounded\">\n      Sign Out\n    </button>\n  ) : (\n    <button onClick={onLogin} className=\"px-3 py-1.5 bg-blue-600 text-white rounded\">\n      Sign In\n    </button>\n  );\n}",
         "codeLanguage": "tsx",
@@ -329,11 +329,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-10",
         "number": "10",
         "title": "Rendering Dynamic Content",
-        "summary": "Displaying dynamic strings, numbers, dates, and localized strings.",
-        "explanation": "Components take props or state and dynamically reflect updates in real-time.",
+        "summary": "ការបង្ហាញ dynamic strings, numbers, dates និង localized strings នៅលើ UI។",
+        "explanation": "Components ទទួលយក props ឬ state ហើយធ្វើបច្ចុប្បន្នភាពលើ UI ភ្លាមៗ (real-time) នៅពេលដែលទិន្នន័យមានការប្រែប្រួល។",
         "keyPoints": [
-          "Values automatically re-render when referenced state changes.",
-          "Interpolate dynamic attributes like `alt`, `href`, and `src` with `{variable}`."
+          "តម្លៃនៅលើ UI នឹង re-render ដោយស្វ័យប្រវត្តិនៅពេលដែល state ឬ props ដែលវាប្រើមានការផ្លាស់ប្តូរ។",
+          "អាចបញ្ចូល dynamic attributes ដូចជា `alt`, `href`, និង `src` ដោយប្រើប្រាស់ `{variable}` ឬ template literals។"
         ],
         "codeSnippet": "export function Avatar({ user }: { user: { name: string; avatarUrl: string } }) {\n  return (\n    <img \n      src={user.avatarUrl} \n      alt={`Profile picture of ${user.name}`}\n      className=\"w-10 h-10 rounded-full border-2 border-emerald-500\" \n    />\n  );\n}",
         "codeLanguage": "tsx",
@@ -343,12 +343,12 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-11",
         "number": "11",
         "title": "JSX Rules",
-        "summary": "Strict closing tags, single root element, and property casing rules.",
-        "explanation": "JSX requires: 1) Return a single root element (or Fragment); 2) Close all tags; 3) camelCase most attributes; 4) Quote static strings with `\"\"` and dynamic expressions with `{}`.",
+        "summary": "សេចក្តីសង្ខេបអំពីច្បាប់បិទ tags ឱ្យបានម៉ត់ចត់ single root element និង property casing។",
+        "explanation": "គោលការណ៍គ្រឹះ ៤ យ៉ាងនៃ JSX រួមមាន៖ ១) ត្រូវតែ return single root element (ឬ Fragment); ២) ត្រូវតែបិទ tags ទាំងអស់ (close all tags); ៣) ប្រើប្រាស់ camelCase សម្រាប់ attributes ស្ទើរតែទាំងអស់; ៤) ប្រើ double quotes `\"\"` សម្រាប់ static strings និង curly braces `{}` សម្រាប់ dynamic expressions។",
         "keyPoints": [
-          "Single parent element required.",
-          "All elements must be closed explicitly.",
-          "Style must be an object, not a CSS string."
+          "ទាមទារ single parent element ជាដាច់ខាត។",
+          "រាល់ HTML elements ទាំងអស់ត្រូវតែបិទ (closed explicitly)។",
+          "Attribute `style` ត្រូវតែជា JavaScript object មិនមែនជា CSS string ធម្មតាឡើយ។"
         ],
         "codeSnippet": "// Summary of Core JSX Rules:\n// 1. Single Root\nreturn <div className=\"card\">...</div>;\n\n// 2. Closed Tags\n<input type=\"text\" />\n\n// 3. camelCase\n<button onClick={handleClick} tabIndex={0}>Click</button>\n\n// 4. Expression braces\n<h1>{`Hello ${user.name}`}</h1>",
         "codeLanguage": "tsx",
@@ -358,16 +358,16 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-12",
         "number": "12",
         "title": "Common JSX Mistakes",
-        "summary": "Rendering 0 with logical AND `&&`, forgetting keys, and class vs className.",
-        "explanation": "The most famous JSX gotcha is `count && <Component />`: if `count` is `0`, JavaScript evaluates `0 && ...` to `0`, causing the number `0` to render on screen rather than nothing!",
+        "summary": "កំហុសទូទៅដូចជាការ render ចេញលេខ 0 ពេលប្រើ logical AND `&&`, ការភ្លេចដាក់ keys និងបញ្ហា class vs className។",
+        "explanation": "កំហុសដែលកើតឡើងញឹកញាប់បំផុតនៅក្នុង JSX គឺការប្រើប្រាស់ `count && <Component />`៖ ប្រសិនបើ `count` ស្មើ `0` នោះ JavaScript នឹង evaluate `0 && ...` ស្មើ `0` ដែលធ្វើឱ្យលេខ `0` បង្ហាញលើអេក្រង់ជំនួសឱ្យការលាក់បាត់!",
         "keyPoints": [
-          "Never write `items.length && <List />` -> use `items.length > 0 && <List />` or ternary `items.length ? <List /> : null`.",
-          "Avoid using array index as `key` when list items can be reordered or removed."
+          "មិនត្រូវសរសេរ `items.length && <List />` ឡើយ -> ត្រូវប្តូរមកប្រើ `items.length > 0 && <List />` ឬប្រើ ternary `items.length ? <List /> : null`។",
+          "ជៀសវាងការប្រើប្រាស់ array index ជា `key` នៅពេលដែលបញ្ជីទិន្នន័យអាចមានការតម្រៀបឡើងវិញ (reorder) ឬលុបចេញ (remove)។"
         ],
         "codeSnippet": "// ❌ Pitfall: Renders the number \"0\" onto the webpage!\n{messages.length && <Badge count={messages.length} />}\n\n// ✅ Fix: Use explicit boolean comparison:\n{messages.length > 0 && <Badge count={messages.length} />}\n\n// ✅ Alternative: Use ternary operator:\n{messages.length > 0 ? <Badge count={messages.length} /> : null}",
         "codeLanguage": "tsx",
         "codeTitle": "The Logical AND Zero Bug",
-        "pitfall": "Writing `{count && <Element />}` when count is 0 prints the character '0' to your UI. Always use `{count > 0 && <Element />}`."
+        "pitfall": "ការសរសេរ `{count && <Element />}` នៅពេលដែល count មានតម្លៃស្មើ 0 នឹងបណ្តាលឱ្យអក្សរលេខ '0' លេចឡើងនៅលើ UI។ ត្រូវប្រើ `{count > 0 && <Element />}` ជានិច្ច។"
       }
     ]
   },

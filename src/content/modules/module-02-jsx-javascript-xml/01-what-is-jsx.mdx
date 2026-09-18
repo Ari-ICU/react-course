@@ -5,19 +5,19 @@ title: "What is JSX?"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Syntax extension for JavaScript that looks like HTML and compiles to React elements."
+summary: "Syntax extension សម្រាប់ JavaScript ដែលមានទម្រង់ដូច HTML និងត្រូវបាន compile ទៅជា React elements។"
 codeTitle: "JSX Compilation Target"
 ---
 
 # What is JSX?
 
-JSX provides a syntactic sugar on top of `React.createElement` or modern JSX runtime transforms (`jsx(...)`). It allows writing component markup directly alongside rendering logic.
+JSX (JavaScript XML) គឺជា syntactic sugar មួយដែលដំណើរការនៅលើ `React.createElement` ឬ modern JSX runtime transforms (`jsx(...)`)។ វាអនុញ្ញាតឱ្យ developer សរសេរ markup រួមគ្នាជាមួយ logic នៃការ render នៅកន្លែងតែមួយយ៉ាងមានរបៀបរៀបរយ។
 
 ### Key Concepts & Rules:
 
-- JSX compiles to JavaScript functions before reaching the browser.
-- Allows seamless embedding of full JavaScript expressions within `{}`.
-- Provides compile-time syntax validation and auto-escaping against XSS attacks.
+- JSX ត្រូវបាន compiler (ដូចជា Babel ឬ SWC/esbuild) បំប្លែងទៅជា JavaScript functions ធម្មតាមុនពេលកូដទៅដល់ browser។
+- អនុញ្ញាតឱ្យយើងបង្កប់កូដ JavaScript expressions យ៉ាងទូលំទូលាយនៅខាងក្នុងរង្វង់ក្រចកទោល `{}`។
+- ផ្តល់នូវ compile-time syntax validation និងការពារប្រព័ន្ធពីការវាយប្រហារ XSS (Cross-Site Scripting) ដោយស្វ័យប្រវត្តិតាមរយៈ auto-escaping។
 
 ### Code Example: JSX Compilation Target
 

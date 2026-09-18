@@ -5,19 +5,19 @@ title: "Vite + React"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "How Vite leverages native ESM and Rollup for instant developer builds."
+summary: "របៀបដែល Vite ប្រើប្រាស់ native ESM និង Rollup ដើម្បីផ្តល់ build speed យ៉ាងលឿនបំផុត។"
 codeTitle: "Vite Configuration with Path Aliases"
 ---
 
 # Vite + React
 
-Vite serves source code over native ESM during development, skipping bundle steps. This ensures Hot Module Replacement (HMR) stays instant regardless of application size.
+Vite បម្រើ source code តាមរយៈ native ESM ក្នុងពេល development ដោយមិនចាំបាច់ឆ្លងកាត់ដំណើរការ bundle ទាំងមូលជាមុនឡើយ។ យន្តការនេះធានាថា Hot Module Replacement (HMR) នៅតែមានល្បឿនលឿនភ្លាមៗ ទោះបីជា application មានទំហំធំប៉ុនណាក៏ដោយ។
 
 ### Key Concepts & Rules:
 
-- Instant server start without pre-bundling the whole project.
-- Fast TypeScript transpilation via esbuild.
-- Optimized Rollup production bundling for small bundle sizes.
+- ចាប់ផ្តើម dev server ភ្លាមៗ (instant server start) ដោយមិនចាំបាច់ pre-bundle project ទាំងមូល។
+- ដំណើរការ transpile TypeScript យ៉ាងលឿនដោយប្រើប្រាស់ esbuild។
+- ដំណើរការ Rollup production bundling ប្រកបដោយប្រសិទ្ធភាពដើម្បីឱ្យ production code មានទំហំតូចបំផុត។
 
 ### Code Example: Vite Configuration with Path Aliases
 

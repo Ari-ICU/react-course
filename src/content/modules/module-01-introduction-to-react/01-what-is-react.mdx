@@ -5,22 +5,22 @@ title: "What is React?"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "A declarative, component-based JavaScript library for building interactive user interfaces created by Meta."
-proTip: "Think in state transitions: define how your data changes, and let React calculate and apply the necessary DOM transformations."
-pitfall: "Do not attempt to directly query or mutate DOM elements (e.g. innerHTML or querySelector) inside React components."
+summary: "JavaScript library បែប declarative និង component-based សម្រាប់បង្កើត interactive user interfaces បង្កើតឡើងដោយ Meta។"
+proTip: "គិតតាមបែប state transitions៖ កំណត់ទិន្នន័យរបស់អ្នកថាតើវាផ្លាស់ប្តូរយ៉ាងដូចម្តេច ហើយទុកឱ្យ React គណនា និងអនុវត្តការផ្លាស់ប្តូរនៅលើ DOM ដោយស្វ័យប្រវត្តិ។"
+pitfall: "កុំព្យាយាមប្រើ DOM query ឬ mutate DOM elements ដោយផ្ទាល់ (ដូចជា innerHTML ឬ querySelector) នៅខាងក្នុង React components ឱ្យសោះ។"
 codeTitle: "Imperative vs Declarative Example"
 ---
 
 # What is React?
 
-React is an open-source JavaScript library focused exclusively on the view layer (V in MVC). Instead of manually querying and mutating DOM nodes using imperative APIs like `document.getElementById` and `element.appendChild`, React introduces a declarative paradigm where you describe what the UI should look like for any given state, and React handles the low-level DOM mutations efficiently.
+React គឺជា open-source JavaScript library មួយដែលផ្តោតយ៉ាងសំខាន់ទៅលើ view layer (អក្សរ V នៅក្នុង MVC architecture)។ ជំនួសឱ្យការសរសេរកូដបែប manual ដើម្បី query និង mutate DOM nodes ដោយផ្ទាល់តាមរយៈ imperative APIs ដូចជា `document.getElementById` ឬ `element.appendChild` React ណែនាំនូវវិធីសាស្ត្រថ្មីហៅថា declarative paradigm ដែលអ្នកគ្រាន់តែកំណត់ថាតើ UI គួរមានទម្រង់បែបណាសម្រាប់ state នីមួយៗ ហើយ React នឹងទទួលបន្ទុកធ្វើបច្ចុប្បន្នភាពលើ low-level DOM ដោយស្វ័យប្រវត្តិ និងមានប្រសិទ្ធភាពខ្ពស់។
 
 ### Key Concepts & Rules:
 
-- Declarative UI: Describe the desired final UI state, not step-by-step imperative mutations.
-- Component-Based: Break complex screens into isolated, reusable, and testable building blocks.
-- Learn Once, Write Anywhere: Core mental models transfer to React Native for mobile apps and Next.js for full-stack apps.
-- Unidirectional Data Flow: Data flows down through props, while events bubble up through callbacks.
+- Declarative UI: កំណត់ទម្រង់ UI ចុងក្រោយដែលចង់បាន (State) ដោយមិនចាំបាច់សរសេរកូដបញ្ជា DOM មួយជំហានម្តងៗឡើយ។
+- Component-Based: បំបែកអេក្រង់ដ៏ស្មុគស្មាញឱ្យទៅជាបំណែកតូចៗ (components) ដែលឯករាជ្យ អាចយកមកប្រើឡើងវិញបាន (reusable) និងងាយស្រួលក្នុងការធ្វើ test។
+- Learn Once, Write Anywhere: គោលគំនិត mental models របស់ React អាចយកទៅអនុវត្តលើ React Native សម្រាប់ mobile apps និង Next.js សម្រាប់ full-stack web apps។
+- Unidirectional Data Flow: ទិន្នន័យហូរចុះក្រោមតាមរយៈ props ចំណែកឯ events ហូរឡើងលើវិញតាមរយៈ callbacks។
 
 ### Code Example: Imperative vs Declarative Example
 

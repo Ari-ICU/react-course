@@ -5,19 +5,19 @@ title: "JSX Syntax"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Tags must close, self-closing tags, and single parent element rules."
+summary: "គោលការណ៍បិទ tags ឱ្យបានត្រឹមត្រូវ self-closing tags និងច្បាប់នៃ single parent element។"
 codeTitle: "Valid JSX Syntax Rules"
 ---
 
 # JSX Syntax
 
-Unlike relaxed HTML parsers, JSX follows strict XML parsing rules: all void tags (`<img />`, `<input />`, `<br />`) must be explicitly self-closed, and every component must return a single top-level node.
+ខុសពី HTML parser ធម្មតា JSX អនុវត្តតាមច្បាប់ XML parsing យ៉ាងតឹងរ៉ឹង៖ រាល់ void tags (ដូចជា `<img />`, `<input />`, `<br />`) ត្រូវតែបិទជា self-closed ដោយផ្ទាល់ ហើយរាល់ component ទាំងអស់ត្រូវតែ return នូវ single top-level node តែមួយគត់។
 
 ### Key Concepts & Rules:
 
-- Tags are case-sensitive: lowercase tags are HTML elements, uppercase are React components.
-- Self-closing is required for empty tags: `<input />`, `<img />`.
-- Single parent node return is enforced by JavaScript syntax (a function can only return one value).
+- Tags មានលក្ខណៈ case-sensitive៖ tags អក្សរតូចជា standard HTML elements (ដូចជា `div`, `span`) រីឯ tags អក្សរធំដើមជា React components (ដូចជា `<Header />`, `<Card />`)។
+- Self-closing គឺតម្រូវជាចាំបាច់សម្រាប់ tags ដែលគ្មាន children៖ ឧទាហរណ៍ `<input />`, `<img />`។
+- ច្បាប់ single parent node return កើតឡើងដោយសារ JavaScript syntax ផ្ទាល់ (ព្រោះ function មួយអាច return តម្លៃបានតែមួយប៉ុណ្ណោះក្នុងពេលតែមួយ)។
 
 ### Code Example: Valid JSX Syntax Rules
 

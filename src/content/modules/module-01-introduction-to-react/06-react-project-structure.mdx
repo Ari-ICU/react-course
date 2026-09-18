@@ -5,19 +5,19 @@ title: "React Project Structure"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "Scalable folder layouts for enterprise React and Next.js applications."
+summary: "ការរៀបចំ folder structure កម្រិត enterprise សម្រាប់ scalable React និង Next.js applications។"
 codeTitle: "Recommended React Folder Structure"
 ---
 
 # React Project Structure
 
-Adopting a domain-driven or feature-based structure prevents monolith folders. Organize by `components/`, `features/`, `hooks/`, `services/`, and `types/`.
+ការជ្រើសរើសទម្រង់ domain-driven ឬ feature-based folder structure ជួយការពារកុំឱ្យ project ក្លាយជា monolith រញ៉េរញ៉ៃ។ គួររៀបចំ folder ទៅតាម `components/`, `features/`, `hooks/`, `services/`, និង `types/`។
 
 ### Key Concepts & Rules:
 
-- Colocate component styles, tests, and sub-components when feature-specific.
-- Shared generic UI primitives live in `@/components/ui`.
-- Business domain features live in `@/features/<feature-name>`.
+- រក្សាទុក component styles, tests, និង sub-components ជាមួយគ្នានៅក្នុង feature folder ជាក់លាក់មួយ (colocation)។
+- រក្សាទុក reusable UI primitives ទូទៅនៅក្នុង `@/components/ui`។
+- រក្សាទុក business domain logic នៅក្នុង `@/features/<feature-name>`។
 
 ### Code Example: Recommended React Folder Structure
 

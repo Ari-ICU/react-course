@@ -5,18 +5,18 @@ title: "JSX Fragments"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Grouping lists of children without adding extra wrapper DOM nodes."
+summary: "ការប្រមូលផ្តុំបញ្ជី children ច្រើនបញ្ចូលគ្នាដោយមិនបាច់បន្ថែម wrapper DOM nodes ឥតប្រយោជន៍។"
 codeTitle: "React Fragments with Keys"
 ---
 
 # JSX Fragments
 
-Fragments (`<React.Fragment>` or shorthand `<>...</>`) allow returning multiple sibling components without injecting superfluous `<div>` tags into the DOM layout.
+Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling components ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Shorthand syntax `<>...</>` adds zero DOM overhead.
-- Use the full `<React.Fragment key={item.id}>` when rendering fragments in a loop that requires a `key` prop.
+- ការសរសេរកាត់ `<>...</>` មិនបង្កើត DOM node បន្ថែមឡើយ (zero DOM overhead)។
+- ត្រូវប្រើ syntax ពេញ `<React.Fragment key={item.id}>` នៅពេល render fragments នៅក្នុង loop ដែលទាមទារឱ្យមាន `key` prop។
 
 ### Code Example: React Fragments with Keys
 

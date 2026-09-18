@@ -5,21 +5,21 @@ title: "React Features"
 moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
-summary: "JSX, Virtual DOM, React Fiber Reconciler, and Server Components."
-proTip: "Use functional updates `setCount(prev => prev + 1)` whenever the new state derives directly from the previous state."
+summary: "លក្ខណៈពិសេសចម្បងៗរួមមាន JSX, Virtual DOM, React Fiber Reconciler និង Server Components។"
+proTip: "គួរប្រើ functional updates `setCount(prev => prev + 1)` ជានិច្ចនៅពេលដែល state ថ្មីអាស្រ័យដោយផ្ទាល់លើតម្លៃនៃ state ចាស់។"
 codeTitle: "Automatic Batching in React"
 ---
 
 # React Features
 
-Key features include JSX syntax extension, the Virtual DOM diffing algorithm that minimizes expensive browser layout recalcs, and React 19 concurrent features with automatic batching.
+ចំណុចពិសេសស្នូលរបស់ React រួមមាន syntax extension គឺ JSX ក្បួនដោះស្រាយ Virtual DOM diffing algorithm ដែលកាត់បន្ថយការគណនា layout ឡើងវិញរបស់ browser ព្រមទាំងសមត្ថភាព concurrent features ទំនើបក្នុង React 19 ជាមួយ automatic batching។
 
 ### Key Concepts & Rules:
 
-- JSX: Expressive HTML-in-JavaScript syntax with compile-time type safety.
-- Virtual DOM & Reconciliation: Memory representation compared via O(n) diffing heuristics.
-- Hooks: Functional state and lifecycle logic sharing without class components.
-- Automatic Batching: Groups multiple state updates together to prevent superfluous re-renders.
+- JSX: គឺជា syntax extension ដែលអនុញ្ញាតឱ្យយើងសរសេរ HTML នៅខាងក្នុង JavaScript ជាមួយ compile-time type safety ខ្ពស់។
+- Virtual DOM & Reconciliation: រចនាសម្ព័ន្ធ memory representation ត្រូវបានប្រៀបធៀបដោយប្រើ O(n) diffing heuristics ដើម្បីធ្វើបច្ចុប្បន្នភាពតែចំណុចណាដែលចាំបាច់។
+- Hooks: មុខងារចែករំលែក stateful logic និង lifecycle ដោយប្រើ functional components ដោយមិនចាំបាច់ប្រើ class components។
+- Automatic Batching: ប្រមូលផ្តុំការ update state ច្រើនបញ្ចូលគ្នាក្នុងពេលតែមួយ ដើម្បីកាត់បន្ថយការ re-render ឥតប្រយោជន៍។
 
 ### Code Example: Automatic Batching in React
 

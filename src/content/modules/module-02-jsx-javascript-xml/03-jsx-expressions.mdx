@@ -5,18 +5,18 @@ title: "JSX Expressions"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Embedding dynamic expressions, calculations, and variables inside curly braces."
+summary: "ការបង្កប់ dynamic expressions ការគណនា និង variables នៅខាងក្នុង curly braces `{}`។"
 codeTitle: "Expressions Inside JSX"
 ---
 
 # JSX Expressions
 
-Any valid JavaScript expression (variables, math, function calls, ternary operators) can be placed between curly braces `{}` inside JSX.
+រាល់ JavaScript expression ត្រឹមត្រូវ (ដូចជា variables, ការគណនាគណិតវិទ្យា, function calls, ឬ ternary operators) អាចដាក់នៅចន្លោះសញ្ញា curly braces `{}` នៅក្នុង JSX បានទាំងអស់។
 
 ### Key Concepts & Rules:
 
-- Statements like `if`, `for`, `while` are not valid inside `{}`; use ternary or array methods instead.
-- Numbers and strings render directly; booleans, `null`, and `undefined` are safely ignored.
+- Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ array methods (ដូចជា `.map()`, `.filter()`) ជំនួសវិញ។
+- Numbers និង strings នឹងត្រូវបង្ហាញលើ UI ដោយផ្ទាល់ ចំណែកឯ booleans (`true`/`false`), `null`, និង `undefined` ត្រូវបាន React ignore (មិនបង្ហាញលើអេក្រង់ឡើយ)។
 
 ### Code Example: Expressions Inside JSX
 

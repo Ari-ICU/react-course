@@ -5,18 +5,18 @@ title: "JavaScript inside JSX"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Function invocation, template literals, and object references."
+summary: "ការហៅ function ដំណើរការ ការប្រើប្រាស់ template literals និងការទាញយក object properties។"
 codeTitle: "JavaScript Functions in JSX"
 ---
 
 # JavaScript inside JSX
 
-Curly braces act as a portal into pure JavaScript. You can call utility functions, format dates, and calculate styles dynamically.
+សញ្ញា Curly braces `{}` ដើរតួជាស្ពានតភ្ជាប់ទៅកាន់ពិភព JavaScript ពេញលេញ។ អ្នកអាចហៅ utility functions, format កាលបរិច្ឆេទ, និងគណនា styling បានយ៉ាងរលូន។
 
 ### Key Concepts & Rules:
 
-- Format dates and numbers on the fly with standard JavaScript functions.
-- Pass callback references directly to handlers without invoking them immediately.
+- អាច format កាលបរិច្ឆេទ និងលេខទិន្នន័យបានភ្លាមៗដោយប្រើ standard JavaScript APIs ដូចជា `Intl.NumberFormat` ឬ `Intl.DateTimeFormat`។
+- បញ្ជូន callback function reference ទៅកាន់ event handlers ដោយផ្ទាល់ ដោយមិនត្រូវហៅ function ដំណើរការភ្លាមៗពេល render នោះឡើយ (ឧ. `onClick={handleClick}` មិនមែន `onClick={handleClick()}`)។
 
 ### Code Example: JavaScript Functions in JSX
 

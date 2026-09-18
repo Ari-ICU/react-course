@@ -5,18 +5,18 @@ title: "Inline Styles"
 moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
-summary: "Passing style objects with camelCase keys to the style attribute."
+summary: "ការបញ្ជូន style objects ដោយប្រើ camelCase keys ទៅកាន់ style attribute។"
 codeTitle: "Inline Style Object in JSX"
 ---
 
 # Inline Styles
 
-Inline styles in JSX require a JavaScript object where CSS properties are camelCased (e.g., `backgroundColor` instead of `background-color`) and numeric units default to pixels (`px`).
+Inline styles នៅក្នុង JSX តម្រូវឱ្យបញ្ជូនជា JavaScript object ដែល CSS properties ត្រូវតែសរសេរជា camelCase (ឧទាហរណ៍ `backgroundColor` ជំនួសឱ្យ `background-color`) ហើយតម្លៃលេខសុទ្ធនឹងត្រូវគិតជា pixels (`px`) ដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- Inline styles use double curly braces: `style={{ margin: 16, backgroundColor: '#000' }}`.
-- Inline styles do not support media queries or pseudo-classes (:hover, :focus); use Tailwind CSS or CSS modules instead.
+- Inline styles ប្រើប្រាស់ double curly braces៖ `style={{ margin: 16, backgroundColor: '#000' }}` (ស្រទាប់ក្រៅជា JSX expression, ស្រទាប់ក្នុងជា JavaScript object)។
+- Inline styles មិនគាំទ្រ media queries ឬ pseudo-classes (`:hover`, `:focus`) ឡើយ ដូច្នេះគួរប្រើ Tailwind CSS ឬ CSS modules សម្រាប់ styling ទូទៅ។
 
 ### Code Example: Inline Style Object in JSX
 
