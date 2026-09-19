@@ -5,24 +5,27 @@ title: "Access Tokens vs Refresh Tokens"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Short-lived access tokens (15m) + long-lived refresh tokens (7d)."
+summary: "ការប្រើប្រាស់ Short-lived Access Tokens (15 នាទី) រួមជាមួយ Long-lived Refresh Tokens (7 ថ្ងៃ) ដើម្បីបង្កើនសុវត្ថិភាព។"
+proTip: "Access Token មានអាយុកាលខ្លីដើម្បីកាត់បន្ថយហានិភ័យប្រសិនបើត្រូវ Hacker លួចបាន។ Refresh Token ត្រូវបានប្រើដើម្បីស្នើសុំ Access Token ថ្មីស្ងាត់ៗនៅ Background ដោយមិនចាំបាច់តម្រូវឱ្យ User វាយ Password ចូលម្តងទៀតឡើយ។"
 codeTitle: "Token Rotation Lifecycle"
 ---
 
 # Access Tokens vs Refresh Tokens
 
-Access tokens expire quickly to minimize the window of vulnerability if intercepted. The refresh token requests a new access token seamlessly without forcing the user to log in again.
+យុទ្ធសាស្ត្រសុវត្ថិភាពកម្រិតស្តង់ដារឧស្សាហកម្មគឺការប្រើប្រាស់ Token ពីរប្រភេទរួមគ្នា៖ **Access Token** (មានអាយុកាលខ្លី ដូចជា 15 នាទី) ប្រើសម្រាប់ភ្ជាប់ជាមួយរាល់ HTTP Requests ទៅកាន់ Protected Endpoints។ ចំណែកឯ **Refresh Token** (មានអាយុកាលវែង ដូចជា 7 ទៅ 30 ថ្ងៃ) ត្រូវបានរក្សាទុកក្នុង HttpOnly Cookie ដើម្បីស្នើសុំ Access Token ថ្មីពេលអាចាស់ផុតកំណត់។
 
 ### Key Concepts & Rules:
 
-- Access token: Sent in `Authorization: Bearer <token>` header.
-- Refresh token: Sent to `/auth/refresh` endpoint.
+- **Access Token**: បញ្ជូនទៅក្នុង Header `Authorization: Bearer <token>`។
+- **Refresh Token**: រក្សាទុកដោយសុវត្ថិភាព និងផ្ញើទៅកាន់ Endpoint `/api/auth/refresh` តែមួយគត់។
+- **Token Rotation**: រាល់ពេល Refresh Server នឹងចេញទាំង Access Token ថ្មី និង Refresh Token ថ្មីដើម្បីការពារ Replay Attacks។
 
 ### Code Example: Token Rotation Lifecycle
 
 ```jsx
-// Token Lifecycle:
-// 1. User logs in -> Receives Access Token (15m) + Refresh Token (7d)
-// 2. Access Token expires -> App calls /refresh -> Receives new Access Token
-// 3. User remains logged in seamlessly!
+// វដ្តជីវិតនៃ Token (Token Lifecycle):
+// 1. User ចូលប្រើប្រាស់ -> ទទួលបាន Access Token (15 នាទី) + Refresh Token (7 ថ្ងៃ)
+// 2. ក្រោយ 15 នាទី Access Token ផុតកំណត់ -> API ឆ្លើយតប 401
+// 3. កម្មវិធីហៅ POST /api/auth/refresh ដោយស្វ័យប្រវត្តិនូវ Background
+// 4. ទទួលបាន Access Token ថ្មីភ្លាមៗ -> User អាចបន្តប្រើប្រាស់ដោយរលូន មិនបាច់ Login ឡើងវិញឡើយ!
 ```

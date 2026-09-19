@@ -5,24 +5,44 @@ title: "Role-Based Access Control (RBAC)"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Restricting UI elements based on user roles."
+summary: "ការកំណត់សិទ្ធិ និងលាក់/បង្ហាញ UI Elements ផ្អែកលើតួនាទីរបស់អ្នកប្រើប្រាស់ (Admin, Editor, Student)។"
+pitfall: "ការលាក់ប៊ូតុងនៅលើ Frontend (UI RBAC) គឺសម្រាប់តែបទពិសោធន៍អ្នកប្រើប្រាស់ (UX) ប៉ុណ្ណោះ! អ្នកត្រូវតែការពារ និងផ្ទៀងផ្ទាត់សិទ្ធិនៅលើ Backend API ជានិច្ច ព្រោះ User អាចកែប្រែកូដ JavaScript ក្នុង Browser បាន។"
 codeTitle: "Declarative RoleGate Component"
 ---
 
 # Role-Based Access Control (RBAC)
 
-Hide or disable actions (like Delete, Edit, or Admin Dashboard) based on whether `user.role === 'admin'`.
+នៅក្នុងកម្មវិធីដែលមានអ្នកប្រើប្រាស់ច្រើនប្រភេទ (ដូចជា Admin, Instructor, Student) យើងត្រូវគ្រប់គ្រងសិទ្ធិមើលឃើញ និងដំណើរការមុខងារផ្សេងៗ។ ការបង្កើត Declarative Component ដូចជា `<RoleGate>` ឬ Custom Hook `useHasPermission()` ជួយឱ្យកូដ UI មានភាពងាយស្រួលអាន និងមានសុវត្ថិភាព។
 
 ### Key Concepts & Rules:
 
-- Always enforce authorization on the backend; frontend RBAC is solely for UX!
+- **Frontend RBAC**: ជួយបង្កើន UX ដោយលាក់ប៊ូតុង ឬតំណភ្ជាប់ដែល User គ្មានសិទ្ធិប្រើប្រាស់។
+- **Backend Authorization**: គឺជាកន្លែងការពារសុវត្ថិភាពពិតប្រាកដដែលមិនអាចខ្វះបាន។
+- ប្រើ Array នៃ Roles (ឧ. `allowedRoles={['admin', 'editor']}`) ដើម្បីភាពបត់បែន។
 
 ### Code Example: Declarative RoleGate Component
 
 ```jsx
-export function RoleGate({ allowedRoles, children }: { allowedRoles: string[]; children: React.ReactNode }) {
+import { useAuth } from '@/features/auth/hooks/useAuth';
+
+interface RoleGateProps {
+  allowedRoles: Array<'admin' | 'instructor' | 'student'>;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+}
+
+export function RoleGate({ allowedRoles, children, fallback = null }: RoleGateProps) {
   const { user } = useAuth();
-  if (!user || !allowedRoles.includes(user.role)) return null;
+
+  if (!user || !allowedRoles.includes(user.role)) {
+    return <>{fallback}</>;
+  }
+
   return <>{children}</>;
 }
+
+// របៀបប្រើប្រាស់៖
+// <RoleGate allowedRoles={['admin']}>
+//   <button className="bg-red-600">លុបវគ្គសិក្សាចោល</button>
+// </RoleGate>
 ```

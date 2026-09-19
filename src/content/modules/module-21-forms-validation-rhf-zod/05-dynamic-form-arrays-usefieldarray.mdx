@@ -5,34 +5,67 @@ title: "Dynamic Form Arrays (useFieldArray)"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Adding and removing items dynamically (e.g. invoice line items)."
+summary: "ការគ្រប់គ្រងបញ្ជី Input ដែលអាចបន្ថែម និងលុបបានតាមចិត្ត (Dynamic Fields) ដូចជា Invoice Items ឬ Phone Numbers តាមរយៈ useFieldArray។"
+proTip: "នៅពេល Map បង្ហាញ fields ត្រូវតែប្រើ `field.id` ជា React `key` ជានិច្ច (ដូចជា `key={field.id}`) កុំប្រើ `index` ជា key ឱ្យសោះ ដើម្បីកុំឱ្យមានបញ្ហាច្រឡំតម្លៃពេលលុប ឬរៀបលំដាប់ជួរឡើងវិញ!"
 codeTitle: "Dynamic Inputs with useFieldArray"
 ---
 
 # Dynamic Form Arrays (useFieldArray)
 
-`useFieldArray` provides methods (`append`, `remove`, `move`) to manage dynamic lists of inputs inside a single form.
+នៅក្នុងទម្រង់បែបបទស្មុគស្មាញ (ដូចជា ការបង្កើតវិក្កយបត្រ Invoice ដែលមានទំនិញច្រើនមុខ ឬការបញ្ចូលលេខទូរស័ព្ទច្រើនខ្សែ) ចំនួន Inputs មិនថេរនោះទេ។ Hook `useFieldArray` ផ្តល់នូវអនុគមន៍ជំនួយជាច្រើនដូចជា `append()`, `remove()`, `insert()`, និង `move()` សម្រាប់គ្រប់គ្រង Dynamic Array Fields យ៉ាងមានប្រសិទ្ធភាព។
 
 ### Key Concepts & Rules:
 
-- Crucial for order forms, tags, and multi-phone inputs.
+- ភ្ជាប់ជាមួយ `control` ពី `useForm()` និងបញ្ជាក់ `name` នៃ Array Property។
+- ត្រូវតែប្រើ `key={field.id}` ជានិច្ចនៅពេល render បញ្ជីជួរដេក។
+- ចុះឈ្មោះ Field តាមរយៈ Template Literal៖ `register(\`items.\${index}.name\`)`។
 
 ### Code Example: Dynamic Inputs with useFieldArray
 
 ```jsx
-import { useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 
-const { fields, append, remove } = useFieldArray({
-  control,
-  name: "phoneNumbers",
-});
+export function InvoiceForm() {
+  const { register, control, handleSubmit } = useForm();
+  
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  });
 
-// Render dynamic items:
-{fields.map((field, index) => (
-  <div key={field.id} className="flex gap-2">
-    <input {...register(`phoneNumbers.${index}.number`)} />
-    <button type="button" onClick={() => remove(index)}>Remove</button>
-  </div>
-))}
-<button type="button" onClick={() => append({ number: '' })}>Add Phone</button>
+  return (
+    <div className="space-y-3">
+      {fields.map((field, index) => (
+        <div key={field.id} className="flex gap-2 items-center">
+          <input 
+            {...register(`items.${index}.description`)} 
+            placeholder="ឈ្មោះទំនិញ" 
+            className="bg-slate-900 border border-slate-700 p-2 rounded"
+          />
+          <input 
+            type="number"
+            {...register(`items.${index}.price`)} 
+            placeholder="តម្លៃ" 
+            className="w-24 bg-slate-900 border border-slate-700 p-2 rounded"
+          />
+          <button 
+            type="button" 
+            onClick={() => remove(index)}
+            className="text-red-400 hover:text-red-300"
+          >
+            លុប
+          </button>
+        </div>
+      ))}
+
+      <button 
+        type="button" 
+        onClick={() => append({ description: '', price: 0 })}
+        className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-sm"
+      >
+        + បន្ថែមទំនិញ
+      </button>
+    </div>
+  );
+}
 ```

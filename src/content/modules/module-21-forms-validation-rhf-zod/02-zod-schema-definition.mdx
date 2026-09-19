@@ -5,17 +5,20 @@ title: "Zod Schema Definition"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Declaring type-safe runtime validation schemas."
+summary: "ការប្រកាស Type-safe Runtime Validation Schema ជាមួយបណ្ណាល័យ Zod និងការទាញយក Type ដោយស្វ័យប្រវត្តិតាមរយៈ z.infer។"
+proTip: "ជាមួយ Zod អ្នកកំណត់ Schema តែម្តងគត់ គឺទទួលបានទាំង Runtime Validation ត្រួតពិនិត្យទិន្នន័យ (Min length, Email, Number coerce) និងទទួលបាន Static TypeScript Type តាមរយៈ `z.infer<typeof schema>` ដោយមិនចាំបាច់សរសេរ Type ស្ទួនឡើយ (Single Source of Truth)។"
 codeTitle: "Complete Zod Validation Schema"
 ---
 
 # Zod Schema Definition
 
-Zod lets you declare schemas with chainable validators. TypeScript types are automatically inferred via `z.infer<typeof schema>`.
+**Zod** គឺជាបណ្ណាល័យ TypeScript-first សម្រាប់ធ្វើការប្រកាស និងផ្ទៀងផ្ទាត់រចនាសម្ព័ន្ធទិន្នន័យ (Schema Validation) នៅពេល Runtime។ តាមរយៈ Zod យើងអាចកំណត់លក្ខខណ្ឌសុពលភាពច្បាស់លាស់ (ដូចជា ប្រវែងអក្សរ, ទម្រង់អ៊ីមែល, ដែនកំណត់លេខ) ព្រមទាំងសារ Error ផ្ទាល់ខ្លួនជាភាសាខ្មែរ ហើយទាញយក TypeScript Type ដោយស្វ័យប្រវត្តិតាមរយៈ `z.infer`។
 
 ### Key Concepts & Rules:
 
-- Single source of truth for both TypeScript types and runtime validation.
+- **Single Source of Truth**: កំណត់ Schema តែម្តង បានទាំង Validation Logic និង TypeScript Interface។
+- ប្រើ `z.coerce.number()` ដើម្បីបំប្លែងតម្លៃ Input String ទៅជា Number ដោយស្វ័យប្រវត្តិ។
+- ប្រើ `z.infer<typeof schema>` ដើម្បីទាញយក Static TypeScript Type ដោយស្វ័យប្រវត្តិ។
 
 ### Code Example: Complete Zod Validation Schema
 
@@ -23,14 +26,17 @@ Zod lets you declare schemas with chainable validators. TypeScript types are aut
 import { z } from 'zod';
 
 export const studentSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  gpa: z.coerce.number().min(0, "GPA >= 0").max(4.0, "GPA <= 4.0"),
-  major: z.enum(["Computer Science", "Software Engineering", "Cybersecurity"]),
+  name: z.string().min(2, 'ឈ្មោះត្រូវតែមានយ៉ាងតិច ២ តួអក្សរ'),
+  email: z.string().email('ទម្រង់អ៊ីមែលមិនត្រឹមត្រូវឡើយ'),
+  gpa: z.coerce.number().min(0, 'GPA ត្រូវធំជាង ឬស្មើ ០').max(4.0, 'GPA ត្រូវតូចជាង ឬស្មើ ៤.០'),
+  major: z.enum(['Computer Science', 'Software Engineering', 'Cybersecurity'], {
+    errorMap: () => ({ message: 'សូមជ្រើសរើសជំនាញសិក្សា' }),
+  }),
   agreeTerms: z.literal(true, {
-    errorMap: () => ({ message: "You must accept terms" }),
+    errorMap: () => ({ message: 'អ្នកត្រូវតែយល់ព្រមតាមលក្ខខណ្ឌ' }),
   }),
 });
 
+// ទាញយក TypeScript Type ដោយស្វ័យប្រវត្តិពី Schema:
 export type StudentFormData = z.infer<typeof studentSchema>;
 ```

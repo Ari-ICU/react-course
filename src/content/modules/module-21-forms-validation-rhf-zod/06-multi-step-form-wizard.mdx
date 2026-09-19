@@ -5,25 +5,52 @@ title: "Multi-Step Form Wizard"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Building multi-page registration pipelines with step validation."
+summary: "ការបែងចែក Form វែងៗជាដំណាក់កាលៗ (Multi-step) និងការផ្ទៀងផ្ទាត់ទិន្នន័យជាជំហានៗដោយប្រើ trigger()។"
+proTip: "ប្រើប្រាស់ `await trigger(['field1', 'field2'])` ដើម្បីផ្ទៀងផ្ទាត់តែវាលទិន្នន័យក្នុងជំហានបច្ចុប្បន្នប៉ុណ្ណោះ មុនពេលអនុញ្ញាតឱ្យ User ចុចប៊ូតុង 'បន្ទាប់' (Next Step) ដោយមិនបាច់ Validate Form ទាំងមូលក្នុងពេលតែមួយឡើយ។"
 codeTitle: "Step Validation with trigger()"
 ---
 
 # Multi-Step Form Wizard
 
-Break long forms into steps (Personal Info -> Address -> Payment -> Review). Validate only the current step's fields using `trigger(['name', 'email'])` before advancing.
+នៅពេលដែល Form មានទិន្នន័យច្រើន ដូចជាដំណើរការចុះឈ្មោះក្រុមហ៊ុន ឬការទិញទំនិញ (Checkout) ការបំបែក Form នោះជាដំណាក់កាលៗ (Wizard: ព័ត៌មានផ្ទាល់ខ្លួន -> អាសយដ្ឋាន -> ការទូទាត់) ជួយសម្រួលដល់ User យ៉ាងខ្លាំង។ អនុគមន៍ `trigger()` របស់ React Hook Form អនុញ្ញាតឱ្យយើង Validate តែ Fields នៃជំហានបច្ចុប្បន្នមុននឹងបន្តទៅមុខ។
 
 ### Key Concepts & Rules:
 
-- Preserves entered data across steps in a single form instance.
-- Validate current step before allowing 'Next' button click.
+- រក្សាទុកទិន្នន័យទាំងអស់ក្នុង `useForm` តែមួយគត់ ដើម្បីកុំឱ្យបាត់បង់ទិន្នន័យពេលប្តូរជំហាន។
+- ប្រើ `trigger(['fieldA', 'fieldB'])` ដើម្បីពិនិត្យសុពលភាពមុននឹងអនុញ្ញាតឱ្យទៅ `step + 1`។
+- ហៅ `handleSubmit(onSubmit)` ចុងក្រោយបង្អស់តែនៅជំហានបញ្ចប់ប៉ុណ្ណោះ។
 
 ### Code Example: Step Validation with trigger()
 
 ```jsx
-const handleNextStep = async () => {
-  // Only validate step 1 fields:
-  const isValid = await trigger(['name', 'email']);
-  if (isValid) setStep(s => s + 1);
-};
+export function MultiStepWizard() {
+  const [step, setStep] = useState(1);
+  const { register, trigger, handleSubmit } = useForm<FormFields>();
+
+  const handleNext = async () => {
+    let isValid = false;
+    
+    if (step === 1) {
+      // ផ្ទៀងផ្ទាត់តែ Field ក្នុងជំហានទី ១ ប៉ុណ្ណោះ
+      isValid = await trigger(['name', 'email']);
+    } else if (step === 2) {
+      // ផ្ទៀងផ្ទាត់តែ Field ក្នុងជំហានទី ២
+      isValid = await trigger(['address', 'city']);
+    }
+
+    if (isValid) {
+      setStep((s) => s + 1);
+    }
+  };
+
+  return (
+    <div>
+      {step === 1 && <StepOne register={register} />}
+      {step === 2 && <StepTwo register={register} />}
+      {step === 3 && <StepThree register={register} />}
+      
+      <button type="button" onClick={handleNext}>បន្ទាប់ ➔</button>
+    </div>
+  );
+}
 ```

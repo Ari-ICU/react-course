@@ -3,24 +3,24 @@ id: "module-20"
 number: "20"
 title: "Authentication"
 category: "Enterprise & Production"
-summary: "JWT tokens, refresh tokens, HttpOnly cookies, protected routes, role-based access control (RBAC), and 401 interceptors."
+summary: "ស្វែងយល់ពីប្រព័ន្ធផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ (Authentication), JWT Tokens, Refresh Tokens, HttpOnly Cookies, Protected Routes, Role-Based Access Control (RBAC), និង 401 Interceptors។"
 iconName: "ShieldCheck"
 totalLessons: 10
 ---
 
 # Module 20: Authentication
 
-JWT tokens, refresh tokens, HttpOnly cookies, protected routes, role-based access control (RBAC), and 401 interceptors.
+ស្វែងយល់ពីប្រព័ន្ធផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ (Authentication), JWT Tokens, Refresh Tokens, HttpOnly Cookies, Protected Routes, Role-Based Access Control (RBAC), និង 401 Interceptors។
 
 ## Module Syllabus (10 Lessons)
 
-- **Lesson 01**: Authentication Concepts - *Authentication vs authorization, sessions vs JWT tokens.*
-- **Lesson 02**: Login & Register UI - *Form design, password visibility toggles, and validation.*
-- **Lesson 03**: Authentication State - *Managing current session, user profile, and token in memory.*
-- **Lesson 04**: Protected Routes & Layouts - *Preventing unauthorized access to private pages.*
-- **Lesson 05**: Access Tokens vs Refresh Tokens - *Short-lived access tokens (15m) + long-lived refresh tokens (7d).*
-- **Lesson 06**: HttpOnly Cookies - *The most secure storage mechanism against XSS attacks.*
-- **Lesson 07**: Handling 401 Unauthorized - *Automatic token refresh queue with Axios interceptors.*
-- **Lesson 08**: Role-Based Access Control (RBAC) - *Restricting UI elements based on user roles.*
-- **Lesson 09**: Secure Logout - *Clearing tokens and invalidating server sessions.*
-- **Lesson 10**: Authentication Architecture - *Enterprise auth structure across hooks, stores, and interceptors.*
+- **Lesson 01**: Authentication Concepts - *ការស្វែងយល់ពីភាពខុសគ្នារវាង Authentication (អ្នកណា) និង Authorization (សិទ្ធិអ្វីខ្លះ), Sessions និង JWT Tokens។*
+- **Lesson 02**: Login & Register UI - *ការរចនា និងបង្កើតផ្ទាំង Login និង Register ជាមួយ Input Validation, Password Visibility Toggle, និង Loading States។*
+- **Lesson 03**: Authentication State - *ការគ្រប់គ្រង Session បច្ចុប្បន្ន, User Profile, និង Access Token នៅក្នុង Memory ជាមួយ Zustand ឬ Context។*
+- **Lesson 04**: Protected Routes & Layouts - *ការការពារទំព័រ Private និងការបញ្ជូន User ដែលមិនទាន់ Login ទៅកាន់ទំព័រ /login ដោយស្វ័យប្រវត្តិតាមរយៈ Layout Route។*
+- **Lesson 05**: Access Tokens vs Refresh Tokens - *ការប្រើប្រាស់ Short-lived Access Tokens (15 នាទី) រួមជាមួយ Long-lived Refresh Tokens (7 ថ្ងៃ) ដើម្បីបង្កើនសុវត្ថិភាព។*
+- **Lesson 06**: HttpOnly Cookies - *យន្តការរក្សាទុក Authentication Session ដ៏មានសុវត្ថិភាពបំផុតប្រឆាំងនឹងការវាយប្រហារ XSS Attacks។*
+- **Lesson 07**: Handling 401 Unauthorized - *ការបង្កើត Axios Response Interceptor សម្រាប់ស្ទាក់ចាប់កំហុស 401 និងធ្វើការ Refresh Token ដោយស្វ័យប្រវត្តិ។*
+- **Lesson 08**: Role-Based Access Control (RBAC) - *ការកំណត់សិទ្ធិ និងលាក់/បង្ហាញ UI Elements ផ្អែកលើតួនាទីរបស់អ្នកប្រើប្រាស់ (Admin, Editor, Student)។*
+- **Lesson 09**: Secure Logout - *ការចាកចេញដោយសុវត្ថិភាព៖ ការលុប Tokens, ការ Revoke Session លើ Server, និងការសម្អាត Query Cache។*
+- **Lesson 10**: Authentication Architecture - *ការរៀបចំរចនាសម្ព័ន្ធ Auth Feature កម្រិត Enterprise ឱ្យមានរបៀប (Hooks, Stores, Services, និង Guards)។*

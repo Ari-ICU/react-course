@@ -5,25 +5,42 @@ title: "Protected Routes & Layouts"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Preventing unauthorized access to private pages."
+summary: "ការការពារទំព័រ Private និងការបញ្ជូន User ដែលមិនទាន់ Login ទៅកាន់ទំព័រ /login ដោយស្វ័យប្រវត្តិតាមរយៈ Layout Route។"
+proTip: "នៅពេល Redirect user ទៅកាន់ `/login` ត្រូវភ្ជាប់ URL ដើមដែលពួកគេចង់ចូលមើលតាមរយៈ State ដូចជា `state={{ from: location }}` ដើម្បីឱ្យពួកគេអាចត្រឡប់មកទំព័រនោះវិញភ្លាមៗបន្ទាប់ពី Login ជោគជ័យ។"
 codeTitle: "Protected Layout Route"
 ---
 
 # Protected Routes & Layouts
 
-Gate entire layout route trees so that unauthenticated visitors are automatically forwarded to `/login`.
+នៅក្នុង Single Page Application ទំព័រមួយចំនួនដូចជា Dashboard, Profile, ឬ Settings ត្រូវតែការពារមិនឱ្យអ្នកដែលមិនទាន់ Login អាចចូលមើលបានឡើយ។ ការប្រើប្រាស់ **Protected Route Layout** ជាមួយ React Router អនុញ្ញាតឱ្យយើងត្រួតពិនិត្យ Auth State នៅកន្លែងតែមួយ និង Redirect ពួកគេទៅកាន់ `/login` ប្រសិនបើគ្មានសិទ្ធិ។
 
 ### Key Concepts & Rules:
 
-- Redirect preserves intended destination URL.
+- បង្ហាញ Loading Spinner ដរាបណា `isLoading` នៅជា `true` (កំពុងផ្ទៀងផ្ទាត់ Session ដំបូង)។
+- ប្រើ `<Navigate to="/login" state={{ from: location }} replace />` ដើម្បីបញ្ជូនទៅកាន់ទំព័រចូល។
+- ប្រើ `<Outlet />` ដើម្បី Render ទំព័រកូនចៅទាំងអស់នៅពេលដែល Auth State ត្រឹមត្រូវ។
 
 ### Code Example: Protected Layout Route
 
 ```jsx
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+
 export function ProtectedLayout() {
   const { isAuthenticated, isLoading } = useAuth();
-  if (isLoading) return <LoadingScreen />;
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  const location = useLocation();
+
+  // 1. កំពុងផ្ទៀងផ្ទាត់ Session ដំបូង
+  if (isLoading) {
+    return <div className="flex h-screen items-center justify-center">កំពុងផ្ទៀងផ្ទាត់...</div>;
+  }
+
+  // 2. បើមិនទាន់ Login បញ្ជូនទៅកាន់ /login ព្រមទាំងភ្ជាប់ location ដើម
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // 3. បើ Login រួចហើយ អនុញ្ញាតឱ្យចូលមើលទំព័រខាងក្នុង
   return <Outlet />;
 }
 ```

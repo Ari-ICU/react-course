@@ -5,31 +5,53 @@ title: "Handling 401 Unauthorized"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Automatic token refresh queue with Axios interceptors."
+summary: "ការបង្កើត Axios Response Interceptor សម្រាប់ស្ទាក់ចាប់កំហុស 401 និងធ្វើការ Refresh Token ដោយស្វ័យប្រវត្តិ។"
+proTip: "នៅពេលមាន API Requests ជាច្រើនបរាជ័យក្នុងពេលតែមួយដោយសារ Access Token ផុតកំណត់ ចូរប្រើ Request Queue ដើម្បីកុំឱ្យកម្មវិធីហៅ API `/refresh` ជាន់គ្នាដដែលៗច្រើនដង។"
 codeTitle: "Automatic 401 Token Refresh Interceptor"
 ---
 
 # Handling 401 Unauthorized
 
-When an API request returns 401, pause the failed requests, call `/refresh`, update the access token, and retry the original requests seamlessly.
+នៅពេលដែល Access Token ផុតកំណត់ Server នឹងឆ្លើយតបមកវិញនូវ Status Code `401 Unauthorized`។ តាមរយៈការរៀបចំ **Axios Response Interceptor** យើងអាចស្ទាក់ចាប់កំហុសនេះ រួចហៅ API សុំ Token ថ្មីដោយស្ងាត់ៗ ហើយបញ្ជូន Request ដើមដែលបរាជ័យនោះឡើងវិញ (Retry Request) ដោយ User មិនបាច់ដឹងខ្លួនឡើយ។
 
 ### Key Concepts & Rules:
 
-- Queue simultaneous requests while refresh is in flight to prevent duplicate refresh calls.
+- ពិនិត្យលក្ខខណ្ឌ `error.response?.status === 401` និង `!originalRequest._retry`។
+- ដាក់ទង់ `originalRequest._retry = true` ដើម្បីការពារ Infinite Loop។
+- ប្រសិនបើ Refresh Token ក៏ផុតកំណត់ដែរ ត្រូវធ្វើការ Logout និង Redirect ទៅកាន់ទំព័រ Login។
 
 ### Code Example: Automatic 401 Token Refresh Interceptor
 
 ```jsx
+import { apiClient } from '@/lib/apiClient';
+import { refreshAccessToken, logoutUser } from '@/features/auth/services/authService';
+
 apiClient.interceptors.response.use(
-  (res) => res,
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    // ប្រសិនបើ Error 401 ហើយមិនទាន់បានព្យាយាម Retry
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const newAccessToken = await refreshAuthToken();
-      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-      return apiClient(originalRequest); // Retry original request!
+
+      try {
+        // 1. ស្នើសុំ Access Token ថ្មីពី Server
+        const newAccessToken = await refreshAccessToken();
+        
+        // 2. ដាក់ Token ថ្មីចូលទៅក្នុង Header នៃ Request ដើម
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        
+        // 3. ហៅ Request ដើមម្តងទៀតដោយជោគជ័យ
+        return apiClient(originalRequest);
+      } catch (refreshError) {
+        // បើ Refresh បរាជ័យ បង្ខំឱ្យ Logout ភ្លាម
+        logoutUser();
+        window.location.href = '/login?session_expired=true';
+        return Promise.reject(refreshError);
+      }
     }
+
     return Promise.reject(error);
   }
 );

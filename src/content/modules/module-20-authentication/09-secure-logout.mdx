@@ -5,28 +5,43 @@ title: "Secure Logout"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Clearing tokens and invalidating server sessions."
+summary: "ការចាកចេញដោយសុវត្ថិភាព៖ ការលុប Tokens, ការ Revoke Session លើ Server, និងការសម្អាត Query Cache។"
+proTip: "កុំភ្លេចហៅ `queryClient.clear()` ឬ `queryClient.resetQueries()` ពេល Logout ដើម្បីលុបបំបាត់ទិន្នន័យសម្ងាត់ ឬព័ត៌មានផ្ទាល់ខ្លួនដែលសេសសល់ក្នុង Cache កុំឱ្យ User បន្ទាប់អាចមើលឃើញ!"
 codeTitle: "Complete Secure Logout Sequence"
 ---
 
 # Secure Logout
 
-On logout: 1) Call backend `/auth/logout` to revoke refresh token; 2) Clear client memory and storage; 3) Reset query cache; 4) Redirect to login.
+ដំណើរការ Logout ប្រកបដោយសុវត្ថិភាពមិនមែនត្រឹមតែជាការលុប State ក្នុង Browser ប៉ុណ្ណោះទេ។ វាទាមទារឱ្យមានការជូនដំណឹងទៅកាន់ Backend Server ដើម្បី Revoke/Blacklist Refresh Token, សម្អាត Storage ក្នុង Client, សម្អាត TanStack Query Cache, និងប្តូរទិសដៅទៅកាន់ទំព័រ Login។
 
 ### Key Concepts & Rules:
 
-- Clear TanStack Query cache on logout to avoid leaking user data to subsequent logins.
+- ហៅ API `POST /api/auth/logout` ដើម្បីឱ្យ Server លុប Session ឬ Refresh Cookie ចោល។
+- ហៅ `queryClient.clear()` ដើម្បីសម្អាតរាល់ទិន្នន័យសម្ងាត់ទាំងអស់ក្នុង RAM Cache។
+- Reset Zustand Auth Store ឱ្យមកសភាពដើម (`user: null`, `token: null`)។
 
 ### Code Example: Complete Secure Logout Sequence
 
 ```jsx
-const logout = async () => {
+import { apiClient } from '@/lib/apiClient';
+import { queryClient } from '@/lib/queryClient';
+import { useAuthStore } from '@/features/auth/store/useAuthStore';
+
+export async function secureLogout() {
   try {
+    // 1. បញ្ជូនសញ្ញាទៅ Backend ដើម្បី Revoke Refresh Token & សម្អាត Cookie
     await apiClient.post('/auth/logout');
+  } catch (error) {
+    console.warn('Logout API error, clearing local state anyway:', error);
   } finally {
-    queryClient.clear(); // Purge all cached user data!
-    useAuthStore.getState().reset();
+    // 2. សម្អាតរាល់ Cached Queries ក្នុង TanStack Query (ការពារការធ្លាយទិន្នន័យ)
+    queryClient.clear();
+
+    // 3. Reset Local Auth Store
+    useAuthStore.getState().clearAuth();
+
+    // 4. បញ្ជូន User ទៅកាន់ទំព័រ Login
     window.location.href = '/login';
   }
-};
+}
 ```

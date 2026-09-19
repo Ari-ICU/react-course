@@ -5,23 +5,27 @@ title: "React Hook Form + Zod Resolver"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Connecting Zod schemas to useForm."
+summary: "ការតភ្ជាប់ Zod Validation Schema ជាមួយ Hook useForm តាមរយៈ zodResolver។"
+proTip: "ការប្រើ `resolver: zodResolver(schema)` ធ្វើឱ្យ `handleSubmit(onSubmit)` ដំណើរការតែនៅពេលដែលទិន្នន័យទាំងអស់ឆ្លងកាត់ការផ្ទៀងផ្ទាត់របស់ Zod ដោយជោគជ័យប៉ុណ្ណោះ។ បើមានកំហុស វានឹង Populate ចូលក្នុង `formState.errors` ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "useForm with zodResolver"
 ---
 
 # React Hook Form + Zod Resolver
 
-Use `@hookform/resolvers/zod` to validate form state against your Zod schema on submit or blur.
+ការរួមបញ្ចូលគ្នារវាង React Hook Form និង Zod ត្រូវបានសម្រេចឡើងតាមរយៈកញ្ចប់ `@hookform/resolvers/zod`។ តាមរយៈការកំណត់ `resolver: zodResolver(mySchema)` នៅក្នុង Hook `useForm` រាល់ពេលដែល User ចុច Submit ឬចាកចេញពី Input (onBlur) Zod នឹងពិនិត្យសុពលភាព ហើយបញ្ជូន Error ចូលទៅក្នុង `formState.errors` ដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- Automatic typed submission handler `handleSubmit(onSubmit)`.
+- បញ្ជូន Generic Type `<StudentFormData>` ទៅកាន់ `useForm` ដើម្បីទទួលបាន Type-safety ពេញលេញ។
+- អនុគមន៍ `handleSubmit(onSubmit)` ធានាថា `onSubmit` នឹងត្រូវហៅតែពេលទិន្នន័យត្រឹមត្រូវ 100%។
+- ស្រង់យក `errors` និង `isSubmitting` ពី `formState` សម្រាប់គ្រប់គ្រង UI។
 
 ### Code Example: useForm with zodResolver
 
 ```jsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { studentSchema, type StudentFormData } from './studentSchema';
 
 export function StudentForm() {
   const {
@@ -39,10 +43,15 @@ export function StudentForm() {
   });
 
   const onSubmit = async (data: StudentFormData) => {
+    // data ទទួលបាន Type ត្រឹមត្រូវ 100% ពី Zod!
     await studentService.create(data);
-    reset();
+    reset(); // Reset form ក្រោយ save ជោគជ័យ
   };
 
-  return <form onSubmit={handleSubmit(onSubmit)}>...</form>;
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Inputs នានា... */}
+    </form>
+  );
 }
 ```

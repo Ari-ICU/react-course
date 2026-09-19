@@ -5,20 +5,24 @@ title: "Advanced React Forms"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Why uncontrolled forms with React Hook Form outperform controlled forms."
+summary: "មូលហេតុដែល Uncontrolled Forms ជាមួយ React Hook Form មានល្បឿនលឿនជាង Controlled Forms ធម្មតា។"
+proTip: "Controlled Forms ធម្មតា (`value` + `onChange` ជាមួយ `useState`) នឹងបង្ខំឱ្យ Component ទាំងមូល Re-render រាល់ពេល User ចុចវាយអក្សរមួយតួៗ! React Hook Form ប្រើ Uncontrolled Inputs តាមរយៈ DOM Refs ដែលធ្វើឱ្យគ្មាន typing lag ទាល់តែសោះ ទោះជា Form មានរាប់សិបវាលក៏ដោយ។"
 codeTitle: "Installing RHF and Zod"
 ---
 
 # Advanced React Forms
 
-Traditional controlled forms re-render the entire component on every keystroke. React Hook Form uses uncontrolled inputs under the hood, subscribing only to errors, which eliminates typing lag in large forms.
+នៅក្នុង React ការបង្កើត Form តាមបែបបុរាណ (Controlled Components ដោយប្រើ `useState` លើគ្រប់ Input) បង្កឱ្យមានបញ្ហា Performance យ៉ាងខ្លាំង៖ រាល់ពេល User ចុចវាយអក្សរមួយតួៗ Component ទាំងមូលត្រូវតែ Re-render ឡើងវិញ។ **React Hook Form (RHF)** ប្រើប្រាស់វិធីសាស្ត្រ Uncontrolled Inputs តាមរយៈ DOM Refs ដោយ Subscribe តែនៅពេលមានកំហុស Validation ប៉ុណ្ណោះ ដែលជួយលុបបំបាត់ Typing Lag ចោលទាំងស្រុង។
 
 ### Key Concepts & Rules:
 
-- Zero typing latency even in forms with 50+ fields.
+- គ្មានភាពយឺតយ៉ាវពេលវាយអក្សរ (Zero Typing Latency) ទោះបីជា Form មានរាប់សិប Field ក៏ដោយ។
+- កាត់បន្ថយចំនួន Re-renders នៃ Component ឱ្យនៅកម្រិតទាបបំផុត។
+- រួមបញ្ចូលគ្នាយ៉ាងរលូនជាមួយបណ្ណាល័យ Validation ដូចជា Zod តាមរយៈ Resolvers។
 
 ### Code Example: Installing RHF and Zod
 
-```jsx
+```bash
+# ដំឡើង React Hook Form, Zod, និង Hookform Resolvers
 npm install react-hook-form zod @hookform/resolvers
 ```

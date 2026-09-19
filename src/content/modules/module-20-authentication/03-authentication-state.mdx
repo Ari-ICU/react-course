@@ -5,24 +5,38 @@ title: "Authentication State"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Managing current session, user profile, and token in memory."
+summary: "ការគ្រប់គ្រង Session បច្ចុប្បន្ន, User Profile, និង Access Token នៅក្នុង Memory ជាមួយ Zustand ឬ Context។"
+pitfall: "ហាមដាច់ខាតកុំរក្សាទុក JWT Token ដែលមានសិទ្ធិខ្ពស់នៅក្នុង LocalStorage ប្រសិនបើកម្មវិធីរបស់អ្នកងាយរងគ្រោះដោយសារការវាយប្រហារ XSS (Cross-Site Scripting)! ការរក្សាទុកក្នុង Memory ឬ HttpOnly Cookies គឺមានសុវត្ថិភាពជាងឆ្ងាយណាស់។"
 codeTitle: "Auth State Shape"
 ---
 
 # Authentication State
 
-Store the access token in memory or secure storage, with user profile metadata exposed to the application.
+ការគ្រប់គ្រង Auth State ទាមទារឱ្យមានការរៀបចំទិន្នន័យច្បាស់លាស់ រួមមានព័ត៌មាន Profile របស់អ្នកប្រើប្រាស់ (`user`), ស្ថានភាពតភ្ជាប់ (`isAuthenticated`), កាលវិភាគផ្ទុកទិន្នន័យ (`isLoading`), និង Access Token សម្រាប់ធ្វើ Request ទៅកាន់ API។
 
 ### Key Concepts & Rules:
 
-- Security rule: Avoid storing raw JWT tokens in localStorage if vulnerable to XSS.
+- **In-Memory Storage**: រក្សាទុក Access Token ក្នុង JavaScript Memory (Zustand Store) ជួយការពារការលួចទិន្នន័យពី XSS Scripts។
+- ផ្តល់នូវ Flag `isLoading` (ឬ `isInitializing`) ដើម្បីការពារកុំឱ្យ UI លោតភ្លាមៗទៅកាន់ទំព័រ Login មុនពេល Refresh Session ចប់។
+- រក្សាទិន្នន័យ Profile ឱ្យស្របគ្នាជាមួយ State លើ Backend។
 
 ### Code Example: Auth State Shape
 
 ```jsx
-interface AuthState {
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'student' | 'instructor';
+  avatarUrl?: string;
+}
+
+export interface AuthState {
   user: UserProfile | null;
   token: string | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
+  setAuth: (user: UserProfile, token: string) => void;
+  clearAuth: () => void;
 }
 ```

@@ -5,25 +5,32 @@ title: "HttpOnly Cookies"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "The most secure storage mechanism against XSS attacks."
+summary: "យន្តការរក្សាទុក Authentication Session ដ៏មានសុវត្ថិភាពបំផុតប្រឆាំងនឹងការវាយប្រហារ XSS Attacks។"
+proTip: "HttpOnly Cookies មិនអាចអាន ឬកែប្រែដោយ JavaScript (`document.cookie`) ក្នុង Browser បានឡើយ ដូច្នេះទោះបីជាកម្មវិធីមានចន្លោះប្រហោង XSS ក៏ Hacker មិនអាចលួច Session Token បានដែរ។ កុំភ្លេចកំណត់ `withCredentials: true` ក្នុង Axios!"
 codeTitle: "Configuring Axios for HttpOnly Cookies"
 ---
 
 # HttpOnly Cookies
 
-HttpOnly cookies cannot be read by JavaScript `document.cookie`. This prevents cross-site scripting (XSS) attacks from stealing authentication sessions.
+**HttpOnly Cookie** គឺជាទម្រង់ Cookie ពិសេសដែលត្រូវបានកំណត់ដោយ Server តាមរយៈ Header `Set-Cookie: ...; HttpOnly; Secure; SameSite=Strict`។ លក្ខណៈពិសេសរបស់វាគឺ JavaScript ក្នុង Browser មិនអាចអានតម្លៃតាមរយៈ `document.cookie` បានឡើយ ដែលជាខែលការពារដ៏រឹងមាំបំផុតប្រឆាំងនឹង Cross-Site Scripting (XSS)។
 
 ### Key Concepts & Rules:
 
-- Browser sends cookie automatically with `credentials: 'include'`.
-- Requires CORS configuration with `withCredentials: true`.
+- Browser នឹងភ្ជាប់ Cookie នេះទៅកាន់ Server ដោយស្វ័យប្រវត្តិនូវរាល់ Request។
+- តម្រូវឱ្យបើក CORS Configuration: `credentials: 'include'` ឬ `withCredentials: true`។
+- ត្រូវកំណត់ `SameSite=Lax` ឬ `SameSite=Strict` ដើម្បីការពារការវាយប្រហារ CSRF។
 
 ### Code Example: Configuring Axios for HttpOnly Cookies
 
 ```jsx
-// Axios configuration for HttpOnly cookie sessions:
+import axios from 'axios';
+
+// ការកំណត់រចនាសម្ព័ន្ធ Axios សម្រាប់ទទួល និងផ្ញើ Secure Cookies៖
 export const apiClient = axios.create({
-  baseURL: '/api',
-  withCredentials: true, // Sends and receives secure cookies!
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true, // ផ្ញើ Secure Cookies ទៅកាន់ Server គ្រប់ Request
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 ```

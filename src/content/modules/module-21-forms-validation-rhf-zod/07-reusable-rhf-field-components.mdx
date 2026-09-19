@@ -5,28 +5,52 @@ title: "Reusable RHF Field Components"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Integrating RHF with custom design system UI primitives."
+summary: "ការភ្ជាប់ Custom UI Widgets (ដូចជា Radix Select, DatePicker, Switch) ទៅកាន់ React Hook Form តាមរយៈ Component Controller។"
+proTip: "សម្រាប់ Custom Components នៃ Design System ដែលមិន expose native input `ref` (ដូចជា Custom Dropdown ឬ Rich Text Editor) ចូរប្រើ `<Controller name='...' control={control} render={({ field }) => ...} />` ដើម្បីផ្សារភ្ជាប់ State ជាមួយ React Hook Form ដោយរលូន។"
 codeTitle: "Controlled Custom Widget via Controller"
 ---
 
 # Reusable RHF Field Components
 
-Use `Controller` from React Hook Form to bind custom UI components (like Radix Select, DatePickers, and custom switches) that do not expose a native input ref.
+UI Components មួយចំនួនក្នុង Design System សម័យទំនើប (ដូចជា Radix Select, Dropdown, Toggle Switch, ឬ DatePicker) មិនមែនជា Native HTML `<input>` ឡើយ ដូច្នេះពួកវាមិនអាចប្រើ `{...register()}` ដោយផ្ទាល់បានទេ។ ដើម្បីដោះស្រាយបញ្ហានេះ React Hook Form ផ្តល់នូវ Component ពិសេសមួយឈ្មោះថា `<Controller>` សម្រាប់ដើរតួជាស្ពានចម្លង State។
 
 ### Key Concepts & Rules:
 
-- `Controller` bridges custom UI widgets with form state.
+- ប្រើ `<Controller>` សម្រាប់គ្រប់គ្រង Non-native ឬ Controlled UI Components។
+- Render prop ផ្តល់នូវ `{ field: { value, onChange, onBlur, ref }, fieldState: { error } }`។
+- ជួយរក្សាភាពស៊ីសង្វាក់គ្នានៃ Design System ជាមួយ Validation របស់ RHF + Zod។
 
 ### Code Example: Controlled Custom Widget via Controller
 
 ```jsx
-import { Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 
-<Controller
-  name="theme"
-  control={control}
-  render={({ field }) => (
-    <CustomSelect value={field.value} onChange={field.onChange} />
-  )}
-/>
+export function SettingsForm() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <Controller
+        name="theme"
+        control={control}
+        defaultValue="dark"
+        render={({ field, fieldState }) => (
+          <div>
+            <label>ជ្រើសរើស Theme</label>
+            <CustomSelect
+              value={field.value}
+              onChange={field.onChange}
+              options={[
+                { label: 'ងងឹត (Dark)', value: 'dark' },
+                { label: 'ភ្លឺ (Light)', value: 'light' },
+              ]}
+            />
+            {fieldState.error && <p className="text-red-500">{fieldState.error.message}</p>}
+          </div>
+        )}
+      />
+    </form>
+  );
+}
 ```

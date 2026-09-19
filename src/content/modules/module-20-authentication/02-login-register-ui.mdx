@@ -5,23 +5,78 @@ title: "Login & Register UI"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Form design, password visibility toggles, and validation."
+summary: "ការរចនា និងបង្កើតផ្ទាំង Login និង Register ជាមួយ Input Validation, Password Visibility Toggle, និង Loading States។"
+proTip: "តែងតែបន្ថែមប៊ូតុង Show/Hide Password (Toggle visibility) ដើម្បីជួយសម្រួលដល់ User លើ Mobile និងការពារកំហុសវាយលេខសម្ងាត់ខុស។ កុំភ្លេច Disable ប៊ូតុង Submit ពេលកំពុងដំណើរការ Network Request។"
 codeTitle: "Login Interface Pattern"
 ---
 
 # Login & Register UI
 
-Build responsive, accessible login and registration interfaces with clear validation and loading indicators.
+ផ្ទាំងចូលប្រើប្រាស់ (Login) និងចុះឈ្មោះ (Register) គឺជាចំណុចចាប់ផ្តើមដំបូងនៃបទពិសោធន៍អ្នកប្រើប្រាស់។ ទម្រង់បែបបទទាំងនេះត្រូវតែមានភាពច្បាស់លាស់ គាំទ្រការផ្ទៀងផ្ទាត់ទិន្នន័យ (Validation), បង្ហាញ Error Message ចំកន្លែង, មានមុខងារ Show/Hide Password, និងមាន Loading State ដើម្បីកុំឱ្យ User ចុច Submit ត្រួតគ្នា។
 
 ### Key Concepts & Rules:
 
-- Never store passwords in plain text.
+- មិនត្រូវរក្សាទុក Password ក្នុង Plain Text ឡើយ។
+- ប្រើប្រាស់ Type `password` សម្រាប់ Input លេខសម្ងាត់ និងផ្តល់ Icon សម្រាប់ចុចមើល។
+- បង្ហាញ Error Alert ច្បាស់លាស់នៅពេល Credentials មិនត្រឹមត្រូវ (ឧ. "អ៊ីមែល ឬលេខសម្ងាត់មិនត្រឹមត្រូវ")។
 
 ### Code Example: Login Interface Pattern
 
 ```jsx
-export function LoginForm() {
+import { useState } from 'react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
+
+export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-  // Form submission with credentials...
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ email, password });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-sm w-full">
+      <div>
+        <label className="block text-sm font-medium mb-1">អ៊ីមែល</label>
+        <input 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          required 
+          className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700" 
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">លេខសម្ងាត់</label>
+        <div className="relative">
+          <input 
+            type={showPassword ? 'text' : 'password'} 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 pr-10" 
+          />
+          <button 
+            type="button" 
+            onClick={() => setShowPassword(!showPassword)} 
+            className="absolute right-3 top-2.5 text-slate-400 hover:text-white"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        disabled={isLoading} 
+        className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center gap-2"
+      >
+        {isLoading ? <Loader2 className="animate-spin" size={18} /> : 'ចូលប្រើប្រាស់'}
+      </button>
+    </form>
+  );
 }
 ```

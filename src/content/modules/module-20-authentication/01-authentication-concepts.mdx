@@ -5,22 +5,30 @@ title: "Authentication Concepts"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Authentication vs authorization, sessions vs JWT tokens."
+summary: "ការស្វែងយល់ពីភាពខុសគ្នារវាង Authentication (អ្នកណា) និង Authorization (សិទ្ធិអ្វីខ្លះ), Sessions និង JWT Tokens។"
+proTip: "Authentication គឺជាការផ្ទៀងផ្ទាត់ថា 'តើអ្នកជាអ្នកណា?' (Who you are) តាមរយៈ Email/Password។ ចំណែក Authorization គឺជាការកំណត់ថា 'តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?' (What permissions you have) ដូចជា Admin ឬ User ធម្មតា។"
 codeTitle: "JWT Token Structure"
 ---
 
 # Authentication Concepts
 
-Authentication proves WHO you are (e.g. valid credentials). Authorization determines WHAT you are permitted to do (e.g. Admin vs Student roles).
+នៅក្នុងប្រព័ន្ធសុវត្ថិភាពនៃកម្មវិធី Web យើងត្រូវបែងចែកពាក្យបច្ចេកទេសសំខាន់ពីរឱ្យដាច់ពីគ្នា៖ **Authentication (AuthN)** គឺជាដំណើរការផ្ទៀងផ្ទាត់អត្តសញ្ញាណរបស់អ្នកប្រើប្រាស់ (តើអ្នកជានរណា?) រីឯ **Authorization (AuthZ)** គឺជាការត្រួតពិនិត្យសិទ្ធិអំណាច (តើអ្នកត្រូវបានអនុញ្ញាតឱ្យចូលមើល ឬកែប្រែទិន្នន័យអ្វីខ្លះ?)។ លើសពីនេះ យើងមានវិធីសាស្ត្រ Session-based (រក្សាទុក Session ID ក្នុង Database) និង Token-based (JWT)។
 
 ### Key Concepts & Rules:
 
-- JWT: JSON Web Token containing cryptographically signed user claims.
-- Sessions: Stateful server-side session IDs stored in database.
+- **JWT (JSON Web Token)**: Token ដែលត្រូវបានចុះហត្ថលេខាឌីជីថល (Cryptographically Signed) មាន ៣ ផ្នែក៖ Header, Payload, និង Signature។
+- **Stateless Authentication**: Server មិនចាំបាច់រក្សាទុក Session ក្នុង Memory ឡើយ ដោយគ្រាន់តែ Verify ហត្ថលេខារបស់ JWT។
+- **Claims**: ព័ត៌មានដែលផ្ទុកក្នុង Payload នៃ JWT (ដូចជា `sub: userId`, `role: admin`, `exp: expirationTime`)។
 
 ### Code Example: JWT Token Structure
 
 ```jsx
-// JWT Structure: header.payload.signature
-// Decoded payload contains: { sub: "u123", role: "admin", exp: 1735689600 }
+// រចនាសម្ព័ន្ធនៃ JWT: header.payload.signature
+// ឧទាហរណ៍ទិន្នន័យបន្ទាប់ពី Decoded Payload៖
+const decodedPayload = {
+  sub: "usr_99824",       // User ID
+  name: "សុខ សាន",        // ឈ្មោះអ្នកប្រើប្រាស់
+  role: "admin",          // តួនាទីសម្រាប់ Authorization (RBAC)
+  exp: 1735689600         // កាលបរិច្ឆេទផុតកំណត់ (Unix Timestamp)
+};
 ```

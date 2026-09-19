@@ -5,24 +5,37 @@ title: "Authentication Architecture"
 moduleId: "module-20"
 moduleNumber: "20"
 category: "Enterprise & Production"
-summary: "Enterprise auth structure across hooks, stores, and interceptors."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធ Auth Feature កម្រិត Enterprise ឱ្យមានរបៀប (Hooks, Stores, Services, និង Guards)។"
+proTip: "ប្រមូលផ្តុំកូដទាំងអស់ដែលទាក់ទងនឹង Authentication ទៅក្នុង Folder តែមួយ (`features/auth/`) ដើម្បីងាយស្រួលថែទាំ ងាយស្រួលសរសេរ Unit Test និងងាយស្រួលផ្លាស់ប្តូរ Auth Provider ពេលអនាគត។"
 codeTitle: "Auth Feature Directory Layout"
 ---
 
 # Authentication Architecture
 
-Colocate auth services, tokens, guards, and context into a dedicated `@/features/auth` slice.
+នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Scalable Apps) ការរៀបចំ Directory តាមទម្រង់ **Feature-based Architecture** គឺជាការអនុវត្តល្អបំផុត។ ការប្រមូលផ្តុំរាល់ Components, Hooks, API Services, និង Zustand Stores នៃប្រព័ន្ធ Auth ទៅក្នុង `src/features/auth/` ជួយឱ្យកូដមានរបៀបរៀបរយ និងងាយស្រួល Refactor។
 
 ### Key Concepts & Rules:
 
-- Clean encapsulation of security concerns.
+- បំបែកការទទួលខុសត្រូវតាមស្រទាប់ (Layered Responsibilities)៖ Components, Hooks, Services, Types, Stores។
+- ប្រើប្រាស់ Barrel Export (`index.ts`) ដើម្បី Export តែ Public APIs នៃ Feature នោះ។
+- ការពារកុំឱ្យកូដ Auth របាត់របាយពាសវាលពាសកាលក្នុងគម្រោង។
 
 ### Code Example: Auth Feature Directory Layout
 
 ```jsx
-features/auth/
-├── components/LoginForm.jsx, RoleGate.jsx
-├── hooks/useAuth.js
-├── services/authService.js
-└── store/useAuthStore.js
+src/features/auth/
+├── components/
+│   ├── LoginForm.tsx            // ផ្ទាំង Form ចូលប្រើប្រាស់
+│   ├── RegisterForm.tsx         // ផ្ទាំង Form ចុះឈ្មោះ
+│   ├── ProtectedLayout.tsx      // Route Guard ការពារទំព័រ Private
+│   └── RoleGate.tsx             // Component ពិនិត្យសិទ្ធិ Role
+├── hooks/
+│   └── useAuth.ts               // Custom Hook សម្រាប់ UI ហៅប្រើ
+├── services/
+│   └── authService.ts           // API calls (login, register, refresh, logout)
+├── store/
+│   └── useAuthStore.ts          // Zustand In-Memory Token & Profile Store
+├── types/
+│   └── auth.types.ts            // TypeScript Interfaces (User, Credentials, Tokens)
+└── index.ts                     // Public Barrel Export
 ```

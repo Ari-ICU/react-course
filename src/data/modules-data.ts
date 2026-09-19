@@ -3784,141 +3784,168 @@ export const modulesData: ModuleItem[] = [
     "number": "20",
     "title": "Authentication",
     "category": "Enterprise & Production",
-    "summary": "JWT tokens, refresh tokens, HttpOnly cookies, protected routes, role-based access control (RBAC), and 401 interceptors.",
+    "summary": "ស្វែងយល់ពីប្រព័ន្ធផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ (Authentication), JWT Tokens, Refresh Tokens, HttpOnly Cookies, Protected Routes, Role-Based Access Control (RBAC), និង 401 Interceptors។",
     "iconName": "ShieldCheck",
     "topics": [
       {
         "id": "m20-01",
         "number": "01",
         "title": "Authentication Concepts",
-        "summary": "Authentication vs authorization, sessions vs JWT tokens.",
-        "explanation": "Authentication proves WHO you are (e.g. valid credentials). Authorization determines WHAT you are permitted to do (e.g. Admin vs Student roles).",
+        "summary": "ការស្វែងយល់ពីភាពខុសគ្នារវាង Authentication (អ្នកណា) និង Authorization (សិទ្ធិអ្វីខ្លះ), Sessions និង JWT Tokens។",
+        "explanation": "នៅក្នុងប្រព័ន្ធសុវត្ថិភាពនៃកម្មវិធី Web យើងត្រូវបែងចែកពាក្យបច្ចេកទេសសំខាន់ពីរឱ្យដាច់ពីគ្នា៖ **Authentication (AuthN)** គឺជាដំណើរការផ្ទៀងផ្ទាត់អត្តសញ្ញាណរបស់អ្នកប្រើប្រាស់ (តើអ្នកជានរណា?) រីឯ **Authorization (AuthZ)** គឺជាការត្រួតពិនិត្យសិទ្ធិអំណាច (តើអ្នកត្រូវបានអនុញ្ញាតឱ្យចូលមើល ឬកែប្រែទិន្នន័យអ្វីខ្លះ?)។ លើសពីនេះ យើងមានវិធីសាស្ត្រ Session-based (រក្សាទុក Session ID ក្នុង Database) និង Token-based (JWT)។",
         "keyPoints": [
-          "JWT: JSON Web Token containing cryptographically signed user claims.",
-          "Sessions: Stateful server-side session IDs stored in database."
+          "**JWT (JSON Web Token)**: Token ដែលត្រូវបានចុះហត្ថលេខាឌីជីថល (Cryptographically Signed) មាន ៣ ផ្នែក៖ Header, Payload, និង Signature។",
+          "**Stateless Authentication**: Server មិនចាំបាច់រក្សាទុក Session ក្នុង Memory ឡើយ ដោយគ្រាន់តែ Verify ហត្ថលេខារបស់ JWT។",
+          "**Claims**: ព័ត៌មានដែលផ្ទុកក្នុង Payload នៃ JWT (ដូចជា `sub: userId`, `role: admin`, `exp: expirationTime`)។"
         ],
-        "codeSnippet": "// JWT Structure: header.payload.signature\n// Decoded payload contains: { sub: \"u123\", role: \"admin\", exp: 1735689600 }",
+        "codeSnippet": "// រចនាសម្ព័ន្ធនៃ JWT: header.payload.signature\n// ឧទាហរណ៍ទិន្នន័យបន្ទាប់ពី Decoded Payload៖\nconst decodedPayload = {\n  sub: \"usr_99824\",       // User ID\n  name: \"សុខ សាន\",        // ឈ្មោះអ្នកប្រើប្រាស់\n  role: \"admin\",          // តួនាទីសម្រាប់ Authorization (RBAC)\n  exp: 1735689600         // កាលបរិច្ឆេទផុតកំណត់ (Unix Timestamp)\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "JWT Token Structure"
+        "codeTitle": "JWT Token Structure",
+        "proTip": "Authentication គឺជាការផ្ទៀងផ្ទាត់ថា 'តើអ្នកជាអ្នកណា?' (Who you are) តាមរយៈ Email/Password។ ចំណែក Authorization គឺជាការកំណត់ថា 'តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?' (What permissions you have) ដូចជា Admin ឬ User ធម្មតា។"
       },
       {
         "id": "m20-02",
         "number": "02",
         "title": "Login & Register UI",
-        "summary": "Form design, password visibility toggles, and validation.",
-        "explanation": "Build responsive, accessible login and registration interfaces with clear validation and loading indicators.",
+        "summary": "ការរចនា និងបង្កើតផ្ទាំង Login និង Register ជាមួយ Input Validation, Password Visibility Toggle, និង Loading States។",
+        "explanation": "ផ្ទាំងចូលប្រើប្រាស់ (Login) និងចុះឈ្មោះ (Register) គឺជាចំណុចចាប់ផ្តើមដំបូងនៃបទពិសោធន៍អ្នកប្រើប្រាស់។ ទម្រង់បែបបទទាំងនេះត្រូវតែមានភាពច្បាស់លាស់ គាំទ្រការផ្ទៀងផ្ទាត់ទិន្នន័យ (Validation), បង្ហាញ Error Message ចំកន្លែង, មានមុខងារ Show/Hide Password, និងមាន Loading State ដើម្បីកុំឱ្យ User ចុច Submit ត្រួតគ្នា។",
         "keyPoints": [
-          "Never store passwords in plain text."
+          "មិនត្រូវរក្សាទុក Password ក្នុង Plain Text ឡើយ។",
+          "ប្រើប្រាស់ Type `password` សម្រាប់ Input លេខសម្ងាត់ និងផ្តល់ Icon សម្រាប់ចុចមើល។",
+          "បង្ហាញ Error Alert ច្បាស់លាស់នៅពេល Credentials មិនត្រឹមត្រូវ (ឧ. \"អ៊ីមែល ឬលេខសម្ងាត់មិនត្រឹមត្រូវ\")។"
         ],
-        "codeSnippet": "export function LoginForm() {\n  const [showPassword, setShowPassword] = useState(false);\n  // Form submission with credentials...\n}",
+        "codeSnippet": "import { useState } from 'react';\nimport { Eye, EyeOff, Loader2 } from 'lucide-react';\n\nexport function LoginForm({ onSubmit, isLoading }: LoginFormProps) {\n  const [showPassword, setShowPassword] = useState(false);\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n\n  const handleSubmit = (e: React.FormEvent) => {\n    e.preventDefault();\n    onSubmit({ email, password });\n  };\n\n  return (\n    <form onSubmit={handleSubmit} className=\"space-y-4 max-w-sm w-full\">\n      <div>\n        <label className=\"block text-sm font-medium mb-1\">អ៊ីមែល</label>\n        <input \n          type=\"email\" \n          value={email} \n          onChange={(e) => setEmail(e.target.value)} \n          required \n          className=\"w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700\" \n        />\n      </div>\n\n      <div>\n        <label className=\"block text-sm font-medium mb-1\">លេខសម្ងាត់</label>\n        <div className=\"relative\">\n          <input \n            type={showPassword ? 'text' : 'password'} \n            value={password} \n            onChange={(e) => setPassword(e.target.value)} \n            required \n            className=\"w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 pr-10\" \n          />\n          <button \n            type=\"button\" \n            onClick={() => setShowPassword(!showPassword)} \n            className=\"absolute right-3 top-2.5 text-slate-400 hover:text-white\"\n          >\n            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}\n          </button>\n        </div>\n      </div>\n\n      <button \n        type=\"submit\" \n        disabled={isLoading} \n        className=\"w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center gap-2\"\n      >\n        {isLoading ? <Loader2 className=\"animate-spin\" size={18} /> : 'ចូលប្រើប្រាស់'}\n      </button>\n    </form>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Login Interface Pattern"
+        "codeTitle": "Login Interface Pattern",
+        "proTip": "តែងតែបន្ថែមប៊ូតុង Show/Hide Password (Toggle visibility) ដើម្បីជួយសម្រួលដល់ User លើ Mobile និងការពារកំហុសវាយលេខសម្ងាត់ខុស។ កុំភ្លេច Disable ប៊ូតុង Submit ពេលកំពុងដំណើរការ Network Request។"
       },
       {
         "id": "m20-03",
         "number": "03",
         "title": "Authentication State",
-        "summary": "Managing current session, user profile, and token in memory.",
-        "explanation": "Store the access token in memory or secure storage, with user profile metadata exposed to the application.",
+        "summary": "ការគ្រប់គ្រង Session បច្ចុប្បន្ន, User Profile, និង Access Token នៅក្នុង Memory ជាមួយ Zustand ឬ Context។",
+        "explanation": "ការគ្រប់គ្រង Auth State ទាមទារឱ្យមានការរៀបចំទិន្នន័យច្បាស់លាស់ រួមមានព័ត៌មាន Profile របស់អ្នកប្រើប្រាស់ (`user`), ស្ថានភាពតភ្ជាប់ (`isAuthenticated`), កាលវិភាគផ្ទុកទិន្នន័យ (`isLoading`), និង Access Token សម្រាប់ធ្វើ Request ទៅកាន់ API។",
         "keyPoints": [
-          "Security rule: Avoid storing raw JWT tokens in localStorage if vulnerable to XSS."
+          "**In-Memory Storage**: រក្សាទុក Access Token ក្នុង JavaScript Memory (Zustand Store) ជួយការពារការលួចទិន្នន័យពី XSS Scripts។",
+          "ផ្តល់នូវ Flag `isLoading` (ឬ `isInitializing`) ដើម្បីការពារកុំឱ្យ UI លោតភ្លាមៗទៅកាន់ទំព័រ Login មុនពេល Refresh Session ចប់។",
+          "រក្សាទិន្នន័យ Profile ឱ្យស្របគ្នាជាមួយ State លើ Backend។"
         ],
-        "codeSnippet": "interface AuthState {\n  user: UserProfile | null;\n  token: string | null;\n  isAuthenticated: boolean;\n}",
+        "codeSnippet": "export interface UserProfile {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'student' | 'instructor';\n  avatarUrl?: string;\n}\n\nexport interface AuthState {\n  user: UserProfile | null;\n  token: string | null;\n  isAuthenticated: boolean;\n  isLoading: boolean;\n  setAuth: (user: UserProfile, token: string) => void;\n  clearAuth: () => void;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Auth State Shape"
+        "codeTitle": "Auth State Shape",
+        "pitfall": "ហាមដាច់ខាតកុំរក្សាទុក JWT Token ដែលមានសិទ្ធិខ្ពស់នៅក្នុង LocalStorage ប្រសិនបើកម្មវិធីរបស់អ្នកងាយរងគ្រោះដោយសារការវាយប្រហារ XSS (Cross-Site Scripting)! ការរក្សាទុកក្នុង Memory ឬ HttpOnly Cookies គឺមានសុវត្ថិភាពជាងឆ្ងាយណាស់។"
       },
       {
         "id": "m20-04",
         "number": "04",
         "title": "Protected Routes & Layouts",
-        "summary": "Preventing unauthorized access to private pages.",
-        "explanation": "Gate entire layout route trees so that unauthenticated visitors are automatically forwarded to `/login`.",
+        "summary": "ការការពារទំព័រ Private និងការបញ្ជូន User ដែលមិនទាន់ Login ទៅកាន់ទំព័រ /login ដោយស្វ័យប្រវត្តិតាមរយៈ Layout Route។",
+        "explanation": "នៅក្នុង Single Page Application ទំព័រមួយចំនួនដូចជា Dashboard, Profile, ឬ Settings ត្រូវតែការពារមិនឱ្យអ្នកដែលមិនទាន់ Login អាចចូលមើលបានឡើយ។ ការប្រើប្រាស់ **Protected Route Layout** ជាមួយ React Router អនុញ្ញាតឱ្យយើងត្រួតពិនិត្យ Auth State នៅកន្លែងតែមួយ និង Redirect ពួកគេទៅកាន់ `/login` ប្រសិនបើគ្មានសិទ្ធិ។",
         "keyPoints": [
-          "Redirect preserves intended destination URL."
+          "បង្ហាញ Loading Spinner ដរាបណា `isLoading` នៅជា `true` (កំពុងផ្ទៀងផ្ទាត់ Session ដំបូង)។",
+          "ប្រើ `<Navigate to=\"/login\" state={{ from: location }} replace />` ដើម្បីបញ្ជូនទៅកាន់ទំព័រចូល។",
+          "ប្រើ `<Outlet />` ដើម្បី Render ទំព័រកូនចៅទាំងអស់នៅពេលដែល Auth State ត្រឹមត្រូវ។"
         ],
-        "codeSnippet": "export function ProtectedLayout() {\n  const { isAuthenticated, isLoading } = useAuth();\n  if (isLoading) return <LoadingScreen />;\n  if (!isAuthenticated) return <Navigate to=\"/login\" replace />;\n  return <Outlet />;\n}",
+        "codeSnippet": "import { Navigate, Outlet, useLocation } from 'react-router-dom';\nimport { useAuth } from '@/features/auth/hooks/useAuth';\n\nexport function ProtectedLayout() {\n  const { isAuthenticated, isLoading } = useAuth();\n  const location = useLocation();\n\n  // 1. កំពុងផ្ទៀងផ្ទាត់ Session ដំបូង\n  if (isLoading) {\n    return <div className=\"flex h-screen items-center justify-center\">កំពុងផ្ទៀងផ្ទាត់...</div>;\n  }\n\n  // 2. បើមិនទាន់ Login បញ្ជូនទៅកាន់ /login ព្រមទាំងភ្ជាប់ location ដើម\n  if (!isAuthenticated) {\n    return <Navigate to=\"/login\" state={{ from: location }} replace />;\n  }\n\n  // 3. បើ Login រួចហើយ អនុញ្ញាតឱ្យចូលមើលទំព័រខាងក្នុង\n  return <Outlet />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Protected Layout Route"
+        "codeTitle": "Protected Layout Route",
+        "proTip": "នៅពេល Redirect user ទៅកាន់ `/login` ត្រូវភ្ជាប់ URL ដើមដែលពួកគេចង់ចូលមើលតាមរយៈ State ដូចជា `state={{ from: location }}` ដើម្បីឱ្យពួកគេអាចត្រឡប់មកទំព័រនោះវិញភ្លាមៗបន្ទាប់ពី Login ជោគជ័យ។"
       },
       {
         "id": "m20-05",
         "number": "05",
         "title": "Access Tokens vs Refresh Tokens",
-        "summary": "Short-lived access tokens (15m) + long-lived refresh tokens (7d).",
-        "explanation": "Access tokens expire quickly to minimize the window of vulnerability if intercepted. The refresh token requests a new access token seamlessly without forcing the user to log in again.",
+        "summary": "ការប្រើប្រាស់ Short-lived Access Tokens (15 នាទី) រួមជាមួយ Long-lived Refresh Tokens (7 ថ្ងៃ) ដើម្បីបង្កើនសុវត្ថិភាព។",
+        "explanation": "យុទ្ធសាស្ត្រសុវត្ថិភាពកម្រិតស្តង់ដារឧស្សាហកម្មគឺការប្រើប្រាស់ Token ពីរប្រភេទរួមគ្នា៖ **Access Token** (មានអាយុកាលខ្លី ដូចជា 15 នាទី) ប្រើសម្រាប់ភ្ជាប់ជាមួយរាល់ HTTP Requests ទៅកាន់ Protected Endpoints។ ចំណែកឯ **Refresh Token** (មានអាយុកាលវែង ដូចជា 7 ទៅ 30 ថ្ងៃ) ត្រូវបានរក្សាទុកក្នុង HttpOnly Cookie ដើម្បីស្នើសុំ Access Token ថ្មីពេលអាចាស់ផុតកំណត់។",
         "keyPoints": [
-          "Access token: Sent in `Authorization: Bearer <token>` header.",
-          "Refresh token: Sent to `/auth/refresh` endpoint."
+          "**Access Token**: បញ្ជូនទៅក្នុង Header `Authorization: Bearer <token>`។",
+          "**Refresh Token**: រក្សាទុកដោយសុវត្ថិភាព និងផ្ញើទៅកាន់ Endpoint `/api/auth/refresh` តែមួយគត់។",
+          "**Token Rotation**: រាល់ពេល Refresh Server នឹងចេញទាំង Access Token ថ្មី និង Refresh Token ថ្មីដើម្បីការពារ Replay Attacks។"
         ],
-        "codeSnippet": "// Token Lifecycle:\n// 1. User logs in -> Receives Access Token (15m) + Refresh Token (7d)\n// 2. Access Token expires -> App calls /refresh -> Receives new Access Token\n// 3. User remains logged in seamlessly!",
+        "codeSnippet": "// វដ្តជីវិតនៃ Token (Token Lifecycle):\n// 1. User ចូលប្រើប្រាស់ -> ទទួលបាន Access Token (15 នាទី) + Refresh Token (7 ថ្ងៃ)\n// 2. ក្រោយ 15 នាទី Access Token ផុតកំណត់ -> API ឆ្លើយតប 401\n// 3. កម្មវិធីហៅ POST /api/auth/refresh ដោយស្វ័យប្រវត្តិនូវ Background\n// 4. ទទួលបាន Access Token ថ្មីភ្លាមៗ -> User អាចបន្តប្រើប្រាស់ដោយរលូន មិនបាច់ Login ឡើងវិញឡើយ!",
         "codeLanguage": "jsx",
-        "codeTitle": "Token Rotation Lifecycle"
+        "codeTitle": "Token Rotation Lifecycle",
+        "proTip": "Access Token មានអាយុកាលខ្លីដើម្បីកាត់បន្ថយហានិភ័យប្រសិនបើត្រូវ Hacker លួចបាន។ Refresh Token ត្រូវបានប្រើដើម្បីស្នើសុំ Access Token ថ្មីស្ងាត់ៗនៅ Background ដោយមិនចាំបាច់តម្រូវឱ្យ User វាយ Password ចូលម្តងទៀតឡើយ។"
       },
       {
         "id": "m20-06",
         "number": "06",
         "title": "HttpOnly Cookies",
-        "summary": "The most secure storage mechanism against XSS attacks.",
-        "explanation": "HttpOnly cookies cannot be read by JavaScript `document.cookie`. This prevents cross-site scripting (XSS) attacks from stealing authentication sessions.",
+        "summary": "យន្តការរក្សាទុក Authentication Session ដ៏មានសុវត្ថិភាពបំផុតប្រឆាំងនឹងការវាយប្រហារ XSS Attacks។",
+        "explanation": "**HttpOnly Cookie** គឺជាទម្រង់ Cookie ពិសេសដែលត្រូវបានកំណត់ដោយ Server តាមរយៈ Header `Set-Cookie: ...; HttpOnly; Secure; SameSite=Strict`។ លក្ខណៈពិសេសរបស់វាគឺ JavaScript ក្នុង Browser មិនអាចអានតម្លៃតាមរយៈ `document.cookie` បានឡើយ ដែលជាខែលការពារដ៏រឹងមាំបំផុតប្រឆាំងនឹង Cross-Site Scripting (XSS)។",
         "keyPoints": [
-          "Browser sends cookie automatically with `credentials: 'include'`.",
-          "Requires CORS configuration with `withCredentials: true`."
+          "Browser នឹងភ្ជាប់ Cookie នេះទៅកាន់ Server ដោយស្វ័យប្រវត្តិនូវរាល់ Request។",
+          "តម្រូវឱ្យបើក CORS Configuration: `credentials: 'include'` ឬ `withCredentials: true`។",
+          "ត្រូវកំណត់ `SameSite=Lax` ឬ `SameSite=Strict` ដើម្បីការពារការវាយប្រហារ CSRF។"
         ],
-        "codeSnippet": "// Axios configuration for HttpOnly cookie sessions:\nexport const apiClient = axios.create({\n  baseURL: '/api',\n  withCredentials: true, // Sends and receives secure cookies!\n});",
+        "codeSnippet": "import axios from 'axios';\n\n// ការកំណត់រចនាសម្ព័ន្ធ Axios សម្រាប់ទទួល និងផ្ញើ Secure Cookies៖\nexport const apiClient = axios.create({\n  baseURL: process.env.NEXT_PUBLIC_API_URL,\n  withCredentials: true, // ផ្ញើ Secure Cookies ទៅកាន់ Server គ្រប់ Request\n  headers: {\n    'Content-Type': 'application/json',\n  },\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Configuring Axios for HttpOnly Cookies"
+        "codeTitle": "Configuring Axios for HttpOnly Cookies",
+        "proTip": "HttpOnly Cookies មិនអាចអាន ឬកែប្រែដោយ JavaScript (`document.cookie`) ក្នុង Browser បានឡើយ ដូច្នេះទោះបីជាកម្មវិធីមានចន្លោះប្រហោង XSS ក៏ Hacker មិនអាចលួច Session Token បានដែរ។ កុំភ្លេចកំណត់ `withCredentials: true` ក្នុង Axios!"
       },
       {
         "id": "m20-07",
         "number": "07",
         "title": "Handling 401 Unauthorized",
-        "summary": "Automatic token refresh queue with Axios interceptors.",
-        "explanation": "When an API request returns 401, pause the failed requests, call `/refresh`, update the access token, and retry the original requests seamlessly.",
+        "summary": "ការបង្កើត Axios Response Interceptor សម្រាប់ស្ទាក់ចាប់កំហុស 401 និងធ្វើការ Refresh Token ដោយស្វ័យប្រវត្តិ។",
+        "explanation": "នៅពេលដែល Access Token ផុតកំណត់ Server នឹងឆ្លើយតបមកវិញនូវ Status Code `401 Unauthorized`។ តាមរយៈការរៀបចំ **Axios Response Interceptor** យើងអាចស្ទាក់ចាប់កំហុសនេះ រួចហៅ API សុំ Token ថ្មីដោយស្ងាត់ៗ ហើយបញ្ជូន Request ដើមដែលបរាជ័យនោះឡើងវិញ (Retry Request) ដោយ User មិនបាច់ដឹងខ្លួនឡើយ។",
         "keyPoints": [
-          "Queue simultaneous requests while refresh is in flight to prevent duplicate refresh calls."
+          "ពិនិត្យលក្ខខណ្ឌ `error.response?.status === 401` និង `!originalRequest._retry`។",
+          "ដាក់ទង់ `originalRequest._retry = true` ដើម្បីការពារ Infinite Loop។",
+          "ប្រសិនបើ Refresh Token ក៏ផុតកំណត់ដែរ ត្រូវធ្វើការ Logout និង Redirect ទៅកាន់ទំព័រ Login។"
         ],
-        "codeSnippet": "apiClient.interceptors.response.use(\n  (res) => res,\n  async (error) => {\n    const originalRequest = error.config;\n    if (error.response?.status === 401 && !originalRequest._retry) {\n      originalRequest._retry = true;\n      const newAccessToken = await refreshAuthToken();\n      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;\n      return apiClient(originalRequest); // Retry original request!\n    }\n    return Promise.reject(error);\n  }\n);",
+        "codeSnippet": "import { apiClient } from '@/lib/apiClient';\nimport { refreshAccessToken, logoutUser } from '@/features/auth/services/authService';\n\napiClient.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    const originalRequest = error.config;\n\n    // ប្រសិនបើ Error 401 ហើយមិនទាន់បានព្យាយាម Retry\n    if (error.response?.status === 401 && !originalRequest._retry) {\n      originalRequest._retry = true;\n\n      try {\n        // 1. ស្នើសុំ Access Token ថ្មីពី Server\n        const newAccessToken = await refreshAccessToken();\n        \n        // 2. ដាក់ Token ថ្មីចូលទៅក្នុង Header នៃ Request ដើម\n        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;\n        \n        // 3. ហៅ Request ដើមម្តងទៀតដោយជោគជ័យ\n        return apiClient(originalRequest);\n      } catch (refreshError) {\n        // បើ Refresh បរាជ័យ បង្ខំឱ្យ Logout ភ្លាម\n        logoutUser();\n        window.location.href = '/login?session_expired=true';\n        return Promise.reject(refreshError);\n      }\n    }\n\n    return Promise.reject(error);\n  }\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "Automatic 401 Token Refresh Interceptor"
+        "codeTitle": "Automatic 401 Token Refresh Interceptor",
+        "proTip": "នៅពេលមាន API Requests ជាច្រើនបរាជ័យក្នុងពេលតែមួយដោយសារ Access Token ផុតកំណត់ ចូរប្រើ Request Queue ដើម្បីកុំឱ្យកម្មវិធីហៅ API `/refresh` ជាន់គ្នាដដែលៗច្រើនដង។"
       },
       {
         "id": "m20-08",
         "number": "08",
         "title": "Role-Based Access Control (RBAC)",
-        "summary": "Restricting UI elements based on user roles.",
-        "explanation": "Hide or disable actions (like Delete, Edit, or Admin Dashboard) based on whether `user.role === 'admin'`.",
+        "summary": "ការកំណត់សិទ្ធិ និងលាក់/បង្ហាញ UI Elements ផ្អែកលើតួនាទីរបស់អ្នកប្រើប្រាស់ (Admin, Editor, Student)។",
+        "explanation": "នៅក្នុងកម្មវិធីដែលមានអ្នកប្រើប្រាស់ច្រើនប្រភេទ (ដូចជា Admin, Instructor, Student) យើងត្រូវគ្រប់គ្រងសិទ្ធិមើលឃើញ និងដំណើរការមុខងារផ្សេងៗ។ ការបង្កើត Declarative Component ដូចជា `<RoleGate>` ឬ Custom Hook `useHasPermission()` ជួយឱ្យកូដ UI មានភាពងាយស្រួលអាន និងមានសុវត្ថិភាព។",
         "keyPoints": [
-          "Always enforce authorization on the backend; frontend RBAC is solely for UX!"
+          "**Frontend RBAC**: ជួយបង្កើន UX ដោយលាក់ប៊ូតុង ឬតំណភ្ជាប់ដែល User គ្មានសិទ្ធិប្រើប្រាស់។",
+          "**Backend Authorization**: គឺជាកន្លែងការពារសុវត្ថិភាពពិតប្រាកដដែលមិនអាចខ្វះបាន។",
+          "ប្រើ Array នៃ Roles (ឧ. `allowedRoles={['admin', 'editor']}`) ដើម្បីភាពបត់បែន។"
         ],
-        "codeSnippet": "export function RoleGate({ allowedRoles, children }: { allowedRoles: string[]; children: React.ReactNode }) {\n  const { user } = useAuth();\n  if (!user || !allowedRoles.includes(user.role)) return null;\n  return <>{children}</>;\n}",
+        "codeSnippet": "import { useAuth } from '@/features/auth/hooks/useAuth';\n\ninterface RoleGateProps {\n  allowedRoles: Array<'admin' | 'instructor' | 'student'>;\n  children: React.ReactNode;\n  fallback?: React.ReactNode;\n}\n\nexport function RoleGate({ allowedRoles, children, fallback = null }: RoleGateProps) {\n  const { user } = useAuth();\n\n  if (!user || !allowedRoles.includes(user.role)) {\n    return <>{fallback}</>;\n  }\n\n  return <>{children}</>;\n}\n\n// របៀបប្រើប្រាស់៖\n// <RoleGate allowedRoles={['admin']}>\n//   <button className=\"bg-red-600\">លុបវគ្គសិក្សាចោល</button>\n// </RoleGate>",
         "codeLanguage": "jsx",
-        "codeTitle": "Declarative RoleGate Component"
+        "codeTitle": "Declarative RoleGate Component",
+        "pitfall": "ការលាក់ប៊ូតុងនៅលើ Frontend (UI RBAC) គឺសម្រាប់តែបទពិសោធន៍អ្នកប្រើប្រាស់ (UX) ប៉ុណ្ណោះ! អ្នកត្រូវតែការពារ និងផ្ទៀងផ្ទាត់សិទ្ធិនៅលើ Backend API ជានិច្ច ព្រោះ User អាចកែប្រែកូដ JavaScript ក្នុង Browser បាន។"
       },
       {
         "id": "m20-09",
         "number": "09",
         "title": "Secure Logout",
-        "summary": "Clearing tokens and invalidating server sessions.",
-        "explanation": "On logout: 1) Call backend `/auth/logout` to revoke refresh token; 2) Clear client memory and storage; 3) Reset query cache; 4) Redirect to login.",
+        "summary": "ការចាកចេញដោយសុវត្ថិភាព៖ ការលុប Tokens, ការ Revoke Session លើ Server, និងការសម្អាត Query Cache។",
+        "explanation": "ដំណើរការ Logout ប្រកបដោយសុវត្ថិភាពមិនមែនត្រឹមតែជាការលុប State ក្នុង Browser ប៉ុណ្ណោះទេ។ វាទាមទារឱ្យមានការជូនដំណឹងទៅកាន់ Backend Server ដើម្បី Revoke/Blacklist Refresh Token, សម្អាត Storage ក្នុង Client, សម្អាត TanStack Query Cache, និងប្តូរទិសដៅទៅកាន់ទំព័រ Login។",
         "keyPoints": [
-          "Clear TanStack Query cache on logout to avoid leaking user data to subsequent logins."
+          "ហៅ API `POST /api/auth/logout` ដើម្បីឱ្យ Server លុប Session ឬ Refresh Cookie ចោល។",
+          "ហៅ `queryClient.clear()` ដើម្បីសម្អាតរាល់ទិន្នន័យសម្ងាត់ទាំងអស់ក្នុង RAM Cache។",
+          "Reset Zustand Auth Store ឱ្យមកសភាពដើម (`user: null`, `token: null`)។"
         ],
-        "codeSnippet": "const logout = async () => {\n  try {\n    await apiClient.post('/auth/logout');\n  } finally {\n    queryClient.clear(); // Purge all cached user data!\n    useAuthStore.getState().reset();\n    window.location.href = '/login';\n  }\n};",
+        "codeSnippet": "import { apiClient } from '@/lib/apiClient';\nimport { queryClient } from '@/lib/queryClient';\nimport { useAuthStore } from '@/features/auth/store/useAuthStore';\n\nexport async function secureLogout() {\n  try {\n    // 1. បញ្ជូនសញ្ញាទៅ Backend ដើម្បី Revoke Refresh Token & សម្អាត Cookie\n    await apiClient.post('/auth/logout');\n  } catch (error) {\n    console.warn('Logout API error, clearing local state anyway:', error);\n  } finally {\n    // 2. សម្អាតរាល់ Cached Queries ក្នុង TanStack Query (ការពារការធ្លាយទិន្នន័យ)\n    queryClient.clear();\n\n    // 3. Reset Local Auth Store\n    useAuthStore.getState().clearAuth();\n\n    // 4. បញ្ជូន User ទៅកាន់ទំព័រ Login\n    window.location.href = '/login';\n  }\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Complete Secure Logout Sequence"
+        "codeTitle": "Complete Secure Logout Sequence",
+        "proTip": "កុំភ្លេចហៅ `queryClient.clear()` ឬ `queryClient.resetQueries()` ពេល Logout ដើម្បីលុបបំបាត់ទិន្នន័យសម្ងាត់ ឬព័ត៌មានផ្ទាល់ខ្លួនដែលសេសសល់ក្នុង Cache កុំឱ្យ User បន្ទាប់អាចមើលឃើញ!"
       },
       {
         "id": "m20-10",
         "number": "10",
         "title": "Authentication Architecture",
-        "summary": "Enterprise auth structure across hooks, stores, and interceptors.",
-        "explanation": "Colocate auth services, tokens, guards, and context into a dedicated `@/features/auth` slice.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធ Auth Feature កម្រិត Enterprise ឱ្យមានរបៀប (Hooks, Stores, Services, និង Guards)។",
+        "explanation": "នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Scalable Apps) ការរៀបចំ Directory តាមទម្រង់ **Feature-based Architecture** គឺជាការអនុវត្តល្អបំផុត។ ការប្រមូលផ្តុំរាល់ Components, Hooks, API Services, និង Zustand Stores នៃប្រព័ន្ធ Auth ទៅក្នុង `src/features/auth/` ជួយឱ្យកូដមានរបៀបរៀបរយ និងងាយស្រួល Refactor។",
         "keyPoints": [
-          "Clean encapsulation of security concerns."
+          "បំបែកការទទួលខុសត្រូវតាមស្រទាប់ (Layered Responsibilities)៖ Components, Hooks, Services, Types, Stores។",
+          "ប្រើប្រាស់ Barrel Export (`index.ts`) ដើម្បី Export តែ Public APIs នៃ Feature នោះ។",
+          "ការពារកុំឱ្យកូដ Auth របាត់របាយពាសវាលពាសកាលក្នុងគម្រោង។"
         ],
-        "codeSnippet": "features/auth/\n├── components/LoginForm.jsx, RoleGate.jsx\n├── hooks/useAuth.js\n├── services/authService.js\n└── store/useAuthStore.js",
+        "codeSnippet": "src/features/auth/\n├── components/\n│   ├── LoginForm.tsx            // ផ្ទាំង Form ចូលប្រើប្រាស់\n│   ├── RegisterForm.tsx         // ផ្ទាំង Form ចុះឈ្មោះ\n│   ├── ProtectedLayout.tsx      // Route Guard ការពារទំព័រ Private\n│   └── RoleGate.tsx             // Component ពិនិត្យសិទ្ធិ Role\n├── hooks/\n│   └── useAuth.ts               // Custom Hook សម្រាប់ UI ហៅប្រើ\n├── services/\n│   └── authService.ts           // API calls (login, register, refresh, logout)\n├── store/\n│   └── useAuthStore.ts          // Zustand In-Memory Token & Profile Store\n├── types/\n│   └── auth.types.ts            // TypeScript Interfaces (User, Credentials, Tokens)\n└── index.ts                     // Public Barrel Export",
         "codeLanguage": "jsx",
-        "codeTitle": "Auth Feature Directory Layout"
+        "codeTitle": "Auth Feature Directory Layout",
+        "proTip": "ប្រមូលផ្តុំកូដទាំងអស់ដែលទាក់ទងនឹង Authentication ទៅក្នុង Folder តែមួយ (`features/auth/`) ដើម្បីងាយស្រួលថែទាំ ងាយស្រួលសរសេរ Unit Test និងងាយស្រួលផ្លាស់ប្តូរ Auth Provider ពេលអនាគត។"
       }
     ]
   },
@@ -3927,100 +3954,120 @@ export const modulesData: ModuleItem[] = [
     "number": "21",
     "title": "Forms & Validation (RHF + Zod)",
     "category": "Enterprise & Production",
-    "summary": "React Hook Form, form registration, submission, Zod schema validation, resolvers, custom error messages, dynamic fields, and multi-step forms.",
+    "summary": "ស្វែងយល់ពី React Hook Form, ការចុះឈ្មោះ Inputs (register), ការផ្ទៀងផ្ទាត់ទិន្នន័យជាមួយ Zod Schema Validation, resolvers, Dynamic Fields (useFieldArray), និង Multi-step Form Wizard។",
     "iconName": "CheckSquare",
     "topics": [
       {
         "id": "m21-01",
         "number": "01",
         "title": "Advanced React Forms",
-        "summary": "Why uncontrolled forms with React Hook Form outperform controlled forms.",
-        "explanation": "Traditional controlled forms re-render the entire component on every keystroke. React Hook Form uses uncontrolled inputs under the hood, subscribing only to errors, which eliminates typing lag in large forms.",
+        "summary": "មូលហេតុដែល Uncontrolled Forms ជាមួយ React Hook Form មានល្បឿនលឿនជាង Controlled Forms ធម្មតា។",
+        "explanation": "នៅក្នុង React ការបង្កើត Form តាមបែបបុរាណ (Controlled Components ដោយប្រើ `useState` លើគ្រប់ Input) បង្កឱ្យមានបញ្ហា Performance យ៉ាងខ្លាំង៖ រាល់ពេល User ចុចវាយអក្សរមួយតួៗ Component ទាំងមូលត្រូវតែ Re-render ឡើងវិញ។ **React Hook Form (RHF)** ប្រើប្រាស់វិធីសាស្ត្រ Uncontrolled Inputs តាមរយៈ DOM Refs ដោយ Subscribe តែនៅពេលមានកំហុស Validation ប៉ុណ្ណោះ ដែលជួយលុបបំបាត់ Typing Lag ចោលទាំងស្រុង។",
         "keyPoints": [
-          "Zero typing latency even in forms with 50+ fields."
+          "គ្មានភាពយឺតយ៉ាវពេលវាយអក្សរ (Zero Typing Latency) ទោះបីជា Form មានរាប់សិប Field ក៏ដោយ។",
+          "កាត់បន្ថយចំនួន Re-renders នៃ Component ឱ្យនៅកម្រិតទាបបំផុត។",
+          "រួមបញ្ចូលគ្នាយ៉ាងរលូនជាមួយបណ្ណាល័យ Validation ដូចជា Zod តាមរយៈ Resolvers។"
         ],
-        "codeSnippet": "npm install react-hook-form zod @hookform/resolvers",
-        "codeLanguage": "jsx",
-        "codeTitle": "Installing RHF and Zod"
+        "codeSnippet": "# ដំឡើង React Hook Form, Zod, និង Hookform Resolvers\nnpm install react-hook-form zod @hookform/resolvers",
+        "codeLanguage": "bash",
+        "codeTitle": "Installing RHF and Zod",
+        "proTip": "Controlled Forms ធម្មតា (`value` + `onChange` ជាមួយ `useState`) នឹងបង្ខំឱ្យ Component ទាំងមូល Re-render រាល់ពេល User ចុចវាយអក្សរមួយតួៗ! React Hook Form ប្រើ Uncontrolled Inputs តាមរយៈ DOM Refs ដែលធ្វើឱ្យគ្មាន typing lag ទាល់តែសោះ ទោះជា Form មានរាប់សិបវាលក៏ដោយ។"
       },
       {
         "id": "m21-02",
         "number": "02",
         "title": "Zod Schema Definition",
-        "summary": "Declaring type-safe runtime validation schemas.",
-        "explanation": "Zod lets you declare schemas with chainable validators. TypeScript types are automatically inferred via `z.infer<typeof schema>`.",
+        "summary": "ការប្រកាស Type-safe Runtime Validation Schema ជាមួយបណ្ណាល័យ Zod និងការទាញយក Type ដោយស្វ័យប្រវត្តិតាមរយៈ z.infer។",
+        "explanation": "**Zod** គឺជាបណ្ណាល័យ TypeScript-first សម្រាប់ធ្វើការប្រកាស និងផ្ទៀងផ្ទាត់រចនាសម្ព័ន្ធទិន្នន័យ (Schema Validation) នៅពេល Runtime។ តាមរយៈ Zod យើងអាចកំណត់លក្ខខណ្ឌសុពលភាពច្បាស់លាស់ (ដូចជា ប្រវែងអក្សរ, ទម្រង់អ៊ីមែល, ដែនកំណត់លេខ) ព្រមទាំងសារ Error ផ្ទាល់ខ្លួនជាភាសាខ្មែរ ហើយទាញយក TypeScript Type ដោយស្វ័យប្រវត្តិតាមរយៈ `z.infer`។",
         "keyPoints": [
-          "Single source of truth for both TypeScript types and runtime validation."
+          "**Single Source of Truth**: កំណត់ Schema តែម្តង បានទាំង Validation Logic និង TypeScript Interface។",
+          "ប្រើ `z.coerce.number()` ដើម្បីបំប្លែងតម្លៃ Input String ទៅជា Number ដោយស្វ័យប្រវត្តិ។",
+          "ប្រើ `z.infer<typeof schema>` ដើម្បីទាញយក Static TypeScript Type ដោយស្វ័យប្រវត្តិ។"
         ],
-        "codeSnippet": "import { z } from 'zod';\n\nexport const studentSchema = z.object({\n  name: z.string().min(2, \"Name must be at least 2 characters\"),\n  email: z.string().email(\"Invalid email address\"),\n  gpa: z.coerce.number().min(0, \"GPA >= 0\").max(4.0, \"GPA <= 4.0\"),\n  major: z.enum([\"Computer Science\", \"Software Engineering\", \"Cybersecurity\"]),\n  agreeTerms: z.literal(true, {\n    errorMap: () => ({ message: \"You must accept terms\" }),\n  }),\n});\n\nexport type StudentFormData = z.infer<typeof studentSchema>;",
+        "codeSnippet": "import { z } from 'zod';\n\nexport const studentSchema = z.object({\n  name: z.string().min(2, 'ឈ្មោះត្រូវតែមានយ៉ាងតិច ២ តួអក្សរ'),\n  email: z.string().email('ទម្រង់អ៊ីមែលមិនត្រឹមត្រូវឡើយ'),\n  gpa: z.coerce.number().min(0, 'GPA ត្រូវធំជាង ឬស្មើ ០').max(4.0, 'GPA ត្រូវតូចជាង ឬស្មើ ៤.០'),\n  major: z.enum(['Computer Science', 'Software Engineering', 'Cybersecurity'], {\n    errorMap: () => ({ message: 'សូមជ្រើសរើសជំនាញសិក្សា' }),\n  }),\n  agreeTerms: z.literal(true, {\n    errorMap: () => ({ message: 'អ្នកត្រូវតែយល់ព្រមតាមលក្ខខណ្ឌ' }),\n  }),\n});\n\n// ទាញយក TypeScript Type ដោយស្វ័យប្រវត្តិពី Schema:\nexport type StudentFormData = z.infer<typeof studentSchema>;",
         "codeLanguage": "jsx",
-        "codeTitle": "Complete Zod Validation Schema"
+        "codeTitle": "Complete Zod Validation Schema",
+        "proTip": "ជាមួយ Zod អ្នកកំណត់ Schema តែម្តងគត់ គឺទទួលបានទាំង Runtime Validation ត្រួតពិនិត្យទិន្នន័យ (Min length, Email, Number coerce) និងទទួលបាន Static TypeScript Type តាមរយៈ `z.infer<typeof schema>` ដោយមិនចាំបាច់សរសេរ Type ស្ទួនឡើយ (Single Source of Truth)។"
       },
       {
         "id": "m21-03",
         "number": "03",
         "title": "React Hook Form + Zod Resolver",
-        "summary": "Connecting Zod schemas to useForm.",
-        "explanation": "Use `@hookform/resolvers/zod` to validate form state against your Zod schema on submit or blur.",
+        "summary": "ការតភ្ជាប់ Zod Validation Schema ជាមួយ Hook useForm តាមរយៈ zodResolver។",
+        "explanation": "ការរួមបញ្ចូលគ្នារវាង React Hook Form និង Zod ត្រូវបានសម្រេចឡើងតាមរយៈកញ្ចប់ `@hookform/resolvers/zod`។ តាមរយៈការកំណត់ `resolver: zodResolver(mySchema)` នៅក្នុង Hook `useForm` រាល់ពេលដែល User ចុច Submit ឬចាកចេញពី Input (onBlur) Zod នឹងពិនិត្យសុពលភាព ហើយបញ្ជូន Error ចូលទៅក្នុង `formState.errors` ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Automatic typed submission handler `handleSubmit(onSubmit)`."
+          "បញ្ជូន Generic Type `<StudentFormData>` ទៅកាន់ `useForm` ដើម្បីទទួលបាន Type-safety ពេញលេញ។",
+          "អនុគមន៍ `handleSubmit(onSubmit)` ធានាថា `onSubmit` នឹងត្រូវហៅតែពេលទិន្នន័យត្រឹមត្រូវ 100%។",
+          "ស្រង់យក `errors` និង `isSubmitting` ពី `formState` សម្រាប់គ្រប់គ្រង UI។"
         ],
-        "codeSnippet": "import { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\n\nexport function StudentForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n    reset,\n  } = useForm<StudentFormData>({\n    resolver: zodResolver(studentSchema),\n    defaultValues: {\n      name: '',\n      email: '',\n      gpa: 3.5,\n    },\n  });\n\n  const onSubmit = async (data: StudentFormData) => {\n    await studentService.create(data);\n    reset();\n  };\n\n  return <form onSubmit={handleSubmit(onSubmit)}>...</form>;\n}",
+        "codeSnippet": "import { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { studentSchema, type StudentFormData } from './studentSchema';\n\nexport function StudentForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n    reset,\n  } = useForm<StudentFormData>({\n    resolver: zodResolver(studentSchema),\n    defaultValues: {\n      name: '',\n      email: '',\n      gpa: 3.5,\n    },\n  });\n\n  const onSubmit = async (data: StudentFormData) => {\n    // data ទទួលបាន Type ត្រឹមត្រូវ 100% ពី Zod!\n    await studentService.create(data);\n    reset(); // Reset form ក្រោយ save ជោគជ័យ\n  };\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)} className=\"space-y-4\">\n      {/* Inputs នានា... */}\n    </form>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useForm with zodResolver"
+        "codeTitle": "useForm with zodResolver",
+        "proTip": "ការប្រើ `resolver: zodResolver(schema)` ធ្វើឱ្យ `handleSubmit(onSubmit)` ដំណើរការតែនៅពេលដែលទិន្នន័យទាំងអស់ឆ្លងកាត់ការផ្ទៀងផ្ទាត់របស់ Zod ដោយជោគជ័យប៉ុណ្ណោះ។ បើមានកំហុស វានឹង Populate ចូលក្នុង `formState.errors` ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m21-04",
         "number": "04",
         "title": "Form Registration ({...register})",
-        "summary": "Connecting native inputs to React Hook Form.",
-        "explanation": "`register('name')` returns `onChange`, `onBlur`, `ref`, and `name` attributes to spread onto the input.",
+        "summary": "ការភ្ជាប់ Native Input Elements ទៅកាន់ React Hook Form តាមរយៈ {...register('fieldName')}។",
+        "explanation": "ដើម្បីភ្ជាប់ Native HTML Input (ដូចជា `<input>`, `<select>`, `<textarea>`) ទៅកាន់ React Hook Form យើងប្រើប្រាស់អនុគមន៍ `register('fieldName')`។ អនុគមន៍នេះនឹង return នូវ Object មួយដែលមាន `name`, `ref`, `onChange`, និង `onBlur` ដែលយើងអាច Spread ចូលទៅក្នុង Input Element បានយ៉ាងរហ័ស។",
         "keyPoints": [
-          "No manual `value` or `onChange` state wiring required."
+          "ប្រើប្រាស់ `{...register('fieldName')}` ដោយផ្ទាល់លើ Native Elements។",
+          "អានសារ Error តាមរយៈ `errors.fieldName?.message`។",
+          "មិនបាច់សរសេរ `value={...}` ឬ `onChange={(e) => ...}` ដោយផ្ទាល់ដៃឡើយ។"
         ],
-        "codeSnippet": "<div>\n  <label className=\"block text-sm font-medium text-slate-300\">Full Name</label>\n  <input \n    {...register('name')} \n    className=\"w-full bg-slate-900 border border-slate-800 p-2 rounded text-white\" \n  />\n  {errors.name && <p className=\"text-xs text-rose-400 mt-1\">{errors.name.message}</p>}\n</div>",
+        "codeSnippet": "<div className=\"space-y-1\">\n  <label className=\"block text-sm font-medium text-slate-300\">ឈ្មោះសិស្ស</label>\n  <input \n    {...register('name')} \n    placeholder=\"បញ្ចូលឈ្មោះពេញ...\"\n    className=\"w-full bg-slate-900 border border-slate-800 p-2.5 rounded-lg text-white focus:ring-2 focus:ring-blue-500\" \n  />\n  {errors.name && (\n    <p className=\"text-xs text-rose-400 mt-1\">{errors.name.message}</p>\n  )}\n</div>",
         "codeLanguage": "jsx",
-        "codeTitle": "Input Registration and Error Display"
+        "codeTitle": "Input Registration and Error Display",
+        "proTip": "`register('name')` នឹង return នូវ `name`, `ref`, `onChange`, និង `onBlur`។ ការប្រើ Spread Syntax `{...register('name')}` ជួយឱ្យអ្នកមិនបាច់សរសេរ State handlers ដោយផ្ទាល់ដៃឡើយ។"
       },
       {
         "id": "m21-05",
         "number": "05",
         "title": "Dynamic Form Arrays (useFieldArray)",
-        "summary": "Adding and removing items dynamically (e.g. invoice line items).",
-        "explanation": "`useFieldArray` provides methods (`append`, `remove`, `move`) to manage dynamic lists of inputs inside a single form.",
+        "summary": "ការគ្រប់គ្រងបញ្ជី Input ដែលអាចបន្ថែម និងលុបបានតាមចិត្ត (Dynamic Fields) ដូចជា Invoice Items ឬ Phone Numbers តាមរយៈ useFieldArray។",
+        "explanation": "នៅក្នុងទម្រង់បែបបទស្មុគស្មាញ (ដូចជា ការបង្កើតវិក្កយបត្រ Invoice ដែលមានទំនិញច្រើនមុខ ឬការបញ្ចូលលេខទូរស័ព្ទច្រើនខ្សែ) ចំនួន Inputs មិនថេរនោះទេ។ Hook `useFieldArray` ផ្តល់នូវអនុគមន៍ជំនួយជាច្រើនដូចជា `append()`, `remove()`, `insert()`, និង `move()` សម្រាប់គ្រប់គ្រង Dynamic Array Fields យ៉ាងមានប្រសិទ្ធភាព។",
         "keyPoints": [
-          "Crucial for order forms, tags, and multi-phone inputs."
+          "ភ្ជាប់ជាមួយ `control` ពី `useForm()` និងបញ្ជាក់ `name` នៃ Array Property។",
+          "ត្រូវតែប្រើ `key={field.id}` ជានិច្ចនៅពេល render បញ្ជីជួរដេក។",
+          "ចុះឈ្មោះ Field តាមរយៈ Template Literal៖ `register(\\`items.\\${index}.name\\`)`។"
         ],
-        "codeSnippet": "import { useFieldArray } from 'react-hook-form';\n\nconst { fields, append, remove } = useFieldArray({\n  control,\n  name: \"phoneNumbers\",\n});\n\n// Render dynamic items:\n{fields.map((field, index) => (\n  <div key={field.id} className=\"flex gap-2\">\n    <input {...register(`phoneNumbers.${index}.number`)} />\n    <button type=\"button\" onClick={() => remove(index)}>Remove</button>\n  </div>\n))}\n<button type=\"button\" onClick={() => append({ number: '' })}>Add Phone</button>",
+        "codeSnippet": "import { useForm, useFieldArray } from 'react-hook-form';\n\nexport function InvoiceForm() {\n  const { register, control, handleSubmit } = useForm();\n  \n  const { fields, append, remove } = useFieldArray({\n    control,\n    name: 'items',\n  });\n\n  return (\n    <div className=\"space-y-3\">\n      {fields.map((field, index) => (\n        <div key={field.id} className=\"flex gap-2 items-center\">\n          <input \n            {...register(`items.${index}.description`)} \n            placeholder=\"ឈ្មោះទំនិញ\" \n            className=\"bg-slate-900 border border-slate-700 p-2 rounded\"\n          />\n          <input \n            type=\"number\"\n            {...register(`items.${index}.price`)} \n            placeholder=\"តម្លៃ\" \n            className=\"w-24 bg-slate-900 border border-slate-700 p-2 rounded\"\n          />\n          <button \n            type=\"button\" \n            onClick={() => remove(index)}\n            className=\"text-red-400 hover:text-red-300\"\n          >\n            លុប\n          </button>\n        </div>\n      ))}\n\n      <button \n        type=\"button\" \n        onClick={() => append({ description: '', price: 0 })}\n        className=\"px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-sm\"\n      >\n        + បន្ថែមទំនិញ\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Dynamic Inputs with useFieldArray"
+        "codeTitle": "Dynamic Inputs with useFieldArray",
+        "proTip": "នៅពេល Map បង្ហាញ fields ត្រូវតែប្រើ `field.id` ជា React `key` ជានិច្ច (ដូចជា `key={field.id}`) កុំប្រើ `index` ជា key ឱ្យសោះ ដើម្បីកុំឱ្យមានបញ្ហាច្រឡំតម្លៃពេលលុប ឬរៀបលំដាប់ជួរឡើងវិញ!"
       },
       {
         "id": "m21-06",
         "number": "06",
         "title": "Multi-Step Form Wizard",
-        "summary": "Building multi-page registration pipelines with step validation.",
-        "explanation": "Break long forms into steps (Personal Info -> Address -> Payment -> Review). Validate only the current step's fields using `trigger(['name', 'email'])` before advancing.",
+        "summary": "ការបែងចែក Form វែងៗជាដំណាក់កាលៗ (Multi-step) និងការផ្ទៀងផ្ទាត់ទិន្នន័យជាជំហានៗដោយប្រើ trigger()។",
+        "explanation": "នៅពេលដែល Form មានទិន្នន័យច្រើន ដូចជាដំណើរការចុះឈ្មោះក្រុមហ៊ុន ឬការទិញទំនិញ (Checkout) ការបំបែក Form នោះជាដំណាក់កាលៗ (Wizard: ព័ត៌មានផ្ទាល់ខ្លួន -> អាសយដ្ឋាន -> ការទូទាត់) ជួយសម្រួលដល់ User យ៉ាងខ្លាំង។ អនុគមន៍ `trigger()` របស់ React Hook Form អនុញ្ញាតឱ្យយើង Validate តែ Fields នៃជំហានបច្ចុប្បន្នមុននឹងបន្តទៅមុខ។",
         "keyPoints": [
-          "Preserves entered data across steps in a single form instance.",
-          "Validate current step before allowing 'Next' button click."
+          "រក្សាទុកទិន្នន័យទាំងអស់ក្នុង `useForm` តែមួយគត់ ដើម្បីកុំឱ្យបាត់បង់ទិន្នន័យពេលប្តូរជំហាន។",
+          "ប្រើ `trigger(['fieldA', 'fieldB'])` ដើម្បីពិនិត្យសុពលភាពមុននឹងអនុញ្ញាតឱ្យទៅ `step + 1`។",
+          "ហៅ `handleSubmit(onSubmit)` ចុងក្រោយបង្អស់តែនៅជំហានបញ្ចប់ប៉ុណ្ណោះ។"
         ],
-        "codeSnippet": "const handleNextStep = async () => {\n  // Only validate step 1 fields:\n  const isValid = await trigger(['name', 'email']);\n  if (isValid) setStep(s => s + 1);\n};",
+        "codeSnippet": "export function MultiStepWizard() {\n  const [step, setStep] = useState(1);\n  const { register, trigger, handleSubmit } = useForm<FormFields>();\n\n  const handleNext = async () => {\n    let isValid = false;\n    \n    if (step === 1) {\n      // ផ្ទៀងផ្ទាត់តែ Field ក្នុងជំហានទី ១ ប៉ុណ្ណោះ\n      isValid = await trigger(['name', 'email']);\n    } else if (step === 2) {\n      // ផ្ទៀងផ្ទាត់តែ Field ក្នុងជំហានទី ២\n      isValid = await trigger(['address', 'city']);\n    }\n\n    if (isValid) {\n      setStep((s) => s + 1);\n    }\n  };\n\n  return (\n    <div>\n      {step === 1 && <StepOne register={register} />}\n      {step === 2 && <StepTwo register={register} />}\n      {step === 3 && <StepThree register={register} />}\n      \n      <button type=\"button\" onClick={handleNext}>បន្ទាប់ ➔</button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Step Validation with trigger()"
+        "codeTitle": "Step Validation with trigger()",
+        "proTip": "ប្រើប្រាស់ `await trigger(['field1', 'field2'])` ដើម្បីផ្ទៀងផ្ទាត់តែវាលទិន្នន័យក្នុងជំហានបច្ចុប្បន្នប៉ុណ្ណោះ មុនពេលអនុញ្ញាតឱ្យ User ចុចប៊ូតុង 'បន្ទាប់' (Next Step) ដោយមិនបាច់ Validate Form ទាំងមូលក្នុងពេលតែមួយឡើយ។"
       },
       {
         "id": "m21-07",
         "number": "07",
         "title": "Reusable RHF Field Components",
-        "summary": "Integrating RHF with custom design system UI primitives.",
-        "explanation": "Use `Controller` from React Hook Form to bind custom UI components (like Radix Select, DatePickers, and custom switches) that do not expose a native input ref.",
+        "summary": "ការភ្ជាប់ Custom UI Widgets (ដូចជា Radix Select, DatePicker, Switch) ទៅកាន់ React Hook Form តាមរយៈ Component Controller។",
+        "explanation": "UI Components មួយចំនួនក្នុង Design System សម័យទំនើប (ដូចជា Radix Select, Dropdown, Toggle Switch, ឬ DatePicker) មិនមែនជា Native HTML `<input>` ឡើយ ដូច្នេះពួកវាមិនអាចប្រើ `{...register()}` ដោយផ្ទាល់បានទេ។ ដើម្បីដោះស្រាយបញ្ហានេះ React Hook Form ផ្តល់នូវ Component ពិសេសមួយឈ្មោះថា `<Controller>` សម្រាប់ដើរតួជាស្ពានចម្លង State។",
         "keyPoints": [
-          "`Controller` bridges custom UI widgets with form state."
+          "ប្រើ `<Controller>` សម្រាប់គ្រប់គ្រង Non-native ឬ Controlled UI Components។",
+          "Render prop ផ្តល់នូវ `{ field: { value, onChange, onBlur, ref }, fieldState: { error } }`។",
+          "ជួយរក្សាភាពស៊ីសង្វាក់គ្នានៃ Design System ជាមួយ Validation របស់ RHF + Zod។"
         ],
-        "codeSnippet": "import { Controller } from 'react-hook-form';\n\n<Controller\n  name=\"theme\"\n  control={control}\n  render={({ field }) => (\n    <CustomSelect value={field.value} onChange={field.onChange} />\n  )}\n/>",
+        "codeSnippet": "import { Controller, useForm } from 'react-hook-form';\nimport { CustomSelect } from '@/components/ui/CustomSelect';\n\nexport function SettingsForm() {\n  const { control, handleSubmit } = useForm();\n\n  return (\n    <form onSubmit={handleSubmit(console.log)}>\n      <Controller\n        name=\"theme\"\n        control={control}\n        defaultValue=\"dark\"\n        render={({ field, fieldState }) => (\n          <div>\n            <label>ជ្រើសរើស Theme</label>\n            <CustomSelect\n              value={field.value}\n              onChange={field.onChange}\n              options={[\n                { label: 'ងងឹត (Dark)', value: 'dark' },\n                { label: 'ភ្លឺ (Light)', value: 'light' },\n              ]}\n            />\n            {fieldState.error && <p className=\"text-red-500\">{fieldState.error.message}</p>}\n          </div>\n        )}\n      />\n    </form>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Custom Widget via Controller"
+        "codeTitle": "Controlled Custom Widget via Controller",
+        "proTip": "សម្រាប់ Custom Components នៃ Design System ដែលមិន expose native input `ref` (ដូចជា Custom Dropdown ឬ Rich Text Editor) ចូរប្រើ `<Controller name='...' control={control} render={({ field }) => ...} />` ដើម្បីផ្សារភ្ជាប់ State ជាមួយ React Hook Form ដោយរលូន។"
       }
     ]
   },

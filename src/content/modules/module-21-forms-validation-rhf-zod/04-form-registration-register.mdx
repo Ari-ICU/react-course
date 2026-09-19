@@ -5,27 +5,33 @@ title: "Form Registration ({...register})"
 moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
-summary: "Connecting native inputs to React Hook Form."
+summary: "ការភ្ជាប់ Native Input Elements ទៅកាន់ React Hook Form តាមរយៈ {...register('fieldName')}។"
+proTip: "`register('name')` នឹង return នូវ `name`, `ref`, `onChange`, និង `onBlur`។ ការប្រើ Spread Syntax `{...register('name')}` ជួយឱ្យអ្នកមិនបាច់សរសេរ State handlers ដោយផ្ទាល់ដៃឡើយ។"
 codeTitle: "Input Registration and Error Display"
 ---
 
 # Form Registration ({...register})
 
-`register('name')` returns `onChange`, `onBlur`, `ref`, and `name` attributes to spread onto the input.
+ដើម្បីភ្ជាប់ Native HTML Input (ដូចជា `<input>`, `<select>`, `<textarea>`) ទៅកាន់ React Hook Form យើងប្រើប្រាស់អនុគមន៍ `register('fieldName')`។ អនុគមន៍នេះនឹង return នូវ Object មួយដែលមាន `name`, `ref`, `onChange`, និង `onBlur` ដែលយើងអាច Spread ចូលទៅក្នុង Input Element បានយ៉ាងរហ័ស។
 
 ### Key Concepts & Rules:
 
-- No manual `value` or `onChange` state wiring required.
+- ប្រើប្រាស់ `{...register('fieldName')}` ដោយផ្ទាល់លើ Native Elements។
+- អានសារ Error តាមរយៈ `errors.fieldName?.message`។
+- មិនបាច់សរសេរ `value={...}` ឬ `onChange={(e) => ...}` ដោយផ្ទាល់ដៃឡើយ។
 
 ### Code Example: Input Registration and Error Display
 
 ```jsx
-<div>
-  <label className="block text-sm font-medium text-slate-300">Full Name</label>
+<div className="space-y-1">
+  <label className="block text-sm font-medium text-slate-300">ឈ្មោះសិស្ស</label>
   <input 
     {...register('name')} 
-    className="w-full bg-slate-900 border border-slate-800 p-2 rounded text-white" 
+    placeholder="បញ្ចូលឈ្មោះពេញ..."
+    className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-lg text-white focus:ring-2 focus:ring-blue-500" 
   />
-  {errors.name && <p className="text-xs text-rose-400 mt-1">{errors.name.message}</p>}
+  {errors.name && (
+    <p className="text-xs text-rose-400 mt-1">{errors.name.message}</p>
+  )}
 </div>
 ```
