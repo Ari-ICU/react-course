@@ -5,18 +5,20 @@ title: "SPA Concept"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "How Single Page Applications render multiple screens without browser refreshes."
+summary: "របៀបដែល Single Page Applications បង្ហាញអេក្រង់ច្រើនដោយមិនបាច់ reload ទំព័រ browser។"
+proTip: "នៅក្នុង SPA ទោះបីជា URL លើ address bar ផ្លាស់ប្តូរទៅ `/projects` ឬ `/settings` ក៏ដោយ ក៏ browser មិនដែលទាញយក HTML ថ្មីពី server ដែរ — JavaScript គ្រាន់តែផ្លាស់ប្តូរ Component លើអេក្រង់ប៉ុណ្ណោះ។"
 codeTitle: "SPA Mental Model"
 ---
 
 # SPA Concept
 
-In an SPA, the browser downloads a single HTML file and JavaScript bundle. When the user navigates to a new URL, client-side JavaScript intercepts the navigation and updates the DOM dynamically without requesting a new HTML page from the server.
+នៅក្នុងស្ថាបត្យកម្ម **Single Page Application (SPA)** កម្មវិធីរុករក (Browser) ទាញយកតែឯកសារ HTML តែមួយគត់ និង JavaScript bundle ដំបូងមកដំណើរការ។ នៅពេលដែលអ្នកប្រើប្រាស់ចុចផ្លាស់ប្តូរទំព័រទៅកាន់ URL ថ្មី JavaScript នៅខាង client-side នឹងធ្វើអន្តរាគមន៍កាត់ផ្តាច់ (intercept) ការ reload របស់ browser ហើយធ្វើការ update លើ DOM ដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- Instant navigation transitions without white screen flashes.
-- State persists in memory across route changes.
+- ការផ្លាស់ប្តូរទំព័រធ្វើឡើងភ្លាមៗ (Instant Navigation) ដោយគ្មានផ្ទាំងពណ៌ស (White Screen Flashes) ដូច traditional websites ឡើយ។
+- State របស់កម្មវិធីត្រូវបានរក្សាទុកក្នុង JavaScript Memory ឆ្លងកាត់ការផ្លាស់ប្តូរ Route នីមួយៗ។
+- Server គ្រាន់តែផ្គត់ផ្គង់ static bundle និង API endpoints (JSON Data) ប៉ុណ្ណោះ។
 
 ### Code Example: SPA Mental Model
 

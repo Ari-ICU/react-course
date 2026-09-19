@@ -5,17 +5,20 @@ title: "NavLink"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Active link styling for navigation bars and menus."
+summary: "ការកំណត់ Style លើ Active Navigation Links សម្រាប់ headers និង sidebars។"
+proTip: "`<NavLink>` បញ្ជូន boolean `isActive` ទៅក្នុង `className` function ដោយស្វ័យប្រវត្តិ ដែលអនុញ្ញាតឱ្យអ្នក highlight menu item ណាដែលកំពុងបើកបានយ៉ាងរលូន។"
 codeTitle: "Active Styling with NavLink"
 ---
 
 # NavLink
 
-A special version of `<Link>` that knows whether it is currently active. It passes an `isActive` boolean to its `className` function for easy active styling.
+`<NavLink>` គឺជាទម្រង់ពិសេសមួយនៃ `<Link>` ដែលមានសមត្ថភាពដឹងថាតើ URL បច្ចុប្បន្នកំពុងត្រូវគ្នានឹងតំណភ្ជាប់របស់វា (Active State) ឬអត់។ វាបញ្ជូន boolean parameter `{ isActive }` ទៅក្នុង `className` ឬ `style` callback function ដែលជួយឱ្យការរចនា navigation bar, tabs, ឬ sidebar menu មានភាពងាយស្រួលបំផុត។
 
 ### Key Concepts & Rules:
 
-- Makes active tab highlights declarative.
+- ប្រើសម្រាប់ Navigation Bars, Sidebars, និង Tab Menus។
+- `className={({ isActive }) => isActive ? 'active-class' : 'inactive-class'}`។
+- គាំទ្រ accessibility (a11y) ដោយបន្ថែម `aria-current="page"` លើ active link ដោយស្វ័យប្រវត្តិ។
 
 ### Code Example: Active Styling with NavLink
 

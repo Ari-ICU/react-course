@@ -5,17 +5,20 @@ title: "Query Parameters (useSearchParams)"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Reading and updating URL search queries like ?sort=desc&page=2."
+summary: "ការអាន និងកែប្រែ URL query strings ដូចជា ?sort=desc&page=2។"
+proTip: "ការរក្សាទុក Search Query, Filter, និង Pagination នៅក្នុង URL Query Parameters ជួយឱ្យ user អាចចម្លងតំណភ្ជាប់ (Shareable Link) ឬ Bookmark ទុកមើលពេលក្រោយបានយ៉ាងងាយស្រួល។"
 codeTitle: "Query Strings with useSearchParams"
 ---
 
 # Query Parameters (useSearchParams)
 
-`useSearchParams` behaves like `useState`, but stores state directly in the URL query string, making URLs shareable and bookmarkable.
+Hook `useSearchParams` មានរបៀបប្រើប្រាស់ស្រដៀងគ្នានឹង `useState` ដែរ ប៉ុន្តែវាធ្វើការរក្សាទុកទិន្នន័យ State នៅលើ URL Query String ដោយផ្ទាល់ (ឧទាហរណ៍៖ `?q=react&sort=popular`)។ វិធីសាស្ត្រនេះជួយឱ្យ filter state អាច share ទៅកាន់អ្នកដទៃ និងរក្សាទុកក្នុង browser history បាន។
 
 ### Key Concepts & Rules:
 
-- Synchronizes table filters with browser history.
+- អានតម្លៃតាមរយៈ `searchParams.get('key')`។
+- Update តម្លៃតាមរយៈ `setSearchParams({ key: value })`។
+- ធ្វើសមកាលកម្មទិន្នន័យតារាង ការ filter និង pagination ជាមួយ Browser History យ៉ាងរលូន។
 
 ### Code Example: Query Strings with useSearchParams
 

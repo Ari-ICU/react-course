@@ -5,17 +5,20 @@ title: "Nested Routes"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Sub-routes sharing layout frames using <Outlet />."
+summary: "ការរៀបចំ sub-routes ដែលចែករំលែក layout រួមគ្នាដោយប្រើប្រាស់ <Outlet />។"
+proTip: "គិតពី `<Outlet />` ដូចជា 'រន្ធដោត (Slot)' មួយនៅក្នុង Layout៖ រាល់ Sub-Route ណាដែលត្រូវគ្នានឹង URL វានឹងរត់មកបង្ហាញនៅចំកន្លែងដែលដាក់ `<Outlet />` នោះភ្លាម។"
 codeTitle: "Nested Routes and Outlet Layout"
 ---
 
 # Nested Routes
 
-Parent routes can render common layouts (e.g. sidebar and header), with `<Outlet />` serving as the placeholder for child route components.
+Nested Routes គឺជាបច្ចេកទេសរៀបចំ Route ជាថ្នាក់កូនចៅ ដែលអនុញ្ញាតឱ្យ Parent Route អាចចែករំលែក Layout រួម (ដូចជា Header, Sidebar, ឬ Footer) ទៅឱ្យ Child Routes ទាំងអស់។ Component `<Outlet />` ដើរតួជាកន្លែងទំនេរ (placeholder) សម្រាប់ render កូនចៅដែលត្រូវគ្នានឹង URL។
 
 ### Key Concepts & Rules:
 
-- Hierarchical route structures mirror visual component nesting.
+- ជួយជៀសវាងការសរសេរ Layout components ស្ទួនៗគ្នានៅគ្រប់ទំព័រ។
+- នៅពេលដែល user ផ្លាស់ប្តូរ sub-routes មានតែផ្នែកខាងក្នុង `<Outlet />` ប៉ុណ្ណោះដែល re-render ចំណែក Header និង Sidebar នៅរក្សាទុកដដែល (គ្មាន flickering)។
+- ប្រើ `index` attribute សម្រាប់កំណត់ default view នៅពេលដែល path ត្រូវគ្នានឹង parent ផ្ទាល់។
 
 ### Code Example: Nested Routes and Outlet Layout
 

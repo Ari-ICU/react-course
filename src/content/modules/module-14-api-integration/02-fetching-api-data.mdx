@@ -5,23 +5,33 @@ title: "Fetching API Data"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Native fetch() API vs external HTTP client libraries."
+summary: "ការប្រៀបធៀបរវាង Browser Native fetch() API និង External HTTP Client Libraries ដូចជា Axios។"
+pitfall: "Native `fetch()` នឹងមិនបោះ Error (Promise rejection) ទេទោះបីជា Server ឆ្លើយតបមកវិញនូវ Status Code 404 (Not Found) ឬ 500 (Internal Server Error) ក៏ដោយ! អ្នកត្រូវតែពិនិត្យមើល `response.ok` ដោយខ្លួនឯងជានិច្ច។"
 codeTitle: "Native fetch() Error Checking"
 ---
 
 # Fetching API Data
 
-Modern browsers have native `fetch()`, but Axios or TanStack Query simplify error handling, request cancellation, and response body JSON parsing.
+Browser សម័យទំនើបបានភ្ជាប់មកជាមួយនូវ Native `fetch()` API សម្រាប់ធ្វើ HTTP Requests។ ទោះជាយ៉ាងណាក៏ដោយ បណ្ណាល័យជំនួយដូចជា Axios ឬ TanStack Query ត្រូវបាននិយមប្រើប្រាស់យ៉ាងទូលំទូលាយ ព្រោះវាជួយសម្រួលដល់ការ parse ទិន្នន័យ JSON ដោយស្វ័យប្រវត្តិ ការកំណត់ Request Timeouts និងការគ្រប់គ្រង Error។
 
 ### Key Concepts & Rules:
 
-- Native fetch does not reject promises on HTTP 404/500 status codes!
+- `fetch()` បោះ Promise reject តែនៅពេលជួបបញ្ហា Network Failure ប៉ុណ្ណោះ មិន reject ពេលជួប HTTP 404/500 ឡើយ។
+- ត្រូវតែពិនិត្យមើល `if (!response.ok)` ជានិច្ចនៅពេលប្រើប្រាស់ `fetch()`។
+- ត្រូវតែហៅ `await response.json()` ដើម្បីបំប្លែង Response Body ទៅជា JavaScript Object។
 
 ### Code Example: Native fetch() Error Checking
 
 ```jsx
-// Native fetch requires manual ok check:
-const response = await fetch('/api/products');
-if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-const data = await response.json();
+async function fetchProducts() {
+  // Native fetch តម្រូវឱ្យពិនិត្យមើល response.ok ដោយផ្ទាល់ដៃ៖
+  const response = await fetch('/api/products');
+  
+  if (!response.ok) {
+    throw new Error(`HTTP Error! Status: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  return data;
+}
 ```

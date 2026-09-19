@@ -5,20 +5,28 @@ title: "PUT Request"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Full replacement update of an existing resource."
+summary: "ការធ្វើបច្ចុប្បន្នភាពទិន្នន័យទាំងមូល (Full Resource Replacement) នៃ Resource ណាមួយ។"
+pitfall: "ការប្រើប្រាស់ `PUT` តម្រូវឱ្យអ្នកផ្ញើទិន្នន័យគ្រប់ Properties ទាំងអស់នៃ Object។ ប្រសិនបើអ្នកផ្ញើតែ property មួយ Backend ខ្លះអាចនឹងលុប properties ផ្សេងទៀតដែលបាត់ចោល! បើចង់ update តែមួយចំណែក ចូរប្រើ `PATCH` ជំនួសវិញ។"
 codeTitle: "Axios PUT Request"
 ---
 
 # PUT Request
 
-Replaces the entire entity at `/api/resources/:id`.
+HTTP PUT ត្រូវបានប្រើប្រាស់ដើម្បីជំនួស ឬធ្វើបច្ចុប្បន្នភាពទិន្នន័យនៃ Resource ណាមួយទាំងមូល (Full Replacement) នៅលើ Server តាមរយៈ Identifier (ឧទាហរណ៍៖ `/api/students/:id`)។
 
 ### Key Concepts & Rules:
 
-- Idempotent update replacing all fields.
+- ជាវិធីសាស្ត្រ Idempotent — ការបញ្ជូន PUT ស្នើសុំជាមួយ Payload ដដែលច្រើនដង នឹងទទួលបានលទ្ធផលចុងក្រោយដូចគ្នា។
+- តម្រូវឱ្យបញ្ជូន Object ពេញលេញដែលមានគ្រប់ Field ទាំងអស់នៃ Resource នោះ។
+- ប្រើសម្រាប់កែប្រែទិន្នន័យដែលមានស្រាប់ ឬបង្កើត Resource ថ្មីប្រសិនបើមិនទាន់មាន (អាស្រ័យលើការរចនា API)។
 
 ### Code Example: Axios PUT Request
 
 ```jsx
-await axios.put(`/api/students/${id}`, fullStudentObject);
+import axios from 'axios';
+
+const updateStudentProfile = async (id: string, fullProfile: StudentProfile) => {
+  const res = await axios.put(`/api/students/${id}`, fullProfile);
+  return res.data;
+};
 ```

@@ -5,20 +5,31 @@ title: "PATCH Request"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Partial update of specific modified fields."
+summary: "ការធ្វើបច្ចុប្បន្នភាពតែចំណែកជាក់លាក់ណាមួយនៃទិន្នន័យ (Partial Update)។"
+proTip: "ប្រើប្រាស់ `PATCH` នៅពេលអ្នកចង់កែប្រែតែវាលទិន្នន័យខ្លះ (Fields) ដូចជាការចុច Toggle status បញ្ចប់ការងារ (e.g., `{ completed: true }`) ដើម្បីកាត់បន្ថយទំហំទិន្នន័យផ្ញើតាម Network។"
 codeTitle: "Axios PATCH Request"
 ---
 
 # PATCH Request
 
-Updates only the fields sent in the request body (e.g. toggle task status).
+ខុសប្លែកពី `PUT`, HTTP PATCH ត្រូវបានប្រើប្រាស់សម្រាប់ធ្វើបច្ចុប្បន្នភាពតែវាលទិន្នន័យជាក់លាក់ណាមួយ (Partial Update) ដោយមិនប៉ះពាល់ដល់ Field ផ្សេងទៀតដែលមិនបានបញ្ជាក់នៅក្នុង Request Body ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Saves bandwidth by sending only changed properties.
+- សន្សំសំចៃ Bandwidth បណ្តាញ ដោយផ្ញើទៅតែ Fields ដែលមានការផ្លាស់ប្តូរ។
+- ស័ក្តិសមបំផុតសម្រាប់ Inline Editing, Switch toggles, ឬ Quick status updates។
+- មិនតម្រូវឱ្យបញ្ជូន Object ពេញលេញនោះឡើយ។
 
 ### Code Example: Axios PATCH Request
 
 ```jsx
-await axios.patch(`/api/todos/${id}`, { completed: true });
+import axios from 'axios';
+
+const toggleTodoStatus = async (id: string, isCompleted: boolean) => {
+  // ផ្ញើតែ field 'completed' ទៅកាន់ Server ប៉ុណ្ណោះ
+  const res = await axios.patch(`/api/todos/${id}`, { 
+    completed: isCompleted 
+  });
+  return res.data;
+};
 ```

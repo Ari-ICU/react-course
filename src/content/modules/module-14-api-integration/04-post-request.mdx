@@ -5,23 +5,33 @@ title: "POST Request"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Creating new resources with JSON payload."
+summary: "ការផ្ញើទិន្នន័យបង្កើត Resource ថ្មីនៅលើ Server តាមរយៈ Request Body ជាទម្រង់ JSON។"
+proTip: "កុំភ្លេចកំណត់ `Content-Type: application/json` នៅលើ Request Header ដើម្បីឱ្យ Server ដឹងថាទិន្នន័យដែលផ្ញើទៅជា JSON (ប្រសិនបើប្រើ Axios វាកំណត់ Header នេះឱ្យដោយស្វ័យប្រវត្តិ)។"
 codeTitle: "Axios POST Request"
 ---
 
 # POST Request
 
-Used for submitting forms, creating tasks, or authenticating users.
+HTTP POST ត្រូវបានប្រើប្រាស់សម្រាប់បញ្ជូនទិន្នន័យថ្មីទៅកាន់ Server ដូចជាការចុះឈ្មោះគណនី (Sign Up), ការបង្កើតទិន្នន័យថ្មី (Create Item), ឬការបញ្ជូន Form Data។ ទិន្នន័យទាំងនេះត្រូវបានវេចខ្ចប់នៅក្នុង Request Body ជាទម្រង់ JSON Payload។
 
 ### Key Concepts & Rules:
 
-- Transmits data in request body.
+- បញ្ជូនទិន្នន័យនៅក្នុង Request Body (មិនមែននៅលើ URL)។
+- មិនមែនជា Idempotent ទេ — ការហៅ POST Request ដដែលៗច្រើនដង នឹងបង្កើត Resource ថ្មីៗច្រើនដងដូចគ្នា។
+- ជាទូទៅ Server ឆ្លើយតបមកវិញនូវ Status `201 Created` រួមជាមួយទិន្នន័យថ្មីដែលបានបង្កើត។
 
 ### Code Example: Axios POST Request
 
 ```jsx
+import axios from 'axios';
+
+interface StudentInput {
+  name: string;
+  email: string;
+}
+
 const createStudent = async (newStudent: StudentInput) => {
   const res = await axios.post('/api/students', newStudent);
-  return res.data;
+  return res.data; // Server returns created record with new ID
 };
 ```

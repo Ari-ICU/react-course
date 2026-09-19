@@ -5,28 +5,35 @@ title: "Response Interceptors"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Handling global errors and automatic 401 token refresh."
+summary: "ការគ្រប់គ្រង Global Errors និងដំណើរការ Automatic Token Refresh នៅពេលជួប Status Code 401 Unauthorized។"
+proTip: "Response Interceptor គឺជាកន្លែងដ៏ល្អឥតខ្ចោះក្នុងការដោះស្រាយ Session Expiry — នៅពេល API ឆ្លើយតប 401 អ្នកអាចធ្វើការ Refresh Token ឬ Redirect user ទៅកាន់ទំព័រ Login ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Response Error Interceptor"
 ---
 
 # Response Interceptors
 
-Catch 401 Unauthorized responses globally to refresh access tokens or redirect to login.
+Response Interceptors អនុញ្ញាតឱ្យអ្នកត្រួតពិនិត្យ និងកែច្នៃលទ្ធផល Response ដែលទទួលបានពី Server មុនពេលវាត្រូវបានបញ្ជូនទៅកាន់ប្លុក `.then()` ឬ `try/catch` របស់ Component។ វាស័ក្តិសមបំផុតសម្រាប់ការដោះស្រាយវិបត្តិ Session ផុតកំណត់ (401 Unauthorized) ឬការកត់ត្រា Log សកល។
 
 ### Key Concepts & Rules:
 
-- Centralizes session expiration handling.
+- ស្ទាក់ចាប់កំហុស 401 ដើម្បីធ្វើការ Logout ឬស្នើសុំ Refresh Token ថ្មីដោយស្វ័យប្រវត្តិ។
+- អាចបំប្លែងទម្រង់ Response Data ឱ្យស្រួលប្រើប្រាស់មុនពេលបញ្ជូនទៅ UI។
+- ត្រូវតែហៅ `Promise.reject(error)` ដើម្បីឱ្យប្លុក `catch` របស់ Caller នៅតែអាចចាប់ Error បានដដែល។
 
 ### Code Example: Response Error Interceptor
 
 ```jsx
+// src/lib/apiClient.ts
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Trigger token refresh or logout
+      // សម្អាត Auth Token ដែលផុតកំណត់
+      localStorage.removeItem('access_token');
+      // បញ្ជូន User ទៅកាន់ទំព័រចូលប្រើប្រាស់
       window.location.href = '/login?expired=true';
     }
+    
     return Promise.reject(error);
   }
 );

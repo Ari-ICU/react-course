@@ -2263,217 +2263,264 @@ export const modulesData: ModuleItem[] = [
     "number": "13",
     "title": "React Routing",
     "category": "Routing & Network",
-    "summary": "Single Page Application architecture, React Router v6+, Routes, Route, Link, NavLink, dynamic routes, nested layouts, and protected routes.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពីស្ថាបត្យកម្ម Single Page Application (SPA), React Router v6+, BrowserRouter, Routes, Route, Link, NavLink, Dynamic Routes, Nested Layouts, Protected Routes, useSearchParams និង Code-splitting។",
     "iconName": "Compass",
     "topics": [
       {
         "id": "m13-01",
         "number": "01",
         "title": "SPA Concept",
-        "summary": "How Single Page Applications render multiple screens without browser refreshes.",
-        "explanation": "In an SPA, the browser downloads a single HTML file and JavaScript bundle. When the user navigates to a new URL, client-side JavaScript intercepts the navigation and updates the DOM dynamically without requesting a new HTML page from the server.",
+        "summary": "របៀបដែល Single Page Applications បង្ហាញអេក្រង់ច្រើនដោយមិនបាច់ reload ទំព័រ browser។",
+        "explanation": "នៅក្នុងស្ថាបត្យកម្ម **Single Page Application (SPA)** កម្មវិធីរុករក (Browser) ទាញយកតែឯកសារ HTML តែមួយគត់ និង JavaScript bundle ដំបូងមកដំណើរការ។ នៅពេលដែលអ្នកប្រើប្រាស់ចុចផ្លាស់ប្តូរទំព័រទៅកាន់ URL ថ្មី JavaScript នៅខាង client-side នឹងធ្វើអន្តរាគមន៍កាត់ផ្តាច់ (intercept) ការ reload របស់ browser ហើយធ្វើការ update លើ DOM ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Instant navigation transitions without white screen flashes.",
-          "State persists in memory across route changes."
+          "ការផ្លាស់ប្តូរទំព័រធ្វើឡើងភ្លាមៗ (Instant Navigation) ដោយគ្មានផ្ទាំងពណ៌ស (White Screen Flashes) ដូច traditional websites ឡើយ។",
+          "State របស់កម្មវិធីត្រូវបានរក្សាទុកក្នុង JavaScript Memory ឆ្លងកាត់ការផ្លាស់ប្តូរ Route នីមួយៗ។",
+          "Server គ្រាន់តែផ្គត់ផ្គង់ static bundle និង API endpoints (JSON Data) ប៉ុណ្ណោះ។"
         ],
         "codeSnippet": "// Traditional Multi-Page App: Server returns full HTML page per URL.\n// Single Page App (SPA): Client-side JavaScript swaps view components on URL change.",
         "codeLanguage": "jsx",
-        "codeTitle": "SPA Mental Model"
+        "codeTitle": "SPA Mental Model",
+        "proTip": "នៅក្នុង SPA ទោះបីជា URL លើ address bar ផ្លាស់ប្តូរទៅ `/projects` ឬ `/settings` ក៏ដោយ ក៏ browser មិនដែលទាញយក HTML ថ្មីពី server ដែរ — JavaScript គ្រាន់តែផ្លាស់ប្តូរ Component លើអេក្រង់ប៉ុណ្ណោះ។"
       },
       {
         "id": "m13-02",
         "number": "02",
         "title": "React Router",
-        "summary": "The standard declarative routing library for React SPAs.",
-        "explanation": "React Router synchronizes the UI with the URL in the browser address bar. It provides components and hooks to match URL paths and render corresponding views.",
+        "summary": "បណ្ណាល័យស្តង់ដារសម្រាប់គ្រប់គ្រង declarative client-side routing ក្នុង React SPAs។",
+        "explanation": "**React Router** គឺជាបណ្ណាល័យស្តង់ដារដ៏ពេញនិយមបំផុតសម្រាប់គ្រប់គ្រង Routing នៅក្នុងកម្មវិធី React SPA។ វាធ្វើការផ្គូផ្គង UI Components ទៅនឹង URL ជាក់លាក់នៅលើ Browser Address Bar និងផ្តល់នូវ Components និង Hooks ជាច្រើនដើម្បីរៀបចំរចនាសម្ព័ន្ធទំព័រ។",
         "keyPoints": [
-          "Version 6+ uses nested routes, data loaders, and elements."
+          "ធ្វើសមកាលកម្ម UI ជាមួយនឹង Browser URL តាមទម្រង់ Declarative។",
+          "ចាប់ពី Version 6 ឡើងទៅ React Router គាំទ្រ Nested Routes, Data Loaders, Action Handlers និង Layout Outlets យ៉ាងរលូន។",
+          "ប្រើ package `react-router-dom` សម្រាប់ web applications។"
         ],
         "codeSnippet": "npm install react-router-dom",
-        "codeLanguage": "jsx",
-        "codeTitle": "Installing React Router"
+        "codeLanguage": "bash",
+        "codeTitle": "Installing React Router",
+        "proTip": "React Router v6+ ប្រើប្រាស់ Element-based syntax (`element={<Home />}`) និង Hooks ទំនើបៗដូចជា `useNavigate`, `useParams` ដែលជួយឱ្យការគ្រប់គ្រង Route មានភាពងាយស្រួលបំផុត។"
       },
       {
         "id": "m13-03",
         "number": "03",
         "title": "BrowserRouter",
-        "summary": "Wrapping your app to connect with the browser History API.",
-        "explanation": "`<BrowserRouter>` uses the HTML5 history API (`pushState`, `replaceState`, and `popstate` event) to keep your UI in sync with the URL.",
+        "summary": "ការ wrap កម្មវិធីដើម្បីភ្ជាប់ជាមួយ HTML5 Browser History API។",
+        "explanation": "`<BrowserRouter>` គឺជា Router Provider ស្នូលដែលត្រូវរុំព័ទ្ធពីលើកម្មវិធី React ទាំងមូល។ វាប្រើប្រាស់ **HTML5 History API** (ដូចជា `pushState`, `replaceState` និង `popstate` event) ដើម្បីរក្សា UI របស់អ្នកឱ្យស៊ីសង្វាក់គ្នាជាមួយនឹង URL នៅក្នុង address bar។",
         "keyPoints": [
-          "Place `<BrowserRouter>` at the root of your application."
+          "ដាក់ `<BrowserRouter>` នៅចំណុចកំពូលបង្អស់ (Root Level) នៃ React App។",
+          "ផ្តល់នូវ Routing Context ដល់ Child Components ទាំងអស់ ដើម្បីឱ្យពួកវាអាចប្រើ `<Link>`, `useNavigate()`, ឬ `useParams()` បាន។",
+          "នៅលើ production server អ្នកត្រូវ configure fallback rewrite ទៅកាន់ `index.html` សម្រាប់ client-side routes ទាំងអស់។"
         ],
         "codeSnippet": "import { BrowserRouter } from 'react-router-dom';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <BrowserRouter>\n    <App />\n  </BrowserRouter>\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "BrowserRouter Provider"
+        "codeTitle": "BrowserRouter Provider",
+        "proTip": "តែងតែដាក់ `<BrowserRouter>` នៅ root level នៃ component tree របស់អ្នក (ដូចជា `main.tsx` ឬ `App.tsx`) ដើម្បីឱ្យ components ទាំងអស់អាចហៅប្រើ Router hooks បាន។"
       },
       {
         "id": "m13-04",
         "number": "04",
         "title": "Routes and Route",
-        "summary": "Defining URL matching rules and target components.",
-        "explanation": "`<Routes>` examines all its child `<Route>` elements and chooses the best match based on the current URL path.",
+        "summary": "ការកំណត់លក្ខខណ្ឌផ្គូផ្គង URL Path និង Target Components ដែលត្រូវ render។",
+        "explanation": "Component `<Routes>` ដើរតួជាអ្នកត្រួតពិនិត្យ Child `<Route>` ទាំងអស់របស់ខ្លួន ហើយជ្រើសរើសយក Route ណាដែលត្រូវគ្នានឹង URL បច្ចុប្បន្នបំផុតដើម្បីយក Component ក្នុង `element` មក render បង្ហាញលើអេក្រង់។",
         "keyPoints": [
-          "Matches are prioritized based on specificity."
+          "`<Routes>` ជ្រើសរើសយក route ដែលមានភាពជាក់លាក់បំផុត (Specificity Matching) ដោយស្វ័យប្រវត្តិ។",
+          "កំណត់ `path` (ឧទាហរណ៍៖ `\"/\"`, `\"/projects\"`) និង `element` (ឧទាហរណ៍៖ `<HomePage />`) សម្រាប់ route នីមួយៗ។",
+          "អាចរៀបចំជា hierarchical nested structure ដើម្បីបង្កើត sub-pages បានយ៉ាងងាយស្រួល។"
         ],
         "codeSnippet": "import { Routes, Route } from 'react-router-dom';\nimport HomePage from './pages/HomePage';\nimport CurriculumPage from './pages/CurriculumPage';\nimport ProjectsPage from './pages/ProjectsPage';\n\nexport function AppRoutes() {\n  return (\n    <Routes>\n      <Route path=\"/\" element={<HomePage />} />\n      <Route path=\"/curriculum\" element={<CurriculumPage />} />\n      <Route path=\"/projects\" element={<ProjectsPage />} />\n    </Routes>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Configuring Routes"
+        "codeTitle": "Configuring Routes",
+        "proTip": "នៅក្នុង React Router v6 `<Routes>` នឹងជ្រើសរើស Route ណាដែល 'Best Match' បំផុតដោយស្វ័យប្រវត្តិ ដោយមិនចាំបាច់ប្រើ `exact` keyword ដូចក្នុង v5 ទៀតឡើយ។"
       },
       {
         "id": "m13-05",
         "number": "05",
         "title": "Link",
-        "summary": "Client-side navigation without page refresh.",
-        "explanation": "The `<Link to=\"/destination\">` component renders an `<a>` tag with an `onClick` handler that prevents the browser's default reload and triggers client-side route navigation.",
+        "summary": "ការធ្វើដំណើរឆ្លងកាត់ទំព័រ (Client-side Navigation) ដោយគ្មាន page refresh។",
+        "explanation": "Component `<Link>` ត្រូវបានប្រើប្រាស់សម្រាប់ការធ្វើដំណើរឆ្លងកាត់ទំព័រនានានៅខាងក្នុងកម្មវិធី React SPA។ នៅលើ DOM វា render ចេញជា HTML `<a>` tag ធម្មតា ប៉ុន្តែវាបានភ្ជាប់មកជាមួយ internal `onClick` handler ដែលទប់ស្កាត់ការ reload browser និងជំរុញឱ្យ client-side routing ដំណើរការភ្លាមៗ។",
         "keyPoints": [
-          "Always use `<Link>` instead of `<a href=\"...\">` for internal links."
+          "ប្រើប្រាស់ attribute `to=\"/destination\"` ដើម្បីបញ្ជាក់គោលដៅ។",
+          "ប្រើ `<Link>` សម្រាប់ internal links និងប្រើ `<a>` ធម្មតាសម្រាប់តែ external links (តំណភ្ជាប់ទៅក្រៅ website) ប៉ុណ្ណោះ។",
+          "រក្សា state របស់កម្មវិធីឱ្យនៅដដែល មិនធ្វើឱ្យបាត់បង់ទិន្នន័យពេលប្តូរទំព័រឡើយ។"
         ],
         "codeSnippet": "import { Link } from 'react-router-dom';\n\n<Link to=\"/projects\" className=\"text-blue-400 hover:underline\">\n  View Real-World Projects\n</Link>",
         "codeLanguage": "jsx",
-        "codeTitle": "Client Navigation with Link"
+        "codeTitle": "Client Navigation with Link",
+        "pitfall": "ដាច់ខាតកុំប្រើ `<a href=\"/projects\">` សម្រាប់ internal navigation ក្នុង SPA ព្រោះវានឹង reload browser ទាំងមូល! ត្រូវប្រើ `<Link to=\"/projects\">` ជានិច្ច។"
       },
       {
         "id": "m13-06",
         "number": "06",
         "title": "NavLink",
-        "summary": "Active link styling for navigation bars and menus.",
-        "explanation": "A special version of `<Link>` that knows whether it is currently active. It passes an `isActive` boolean to its `className` function for easy active styling.",
+        "summary": "ការកំណត់ Style លើ Active Navigation Links សម្រាប់ headers និង sidebars។",
+        "explanation": "`<NavLink>` គឺជាទម្រង់ពិសេសមួយនៃ `<Link>` ដែលមានសមត្ថភាពដឹងថាតើ URL បច្ចុប្បន្នកំពុងត្រូវគ្នានឹងតំណភ្ជាប់របស់វា (Active State) ឬអត់។ វាបញ្ជូន boolean parameter `{ isActive }` ទៅក្នុង `className` ឬ `style` callback function ដែលជួយឱ្យការរចនា navigation bar, tabs, ឬ sidebar menu មានភាពងាយស្រួលបំផុត។",
         "keyPoints": [
-          "Makes active tab highlights declarative."
+          "ប្រើសម្រាប់ Navigation Bars, Sidebars, និង Tab Menus។",
+          "`className={({ isActive }) => isActive ? 'active-class' : 'inactive-class'}`។",
+          "គាំទ្រ accessibility (a11y) ដោយបន្ថែម `aria-current=\"page\"` លើ active link ដោយស្វ័យប្រវត្តិ។"
         ],
         "codeSnippet": "import { NavLink } from 'react-router-dom';\n\n<NavLink\n  to=\"/curriculum\"\n  className={({ isActive }) =>\n    cn(\n      \"px-3 py-2 rounded-md text-sm font-medium\",\n      isActive ? \"bg-slate-800 text-white\" : \"text-slate-400 hover:text-white\"\n    )\n  }\n>\n  Curriculum\n</NavLink>",
         "codeLanguage": "jsx",
-        "codeTitle": "Active Styling with NavLink"
+        "codeTitle": "Active Styling with NavLink",
+        "proTip": "`<NavLink>` បញ្ជូន boolean `isActive` ទៅក្នុង `className` function ដោយស្វ័យប្រវត្តិ ដែលអនុញ្ញាតឱ្យអ្នក highlight menu item ណាដែលកំពុងបើកបានយ៉ាងរលូន។"
       },
       {
         "id": "m13-07",
         "number": "07",
         "title": "Navigation Hook (useNavigate)",
-        "summary": "Programmatic redirects inside handlers or effects.",
-        "explanation": "The `useNavigate` hook returns a navigation function for redirecting users after form submissions or logout actions.",
+        "summary": "ការបញ្ជា redirect ទំព័រតាមរយៈកូដ (Programmatic Navigation) ក្នុង handlers ឬ effects។",
+        "explanation": "Hook `useNavigate` ផ្តល់ត្រឡប់មកវិញនូវ navigation function ដែលអនុញ្ញាតឱ្យអ្នកបញ្ជាប្តូរទំព័រតាមរយៈកូដ JavaScript (Programmatic Navigation) ដូចជាការ redirect ទៅកាន់ Dashboard បន្ទាប់ពី submit form ជោគជ័យ ឬការ redirect ទៅ Login បន្ទាប់ពី user ចុច Logout។",
         "keyPoints": [
-          "Can navigate forwards, backwards (`navigate(-1)`), or with options (`{ replace: true }`)."
+          "ប្រើ `navigate('/path')` ដើម្បីទៅកាន់ទំព័រថ្មី។",
+          "ប្រើ `navigate(-1)` ដើម្បីត្រឡប់ក្រោយ (Go Back) ឬ `navigate(1)` ដើម្បីទៅមុខ (Go Forward) ដូច browser buttons។",
+          "ជម្រើស `{ replace: true }` នឹងជំនួស URL ចាស់ក្នុង history stack (ការពារ back-button loop)។"
         ],
         "codeSnippet": "import { useNavigate } from 'react-router-dom';\n\nexport function LoginForm() {\n  const navigate = useNavigate();\n\n  const handleLoginSuccess = () => {\n    // Redirect to dashboard without back-button loop:\n    navigate('/dashboard', { replace: true });\n  };\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Programmatic Navigation with useNavigate"
+        "codeTitle": "Programmatic Navigation with useNavigate",
+        "proTip": "ប្រើ `navigate('/dashboard', { replace: true })` ក្រោយពេល Login ជោគជ័យ ដើម្បីកុំឱ្យ user អាចចុចប៊ូតុង Back ត្រឡប់មកទំព័រ Login វិញបាន។"
       },
       {
         "id": "m13-08",
         "number": "08",
         "title": "Dynamic Routes",
-        "summary": "Capturing variable URL paths using parameters like :id.",
-        "explanation": "Define dynamic paths with a colon prefix: `/modules/:moduleId/topics/:topicId`.",
+        "summary": "ការចាប់យក dynamic URL paths ដោយប្រើ parameters ដូចជា :id ឬ :moduleId។",
+        "explanation": "Dynamic Routes អនុញ្ញាតឱ្យអ្នកកំណត់ pattern នៃ URL ដែលមានតម្លៃប្រែប្រួល dynamic ដោយប្រើសញ្ញាពីរចុច (`:`) នៅពីមុខឈ្មោះ parameter ដូចជា `/modules/:moduleId` ឬ `/products/:id`។ វិធីសាស្ត្រនេះជួយឱ្យ Component តែមួយអាចទទួលរ៉ាប់រងការបង្ហាញទំព័រលម្អិតនៃទិន្នន័យរាប់ពាន់ records បានយ៉ាងរលូន។",
         "keyPoints": [
-          "Allows single component to handle thousands of dynamic URLs."
+          "កំណត់ Dynamic segment ដោយប្រើបុព្វបទ `:` ដូចជា `:moduleId`។",
+          "អនុញ្ញាតឱ្យ component តែមួយដើរតួជា template សម្រាប់ URLs រាប់ពាន់ផ្សេងគ្នា។",
+          "តម្លៃជាក់ស្តែងនៃ parameter នឹងត្រូវទាញយកតាមរយៈ `useParams()` hook។"
         ],
         "codeSnippet": "<Route path=\"/modules/:moduleId\" element={<ModuleDetailView />} />",
         "codeLanguage": "jsx",
-        "codeTitle": "Dynamic Route Parameter Definition"
+        "codeTitle": "Dynamic Route Parameter Definition",
+        "proTip": "អ្នកអាចដាក់ parameters ច្រើនក្នុង path តែមួយបាន ដូចជា `/courses/:courseId/modules/:moduleId/lessons/:lessonId`។"
       },
       {
         "id": "m13-09",
         "number": "09",
         "title": "Route Parameters (useParams)",
-        "summary": "Extracting dynamic parameters from URL path.",
-        "explanation": "The `useParams()` hook returns an object of key/value pairs of the URL parameters matched by the `<Route path>`.",
+        "summary": "ការទាញយក dynamic parameters ចេញពី URL path តាមរយៈ useParams hook។",
+        "explanation": "Hook `useParams()` ផ្តល់នូវ Object ដែលផ្ទុក key/value pairs នៃ dynamic parameters ទាំងអស់ដែលត្រូវគ្នានឹង `<Route path>` បច្ចុប្បន្ន។ អ្នកអាចទាញយក parameter ទាំងនោះមកប្រើប្រាស់ដើម្បីទាញយកទិន្នន័យពី API ឬធ្វើការ filter បង្ហាញលើ UI។",
         "keyPoints": [
-          "Parameters are always strings."
+          "តម្លៃដែលទាញចេញពី `useParams` គឺតែងតែជា **String** ជានិច្ច។",
+          "នៅក្នុង TypeScript អ្នកអាចកំណត់ Generic type ដូចជា `useParams<{ moduleId: string }>()` ដើម្បីទទួលបាន Type Safety និង Auto-completion។",
+          "ប្រើរួមជាមួយ `useEffect` ដើម្បីទាញយកទិន្នន័យថ្មីរាល់ពេលដែល parameter ផ្លាស់ប្តូរតម្លៃ។"
         ],
         "codeSnippet": "import { useParams } from 'react-router-dom';\n\nexport function ModuleDetailView() {\n  const { moduleId } = useParams<{ moduleId: string }>();\n  return <h2>Displaying details for Module {moduleId}</h2>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Reading URL Parameters with useParams"
+        "codeTitle": "Reading URL Parameters with useParams",
+        "proTip": "ចងចាំថា `useParams` តែងតែ return តម្លៃជា `string` ជានិច្ច! ប្រសិនបើ ID របស់អ្នកជាលេខ ត្រូវប្រើ `Number(id)` មុនពេលយកទៅប្រៀបធៀប។"
       },
       {
         "id": "m13-10",
         "number": "10",
         "title": "Nested Routes",
-        "summary": "Sub-routes sharing layout frames using <Outlet />.",
-        "explanation": "Parent routes can render common layouts (e.g. sidebar and header), with `<Outlet />` serving as the placeholder for child route components.",
+        "summary": "ការរៀបចំ sub-routes ដែលចែករំលែក layout រួមគ្នាដោយប្រើប្រាស់ <Outlet />។",
+        "explanation": "Nested Routes គឺជាបច្ចេកទេសរៀបចំ Route ជាថ្នាក់កូនចៅ ដែលអនុញ្ញាតឱ្យ Parent Route អាចចែករំលែក Layout រួម (ដូចជា Header, Sidebar, ឬ Footer) ទៅឱ្យ Child Routes ទាំងអស់។ Component `<Outlet />` ដើរតួជាកន្លែងទំនេរ (placeholder) សម្រាប់ render កូនចៅដែលត្រូវគ្នានឹង URL។",
         "keyPoints": [
-          "Hierarchical route structures mirror visual component nesting."
+          "ជួយជៀសវាងការសរសេរ Layout components ស្ទួនៗគ្នានៅគ្រប់ទំព័រ។",
+          "នៅពេលដែល user ផ្លាស់ប្តូរ sub-routes មានតែផ្នែកខាងក្នុង `<Outlet />` ប៉ុណ្ណោះដែល re-render ចំណែក Header និង Sidebar នៅរក្សាទុកដដែល (គ្មាន flickering)។",
+          "ប្រើ `index` attribute សម្រាប់កំណត់ default view នៅពេលដែល path ត្រូវគ្នានឹង parent ផ្ទាល់។"
         ],
         "codeSnippet": "// Route configuration:\n<Route path=\"/dashboard\" element={<DashboardLayout />}>\n  <Route index element={<DashboardOverview />} />\n  <Route path=\"analytics\" element={<AnalyticsView />} />\n  <Route path=\"settings\" element={<SettingsView />} />\n</Route>\n\n// Inside DashboardLayout.jsx:\nexport function DashboardLayout() {\n  return (\n    <div className=\"flex\">\n      <Sidebar />\n      <main className=\"flex-1 p-6\">\n        <Outlet /> {/* Child route renders here! */}\n      </main>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Nested Routes and Outlet Layout"
+        "codeTitle": "Nested Routes and Outlet Layout",
+        "proTip": "គិតពី `<Outlet />` ដូចជា 'រន្ធដោត (Slot)' មួយនៅក្នុង Layout៖ រាល់ Sub-Route ណាដែលត្រូវគ្នានឹង URL វានឹងរត់មកបង្ហាញនៅចំកន្លែងដែលដាក់ `<Outlet />` នោះភ្លាម។"
       },
       {
         "id": "m13-11",
         "number": "11",
         "title": "Layout Routes",
-        "summary": "Grouping routes under shared layouts without adding URL path prefixes.",
-        "explanation": "Omit the `path` prop on the parent Route to wrap routes in a layout without modifying the URL path.",
+        "summary": "ការប្រមូលផ្តុំ routes ក្រោម layout រួមដោយមិនចាំបាច់បន្ថែម URL path prefix (Pathless Routes)។",
+        "explanation": "ប្រសិនបើអ្នកចង់រុំព័ទ្ធ Routes មួយក្រុមនៅក្នុង Layout តែមួយ ដោយមិនចង់បន្ថែម prefix ទៅក្នុង URL ឡើយ អ្នកអាចលុប attribute `path` ចេញពី parent `<Route>` បាន។ បច្ចេកទេសនេះហៅថា **Pathless Layout Routes**។",
         "keyPoints": [
-          "Pathless layout routes cleanly group public vs authenticated layouts."
+          "Parent Route គ្រាន់តែកំណត់ `element={<Layout />}` ដោយគ្មាន `path` attribute។",
+          "អនុញ្ញាតឱ្យ routes ដូចជា `/login` និង `/register` ចែករំលែក `AuthLayout` ជាមួយគ្នាដោយមិនចាំបាច់ក្លាយជា `/auth/login` ឡើយ។",
+          "ជួយឱ្យ URL Structure មានភាពខ្លី និងស្រស់ស្អាត។"
         ],
         "codeSnippet": "<Route element={<AuthLayout />}>\n  <Route path=\"/login\" element={<LoginPage />} />\n  <Route path=\"/register\" element={<RegisterPage />} />\n</Route>",
         "codeLanguage": "jsx",
-        "codeTitle": "Pathless Layout Route"
+        "codeTitle": "Pathless Layout Route",
+        "proTip": "Pathless Layout Routes គឺល្អឥតខ្ចោះសម្រាប់ការបែងចែក Layout ពីរផ្សេងគ្នា ដូចជា Public Layout (សម្រាប់ Landing, About) និង Auth Layout (សម្រាប់ Login, Register)។"
       },
       {
         "id": "m13-12",
         "number": "12",
         "title": "404 Page",
-        "summary": "Catch-all wildcard routes (*).",
-        "explanation": "Use `<Route path=\"*\" element={<NotFoundPage />} />` at the very end of your route list to catch any unmatched URLs.",
+        "summary": "ការបង្កើត Catch-all Wildcard Route (*) សម្រាប់បង្ហាញទំព័រ Not Found។",
+        "explanation": "ដើម្បីគ្រប់គ្រងករណីដែលអ្នកប្រើប្រាស់វាយ URL ខុស ឬចូលទៅកាន់តំណភ្ជាប់ដែលមិនមាននៅក្នុងកម្មវិធី អ្នកត្រូវតែបង្កើត Catch-all Route ដោយប្រើសញ្ញាផ្កាយ (`path=\"*\"`) នៅខាងចុងបង្អស់នៃ `<Routes>` list។",
         "keyPoints": [
-          "Always provide a helpful 404 page with a link back to home."
+          "`path=\"*\"` នឹងចាប់យកគ្រប់ URL ណាដែលមិនត្រូវគ្នានឹង routes ខាងលើទាំងអស់។",
+          "តែងតែផ្តល់នូវការរចនាទំព័រ 404 ប្រកបដោយភាពរួសរាយ រួមជាមួយនឹងប៊ូតុងត្រឡប់ទៅកាន់ទំព័រដើមវិញ (Home Link)។",
+          "ជៀសវាងការទុកឱ្យទំព័រទទេស្អាតពេល user វាយ URL ខុស។"
         ],
         "codeSnippet": "<Route path=\"*\" element={<NotFoundView />} />",
         "codeLanguage": "jsx",
-        "codeTitle": "Catch-all 404 Route"
+        "codeTitle": "Catch-all 404 Route",
+        "proTip": "តែងតែដាក់ Catch-all Route (`path=\"*\"`) នៅបន្ទាត់ចុងក្រោយបង្អស់នៃ `<Routes>` ជានិច្ច ដើម្បីចាប់យក URL ទាំងឡាយណាដែលមិនត្រូវគ្នានឹង route ខាងលើ។"
       },
       {
         "id": "m13-13",
         "number": "13",
         "title": "Protected Routes",
-        "summary": "Restricting access to authenticated users and redirecting guests.",
-        "explanation": "A wrapper route component that checks authentication state: if logged in, renders `<Outlet />`; otherwise redirects to `/login`.",
+        "summary": "ការការពារទំព័រឯកជនសម្រាប់តែ Authenticated Users និងការ redirect ភ្ញៀវទៅកាន់ login។",
+        "explanation": "Protected Route (ឬ Route Guard) គឺជា Component Wrapper ដែលធ្វើការត្រួតពិនិត្យ Authentication State របស់អ្នកប្រើប្រាស់៖ ប្រសិនបើ user បាន Login រួចរាល់ វានឹងអនុញ្ញាតឱ្យ render `<Outlet />`; ប្រសិនបើមិនទាន់ Login ទេ វានឹង redirect ទៅកាន់ទំព័រ `/login` ភ្លាមៗ។",
         "keyPoints": [
-          "Include `state={{ from: location }}` to redirect user back after login."
+          "ប្រើប្រាស់ component `<Navigate to=\"/login\" replace />` សម្រាប់ការ redirect ដោយស្វ័យប្រវត្តិ។",
+          "ភ្ជាប់ `state={{ from: location }}` ដើម្បីចងចាំទំព័រដើមដែល user បានព្យាយាមចូល។",
+          "អាចអនុវត្តបន្ថែមសម្រាប់ Role-based Authorization (ដូចជា Admin-only routes)។"
         ],
         "codeSnippet": "import { Navigate, Outlet, useLocation } from 'react-router-dom';\n\nexport function ProtectedRoute({ isAuthenticated }: { isAuthenticated: boolean }) {\n  const location = useLocation();\n\n  if (!isAuthenticated) {\n    return <Navigate to=\"/login\" state={{ from: location }} replace />;\n  }\n\n  return <Outlet />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Protected Route Gate"
+        "codeTitle": "Protected Route Gate",
+        "proTip": "បញ្ជូន `state={{ from: location }}` ទៅក្នុង `<Navigate>` ដើម្បីឱ្យទំព័រ Login អាចដឹង និង redirect user ត្រឡប់មកកាន់ទំព័រដែលគាត់ចង់ចូលវិញដោយស្វ័យប្រវត្តិ ក្រោយពេល Login ជោគជ័យ។"
       },
       {
         "id": "m13-14",
         "number": "14",
         "title": "Query Parameters (useSearchParams)",
-        "summary": "Reading and updating URL search queries like ?sort=desc&page=2.",
-        "explanation": "`useSearchParams` behaves like `useState`, but stores state directly in the URL query string, making URLs shareable and bookmarkable.",
+        "summary": "ការអាន និងកែប្រែ URL query strings ដូចជា ?sort=desc&page=2។",
+        "explanation": "Hook `useSearchParams` មានរបៀបប្រើប្រាស់ស្រដៀងគ្នានឹង `useState` ដែរ ប៉ុន្តែវាធ្វើការរក្សាទុកទិន្នន័យ State នៅលើ URL Query String ដោយផ្ទាល់ (ឧទាហរណ៍៖ `?q=react&sort=popular`)។ វិធីសាស្ត្រនេះជួយឱ្យ filter state អាច share ទៅកាន់អ្នកដទៃ និងរក្សាទុកក្នុង browser history បាន។",
         "keyPoints": [
-          "Synchronizes table filters with browser history."
+          "អានតម្លៃតាមរយៈ `searchParams.get('key')`។",
+          "Update តម្លៃតាមរយៈ `setSearchParams({ key: value })`។",
+          "ធ្វើសមកាលកម្មទិន្នន័យតារាង ការ filter និង pagination ជាមួយ Browser History យ៉ាងរលូន។"
         ],
         "codeSnippet": "import { useSearchParams } from 'react-router-dom';\n\nexport function SearchFilter() {\n  const [searchParams, setSearchParams] = useSearchParams();\n  const query = searchParams.get('q') || '';\n\n  const handleSearch = (newQuery: string) => {\n    setSearchParams({ q: newQuery });\n  };\n\n  return <input value={query} onChange={(e) => handleSearch(e.target.value)} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Query Strings with useSearchParams"
+        "codeTitle": "Query Strings with useSearchParams",
+        "proTip": "ការរក្សាទុក Search Query, Filter, និង Pagination នៅក្នុង URL Query Parameters ជួយឱ្យ user អាចចម្លងតំណភ្ជាប់ (Shareable Link) ឬ Bookmark ទុកមើលពេលក្រោយបានយ៉ាងងាយស្រួល។"
       },
       {
         "id": "m13-15",
         "number": "15",
         "title": "Route Architecture",
-        "summary": "Centralizing route definitions, route constants, and loaders.",
-        "explanation": "Store all route path strings in a central `ROUTES` constant (`ROUTES.PROJECTS`, `ROUTES.CURRICULUM`) to prevent broken link typos across large codebases.",
+        "summary": "ការប្រមូលផ្តុំ Route Definitions និង Route Path Constants ឱ្យមានរបៀបរៀបរយ។",
+        "explanation": "នៅក្នុងកម្មវិធីខ្នាតធំ ការសរសេរ Path string ដោយផ្ទាល់ (Hardcoding strings) នៅតាម components នានា អាចនាំឱ្យកើតមាន Broken Links ដោយសារតែការវាយអក្សរខុស ឬការពិបាកពេលផ្លាស់ប្តូរ URL structure។ ការប្រមូលផ្តុំ Paths ទាំងអស់ឱ្យស្ថិតនៅក្នុង object constant `ROUTES` តែមួយ គឺជា Best Practice ដ៏សំខាន់។",
         "keyPoints": [
-          "Centralized route configuration improves refactoring speed."
+          "បង្កើត `ROUTES` constant object ដោយបន្ថែម `as const`។",
+          "គាំទ្រ dynamic route helpers ដូចជា `ROUTES.PROJECT_DETAIL(id)`។",
+          "ជួយឱ្យការ refactor ផ្លាស់ប្តូរ URL paths អាចធ្វើឡើងនៅកន្លែងតែមួយដោយសុវត្ថិភាព។"
         ],
         "codeSnippet": "export const ROUTES = {\n  HOME: '/',\n  CURRICULUM: '/curriculum',\n  PROJECTS: '/projects',\n  PROJECT_DETAIL: (id: string) => `/projects/${id}`,\n} as const;",
         "codeLanguage": "jsx",
-        "codeTitle": "Centralized Route Constants"
+        "codeTitle": "Centralized Route Constants",
+        "proTip": "ជៀសវាងការសរសេរ Hardcoded Strings ដូចជា `navigate('/projects')` នៅគ្រប់កន្លែង! ចូរប្រមូលផ្តុំវាក្នុង `ROUTES` constant ដើម្បីការពារកុំឱ្យមានកំហុសវាយខុសអក្ខរាវិរុទ្ធ (Typos)។"
       },
       {
         "id": "m13-16",
         "number": "16",
         "title": "React Router Best Practices",
-        "summary": "Code-splitting routes with React.lazy and Suspense.",
-        "explanation": "Lazy-load route pages so users only download the JavaScript for the specific page they are currently viewing.",
+        "summary": "ការធ្វើ Code-splitting លើ Routes ដោយប្រើប្រាស់ React.lazy និង Suspense។",
+        "explanation": "ដើម្បីបង្កើនល្បឿននៃការផ្ទុកទំព័រដំបូង (Initial Page Load Time) នៃកម្មវិធី SPA ធំៗ អ្នកគួរតែអនុវត្ត **Route-based Code Splitting**។ តាមរយៈការប្រើប្រាស់ `React.lazy()` និង `<Suspense>` browser នឹងទាញយក JavaScript សម្រាប់តែទំព័រជាក់លាក់ដែលអ្នកប្រើប្រាស់កំពុងបើកមើលប៉ុណ្ណោះ។",
         "keyPoints": [
-          "Wrap lazy routes in `<Suspense fallback={<LoadingSkeleton />}>`."
+          "ប្រើប្រាស់ `React.lazy(() => import('./pages/PageName'))` សម្រាប់ទំព័រ route ទាំងអស់។",
+          "រុំព័ទ្ធ route components នៅក្នុង `<Suspense fallback={<LoadingSkeleton />}>`។",
+          "ជួយកាត់បន្ថយ Time to Interactive (TTI) និងបង្កើនពិន្ទុ Performance របស់ Web Vitals។"
         ],
         "codeSnippet": "import React, { Suspense } from 'react';\n\nconst ProjectsPage = React.lazy(() => import('./pages/ProjectsPage'));\n\n<Route \n  path=\"/projects\" \n  element={\n    <Suspense fallback={<PageSkeleton />}>\n      <ProjectsPage />\n    </Suspense>\n  } \n/>",
         "codeLanguage": "jsx",
-        "codeTitle": "Lazy-loaded Route with Suspense"
+        "codeTitle": "Lazy-loaded Route with Suspense",
+        "proTip": "ការប្រើ `React.lazy()` ជាមួយ Routes ជួយកាត់បន្ថយទំហំ Initial JavaScript Bundle យ៉ាងច្រើន ព្រោះ browser ទាញយកតែ code នៃទំព័រណាដែល user កំពុងបើកមើលប៉ុណ្ណោះ។"
       }
     ]
   },
@@ -2482,204 +2529,248 @@ export const modulesData: ModuleItem[] = [
     "number": "14",
     "title": "API Integration",
     "category": "Routing & Network",
-    "summary": "REST API communication, Axios, HTTP methods, service layers, interceptors, and robust network error handling.",
+    "summary": "ការតភ្ជាប់កម្មវិធី React ជាមួយ REST API, ការប្រើប្រាស់ Axios, HTTP methods (GET, POST, PUT, PATCH, DELETE), service layers, interceptors, និងការគ្រប់គ្រង Network Errors ប្រកបដោយប្រសិទ្ធភាព។",
     "iconName": "Globe",
     "topics": [
       {
         "id": "m14-01",
         "number": "01",
         "title": "React + REST API",
-        "summary": "How frontend React applications interface with backend services.",
-        "explanation": "React applications communicate with backend servers over HTTP using JSON payloads. The frontend is decoupled from the backend technology (Node, Python, Go, PHP Laravel).",
+        "summary": "ស្វែងយល់អំពីរបៀបដែល Frontend React ធ្វើការទំនាក់ទំនងជាមួយ Backend Services តាមរយៈ REST API។",
+        "explanation": "កម្មវិធី React ធ្វើការទំនាក់ទំនងជាមួយ Backend Servers តាមរយៈពិធីការ HTTP ដោយផ្លាស់ប្តូរទិន្នន័យជាទម្រង់ JSON។ រចនាសម្ព័ន្ធបែប Decoupled Architecture នេះអនុញ្ញាតឱ្យ Frontend និង Backend អភិវឌ្ឍដោយឡែកពីគ្នា ដោយគ្រាន់តែគោរពតាមកិច្ចព្រមព្រៀង API Contract (Endpoints & Data Formats) តែប៉ុណ្ណោះ។",
         "keyPoints": [
-          "Stateless communication via JSON.",
-          "Frontend only consumes API contracts."
+          "ការទំនាក់ទំនងគ្មានស្ថានភាព (Stateless Communication) តាមរយៈ HTTP Requests និង JSON Payload។",
+          "Frontend ទទួលខុសត្រូវលើ User Interface (UI) និង State រីឯ Backend ទទួលខុសត្រូវលើ Database, Security, និង Business Logic។",
+          "ប្រើប្រាស់ HTTP Methods ស្របតាមស្តង់ដារ REST (GET, POST, PUT, PATCH, DELETE)។"
         ],
-        "codeSnippet": "// Client sends HTTP Request -> Server processes -> Server returns JSON Response",
+        "codeSnippet": "// 1. Client (React) ផ្ញើ HTTP Request ទៅកាន់ Server:\n// GET /api/v1/products -> Headers: { Authorization: \"Bearer ...\" }\n\n// 2. Server ដំណើរការ Business Logic និង Query Database\n\n// 3. Server ឆ្លើយតបមកវិញនូវ JSON Response:\n// Status: 200 OK\n// Body: [ { \"id\": 1, \"title\": \"React Masterclass\", \"price\": 49 } ]",
         "codeLanguage": "jsx",
-        "codeTitle": "REST Architecture Model"
+        "codeTitle": "REST Architecture Model",
+        "proTip": "React ដំណើរការតែនៅលើ Client (Browser) ប៉ុណ្ណោះ ដូច្នេះវាត្រូវការទាញយកទិន្នន័យពី Server តាមរយៈ HTTP APIs (JSON) ដោយមិនខ្វល់ថា Backend សរសេរដោយ Node.js, Python, Laravel ឬ Go នោះឡើយ (Decoupled Architecture)។"
       },
       {
         "id": "m14-02",
         "number": "02",
         "title": "Fetching API Data",
-        "summary": "Native fetch() API vs external HTTP client libraries.",
-        "explanation": "Modern browsers have native `fetch()`, but Axios or TanStack Query simplify error handling, request cancellation, and response body JSON parsing.",
+        "summary": "ការប្រៀបធៀបរវាង Browser Native fetch() API និង External HTTP Client Libraries ដូចជា Axios។",
+        "explanation": "Browser សម័យទំនើបបានភ្ជាប់មកជាមួយនូវ Native `fetch()` API សម្រាប់ធ្វើ HTTP Requests។ ទោះជាយ៉ាងណាក៏ដោយ បណ្ណាល័យជំនួយដូចជា Axios ឬ TanStack Query ត្រូវបាននិយមប្រើប្រាស់យ៉ាងទូលំទូលាយ ព្រោះវាជួយសម្រួលដល់ការ parse ទិន្នន័យ JSON ដោយស្វ័យប្រវត្តិ ការកំណត់ Request Timeouts និងការគ្រប់គ្រង Error។",
         "keyPoints": [
-          "Native fetch does not reject promises on HTTP 404/500 status codes!"
+          "`fetch()` បោះ Promise reject តែនៅពេលជួបបញ្ហា Network Failure ប៉ុណ្ណោះ មិន reject ពេលជួប HTTP 404/500 ឡើយ។",
+          "ត្រូវតែពិនិត្យមើល `if (!response.ok)` ជានិច្ចនៅពេលប្រើប្រាស់ `fetch()`។",
+          "ត្រូវតែហៅ `await response.json()` ដើម្បីបំប្លែង Response Body ទៅជា JavaScript Object។"
         ],
-        "codeSnippet": "// Native fetch requires manual ok check:\nconst response = await fetch('/api/products');\nif (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);\nconst data = await response.json();",
+        "codeSnippet": "async function fetchProducts() {\n  // Native fetch តម្រូវឱ្យពិនិត្យមើល response.ok ដោយផ្ទាល់ដៃ៖\n  const response = await fetch('/api/products');\n  \n  if (!response.ok) {\n    throw new Error(`HTTP Error! Status: ${response.status}`);\n  }\n  \n  const data = await response.json();\n  return data;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Native fetch() Error Checking"
+        "codeTitle": "Native fetch() Error Checking",
+        "pitfall": "Native `fetch()` នឹងមិនបោះ Error (Promise rejection) ទេទោះបីជា Server ឆ្លើយតបមកវិញនូវ Status Code 404 (Not Found) ឬ 500 (Internal Server Error) ក៏ដោយ! អ្នកត្រូវតែពិនិត្យមើល `response.ok` ដោយខ្លួនឯងជានិច្ច។"
       },
       {
         "id": "m14-03",
         "number": "03",
         "title": "GET Request",
-        "summary": "Retrieving records from backend endpoints.",
-        "explanation": "Used to fetch data without side effects on the server.",
+        "summary": "ការទាញយកទិន្នន័យ (Retrieve Data) ពី Backend API Endpoints មកបង្ហាញលើ UI។",
+        "explanation": "HTTP GET ត្រូវបានប្រើប្រាស់សម្រាប់ទាញយកទិន្នន័យពី Server ដោយគ្មានការផ្លាស់ប្តូរ (Side Effects) លើទិន្នន័យនៅក្នុង Database ឡើយ។ នៅពេលប្រើប្រាស់ Axios ទិន្នន័យដែល Server ឆ្លើយតបមកវិញនឹងត្រូវបាន Parse ជា JSON រួចស្រេចនៅក្នុង property `res.data`។",
         "keyPoints": [
-          "Idempotent and safe HTTP method."
+          "GET Request គ្មាន Request Body ឡើយ — បើចង់ចម្លងទិន្នន័យតម្រង សូមប្រើ Query Parameters (e.g. `?page=1&limit=10`)។",
+          "មានសុវត្ថិភាព (Safe) និងអាចត្រូវបាន Caching ដោយ Browser ឬ CDN។",
+          "ស្រង់យកទិន្នន័យតាមរយៈ `response.data` នៅពេលប្រើ Axios។"
         ],
-        "codeSnippet": "const fetchStudents = async () => {\n  const res = await axios.get('/api/students');\n  return res.data;\n};",
+        "codeSnippet": "import axios from 'axios';\n\nconst fetchStudents = async () => {\n  const res = await axios.get('/api/students', {\n    params: { page: 1, limit: 10 }\n  });\n  return res.data;\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios GET Request"
+        "codeTitle": "Axios GET Request",
+        "proTip": "HTTP GET គឺជាវិធីសាស្ត្រមួយដែលមានសុវត្ថិភាព (Safe) និង Idempotent មានន័យថាការហៅ GET ច្រើនដងនឹងមិនកែប្រែ ឬបំផ្លាញទិន្នន័យនៅលើ Server ឡើយ។"
       },
       {
         "id": "m14-04",
         "number": "04",
         "title": "POST Request",
-        "summary": "Creating new resources with JSON payload.",
-        "explanation": "Used for submitting forms, creating tasks, or authenticating users.",
+        "summary": "ការផ្ញើទិន្នន័យបង្កើត Resource ថ្មីនៅលើ Server តាមរយៈ Request Body ជាទម្រង់ JSON។",
+        "explanation": "HTTP POST ត្រូវបានប្រើប្រាស់សម្រាប់បញ្ជូនទិន្នន័យថ្មីទៅកាន់ Server ដូចជាការចុះឈ្មោះគណនី (Sign Up), ការបង្កើតទិន្នន័យថ្មី (Create Item), ឬការបញ្ជូន Form Data។ ទិន្នន័យទាំងនេះត្រូវបានវេចខ្ចប់នៅក្នុង Request Body ជាទម្រង់ JSON Payload។",
         "keyPoints": [
-          "Transmits data in request body."
+          "បញ្ជូនទិន្នន័យនៅក្នុង Request Body (មិនមែននៅលើ URL)។",
+          "មិនមែនជា Idempotent ទេ — ការហៅ POST Request ដដែលៗច្រើនដង នឹងបង្កើត Resource ថ្មីៗច្រើនដងដូចគ្នា។",
+          "ជាទូទៅ Server ឆ្លើយតបមកវិញនូវ Status `201 Created` រួមជាមួយទិន្នន័យថ្មីដែលបានបង្កើត។"
         ],
-        "codeSnippet": "const createStudent = async (newStudent: StudentInput) => {\n  const res = await axios.post('/api/students', newStudent);\n  return res.data;\n};",
+        "codeSnippet": "import axios from 'axios';\n\ninterface StudentInput {\n  name: string;\n  email: string;\n}\n\nconst createStudent = async (newStudent: StudentInput) => {\n  const res = await axios.post('/api/students', newStudent);\n  return res.data; // Server returns created record with new ID\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios POST Request"
+        "codeTitle": "Axios POST Request",
+        "proTip": "កុំភ្លេចកំណត់ `Content-Type: application/json` នៅលើ Request Header ដើម្បីឱ្យ Server ដឹងថាទិន្នន័យដែលផ្ញើទៅជា JSON (ប្រសិនបើប្រើ Axios វាកំណត់ Header នេះឱ្យដោយស្វ័យប្រវត្តិ)។"
       },
       {
         "id": "m14-05",
         "number": "05",
         "title": "PUT Request",
-        "summary": "Full replacement update of an existing resource.",
-        "explanation": "Replaces the entire entity at `/api/resources/:id`.",
+        "summary": "ការធ្វើបច្ចុប្បន្នភាពទិន្នន័យទាំងមូល (Full Resource Replacement) នៃ Resource ណាមួយ។",
+        "explanation": "HTTP PUT ត្រូវបានប្រើប្រាស់ដើម្បីជំនួស ឬធ្វើបច្ចុប្បន្នភាពទិន្នន័យនៃ Resource ណាមួយទាំងមូល (Full Replacement) នៅលើ Server តាមរយៈ Identifier (ឧទាហរណ៍៖ `/api/students/:id`)។",
         "keyPoints": [
-          "Idempotent update replacing all fields."
+          "ជាវិធីសាស្ត្រ Idempotent — ការបញ្ជូន PUT ស្នើសុំជាមួយ Payload ដដែលច្រើនដង នឹងទទួលបានលទ្ធផលចុងក្រោយដូចគ្នា។",
+          "តម្រូវឱ្យបញ្ជូន Object ពេញលេញដែលមានគ្រប់ Field ទាំងអស់នៃ Resource នោះ។",
+          "ប្រើសម្រាប់កែប្រែទិន្នន័យដែលមានស្រាប់ ឬបង្កើត Resource ថ្មីប្រសិនបើមិនទាន់មាន (អាស្រ័យលើការរចនា API)។"
         ],
-        "codeSnippet": "await axios.put(`/api/students/${id}`, fullStudentObject);",
+        "codeSnippet": "import axios from 'axios';\n\nconst updateStudentProfile = async (id: string, fullProfile: StudentProfile) => {\n  const res = await axios.put(`/api/students/${id}`, fullProfile);\n  return res.data;\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios PUT Request"
+        "codeTitle": "Axios PUT Request",
+        "pitfall": "ការប្រើប្រាស់ `PUT` តម្រូវឱ្យអ្នកផ្ញើទិន្នន័យគ្រប់ Properties ទាំងអស់នៃ Object។ ប្រសិនបើអ្នកផ្ញើតែ property មួយ Backend ខ្លះអាចនឹងលុប properties ផ្សេងទៀតដែលបាត់ចោល! បើចង់ update តែមួយចំណែក ចូរប្រើ `PATCH` ជំនួសវិញ។"
       },
       {
         "id": "m14-06",
         "number": "06",
         "title": "PATCH Request",
-        "summary": "Partial update of specific modified fields.",
-        "explanation": "Updates only the fields sent in the request body (e.g. toggle task status).",
+        "summary": "ការធ្វើបច្ចុប្បន្នភាពតែចំណែកជាក់លាក់ណាមួយនៃទិន្នន័យ (Partial Update)។",
+        "explanation": "ខុសប្លែកពី `PUT`, HTTP PATCH ត្រូវបានប្រើប្រាស់សម្រាប់ធ្វើបច្ចុប្បន្នភាពតែវាលទិន្នន័យជាក់លាក់ណាមួយ (Partial Update) ដោយមិនប៉ះពាល់ដល់ Field ផ្សេងទៀតដែលមិនបានបញ្ជាក់នៅក្នុង Request Body ឡើយ។",
         "keyPoints": [
-          "Saves bandwidth by sending only changed properties."
+          "សន្សំសំចៃ Bandwidth បណ្តាញ ដោយផ្ញើទៅតែ Fields ដែលមានការផ្លាស់ប្តូរ។",
+          "ស័ក្តិសមបំផុតសម្រាប់ Inline Editing, Switch toggles, ឬ Quick status updates។",
+          "មិនតម្រូវឱ្យបញ្ជូន Object ពេញលេញនោះឡើយ។"
         ],
-        "codeSnippet": "await axios.patch(`/api/todos/${id}`, { completed: true });",
+        "codeSnippet": "import axios from 'axios';\n\nconst toggleTodoStatus = async (id: string, isCompleted: boolean) => {\n  // ផ្ញើតែ field 'completed' ទៅកាន់ Server ប៉ុណ្ណោះ\n  const res = await axios.patch(`/api/todos/${id}`, { \n    completed: isCompleted \n  });\n  return res.data;\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios PATCH Request"
+        "codeTitle": "Axios PATCH Request",
+        "proTip": "ប្រើប្រាស់ `PATCH` នៅពេលអ្នកចង់កែប្រែតែវាលទិន្នន័យខ្លះ (Fields) ដូចជាការចុច Toggle status បញ្ចប់ការងារ (e.g., `{ completed: true }`) ដើម្បីកាត់បន្ថយទំហំទិន្នន័យផ្ញើតាម Network។"
       },
       {
         "id": "m14-07",
         "number": "07",
         "title": "DELETE Request",
-        "summary": "Removing a resource by identifier.",
-        "explanation": "Sends HTTP DELETE to purge a record from the database.",
+        "summary": "ការលុបទិន្នន័យ Resource ចេញពី Server ដោយបញ្ជាក់ពី Unique Identifier (ID)។",
+        "explanation": "HTTP DELETE ត្រូវបានប្រើសម្រាប់ស្នើសុំលុបចោលនូវ Resource ណាមួយចេញពី Database តាមរយៈ ID ឬ Endpoint ជាក់លាក់។",
         "keyPoints": [
-          "Check response status 200/204 to confirm deletion."
+          "ពិនិត្យ Response Status `200 OK` ឬ `204 No Content` ដើម្បីបញ្ជាក់ថាទិន្នន័យត្រូវបានលុបដោយជោគជ័យ។",
+          "ជាទូទៅមិនមាន Request Body ទេ ដោយកំណត់ Identifier នៅលើ URL Path។",
+          "ធ្វើបច្ចុប្បន្នភាព UI State បន្ទាប់ពីការលុបជោគជ័យ តាមរយៈការ filter item ចេញពី array state។"
         ],
-        "codeSnippet": "await axios.delete(`/api/todos/${id}`);",
+        "codeSnippet": "import axios from 'axios';\n\nconst removeStudent = async (studentId: string) => {\n  await axios.delete(`/api/students/${studentId}`);\n  // Update UI local state បន្ទាប់ពីលុបជោគជ័យ៖\n  setStudents((prev) => prev.filter((s) => s.id !== studentId));\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios DELETE Request"
+        "codeTitle": "Axios DELETE Request",
+        "proTip": "បន្ទាប់ពីលុបដោយជោគជ័យ (Status 200 ឬ 204 No Content) អ្នកគួរបច្ចុប្បន្នភាព Local State ភ្លាមៗ (Filter out item) ឬ Re-fetch ទិន្នន័យ ដើម្បីឱ្យ UI បង្ហាញការផ្លាស់ប្តូរភ្លាមៗ។"
       },
       {
         "id": "m14-08",
         "number": "08",
         "title": "Loading State",
-        "summary": "Tracking in-flight network requests.",
-        "explanation": "Set `isLoading(true)` before the request and `isLoading(false)` in `finally`.",
+        "summary": "ការគ្រប់គ្រង និងតាមដានស្ថានភាពកំពុងទាញយកទិន្នន័យ (In-flight Requests) ដើម្បីបង្ហាញ Spinner ឬ Skeleton UI។",
+        "explanation": "នៅពេលកម្មវិធី React ធ្វើការទំនាក់ទំនងជាមួយ API តាមបណ្តាញ Internet វាតែងតែមានរយៈពេលពន្យារពេល (Network Latency)។ ការបង្កើត Loading State ជួយឱ្យអ្នកប្រើប្រាស់ដឹងថាកម្មវិធីកំពុងដំណើរការ ដោយបង្ហាញនូវ Loading Spinner ឬ Skeleton Loader ជំនួសឱ្យទំព័រទទេរ។",
         "keyPoints": [
-          "Always use `finally` to ensure loading spinners disappear on error."
+          "កំណត់ `setIsLoading(true)` មុនពេលចាប់ផ្តើមស្នើសុំ API Request។",
+          "កំណត់ `setIsLoading(false)` នៅក្នុងប្លុក `finally` ជានិច្ច ដើម្បីការពារកុំឱ្យ Spinner វិលមិនឈប់ពេលមានកំហុស។",
+          "ប្រើ Skeleton Loaders សម្រាប់បង្កើនបទពិសោធន៍អ្នកប្រើប្រាស់ (Perceived Performance)។"
         ],
-        "codeSnippet": "try {\n  setIsLoading(true);\n  const data = await fetchStudents();\n  setStudents(data);\n} catch (err) {\n  setError('Failed to load students');\n} finally {\n  setIsLoading(false);\n}",
+        "codeSnippet": "import { useState, useEffect } from 'react';\n\nexport function StudentList() {\n  const [students, setStudents] = useState([]);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    const loadData = async () => {\n      try {\n        setIsLoading(true);\n        setError(null);\n        const data = await fetchStudents();\n        setStudents(data);\n      } catch (err: any) {\n        setError('មិនអាចទាញយកទិន្នន័យសិស្សបានឡើយ');\n      } finally {\n        setIsLoading(false); // ដំណើរការជានិច្ច ទោះបីជាជោគជ័យ ឬ error\n      }\n    };\n\n    loadData();\n  }, []);\n\n  if (isLoading) return <p>កំពុងផ្ទុកទិន្នន័យ...</p>;\n  if (error) return <p className=\"text-red-500\">{error}</p>;\n\n  return <ul>{students.map(s => <li key={s.id}>{s.name}</li>)}</ul>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "In-Flight Loading Lifecycle"
+        "codeTitle": "In-Flight Loading Lifecycle",
+        "proTip": "ត្រូវដាក់ `setIsLoading(false)` នៅក្នុងប្លុក `finally` ជានិច្ច ដើម្បីធានាថា Loading Spinner នឹងបាត់ទៅវិញជានិច្ច ទោះបីជាការហៅ API ជោគជ័យ ឬបរាជ័យ (Error) ក៏ដោយ។"
       },
       {
         "id": "m14-09",
         "number": "09",
         "title": "Error Handling",
-        "summary": "Parsing server error responses and displaying helpful messages.",
-        "explanation": "Extract error messages from `error.response?.data?.message` to give users actionable feedback.",
+        "summary": "ការចាប់យក និងបំប្លែង Server Error Responses មកជាសារជូនដំណឹងដែលងាយស្រួលយល់ដល់អ្នកប្រើប្រាស់។",
+        "explanation": "បញ្ហាបណ្តាញ (Network failures), ការបញ្ចូលទិន្នន័យមិនត្រឹមត្រូវ (422 Validation errors), ឬបញ្ហាខាង Server (500 Server error) សុទ្ធតែអាចកើតឡើងបានគ្រប់ពេលវេលា។ ការគ្រប់គ្រង Error ឱ្យបានត្រឹមត្រូវជួយការពារកុំឱ្យកម្មវិធី Crash និងផ្តល់សារជូនដំណឹងច្បាស់លាស់ដល់ User។",
         "keyPoints": [
-          "Differentiate network failures from 400 validation errors."
+          "បែងចែកឱ្យដាច់រវាងបញ្ហាដាច់បណ្តាញ (No Internet) និងកំហុសឆ្លើយតបពី Server (HTTP Status 4xx / 5xx)។",
+          "ស្រង់យកសារ Error ដែល Server បញ្ជូនមកតាមរយៈ `error.response?.data?.message`។",
+          "ផ្តល់នូវប៊ូតុង Retry ដើម្បីឱ្យ User អាចចុចសាកល្បងម្តងទៀតបាន។"
         ],
-        "codeSnippet": "catch (error: any) {\n  const message = error.response?.data?.message || error.message || 'Unknown network error';\n  toast.error(message);\n}",
+        "codeSnippet": "import axios from 'axios';\n\ntry {\n  await axios.post('/api/register', formData);\n} catch (error: any) {\n  if (axios.isAxiosError(error)) {\n    // ស្រង់យកសារ Error ដែល Backend បានកំណត់\n    const message = error.response?.data?.message || 'ការចុះឈ្មោះមិនបានសម្រេច';\n    showToast(message, 'error');\n  } else {\n    showToast('មានបញ្ហាមិនរំពឹងទុកបានកើតឡើង', 'error');\n  }\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Parsing API Error Responses"
+        "codeTitle": "Parsing API Error Responses",
+        "proTip": "កុំបង្ហាញ raw error object (ឧទាហរណ៍ `[object Object]`) ទៅកាន់ User! ត្រូវស្រង់យក `error.response?.data?.message` ឬប្រើ Fallback message ដូចជា 'មានបញ្ហាតភ្ជាប់បណ្តាញ'។"
       },
       {
         "id": "m14-10",
         "number": "10",
         "title": "API Service Layer",
-        "summary": "Abstracting HTTP calls out of UI components.",
-        "explanation": "Components should never make direct `axios.get()` calls! Keep all API endpoints in dedicated service files (e.g. `studentService.ts`).",
+        "summary": "ការបំបែកកូដ HTTP Calls ចេញពី UI Components ទៅកាន់ Dedicated Service Layer ឱ្យមានរបៀបរៀបរយ។",
+        "explanation": "ដើម្បីកុំឱ្យ UI Components មានភាពស្មុគស្មាញ និងពោរពេញដោយកូដ HTTP endpoints អ្នកគួរតែអនុវត្ត **Service Layer Pattern**។ វិធីសាស្ត្រនេះប្រមូលផ្តុំរាល់ API Calls ទាំងអស់ទៅក្នុងម៉ូឌុលដាច់ដោយឡែក (ដូចជា `studentService.ts`, `authService.ts`)។",
         "keyPoints": [
-          "Decouples UI components from backend URLs and API changes."
+          "បំបែកការងាររវាង UI Presentation និង Data Fetching Logic។",
+          "បង្កើត Type-safe API methods ជាមួយ TypeScript។",
+          "ងាយស្រួលក្នុងការធ្វើ Mock ទិន្នន័យនៅពេលសរសេរ Unit Test។"
         ],
-        "codeSnippet": "// src/services/studentService.ts\nimport { apiClient } from './apiClient';\nimport { Student } from '@/types';\n\nexport const studentService = {\n  getAll: () => apiClient.get<Student[]>('/students').then(r => r.data),\n  getById: (id: string) => apiClient.get<Student>(`/students/${id}`).then(r => r.data),\n  create: (data: Omit<Student, 'id'>) => apiClient.post<Student>('/students', data).then(r => r.data),\n  delete: (id: string) => apiClient.delete(`/students/${id}`),\n};",
+        "codeSnippet": "// src/services/studentService.ts\nimport { apiClient } from './apiClient';\nimport { Student, CreateStudentInput } from '@/types';\n\nexport const studentService = {\n  getAll: async (): Promise<Student[]> => {\n    const res = await apiClient.get<Student[]>('/students');\n    return res.data;\n  },\n  \n  getById: async (id: string): Promise<Student> => {\n    const res = await apiClient.get<Student>(`/students/${id}`);\n    return res.data;\n  },\n  \n  create: async (payload: CreateStudentInput): Promise<Student> => {\n    const res = await apiClient.post<Student>('/students', payload);\n    return res.data;\n  },\n  \n  delete: async (id: string): Promise<void> => {\n    await apiClient.delete(`/students/${id}`);\n  },\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Dedicated Service Layer Pattern"
+        "codeTitle": "Dedicated Service Layer Pattern",
+        "proTip": "កុំសរសេរ `axios.get('/api/users')` ដោយផ្ទាល់នៅក្នុង Component! ការបង្កើត Service Layer (ឧទាហរណ៍ `userService.ts`) ជួយឱ្យកូដងាយស្រួល reuse និងងាយស្រួលកែប្រែពេល Backend URL ផ្លាស់ប្តូរ។"
       },
       {
         "id": "m14-11",
         "number": "11",
         "title": "Axios Instance Configuration",
-        "summary": "Configuring base URLs, timeouts, and headers.",
-        "explanation": "Create a centralized Axios instance with default headers and base URL.",
+        "summary": "ការបង្កើត និងកំណត់រចនាសម្ព័ន្ធ Axios Instance តែមួយសម្រាប់គម្រោង (Base URL, Timeouts, Headers)។",
+        "explanation": "ជំនួសឱ្យការ import `axios` លំនាំដើមមកប្រើប្រាស់នៅគ្រប់ទីកន្លែង អ្នកគួរបង្កើត **Custom Axios Instance** តែមួយកណ្តាល (Centralized Instance)។ វាជួយឱ្យអ្នកកំណត់ Base URL, Timeouts, និង Default Headers បានយ៉ាងងាយស្រួល។",
         "keyPoints": [
-          "Single place to configure authorization headers."
+          "កំណត់ `baseURL` តាមរយៈ Environment Variable (ឧទាហរណ៍៖ `process.env.NEXT_PUBLIC_API_URL`)។",
+          "កំណត់ `timeout` (ឧទាហរណ៍៖ 10 វិនាទី) ដើម្បីការពារកុំឱ្យ Request គាំងយូរពេកពេលបណ្តាញខ្សោយ។",
+          "កំណត់ `headers` លំនាំដើមដូចជា `Content-Type: application/json`។"
         ],
-        "codeSnippet": "import axios from 'axios';\n\nexport const apiClient = axios.create({\n  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.reactcourse.dev/v1',\n  timeout: 10000,\n  headers: {\n    'Content-Type': 'application/json',\n  },\n});",
+        "codeSnippet": "// src/lib/apiClient.ts\nimport axios from 'axios';\n\nexport const apiClient = axios.create({\n  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.reactcourse.dev/v1',\n  timeout: 10000, // 10 វិនាទី\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n  },\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Axios Centralized Instance"
+        "codeTitle": "Axios Centralized Instance",
+        "proTip": "ការប្រើ `axios.create()` ជួយឱ្យអ្នកកំណត់ `baseURL`, `timeout`, និង headers លំនាំដើមនៅកន្លែងតែមួយ ដោយមិនចាំបាច់សរសេរ URL ពេញលេញនៅគ្រប់ endpoint នោះឡើយ។"
       },
       {
         "id": "m14-12",
         "number": "12",
         "title": "Request Interceptors",
-        "summary": "Automatically attaching Bearer tokens to outgoing requests.",
-        "explanation": "Axios request interceptors run before every outgoing request, injecting the latest JWT token from memory or cookies.",
+        "summary": "ការភ្ជាប់ Authentication Bearer Tokens ទៅក្នុង Request Headers ដោយស្វ័យប្រវត្តិកំណត់មុនពេល Request ចេញទៅ។",
+        "explanation": "Axios Interceptors អនុញ្ញាតឱ្យអ្នកស្ទាក់ចាប់ (Intercept) និងកែប្រែ HTTP Requests មុនពេលវាត្រូវបានបញ្ជូនចេញទៅកាន់ Server។ ករណីប្រើប្រាស់ទូទៅបំផុតគឺការទាញយក JWT Access Token ពី LocalStorage/Cookie រួចបញ្ចូលវាទៅក្នុង Header `Authorization: Bearer <token>`។",
         "keyPoints": [
-          "No need to manually pass headers in every service method."
+          "ដំណើរការរាល់ពេលដែល Request ណាមួយត្រូវបានហៅចេញពី `apiClient`។",
+          "ជួយលុបបំបាត់ការសរសេរ `headers: { Authorization: ... }` ដដែលៗនៅគ្រប់ endpoint។",
+          "ត្រូវតែ return `config` ជានិច្ច ដើម្បីឱ្យ Request អាចបន្តដំណើរទៅមុខទៀត។"
         ],
-        "codeSnippet": "apiClient.interceptors.request.use((config) => {\n  const token = localStorage.getItem('access_token');\n  if (token && config.headers) {\n    config.headers.Authorization = `Bearer ${token}`;\n  }\n  return config;\n});",
+        "codeSnippet": "// src/lib/apiClient.ts\napiClient.interceptors.request.use(\n  (config) => {\n    const token = localStorage.getItem('access_token');\n    \n    if (token && config.headers) {\n      config.headers.Authorization = `Bearer ${token}`;\n    }\n    \n    return config;\n  },\n  (error) => {\n    return Promise.reject(error);\n  }\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "JWT Request Interceptor"
+        "codeTitle": "JWT Request Interceptor",
+        "proTip": "Request Interceptor ជួយកាត់បន្ថយការសរសេរកូដដដែលៗ ព្រោះវានឹងអាន Token ពី Storage រួចភ្ជាប់ទៅក្នុង `Authorization` header ដោយស្វ័យប្រវត្តិសម្រាប់រាល់ Request ទាំងអស់។"
       },
       {
         "id": "m14-13",
         "number": "13",
         "title": "Response Interceptors",
-        "summary": "Handling global errors and automatic 401 token refresh.",
-        "explanation": "Catch 401 Unauthorized responses globally to refresh access tokens or redirect to login.",
+        "summary": "ការគ្រប់គ្រង Global Errors និងដំណើរការ Automatic Token Refresh នៅពេលជួប Status Code 401 Unauthorized។",
+        "explanation": "Response Interceptors អនុញ្ញាតឱ្យអ្នកត្រួតពិនិត្យ និងកែច្នៃលទ្ធផល Response ដែលទទួលបានពី Server មុនពេលវាត្រូវបានបញ្ជូនទៅកាន់ប្លុក `.then()` ឬ `try/catch` របស់ Component។ វាស័ក្តិសមបំផុតសម្រាប់ការដោះស្រាយវិបត្តិ Session ផុតកំណត់ (401 Unauthorized) ឬការកត់ត្រា Log សកល។",
         "keyPoints": [
-          "Centralizes session expiration handling."
+          "ស្ទាក់ចាប់កំហុស 401 ដើម្បីធ្វើការ Logout ឬស្នើសុំ Refresh Token ថ្មីដោយស្វ័យប្រវត្តិ។",
+          "អាចបំប្លែងទម្រង់ Response Data ឱ្យស្រួលប្រើប្រាស់មុនពេលបញ្ជូនទៅ UI។",
+          "ត្រូវតែហៅ `Promise.reject(error)` ដើម្បីឱ្យប្លុក `catch` របស់ Caller នៅតែអាចចាប់ Error បានដដែល។"
         ],
-        "codeSnippet": "apiClient.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    if (error.response?.status === 401) {\n      // Trigger token refresh or logout\n      window.location.href = '/login?expired=true';\n    }\n    return Promise.reject(error);\n  }\n);",
+        "codeSnippet": "// src/lib/apiClient.ts\napiClient.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    if (error.response?.status === 401) {\n      // សម្អាត Auth Token ដែលផុតកំណត់\n      localStorage.removeItem('access_token');\n      // បញ្ជូន User ទៅកាន់ទំព័រចូលប្រើប្រាស់\n      window.location.href = '/login?expired=true';\n    }\n    \n    return Promise.reject(error);\n  }\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "Response Error Interceptor"
+        "codeTitle": "Response Error Interceptor",
+        "proTip": "Response Interceptor គឺជាកន្លែងដ៏ល្អឥតខ្ចោះក្នុងការដោះស្រាយ Session Expiry — នៅពេល API ឆ្លើយតប 401 អ្នកអាចធ្វើការ Refresh Token ឬ Redirect user ទៅកាន់ទំព័រ Login ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m14-14",
         "number": "14",
         "title": "API Error Handling Architecture",
-        "summary": "Unified error models and retry policies.",
-        "explanation": "Map raw HTTP error codes to strongly typed domain errors.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធដោះស្រាយកំហុសកម្រិតស្ថាបត្យកម្ម (Unified Error Models និង Retry Policies)។",
+        "explanation": "នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Applications) ការរៀបចំរចនាសម្ព័ន្ធ Error ឱ្យមានស្តង់ដារតែមួយ (Normalized Error Schema) គឺជាកត្តាសំខាន់។ វាជួយសម្រួលដល់ការបង្ហាញ Validation Errors នៅតាម Field នីមួយៗនៃ Form និងការកំណត់គោលការណ៍ Retry ដោយស្វ័យប្រវត្តិពេលបណ្តាញដាច់។",
         "keyPoints": [
-          "Provides clean typed error models for UI components."
+          "បង្កើត TypeScript Type ឬ Interface សម្រាប់កំហុស API (`ApiError`)។",
+          "ស្រង់យក Validation Errors ដែលបញ្ជូនមកពី Backend (ឧទាហរណ៍ `fieldErrors`)។",
+          "កំណត់គោលការណ៍ Retry (e.g. សាកល្បងហៅឡើងវិញ ៣ ដងចំពោះ 503 Service Unavailable)។"
         ],
-        "codeSnippet": "export interface ApiError {\n  statusCode: number;\n  message: string;\n  fieldErrors?: Record<string, string[]>;\n}",
+        "codeSnippet": "export interface ApiError {\n  statusCode: number;\n  message: string;\n  fieldErrors?: Record<string, string[]>;\n}\n\nexport function parseApiError(error: any): ApiError {\n  if (error.response) {\n    return {\n      statusCode: error.response.status,\n      message: error.response.data?.message || 'កំហុសពីម៉ាស៊ីនបម្រើ (Server Error)',\n      fieldErrors: error.response.data?.errors,\n    };\n  }\n  \n  return {\n    statusCode: 0,\n    message: 'មិនអាចតភ្ជាប់ទៅកាន់ម៉ាស៊ីនបម្រើបានឡើយ',\n  };\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Strongly Typed ApiError Model"
+        "codeTitle": "Strongly Typed ApiError Model",
+        "proTip": "ការបង្កើត Custom `ApiError` interface ឬ class ជួយឱ្យ Frontend មានទម្រង់ Error តែមួយច្បាស់លាស់ ងាយស្រួលបង្ហាញ Validation errors នៅលើ Form fields នីមួយៗ។"
       },
       {
         "id": "m14-15",
         "number": "15",
         "title": "Environment Variables for APIs",
-        "summary": "Configuring dev vs staging vs production endpoints safely.",
-        "explanation": "Use `.env.local` and `NEXT_PUBLIC_` prefixes for client-accessible variables.",
+        "summary": "ការប្រើប្រាស់ Environment Variables ដើម្បីគ្រប់គ្រង API Endpoints សម្រាប់ Development, Staging, និង Production ដោយសុវត្ថិភាព។",
+        "explanation": "ការផ្លាស់ប្តូរ Base URL រវាងបរិស្ថានសាកល្បងនៅលើម៉ាស៊ីនផ្ទាល់ខ្លួន (Local Development), Staging Server, និង Production Server ត្រូវតែធ្វើឡើងតាមរយៈ **Environment Variables** (`.env`)។ វិធីសាស្ត្រនេះការពារកុំឱ្យមានការ hardcode URL ទៅក្នុង source code។",
         "keyPoints": [
-          "Never commit secret API keys or database credentials to git."
+          "ប្រើប្រាស់ Prefix ពិសេសសម្រាប់ Client-side (ដូចជា `NEXT_PUBLIC_` ក្នុង Next.js ឬ `VITE_` ក្នុង Vite)។",
+          "បង្កើតឯកសារ `.env.example` ដើម្បីជាគំរូសម្រាប់ក្រុមការងារ (Team) ដោយមិនមានផ្ទុក sensitive keys ឡើយ។",
+          "ដាក់ឯកសារ `.env.local` នៅក្នុង `.gitignore` ជានិច្ច ដើម្បីការពារការបែកធ្លាយសម្ងាត់លើ Git repository។"
         ],
-        "codeSnippet": "NEXT_PUBLIC_API_URL=https://api.example.com\nNEXT_PUBLIC_APP_ENV=production",
+        "codeSnippet": "// .env.development\nNEXT_PUBLIC_API_URL=http://localhost:8000/api/v1\nNEXT_PUBLIC_APP_ENV=development\n\n// .env.production\nNEXT_PUBLIC_API_URL=https://api.reactcourse.dev/v1\nNEXT_PUBLIC_APP_ENV=production\n\n// src/lib/apiClient.ts\nconst baseURL = process.env.NEXT_PUBLIC_API_URL;",
         "codeLanguage": "jsx",
-        "codeTitle": "Environment Variable Configuration"
+        "codeTitle": "Environment Variable Configuration",
+        "pitfall": "ហាមដាច់ខាតកុំរក្សាទុក Secret Keys (ដូចជា Database Passwords, Private API Secret Keys) នៅក្នុងអថេរដែលមាន prefix `NEXT_PUBLIC_` ព្រោះតម្លៃទាំងនោះនឹងត្រូវបែកធ្លាយទៅកាន់ Browser របស់ Client!"
       }
     ]
   },

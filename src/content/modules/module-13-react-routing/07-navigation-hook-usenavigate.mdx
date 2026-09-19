@@ -5,17 +5,20 @@ title: "Navigation Hook (useNavigate)"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Programmatic redirects inside handlers or effects."
+summary: "ការបញ្ជា redirect ទំព័រតាមរយៈកូដ (Programmatic Navigation) ក្នុង handlers ឬ effects។"
+proTip: "ប្រើ `navigate('/dashboard', { replace: true })` ក្រោយពេល Login ជោគជ័យ ដើម្បីកុំឱ្យ user អាចចុចប៊ូតុង Back ត្រឡប់មកទំព័រ Login វិញបាន។"
 codeTitle: "Programmatic Navigation with useNavigate"
 ---
 
 # Navigation Hook (useNavigate)
 
-The `useNavigate` hook returns a navigation function for redirecting users after form submissions or logout actions.
+Hook `useNavigate` ផ្តល់ត្រឡប់មកវិញនូវ navigation function ដែលអនុញ្ញាតឱ្យអ្នកបញ្ជាប្តូរទំព័រតាមរយៈកូដ JavaScript (Programmatic Navigation) ដូចជាការ redirect ទៅកាន់ Dashboard បន្ទាប់ពី submit form ជោគជ័យ ឬការ redirect ទៅ Login បន្ទាប់ពី user ចុច Logout។
 
 ### Key Concepts & Rules:
 
-- Can navigate forwards, backwards (`navigate(-1)`), or with options (`{ replace: true }`).
+- ប្រើ `navigate('/path')` ដើម្បីទៅកាន់ទំព័រថ្មី។
+- ប្រើ `navigate(-1)` ដើម្បីត្រឡប់ក្រោយ (Go Back) ឬ `navigate(1)` ដើម្បីទៅមុខ (Go Forward) ដូច browser buttons។
+- ជម្រើស `{ replace: true }` នឹងជំនួស URL ចាស់ក្នុង history stack (ការពារ back-button loop)។
 
 ### Code Example: Programmatic Navigation with useNavigate
 

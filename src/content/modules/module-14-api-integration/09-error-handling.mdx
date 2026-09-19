@@ -5,23 +5,35 @@ title: "Error Handling"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Parsing server error responses and displaying helpful messages."
+summary: "ការចាប់យក និងបំប្លែង Server Error Responses មកជាសារជូនដំណឹងដែលងាយស្រួលយល់ដល់អ្នកប្រើប្រាស់។"
+proTip: "កុំបង្ហាញ raw error object (ឧទាហរណ៍ `[object Object]`) ទៅកាន់ User! ត្រូវស្រង់យក `error.response?.data?.message` ឬប្រើ Fallback message ដូចជា 'មានបញ្ហាតភ្ជាប់បណ្តាញ'។"
 codeTitle: "Parsing API Error Responses"
 ---
 
 # Error Handling
 
-Extract error messages from `error.response?.data?.message` to give users actionable feedback.
+បញ្ហាបណ្តាញ (Network failures), ការបញ្ចូលទិន្នន័យមិនត្រឹមត្រូវ (422 Validation errors), ឬបញ្ហាខាង Server (500 Server error) សុទ្ធតែអាចកើតឡើងបានគ្រប់ពេលវេលា។ ការគ្រប់គ្រង Error ឱ្យបានត្រឹមត្រូវជួយការពារកុំឱ្យកម្មវិធី Crash និងផ្តល់សារជូនដំណឹងច្បាស់លាស់ដល់ User។
 
 ### Key Concepts & Rules:
 
-- Differentiate network failures from 400 validation errors.
+- បែងចែកឱ្យដាច់រវាងបញ្ហាដាច់បណ្តាញ (No Internet) និងកំហុសឆ្លើយតបពី Server (HTTP Status 4xx / 5xx)។
+- ស្រង់យកសារ Error ដែល Server បញ្ជូនមកតាមរយៈ `error.response?.data?.message`។
+- ផ្តល់នូវប៊ូតុង Retry ដើម្បីឱ្យ User អាចចុចសាកល្បងម្តងទៀតបាន។
 
 ### Code Example: Parsing API Error Responses
 
 ```jsx
-catch (error: any) {
-  const message = error.response?.data?.message || error.message || 'Unknown network error';
-  toast.error(message);
+import axios from 'axios';
+
+try {
+  await axios.post('/api/register', formData);
+} catch (error: any) {
+  if (axios.isAxiosError(error)) {
+    // ស្រង់យកសារ Error ដែល Backend បានកំណត់
+    const message = error.response?.data?.message || 'ការចុះឈ្មោះមិនបានសម្រេច';
+    showToast(message, 'error');
+  } else {
+    showToast('មានបញ្ហាមិនរំពឹងទុកបានកើតឡើង', 'error');
+  }
 }
 ```

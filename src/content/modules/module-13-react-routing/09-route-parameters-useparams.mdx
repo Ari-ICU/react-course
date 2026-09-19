@@ -5,17 +5,20 @@ title: "Route Parameters (useParams)"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Extracting dynamic parameters from URL path."
+summary: "ការទាញយក dynamic parameters ចេញពី URL path តាមរយៈ useParams hook។"
+proTip: "ចងចាំថា `useParams` តែងតែ return តម្លៃជា `string` ជានិច្ច! ប្រសិនបើ ID របស់អ្នកជាលេខ ត្រូវប្រើ `Number(id)` មុនពេលយកទៅប្រៀបធៀប។"
 codeTitle: "Reading URL Parameters with useParams"
 ---
 
 # Route Parameters (useParams)
 
-The `useParams()` hook returns an object of key/value pairs of the URL parameters matched by the `<Route path>`.
+Hook `useParams()` ផ្តល់នូវ Object ដែលផ្ទុក key/value pairs នៃ dynamic parameters ទាំងអស់ដែលត្រូវគ្នានឹង `<Route path>` បច្ចុប្បន្ន។ អ្នកអាចទាញយក parameter ទាំងនោះមកប្រើប្រាស់ដើម្បីទាញយកទិន្នន័យពី API ឬធ្វើការ filter បង្ហាញលើ UI។
 
 ### Key Concepts & Rules:
 
-- Parameters are always strings.
+- តម្លៃដែលទាញចេញពី `useParams` គឺតែងតែជា **String** ជានិច្ច។
+- នៅក្នុង TypeScript អ្នកអាចកំណត់ Generic type ដូចជា `useParams<{ moduleId: string }>()` ដើម្បីទទួលបាន Type Safety និង Auto-completion។
+- ប្រើរួមជាមួយ `useEffect` ដើម្បីទាញយកទិន្នន័យថ្មីរាល់ពេលដែល parameter ផ្លាស់ប្តូរតម្លៃ។
 
 ### Code Example: Reading URL Parameters with useParams
 

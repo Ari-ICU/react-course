@@ -5,29 +5,46 @@ title: "API Service Layer"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Abstracting HTTP calls out of UI components."
+summary: "ការបំបែកកូដ HTTP Calls ចេញពី UI Components ទៅកាន់ Dedicated Service Layer ឱ្យមានរបៀបរៀបរយ។"
+proTip: "កុំសរសេរ `axios.get('/api/users')` ដោយផ្ទាល់នៅក្នុង Component! ការបង្កើត Service Layer (ឧទាហរណ៍ `userService.ts`) ជួយឱ្យកូដងាយស្រួល reuse និងងាយស្រួលកែប្រែពេល Backend URL ផ្លាស់ប្តូរ។"
 codeTitle: "Dedicated Service Layer Pattern"
 ---
 
 # API Service Layer
 
-Components should never make direct `axios.get()` calls! Keep all API endpoints in dedicated service files (e.g. `studentService.ts`).
+ដើម្បីកុំឱ្យ UI Components មានភាពស្មុគស្មាញ និងពោរពេញដោយកូដ HTTP endpoints អ្នកគួរតែអនុវត្ត **Service Layer Pattern**។ វិធីសាស្ត្រនេះប្រមូលផ្តុំរាល់ API Calls ទាំងអស់ទៅក្នុងម៉ូឌុលដាច់ដោយឡែក (ដូចជា `studentService.ts`, `authService.ts`)។
 
 ### Key Concepts & Rules:
 
-- Decouples UI components from backend URLs and API changes.
+- បំបែកការងាររវាង UI Presentation និង Data Fetching Logic។
+- បង្កើត Type-safe API methods ជាមួយ TypeScript។
+- ងាយស្រួលក្នុងការធ្វើ Mock ទិន្នន័យនៅពេលសរសេរ Unit Test។
 
 ### Code Example: Dedicated Service Layer Pattern
 
 ```jsx
 // src/services/studentService.ts
 import { apiClient } from './apiClient';
-import { Student } from '@/types';
+import { Student, CreateStudentInput } from '@/types';
 
 export const studentService = {
-  getAll: () => apiClient.get<Student[]>('/students').then(r => r.data),
-  getById: (id: string) => apiClient.get<Student>(`/students/${id}`).then(r => r.data),
-  create: (data: Omit<Student, 'id'>) => apiClient.post<Student>('/students', data).then(r => r.data),
-  delete: (id: string) => apiClient.delete(`/students/${id}`),
+  getAll: async (): Promise<Student[]> => {
+    const res = await apiClient.get<Student[]>('/students');
+    return res.data;
+  },
+  
+  getById: async (id: string): Promise<Student> => {
+    const res = await apiClient.get<Student>(`/students/${id}`);
+    return res.data;
+  },
+  
+  create: async (payload: CreateStudentInput): Promise<Student> => {
+    const res = await apiClient.post<Student>('/students', payload);
+    return res.data;
+  },
+  
+  delete: async (id: string): Promise<void> => {
+    await apiClient.delete(`/students/${id}`);
+  },
 };
 ```

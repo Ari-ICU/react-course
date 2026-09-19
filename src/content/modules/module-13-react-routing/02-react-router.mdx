@@ -5,20 +5,23 @@ title: "React Router"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "The standard declarative routing library for React SPAs."
+summary: "បណ្ណាល័យស្តង់ដារសម្រាប់គ្រប់គ្រង declarative client-side routing ក្នុង React SPAs។"
+proTip: "React Router v6+ ប្រើប្រាស់ Element-based syntax (`element={<Home />}`) និង Hooks ទំនើបៗដូចជា `useNavigate`, `useParams` ដែលជួយឱ្យការគ្រប់គ្រង Route មានភាពងាយស្រួលបំផុត។"
 codeTitle: "Installing React Router"
 ---
 
 # React Router
 
-React Router synchronizes the UI with the URL in the browser address bar. It provides components and hooks to match URL paths and render corresponding views.
+**React Router** គឺជាបណ្ណាល័យស្តង់ដារដ៏ពេញនិយមបំផុតសម្រាប់គ្រប់គ្រង Routing នៅក្នុងកម្មវិធី React SPA។ វាធ្វើការផ្គូផ្គង UI Components ទៅនឹង URL ជាក់លាក់នៅលើ Browser Address Bar និងផ្តល់នូវ Components និង Hooks ជាច្រើនដើម្បីរៀបចំរចនាសម្ព័ន្ធទំព័រ។
 
 ### Key Concepts & Rules:
 
-- Version 6+ uses nested routes, data loaders, and elements.
+- ធ្វើសមកាលកម្ម UI ជាមួយនឹង Browser URL តាមទម្រង់ Declarative។
+- ចាប់ពី Version 6 ឡើងទៅ React Router គាំទ្រ Nested Routes, Data Loaders, Action Handlers និង Layout Outlets យ៉ាងរលូន។
+- ប្រើ package `react-router-dom` សម្រាប់ web applications។
 
 ### Code Example: Installing React Router
 
-```jsx
+```bash
 npm install react-router-dom
 ```

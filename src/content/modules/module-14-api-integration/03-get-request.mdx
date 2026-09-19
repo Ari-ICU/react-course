@@ -5,23 +5,30 @@ title: "GET Request"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Retrieving records from backend endpoints."
+summary: "ការទាញយកទិន្នន័យ (Retrieve Data) ពី Backend API Endpoints មកបង្ហាញលើ UI។"
+proTip: "HTTP GET គឺជាវិធីសាស្ត្រមួយដែលមានសុវត្ថិភាព (Safe) និង Idempotent មានន័យថាការហៅ GET ច្រើនដងនឹងមិនកែប្រែ ឬបំផ្លាញទិន្នន័យនៅលើ Server ឡើយ។"
 codeTitle: "Axios GET Request"
 ---
 
 # GET Request
 
-Used to fetch data without side effects on the server.
+HTTP GET ត្រូវបានប្រើប្រាស់សម្រាប់ទាញយកទិន្នន័យពី Server ដោយគ្មានការផ្លាស់ប្តូរ (Side Effects) លើទិន្នន័យនៅក្នុង Database ឡើយ។ នៅពេលប្រើប្រាស់ Axios ទិន្នន័យដែល Server ឆ្លើយតបមកវិញនឹងត្រូវបាន Parse ជា JSON រួចស្រេចនៅក្នុង property `res.data`។
 
 ### Key Concepts & Rules:
 
-- Idempotent and safe HTTP method.
+- GET Request គ្មាន Request Body ឡើយ — បើចង់ចម្លងទិន្នន័យតម្រង សូមប្រើ Query Parameters (e.g. `?page=1&limit=10`)។
+- មានសុវត្ថិភាព (Safe) និងអាចត្រូវបាន Caching ដោយ Browser ឬ CDN។
+- ស្រង់យកទិន្នន័យតាមរយៈ `response.data` នៅពេលប្រើ Axios។
 
 ### Code Example: Axios GET Request
 
 ```jsx
+import axios from 'axios';
+
 const fetchStudents = async () => {
-  const res = await axios.get('/api/students');
+  const res = await axios.get('/api/students', {
+    params: { page: 1, limit: 10 }
+  });
   return res.data;
 };
 ```

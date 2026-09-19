@@ -5,21 +5,32 @@ title: "Environment Variables for APIs"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Configuring dev vs staging vs production endpoints safely."
+summary: "ការប្រើប្រាស់ Environment Variables ដើម្បីគ្រប់គ្រង API Endpoints សម្រាប់ Development, Staging, និង Production ដោយសុវត្ថិភាព។"
+pitfall: "ហាមដាច់ខាតកុំរក្សាទុក Secret Keys (ដូចជា Database Passwords, Private API Secret Keys) នៅក្នុងអថេរដែលមាន prefix `NEXT_PUBLIC_` ព្រោះតម្លៃទាំងនោះនឹងត្រូវបែកធ្លាយទៅកាន់ Browser របស់ Client!"
 codeTitle: "Environment Variable Configuration"
 ---
 
 # Environment Variables for APIs
 
-Use `.env.local` and `NEXT_PUBLIC_` prefixes for client-accessible variables.
+ការផ្លាស់ប្តូរ Base URL រវាងបរិស្ថានសាកល្បងនៅលើម៉ាស៊ីនផ្ទាល់ខ្លួន (Local Development), Staging Server, និង Production Server ត្រូវតែធ្វើឡើងតាមរយៈ **Environment Variables** (`.env`)។ វិធីសាស្ត្រនេះការពារកុំឱ្យមានការ hardcode URL ទៅក្នុង source code។
 
 ### Key Concepts & Rules:
 
-- Never commit secret API keys or database credentials to git.
+- ប្រើប្រាស់ Prefix ពិសេសសម្រាប់ Client-side (ដូចជា `NEXT_PUBLIC_` ក្នុង Next.js ឬ `VITE_` ក្នុង Vite)។
+- បង្កើតឯកសារ `.env.example` ដើម្បីជាគំរូសម្រាប់ក្រុមការងារ (Team) ដោយមិនមានផ្ទុក sensitive keys ឡើយ។
+- ដាក់ឯកសារ `.env.local` នៅក្នុង `.gitignore` ជានិច្ច ដើម្បីការពារការបែកធ្លាយសម្ងាត់លើ Git repository។
 
 ### Code Example: Environment Variable Configuration
 
 ```jsx
-NEXT_PUBLIC_API_URL=https://api.example.com
+// .env.development
+NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+NEXT_PUBLIC_APP_ENV=development
+
+// .env.production
+NEXT_PUBLIC_API_URL=https://api.reactcourse.dev/v1
 NEXT_PUBLIC_APP_ENV=production
+
+// src/lib/apiClient.ts
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
 ```

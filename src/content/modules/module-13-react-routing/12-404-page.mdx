@@ -5,17 +5,20 @@ title: "404 Page"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Catch-all wildcard routes (*)."
+summary: "ការបង្កើត Catch-all Wildcard Route (*) សម្រាប់បង្ហាញទំព័រ Not Found។"
+proTip: "តែងតែដាក់ Catch-all Route (`path=\"*\"`) នៅបន្ទាត់ចុងក្រោយបង្អស់នៃ `<Routes>` ជានិច្ច ដើម្បីចាប់យក URL ទាំងឡាយណាដែលមិនត្រូវគ្នានឹង route ខាងលើ។"
 codeTitle: "Catch-all 404 Route"
 ---
 
 # 404 Page
 
-Use `<Route path="*" element={<NotFoundPage />} />` at the very end of your route list to catch any unmatched URLs.
+ដើម្បីគ្រប់គ្រងករណីដែលអ្នកប្រើប្រាស់វាយ URL ខុស ឬចូលទៅកាន់តំណភ្ជាប់ដែលមិនមាននៅក្នុងកម្មវិធី អ្នកត្រូវតែបង្កើត Catch-all Route ដោយប្រើសញ្ញាផ្កាយ (`path="*"`) នៅខាងចុងបង្អស់នៃ `<Routes>` list។
 
 ### Key Concepts & Rules:
 
-- Always provide a helpful 404 page with a link back to home.
+- `path="*"` នឹងចាប់យកគ្រប់ URL ណាដែលមិនត្រូវគ្នានឹង routes ខាងលើទាំងអស់។
+- តែងតែផ្តល់នូវការរចនាទំព័រ 404 ប្រកបដោយភាពរួសរាយ រួមជាមួយនឹងប៊ូតុងត្រឡប់ទៅកាន់ទំព័រដើមវិញ (Home Link)។
+- ជៀសវាងការទុកឱ្យទំព័រទទេស្អាតពេល user វាយ URL ខុស។
 
 ### Code Example: Catch-all 404 Route
 

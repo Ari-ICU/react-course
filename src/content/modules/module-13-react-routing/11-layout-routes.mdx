@@ -5,17 +5,20 @@ title: "Layout Routes"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Grouping routes under shared layouts without adding URL path prefixes."
+summary: "ការប្រមូលផ្តុំ routes ក្រោម layout រួមដោយមិនចាំបាច់បន្ថែម URL path prefix (Pathless Routes)។"
+proTip: "Pathless Layout Routes គឺល្អឥតខ្ចោះសម្រាប់ការបែងចែក Layout ពីរផ្សេងគ្នា ដូចជា Public Layout (សម្រាប់ Landing, About) និង Auth Layout (សម្រាប់ Login, Register)។"
 codeTitle: "Pathless Layout Route"
 ---
 
 # Layout Routes
 
-Omit the `path` prop on the parent Route to wrap routes in a layout without modifying the URL path.
+ប្រសិនបើអ្នកចង់រុំព័ទ្ធ Routes មួយក្រុមនៅក្នុង Layout តែមួយ ដោយមិនចង់បន្ថែម prefix ទៅក្នុង URL ឡើយ អ្នកអាចលុប attribute `path` ចេញពី parent `<Route>` បាន។ បច្ចេកទេសនេះហៅថា **Pathless Layout Routes**។
 
 ### Key Concepts & Rules:
 
-- Pathless layout routes cleanly group public vs authenticated layouts.
+- Parent Route គ្រាន់តែកំណត់ `element={<Layout />}` ដោយគ្មាន `path` attribute។
+- អនុញ្ញាតឱ្យ routes ដូចជា `/login` និង `/register` ចែករំលែក `AuthLayout` ជាមួយគ្នាដោយមិនចាំបាច់ក្លាយជា `/auth/login` ឡើយ។
+- ជួយឱ្យ URL Structure មានភាពខ្លី និងស្រស់ស្អាត។
 
 ### Code Example: Pathless Layout Route
 

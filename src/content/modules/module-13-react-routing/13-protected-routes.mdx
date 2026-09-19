@@ -5,17 +5,20 @@ title: "Protected Routes"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Restricting access to authenticated users and redirecting guests."
+summary: "ការការពារទំព័រឯកជនសម្រាប់តែ Authenticated Users និងការ redirect ភ្ញៀវទៅកាន់ login។"
+proTip: "បញ្ជូន `state={{ from: location }}` ទៅក្នុង `<Navigate>` ដើម្បីឱ្យទំព័រ Login អាចដឹង និង redirect user ត្រឡប់មកកាន់ទំព័រដែលគាត់ចង់ចូលវិញដោយស្វ័យប្រវត្តិ ក្រោយពេល Login ជោគជ័យ។"
 codeTitle: "Protected Route Gate"
 ---
 
 # Protected Routes
 
-A wrapper route component that checks authentication state: if logged in, renders `<Outlet />`; otherwise redirects to `/login`.
+Protected Route (ឬ Route Guard) គឺជា Component Wrapper ដែលធ្វើការត្រួតពិនិត្យ Authentication State របស់អ្នកប្រើប្រាស់៖ ប្រសិនបើ user បាន Login រួចរាល់ វានឹងអនុញ្ញាតឱ្យ render `<Outlet />`; ប្រសិនបើមិនទាន់ Login ទេ វានឹង redirect ទៅកាន់ទំព័រ `/login` ភ្លាមៗ។
 
 ### Key Concepts & Rules:
 
-- Include `state={{ from: location }}` to redirect user back after login.
+- ប្រើប្រាស់ component `<Navigate to="/login" replace />` សម្រាប់ការ redirect ដោយស្វ័យប្រវត្តិ។
+- ភ្ជាប់ `state={{ from: location }}` ដើម្បីចងចាំទំព័រដើមដែល user បានព្យាយាមចូល។
+- អាចអនុវត្តបន្ថែមសម្រាប់ Role-based Authorization (ដូចជា Admin-only routes)។
 
 ### Code Example: Protected Route Gate
 

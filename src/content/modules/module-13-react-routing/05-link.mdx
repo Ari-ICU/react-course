@@ -5,17 +5,20 @@ title: "Link"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Client-side navigation without page refresh."
+summary: "ការធ្វើដំណើរឆ្លងកាត់ទំព័រ (Client-side Navigation) ដោយគ្មាន page refresh។"
+pitfall: "ដាច់ខាតកុំប្រើ `<a href=\"/projects\">` សម្រាប់ internal navigation ក្នុង SPA ព្រោះវានឹង reload browser ទាំងមូល! ត្រូវប្រើ `<Link to=\"/projects\">` ជានិច្ច។"
 codeTitle: "Client Navigation with Link"
 ---
 
 # Link
 
-The `<Link to="/destination">` component renders an `<a>` tag with an `onClick` handler that prevents the browser's default reload and triggers client-side route navigation.
+Component `<Link>` ត្រូវបានប្រើប្រាស់សម្រាប់ការធ្វើដំណើរឆ្លងកាត់ទំព័រនានានៅខាងក្នុងកម្មវិធី React SPA។ នៅលើ DOM វា render ចេញជា HTML `<a>` tag ធម្មតា ប៉ុន្តែវាបានភ្ជាប់មកជាមួយ internal `onClick` handler ដែលទប់ស្កាត់ការ reload browser និងជំរុញឱ្យ client-side routing ដំណើរការភ្លាមៗ។
 
 ### Key Concepts & Rules:
 
-- Always use `<Link>` instead of `<a href="...">` for internal links.
+- ប្រើប្រាស់ attribute `to="/destination"` ដើម្បីបញ្ជាក់គោលដៅ។
+- ប្រើ `<Link>` សម្រាប់ internal links និងប្រើ `<a>` ធម្មតាសម្រាប់តែ external links (តំណភ្ជាប់ទៅក្រៅ website) ប៉ុណ្ណោះ។
+- រក្សា state របស់កម្មវិធីឱ្យនៅដដែល មិនធ្វើឱ្យបាត់បង់ទិន្នន័យពេលប្តូរទំព័រឡើយ។
 
 ### Code Example: Client Navigation with Link
 

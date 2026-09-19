@@ -5,17 +5,20 @@ title: "Route Architecture"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Centralizing route definitions, route constants, and loaders."
+summary: "ការប្រមូលផ្តុំ Route Definitions និង Route Path Constants ឱ្យមានរបៀបរៀបរយ។"
+proTip: "ជៀសវាងការសរសេរ Hardcoded Strings ដូចជា `navigate('/projects')` នៅគ្រប់កន្លែង! ចូរប្រមូលផ្តុំវាក្នុង `ROUTES` constant ដើម្បីការពារកុំឱ្យមានកំហុសវាយខុសអក្ខរាវិរុទ្ធ (Typos)។"
 codeTitle: "Centralized Route Constants"
 ---
 
 # Route Architecture
 
-Store all route path strings in a central `ROUTES` constant (`ROUTES.PROJECTS`, `ROUTES.CURRICULUM`) to prevent broken link typos across large codebases.
+នៅក្នុងកម្មវិធីខ្នាតធំ ការសរសេរ Path string ដោយផ្ទាល់ (Hardcoding strings) នៅតាម components នានា អាចនាំឱ្យកើតមាន Broken Links ដោយសារតែការវាយអក្សរខុស ឬការពិបាកពេលផ្លាស់ប្តូរ URL structure។ ការប្រមូលផ្តុំ Paths ទាំងអស់ឱ្យស្ថិតនៅក្នុង object constant `ROUTES` តែមួយ គឺជា Best Practice ដ៏សំខាន់។
 
 ### Key Concepts & Rules:
 
-- Centralized route configuration improves refactoring speed.
+- បង្កើត `ROUTES` constant object ដោយបន្ថែម `as const`។
+- គាំទ្រ dynamic route helpers ដូចជា `ROUTES.PROJECT_DETAIL(id)`។
+- ជួយឱ្យការ refactor ផ្លាស់ប្តូរ URL paths អាចធ្វើឡើងនៅកន្លែងតែមួយដោយសុវត្ថិភាព។
 
 ### Code Example: Centralized Route Constants
 

@@ -5,17 +5,20 @@ title: "React Router Best Practices"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Code-splitting routes with React.lazy and Suspense."
+summary: "ការធ្វើ Code-splitting លើ Routes ដោយប្រើប្រាស់ React.lazy និង Suspense។"
+proTip: "ការប្រើ `React.lazy()` ជាមួយ Routes ជួយកាត់បន្ថយទំហំ Initial JavaScript Bundle យ៉ាងច្រើន ព្រោះ browser ទាញយកតែ code នៃទំព័រណាដែល user កំពុងបើកមើលប៉ុណ្ណោះ។"
 codeTitle: "Lazy-loaded Route with Suspense"
 ---
 
 # React Router Best Practices
 
-Lazy-load route pages so users only download the JavaScript for the specific page they are currently viewing.
+ដើម្បីបង្កើនល្បឿននៃការផ្ទុកទំព័រដំបូង (Initial Page Load Time) នៃកម្មវិធី SPA ធំៗ អ្នកគួរតែអនុវត្ត **Route-based Code Splitting**។ តាមរយៈការប្រើប្រាស់ `React.lazy()` និង `<Suspense>` browser នឹងទាញយក JavaScript សម្រាប់តែទំព័រជាក់លាក់ដែលអ្នកប្រើប្រាស់កំពុងបើកមើលប៉ុណ្ណោះ។
 
 ### Key Concepts & Rules:
 
-- Wrap lazy routes in `<Suspense fallback={<LoadingSkeleton />}>`.
+- ប្រើប្រាស់ `React.lazy(() => import('./pages/PageName'))` សម្រាប់ទំព័រ route ទាំងអស់។
+- រុំព័ទ្ធ route components នៅក្នុង `<Suspense fallback={<LoadingSkeleton />}>`។
+- ជួយកាត់បន្ថយ Time to Interactive (TTI) និងបង្កើនពិន្ទុ Performance របស់ Web Vitals។
 
 ### Code Example: Lazy-loaded Route with Suspense
 

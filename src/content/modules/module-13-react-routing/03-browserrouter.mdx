@@ -5,17 +5,20 @@ title: "BrowserRouter"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Wrapping your app to connect with the browser History API."
+summary: "ការ wrap កម្មវិធីដើម្បីភ្ជាប់ជាមួយ HTML5 Browser History API។"
+proTip: "តែងតែដាក់ `<BrowserRouter>` នៅ root level នៃ component tree របស់អ្នក (ដូចជា `main.tsx` ឬ `App.tsx`) ដើម្បីឱ្យ components ទាំងអស់អាចហៅប្រើ Router hooks បាន។"
 codeTitle: "BrowserRouter Provider"
 ---
 
 # BrowserRouter
 
-`<BrowserRouter>` uses the HTML5 history API (`pushState`, `replaceState`, and `popstate` event) to keep your UI in sync with the URL.
+`<BrowserRouter>` គឺជា Router Provider ស្នូលដែលត្រូវរុំព័ទ្ធពីលើកម្មវិធី React ទាំងមូល។ វាប្រើប្រាស់ **HTML5 History API** (ដូចជា `pushState`, `replaceState` និង `popstate` event) ដើម្បីរក្សា UI របស់អ្នកឱ្យស៊ីសង្វាក់គ្នាជាមួយនឹង URL នៅក្នុង address bar។
 
 ### Key Concepts & Rules:
 
-- Place `<BrowserRouter>` at the root of your application.
+- ដាក់ `<BrowserRouter>` នៅចំណុចកំពូលបង្អស់ (Root Level) នៃ React App។
+- ផ្តល់នូវ Routing Context ដល់ Child Components ទាំងអស់ ដើម្បីឱ្យពួកវាអាចប្រើ `<Link>`, `useNavigate()`, ឬ `useParams()` បាន។
+- នៅលើ production server អ្នកត្រូវ configure fallback rewrite ទៅកាន់ `index.html` សម្រាប់ client-side routes ទាំងអស់។
 
 ### Code Example: BrowserRouter Provider
 

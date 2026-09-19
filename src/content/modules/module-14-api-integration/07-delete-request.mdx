@@ -5,20 +5,29 @@ title: "DELETE Request"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Removing a resource by identifier."
+summary: "ការលុបទិន្នន័យ Resource ចេញពី Server ដោយបញ្ជាក់ពី Unique Identifier (ID)។"
+proTip: "បន្ទាប់ពីលុបដោយជោគជ័យ (Status 200 ឬ 204 No Content) អ្នកគួរបច្ចុប្បន្នភាព Local State ភ្លាមៗ (Filter out item) ឬ Re-fetch ទិន្នន័យ ដើម្បីឱ្យ UI បង្ហាញការផ្លាស់ប្តូរភ្លាមៗ។"
 codeTitle: "Axios DELETE Request"
 ---
 
 # DELETE Request
 
-Sends HTTP DELETE to purge a record from the database.
+HTTP DELETE ត្រូវបានប្រើសម្រាប់ស្នើសុំលុបចោលនូវ Resource ណាមួយចេញពី Database តាមរយៈ ID ឬ Endpoint ជាក់លាក់។
 
 ### Key Concepts & Rules:
 
-- Check response status 200/204 to confirm deletion.
+- ពិនិត្យ Response Status `200 OK` ឬ `204 No Content` ដើម្បីបញ្ជាក់ថាទិន្នន័យត្រូវបានលុបដោយជោគជ័យ។
+- ជាទូទៅមិនមាន Request Body ទេ ដោយកំណត់ Identifier នៅលើ URL Path។
+- ធ្វើបច្ចុប្បន្នភាព UI State បន្ទាប់ពីការលុបជោគជ័យ តាមរយៈការ filter item ចេញពី array state។
 
 ### Code Example: Axios DELETE Request
 
 ```jsx
-await axios.delete(`/api/todos/${id}`);
+import axios from 'axios';
+
+const removeStudent = async (studentId: string) => {
+  await axios.delete(`/api/students/${studentId}`);
+  // Update UI local state បន្ទាប់ពីលុបជោគជ័យ៖
+  setStudents((prev) => prev.filter((s) => s.id !== studentId));
+};
 ```

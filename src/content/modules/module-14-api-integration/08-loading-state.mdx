@@ -5,28 +5,51 @@ title: "Loading State"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Tracking in-flight network requests."
+summary: "ការគ្រប់គ្រង និងតាមដានស្ថានភាពកំពុងទាញយកទិន្នន័យ (In-flight Requests) ដើម្បីបង្ហាញ Spinner ឬ Skeleton UI។"
+proTip: "ត្រូវដាក់ `setIsLoading(false)` នៅក្នុងប្លុក `finally` ជានិច្ច ដើម្បីធានាថា Loading Spinner នឹងបាត់ទៅវិញជានិច្ច ទោះបីជាការហៅ API ជោគជ័យ ឬបរាជ័យ (Error) ក៏ដោយ។"
 codeTitle: "In-Flight Loading Lifecycle"
 ---
 
 # Loading State
 
-Set `isLoading(true)` before the request and `isLoading(false)` in `finally`.
+នៅពេលកម្មវិធី React ធ្វើការទំនាក់ទំនងជាមួយ API តាមបណ្តាញ Internet វាតែងតែមានរយៈពេលពន្យារពេល (Network Latency)។ ការបង្កើត Loading State ជួយឱ្យអ្នកប្រើប្រាស់ដឹងថាកម្មវិធីកំពុងដំណើរការ ដោយបង្ហាញនូវ Loading Spinner ឬ Skeleton Loader ជំនួសឱ្យទំព័រទទេរ។
 
 ### Key Concepts & Rules:
 
-- Always use `finally` to ensure loading spinners disappear on error.
+- កំណត់ `setIsLoading(true)` មុនពេលចាប់ផ្តើមស្នើសុំ API Request។
+- កំណត់ `setIsLoading(false)` នៅក្នុងប្លុក `finally` ជានិច្ច ដើម្បីការពារកុំឱ្យ Spinner វិលមិនឈប់ពេលមានកំហុស។
+- ប្រើ Skeleton Loaders សម្រាប់បង្កើនបទពិសោធន៍អ្នកប្រើប្រាស់ (Perceived Performance)។
 
 ### Code Example: In-Flight Loading Lifecycle
 
 ```jsx
-try {
-  setIsLoading(true);
-  const data = await fetchStudents();
-  setStudents(data);
-} catch (err) {
-  setError('Failed to load students');
-} finally {
-  setIsLoading(false);
+import { useState, useEffect } from 'react';
+
+export function StudentList() {
+  const [students, setStudents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await fetchStudents();
+        setStudents(data);
+      } catch (err: any) {
+        setError('មិនអាចទាញយកទិន្នន័យសិស្សបានឡើយ');
+      } finally {
+        setIsLoading(false); // ដំណើរការជានិច្ច ទោះបីជាជោគជ័យ ឬ error
+      }
+    };
+
+    loadData();
+  }, []);
+
+  if (isLoading) return <p>កំពុងផ្ទុកទិន្នន័យ...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+
+  return <ul>{students.map(s => <li key={s.id}>{s.name}</li>)}</ul>;
 }
 ```

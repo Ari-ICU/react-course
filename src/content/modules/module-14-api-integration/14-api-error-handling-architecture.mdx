@@ -5,17 +5,20 @@ title: "API Error Handling Architecture"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Unified error models and retry policies."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធដោះស្រាយកំហុសកម្រិតស្ថាបត្យកម្ម (Unified Error Models និង Retry Policies)។"
+proTip: "ការបង្កើត Custom `ApiError` interface ឬ class ជួយឱ្យ Frontend មានទម្រង់ Error តែមួយច្បាស់លាស់ ងាយស្រួលបង្ហាញ Validation errors នៅលើ Form fields នីមួយៗ។"
 codeTitle: "Strongly Typed ApiError Model"
 ---
 
 # API Error Handling Architecture
 
-Map raw HTTP error codes to strongly typed domain errors.
+នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Applications) ការរៀបចំរចនាសម្ព័ន្ធ Error ឱ្យមានស្តង់ដារតែមួយ (Normalized Error Schema) គឺជាកត្តាសំខាន់។ វាជួយសម្រួលដល់ការបង្ហាញ Validation Errors នៅតាម Field នីមួយៗនៃ Form និងការកំណត់គោលការណ៍ Retry ដោយស្វ័យប្រវត្តិពេលបណ្តាញដាច់។
 
 ### Key Concepts & Rules:
 
-- Provides clean typed error models for UI components.
+- បង្កើត TypeScript Type ឬ Interface សម្រាប់កំហុស API (`ApiError`)។
+- ស្រង់យក Validation Errors ដែលបញ្ជូនមកពី Backend (ឧទាហរណ៍ `fieldErrors`)។
+- កំណត់គោលការណ៍ Retry (e.g. សាកល្បងហៅឡើងវិញ ៣ ដងចំពោះ 503 Service Unavailable)។
 
 ### Code Example: Strongly Typed ApiError Model
 
@@ -24,5 +27,20 @@ export interface ApiError {
   statusCode: number;
   message: string;
   fieldErrors?: Record<string, string[]>;
+}
+
+export function parseApiError(error: any): ApiError {
+  if (error.response) {
+    return {
+      statusCode: error.response.status,
+      message: error.response.data?.message || 'កំហុសពីម៉ាស៊ីនបម្រើ (Server Error)',
+      fieldErrors: error.response.data?.errors,
+    };
+  }
+  
+  return {
+    statusCode: 0,
+    message: 'មិនអាចតភ្ជាប់ទៅកាន់ម៉ាស៊ីនបម្រើបានឡើយ',
+  };
 }
 ```

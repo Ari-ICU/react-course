@@ -5,26 +5,37 @@ title: "Request Interceptors"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Automatically attaching Bearer tokens to outgoing requests."
+summary: "ការភ្ជាប់ Authentication Bearer Tokens ទៅក្នុង Request Headers ដោយស្វ័យប្រវត្តិកំណត់មុនពេល Request ចេញទៅ។"
+proTip: "Request Interceptor ជួយកាត់បន្ថយការសរសេរកូដដដែលៗ ព្រោះវានឹងអាន Token ពី Storage រួចភ្ជាប់ទៅក្នុង `Authorization` header ដោយស្វ័យប្រវត្តិសម្រាប់រាល់ Request ទាំងអស់។"
 codeTitle: "JWT Request Interceptor"
 ---
 
 # Request Interceptors
 
-Axios request interceptors run before every outgoing request, injecting the latest JWT token from memory or cookies.
+Axios Interceptors អនុញ្ញាតឱ្យអ្នកស្ទាក់ចាប់ (Intercept) និងកែប្រែ HTTP Requests មុនពេលវាត្រូវបានបញ្ជូនចេញទៅកាន់ Server។ ករណីប្រើប្រាស់ទូទៅបំផុតគឺការទាញយក JWT Access Token ពី LocalStorage/Cookie រួចបញ្ចូលវាទៅក្នុង Header `Authorization: Bearer <token>`។
 
 ### Key Concepts & Rules:
 
-- No need to manually pass headers in every service method.
+- ដំណើរការរាល់ពេលដែល Request ណាមួយត្រូវបានហៅចេញពី `apiClient`។
+- ជួយលុបបំបាត់ការសរសេរ `headers: { Authorization: ... }` ដដែលៗនៅគ្រប់ endpoint។
+- ត្រូវតែ return `config` ជានិច្ច ដើម្បីឱ្យ Request អាចបន្តដំណើរទៅមុខទៀត។
 
 ### Code Example: JWT Request Interceptor
 
 ```jsx
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
+// src/lib/apiClient.ts
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 ```

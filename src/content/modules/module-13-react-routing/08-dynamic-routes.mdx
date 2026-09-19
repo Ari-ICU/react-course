@@ -5,17 +5,20 @@ title: "Dynamic Routes"
 moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
-summary: "Capturing variable URL paths using parameters like :id."
+summary: "ការចាប់យក dynamic URL paths ដោយប្រើ parameters ដូចជា :id ឬ :moduleId។"
+proTip: "អ្នកអាចដាក់ parameters ច្រើនក្នុង path តែមួយបាន ដូចជា `/courses/:courseId/modules/:moduleId/lessons/:lessonId`។"
 codeTitle: "Dynamic Route Parameter Definition"
 ---
 
 # Dynamic Routes
 
-Define dynamic paths with a colon prefix: `/modules/:moduleId/topics/:topicId`.
+Dynamic Routes អនុញ្ញាតឱ្យអ្នកកំណត់ pattern នៃ URL ដែលមានតម្លៃប្រែប្រួល dynamic ដោយប្រើសញ្ញាពីរចុច (`:`) នៅពីមុខឈ្មោះ parameter ដូចជា `/modules/:moduleId` ឬ `/products/:id`។ វិធីសាស្ត្រនេះជួយឱ្យ Component តែមួយអាចទទួលរ៉ាប់រងការបង្ហាញទំព័រលម្អិតនៃទិន្នន័យរាប់ពាន់ records បានយ៉ាងរលូន។
 
 ### Key Concepts & Rules:
 
-- Allows single component to handle thousands of dynamic URLs.
+- កំណត់ Dynamic segment ដោយប្រើបុព្វបទ `:` ដូចជា `:moduleId`។
+- អនុញ្ញាតឱ្យ component តែមួយដើរតួជា template សម្រាប់ URLs រាប់ពាន់ផ្សេងគ្នា។
+- តម្លៃជាក់ស្តែងនៃ parameter នឹងត្រូវទាញយកតាមរយៈ `useParams()` hook។
 
 ### Code Example: Dynamic Route Parameter Definition
 

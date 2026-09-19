@@ -5,21 +5,30 @@ title: "React + REST API"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "How frontend React applications interface with backend services."
+summary: "ស្វែងយល់អំពីរបៀបដែល Frontend React ធ្វើការទំនាក់ទំនងជាមួយ Backend Services តាមរយៈ REST API។"
+proTip: "React ដំណើរការតែនៅលើ Client (Browser) ប៉ុណ្ណោះ ដូច្នេះវាត្រូវការទាញយកទិន្នន័យពី Server តាមរយៈ HTTP APIs (JSON) ដោយមិនខ្វល់ថា Backend សរសេរដោយ Node.js, Python, Laravel ឬ Go នោះឡើយ (Decoupled Architecture)។"
 codeTitle: "REST Architecture Model"
 ---
 
 # React + REST API
 
-React applications communicate with backend servers over HTTP using JSON payloads. The frontend is decoupled from the backend technology (Node, Python, Go, PHP Laravel).
+កម្មវិធី React ធ្វើការទំនាក់ទំនងជាមួយ Backend Servers តាមរយៈពិធីការ HTTP ដោយផ្លាស់ប្តូរទិន្នន័យជាទម្រង់ JSON។ រចនាសម្ព័ន្ធបែប Decoupled Architecture នេះអនុញ្ញាតឱ្យ Frontend និង Backend អភិវឌ្ឍដោយឡែកពីគ្នា ដោយគ្រាន់តែគោរពតាមកិច្ចព្រមព្រៀង API Contract (Endpoints & Data Formats) តែប៉ុណ្ណោះ។
 
 ### Key Concepts & Rules:
 
-- Stateless communication via JSON.
-- Frontend only consumes API contracts.
+- ការទំនាក់ទំនងគ្មានស្ថានភាព (Stateless Communication) តាមរយៈ HTTP Requests និង JSON Payload។
+- Frontend ទទួលខុសត្រូវលើ User Interface (UI) និង State រីឯ Backend ទទួលខុសត្រូវលើ Database, Security, និង Business Logic។
+- ប្រើប្រាស់ HTTP Methods ស្របតាមស្តង់ដារ REST (GET, POST, PUT, PATCH, DELETE)។
 
 ### Code Example: REST Architecture Model
 
 ```jsx
-// Client sends HTTP Request -> Server processes -> Server returns JSON Response
+// 1. Client (React) ផ្ញើ HTTP Request ទៅកាន់ Server:
+// GET /api/v1/products -> Headers: { Authorization: "Bearer ..." }
+
+// 2. Server ដំណើរការ Business Logic និង Query Database
+
+// 3. Server ឆ្លើយតបមកវិញនូវ JSON Response:
+// Status: 200 OK
+// Body: [ { "id": 1, "title": "React Masterclass", "price": 49 } ]
 ```

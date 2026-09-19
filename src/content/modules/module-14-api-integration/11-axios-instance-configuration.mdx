@@ -5,28 +5,33 @@ title: "Axios Instance Configuration"
 moduleId: "module-14"
 moduleNumber: "14"
 category: "Routing & Network"
-summary: "Configuring base URLs, timeouts, and headers."
+summary: "ការបង្កើត និងកំណត់រចនាសម្ព័ន្ធ Axios Instance តែមួយសម្រាប់គម្រោង (Base URL, Timeouts, Headers)។"
+proTip: "ការប្រើ `axios.create()` ជួយឱ្យអ្នកកំណត់ `baseURL`, `timeout`, និង headers លំនាំដើមនៅកន្លែងតែមួយ ដោយមិនចាំបាច់សរសេរ URL ពេញលេញនៅគ្រប់ endpoint នោះឡើយ។"
 codeTitle: "Axios Centralized Instance"
 ---
 
 # Axios Instance Configuration
 
-Create a centralized Axios instance with default headers and base URL.
+ជំនួសឱ្យការ import `axios` លំនាំដើមមកប្រើប្រាស់នៅគ្រប់ទីកន្លែង អ្នកគួរបង្កើត **Custom Axios Instance** តែមួយកណ្តាល (Centralized Instance)។ វាជួយឱ្យអ្នកកំណត់ Base URL, Timeouts, និង Default Headers បានយ៉ាងងាយស្រួល។
 
 ### Key Concepts & Rules:
 
-- Single place to configure authorization headers.
+- កំណត់ `baseURL` តាមរយៈ Environment Variable (ឧទាហរណ៍៖ `process.env.NEXT_PUBLIC_API_URL`)។
+- កំណត់ `timeout` (ឧទាហរណ៍៖ 10 វិនាទី) ដើម្បីការពារកុំឱ្យ Request គាំងយូរពេកពេលបណ្តាញខ្សោយ។
+- កំណត់ `headers` លំនាំដើមដូចជា `Content-Type: application/json`។
 
 ### Code Example: Axios Centralized Instance
 
 ```jsx
+// src/lib/apiClient.ts
 import axios from 'axios';
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.reactcourse.dev/v1',
-  timeout: 10000,
+  timeout: 10000, // 10 វិនាទី
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
 });
 ```
