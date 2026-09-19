@@ -5,21 +5,84 @@ title: "Project 02: Student Management System"
 moduleId: "module-27"
 moduleNumber: "27"
 category: "Projects"
-summary: "Full CRUD administration interface with pagination and multi-field validation."
-codeTitle: "Project 02 Overview"
+summary: "ផ្ទាំង Admin CRUD ពេញលេញសម្រាប់គ្រប់គ្រងទិន្នន័យសិស្ស ជាមួយ Client-side Pagination, Sorting, និង Modal Form Validation។"
+proTip: "នៅពេលបង្កើត Client-side Pagination ត្រូវគណនា Total Pages តាមរយៈ `Math.ceil(filteredStudents.length / pageSize)` ដោយផ្អែកលើ Filtered List មិនមែន Original Array ទាំងមូលឡើយ។"
+pitfall: "កុំភ្លេច Reset Current Page មកលេខ 1 វិញនៅពេលដែល User វាយពាក្យ Search ឬប្តូរ Category Filter បើពុំនោះទេ User អាចនឹងជាប់នៅលើទំព័រទទេដែលគ្មានទិន្នន័យ (Empty State)។"
+codeTitle: "Student Pagination & Sorting Logic"
 ---
 
 # Project 02: Student Management System
 
-Deep dive into data tables, modal dialogs, and sorting heuristics.
+គម្រោងនេះផ្តោតលើការកសាងផ្ទាំងគ្រប់គ្រងរដ្ឋបាល (**Admin CRUD Dashboard**) ជាក់ស្តែងសម្រាប់ទិន្នន័យសិស្សនិស្សិត។ អ្នកនឹងរៀនពីការរៀបចំ Data Table ប្រកបដោយអន្តរកម្ម, ការតម្រៀបទិន្នន័យ (Sorting តាម Name, GPA, Enroll Date), ការបែងចែកទំព័រ (Pagination), ផ្ទាំង Modal បញ្ចូល/កែសម្រួលព័ត៌មាន (Add/Edit Modal) និងផ្ទាំង Confirmation Dialog មុននឹងលុបទិន្នន័យចេញ។
 
 ### Key Concepts & Rules:
 
-- Client-side pagination and sorting.
-- Modal add/edit forms with error handling.
+- **Full CRUD Workflow**: បង្កើតសិស្សថ្មី, អាននិងបង្ហាញតារាងទិន្នន័យ, កែសម្រួល Profile, និងលុបទិន្នន័យដោយសុវត្ថិភាព។
+- **Client-Side Pagination**: បែងចែកទិន្នន័យបង្ហាញតាមទំព័រ (ឧ. 10 នាក់ក្នុងមួយទំព័រ) ជាមួយប៊ូតុង Next, Prev, និង Page Numbers។
+- **Multi-Field Validation**: ត្រួតពិនិត្យភាពត្រឹមត្រូវនៃ Email, Phone Number, GPA (0.0 - 4.0), និង Major មុនពេល Submit Form។
+- **Multi-Criteria Filtering**: ត្រងតាមជំនាញសិក្សា (Major), ស្ថានភាពសិស្ស (Active, Graduated, Probation) និងពាក្យគន្លឹះស្វែងរក។
 
-### Code Example: Project 02 Overview
+### Code Example: Student Pagination & Sorting Logic
 
-```jsx
-// Features: Student List, Add/Edit Modal, Delete confirmation, Search, Filter, Pagination.
+```tsx
+import { useMemo, useState } from "react";
+
+export interface Student {
+  id: string;
+  name: string;
+  email: string;
+  major: string;
+  gpa: number;
+  status: "Active" | "Graduated" | "Probation";
+}
+
+export function useStudentTable(students: Student[], pageSize = 10) {
+  const [search, setSearch] = useState("");
+  const [selectedMajor, setSelectedMajor] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortKey, setSortKey] = useState<keyof Student>("name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  // 1. Filtered Students
+  const filtered = useMemo(() => {
+    return students.filter((s) => {
+      const matchSearch = s.name.toLowerCase().includes(search.toLowerCase()) || s.email.includes(search);
+      const matchMajor = selectedMajor === "All" || s.major === selectedMajor;
+      return matchSearch && matchMajor;
+    });
+  }, [students, search, selectedMajor]);
+
+  // 2. Sorted Students
+  const sorted = useMemo(() => {
+    return [...filtered].sort((a, b) => {
+      const valA = a[sortKey];
+      const valB = b[sortKey];
+      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [filtered, sortKey, sortOrder]);
+
+  // 3. Paginated Slice
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const paginatedStudents = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return sorted.slice(start, start + pageSize);
+  }, [sorted, currentPage, pageSize]);
+
+  return {
+    paginatedStudents,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    search,
+    setSearch: (val: string) => { setSearch(val); setCurrentPage(1); },
+    sortKey,
+    sortOrder,
+    toggleSort: (key: keyof Student) => {
+      if (sortKey === key) setSortOrder(prev => prev === "asc" ? "desc" : "asc");
+      else { setSortKey(key); setSortOrder("asc"); }
+    }
+  };
+}
 ```

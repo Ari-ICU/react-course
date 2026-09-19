@@ -5,21 +5,72 @@ title: "Project 03: Product Management Dashboard"
 moduleId: "module-27"
 moduleNumber: "27"
 category: "Projects"
-summary: "Enterprise catalog with REST API integration, skeletons, and metrics."
-codeTitle: "Project 03 Overview"
+summary: "ផ្ទាំង Dashboard សន្និធិផលិតផលភ្ជាប់ជាមួយ REST API, Axios Client, Loading Skeletons, និង Inventory Metrics Cards។"
+proTip: "បង្កើត Service Layer ដាច់ដោយឡែក (`productService.ts`) ជៀសវាងការហៅ `axios.get()` ដោយផ្ទាល់នៅខាងក្នុង Components ដើម្បីឱ្យកូដមានភាពងាយស្រួល Refactor និង Mock ពេលសរសេរ Unit Tests។"
+pitfall: "កុំភ្លេចគ្រប់គ្រង Asynchronous Lifecycle States ឱ្យបានគ្រប់ជ្រុងជ្រោយ (Idle, Loading, Error, Success)។ កុំទុកឱ្យ User ជាប់គាំងលើ Loading Skeleton រហូតនៅពេល API ឆ្លើយតបមកដោយ Error ឡើយ។"
+codeTitle: "Product Service & API Integration Hook"
 ---
 
 # Project 03: Product Management Dashboard
 
-Service layer abstraction with Axios and asynchronous lifecycle handling.
+នៅក្នុងគម្រោងនេះ អ្នកនឹងអនុវត្តការតភ្ជាប់ React ជាមួយ REST API តាមកម្រិតស្តង់ដារសហគ្រាស (Enterprise Architecture) ដោយរៀបចំ **Service Layer Pattern** តាមរយៈ Axios។ គម្រោងនេះរួមបញ្ចូលទាំងការគ្រប់គ្រង Asynchronous States (Loading Skeletons, Empty States, Error Retries), ការគណនា Metrics កាតសង្ខេប (Total Inventory, Low Stock Alerts), និងការ Filter តាមប្រភេទផលិតផល និង Price Range Slider។
 
 ### Key Concepts & Rules:
 
-- Loading skeletons during latency.
-- Product inventory metrics cards.
+- **Service Layer Abstraction**: បំបែក Logic នៃការហៅ API ទៅកាន់ `services/api/productService.ts` ដាច់ដោយឡែកពី UI Components។
+- **High-Fidelity Skeleton Loading**: បង្ហាញ UI Skeleton យ៉ាងរលូនក្នុងកំឡុងពេលទាញយកទិន្នន័យពី Backend Network។
+- **Inventory Metrics Summary**: គណនា KPI សំខាន់ៗ (ចំនួនទំនិញសរុប, តម្លៃស្តុកសរុប, ចំនួនទំនិញជិតដាច់ស្តុក) ដោយស្វ័យប្រវត្តិ។
+- **Optimistic UI Updates**: ធ្វើបច្ចុប្បន្នភាពចំនួនស្តុកលើផ្ទាំងអេក្រង់ភ្លាមៗ មុនពេល API ឆ្លើយតបជោគជ័យ ដើម្បីបង្កើនល្បឿន UX ឱ្យកាន់តែរហ័ស។
 
-### Code Example: Project 03 Overview
+### Code Example: Product Service & API Integration Hook
 
-```jsx
-// Features: REST API, Axios client, Category tree filter, Price slider, Inventory metrics.
+```tsx
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+
+export interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  stock: number;
+}
+
+// 1. Service Layer
+export const productService = {
+  async getAll(): Promise<Product[]> {
+    const { data } = await axios.get<Product[]>("/api/products");
+    return data;
+  },
+  async updateStock(id: string, stock: number): Promise<Product> {
+    const { data } = await axios.patch<Product>(`/api/products/${id}`, { stock });
+    return data;
+  }
+};
+
+// 2. Custom Data Fetching Hook
+export function useProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchProducts = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const data = await productService.getAll();
+      setProducts(data);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "បរាជ័យក្នុងការទាញយកទិន្នន័យផលិតផល");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  return { products, isLoading, error, refetch: fetchProducts };
+}
 ```

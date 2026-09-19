@@ -5,21 +5,94 @@ title: "Project 05: E-Commerce Frontend"
 moduleId: "module-27"
 moduleNumber: "27"
 category: "Projects"
-summary: "Full storefront with global Zustand cart, wishlist, and checkout pipeline."
-codeTitle: "Project 05 Overview"
+summary: "ហាងទំនិញ Online ពេញលេញជាមួយ Zustand Global Cart Store, Persistent Storage, Wishlist, និង Multi-step Checkout Wizard។"
+proTip: "ប្រើប្រាស់ `persist` middleware របស់ Zustand សម្រាប់ Shopping Cart Store ដើម្បីឱ្យទំនិញក្នុងកន្ត្រកនៅតែរក្សាទុកដដែល ទោះបីជា User បិទផ្ទាំង Browser ឬ Refresh ក៏ដោយ។"
+pitfall: "កុំគណនា Subtotal ឬតម្លៃទំនិញសរុបក្នុង Local Component State ដាច់ដោយឡែកពីគ្នា។ ត្រូវគណនាផលបូកទាំងអស់ (Derived Value) ដោយផ្ទាល់នៅក្នុង Zustand Store ដើម្បីធានាបាននូវ Single Source of Truth។"
+codeTitle: "Zustand Global Shopping Cart Store"
 ---
 
 # Project 05: E-Commerce Frontend
 
-Combines React Router with global Zustand state and persistent checkout wizards.
+គម្រោងនេះរួមបញ្ចូលគ្នានូវ **React Router**, ការគ្រប់គ្រង Global State តាមរយៈ **Zustand**, និងការរចនា UX ហាងលក់ទំនិញ Online ទំនើប។ អ្នកនឹងកសាងទំព័រ Catalog ជាមួយ Dynamic Category Tabs, ទំព័រពិនិត្យលម្អិតទំនិញ (Product Details), ផ្ទាំង Shopping Cart Slide-out Drawer, ប្រព័ន្ធ Wishlist, និងដំណាក់កាលទូទាត់ប្រាក់ច្រើនជំហាន (**Multi-step Checkout Pipeline**: Shipping → Payment → Order Summary)។
 
 ### Key Concepts & Rules:
 
-- Cart slide-out drawer.
-- Multi-step checkout pipeline.
+- **Global Cart Management**: គ្រប់គ្រងចំនួនទំនិញ, បន្ថែមចូលកន្ត្រក, កែប្រែបរិមាណ, និងគណនាតម្លៃសរុបជាមួយ Zustand។
+- **Persistent Storage**: រក្សាទុកកន្ត្រកទំនិញជាប់ក្នុង Browser Storage តាមរយៈ Zustand `persist` middleware។
+- **Slide-out Cart Drawer**: បង្ហាញផ្ទាំង Cart Drawer យ៉ាងរលូនពីចំហៀងអេក្រង់ ដោយមិនបាច់ផ្លាស់ប្តូរទំព័រ។
+- **Multi-Step Checkout Wizard**: ដំណើរការបញ្ជាទិញជាជំហានៗ ជាមួយការត្រួតពិនិត្យភាពត្រឹមត្រូវនៃអាសយដ្ឋានដឹកជញ្ជូន និងវិធីសាស្ត្រទូទាត់។
 
-### Code Example: Project 05 Overview
+### Code Example: Zustand Global Shopping Cart Store
 
-```jsx
-// Features: Dynamic catalog, Product detail, Zustand Cart Store, Wishlist, Checkout Wizard.
+```tsx
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+interface CartStore {
+  items: CartItem[];
+  isDrawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  addItem: (product: Omit<CartItem, "quantity">) => void;
+  removeItem: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
+  clearCart: () => void;
+  getTotalPrice: () => number;
+  getTotalItems: () => number;
+}
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
+      isDrawerOpen: false,
+      openDrawer: () => set({ isDrawerOpen: true }),
+      closeDrawer: () => set({ isDrawerOpen: false }),
+
+      addItem: (product) => {
+        set((state) => {
+          const existing = state.items.find((item) => item.id === product.id);
+          if (existing) {
+            return {
+              items: state.items.map((item) =>
+                item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+              ),
+            };
+          }
+          return { items: [...state.items, { ...product, quantity: 1 }] };
+        });
+      },
+
+      removeItem: (id) => {
+        set((state) => ({ items: state.items.filter((item) => item.id !== id) }));
+      },
+
+      updateQuantity: (id, quantity) => {
+        if (quantity <= 0) {
+          get().removeItem(id);
+          return;
+        }
+        set((state) => ({
+          items: state.items.map((item) => (item.id === id ? { ...item, quantity } : item)),
+        }));
+      },
+
+      clearCart: () => set({ items: [] }),
+
+      getTotalPrice: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      getTotalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
+    }),
+    {
+      name: "ecommerce-cart-storage",
+    }
+  )
+);
 ```

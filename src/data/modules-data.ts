@@ -4407,93 +4407,117 @@ export const modulesData: ModuleItem[] = [
     "number": "27",
     "title": "Real-World Projects",
     "category": "Projects",
-    "summary": "6 complete real-world projects: Todo App, Student Management System, Product Dashboard, Auth Portal, E-Commerce, and Final Capstone Application.",
+    "summary": "គម្រោងអនុវត្តផ្ទាល់ជាក់ស្ដែងកម្រិត Real-World ចំនួន 6៖ Todo App, Student Management System, Product Dashboard, Auth Portal, E-Commerce Storefront, និង Final Capstone Enterprise Application។",
     "iconName": "FolderGit2",
     "topics": [
       {
         "id": "m27-01",
         "number": "01",
         "title": "Project 01: Todo Management App",
-        "summary": "Complete task manager with localStorage persistence, dynamic filtering, and search.",
-        "explanation": "Master core state transitions, controlled inputs, and custom localStorage hooks.",
+        "summary": "កម្មវិធីគ្រប់គ្រងកិច្ចការងារជាមួយ localStorage persistence, dynamic filtering, និង live search។",
+        "explanation": "នៅក្នុងគម្រោងដំបូងនេះ អ្នកនឹងអនុវត្តផ្ទាល់នូវគោលការណ៍គ្រឹះស្នូលរបស់ React ដូចជា State Management តាមរយៈ `useState`, Event Handling, Controlled Inputs, Derived State សម្រាប់ការ Filter ទិន្នន័យ (All, Active, Completed) និងការរក្សាទុកទិន្នន័យលើ Browser តាមរយៈ Custom Hook `useLocalStorage`។",
         "keyPoints": [
-          "Create, edit, toggle, filter, and delete tasks.",
-          "Real-time search query matching."
+          "**CRUD Operations**: បន្ថែម (Add), កែសម្រួល (Edit inline), ធីកបញ្ចប់ (Toggle), និងលុប (Delete) កិច្ចការងារនីមួយៗ។",
+          "**Dynamic Filtering & Live Search**: ត្រងទិន្នន័យតាមស្ថានភាពការងារ និងស្វែងរកតាមរយៈ Real-time Text Query។",
+          "**Persistence with Custom Hook**: ប្រើប្រាស់ `useLocalStorage` ដើម្បី Synchronize រវាង React State និង Browser Storage ដោយស្វ័យប្រវត្តិ។",
+          "**Keyboard Shortcuts**: បន្ថែម UX ល្អប្រសើរដូចជាចុច `Enter` ដើម្បី Add task និងចុច `Escape` ដើម្បី Cancel edit mode។"
         ],
-        "codeSnippet": "// Available in interactive demo tab! Check the Right Panel or Projects tab.",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 01 Overview",
+        "codeSnippet": "import { useState, useEffect } from \"react\";\n\nexport function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {\n  // Lazy state initialization ដើម្បីកុំឱ្យអាន localStorage រាល់ពេល Re-render\n  const [storedValue, setStoredValue] = useState<T>(() => {\n    try {\n      if (typeof window === \"undefined\") return initialValue;\n      const item = window.localStorage.getItem(key);\n      return item ? JSON.parse(item) : initialValue;\n    } catch (error) {\n      console.error(`Error reading localStorage key \"${key}\":`, error);\n      return initialValue;\n    }\n  });\n\n  useEffect(() => {\n    try {\n      window.localStorage.setItem(key, JSON.stringify(storedValue));\n    } catch (error) {\n      console.error(`Error saving localStorage key \"${key}\":`, error);\n    }\n  }, [key, storedValue]);\n\n  return [storedValue, setStoredValue];\n}",
+        "codeLanguage": "tsx",
+        "codeTitle": "Todo App Custom Hook Architecture",
+        "proTip": "ដើម្បីឱ្យ UI មានភាពរលូន និងមិនជួបបញ្ហា Hydration mismatch នៅពេលប្រើ localStorage គួរទាញយកតម្លៃដំបូងតាមរយៈ Lazy Initializer ក្នុង `useState(() => ...)`។",
+        "pitfall": "កុំធ្វើការ Update Todo Item ដោយផ្ទាល់លើ State Array ចាស់ (Mutation) ដូចជា `todos[index].completed = true` ឱ្យសោះ។ ត្រូវបង្កើត Array ថ្មីតាមរយៈ `.map()` ជានិច្ច ដើម្បីរក្សា Immutability របស់ React State។",
         "interactiveDemoKey": "TodoAppDemo"
       },
       {
         "id": "m27-02",
         "number": "02",
         "title": "Project 02: Student Management System",
-        "summary": "Full CRUD administration interface with pagination and multi-field validation.",
-        "explanation": "Deep dive into data tables, modal dialogs, and sorting heuristics.",
+        "summary": "ផ្ទាំង Admin CRUD ពេញលេញសម្រាប់គ្រប់គ្រងទិន្នន័យសិស្ស ជាមួយ Client-side Pagination, Sorting, និង Modal Form Validation។",
+        "explanation": "គម្រោងនេះផ្តោតលើការកសាងផ្ទាំងគ្រប់គ្រងរដ្ឋបាល (**Admin CRUD Dashboard**) ជាក់ស្តែងសម្រាប់ទិន្នន័យសិស្សនិស្សិត។ អ្នកនឹងរៀនពីការរៀបចំ Data Table ប្រកបដោយអន្តរកម្ម, ការតម្រៀបទិន្នន័យ (Sorting តាម Name, GPA, Enroll Date), ការបែងចែកទំព័រ (Pagination), ផ្ទាំង Modal បញ្ចូល/កែសម្រួលព័ត៌មាន (Add/Edit Modal) និងផ្ទាំង Confirmation Dialog មុននឹងលុបទិន្នន័យចេញ។",
         "keyPoints": [
-          "Client-side pagination and sorting.",
-          "Modal add/edit forms with error handling."
+          "**Full CRUD Workflow**: បង្កើតសិស្សថ្មី, អាននិងបង្ហាញតារាងទិន្នន័យ, កែសម្រួល Profile, និងលុបទិន្នន័យដោយសុវត្ថិភាព។",
+          "**Client-Side Pagination**: បែងចែកទិន្នន័យបង្ហាញតាមទំព័រ (ឧ. 10 នាក់ក្នុងមួយទំព័រ) ជាមួយប៊ូតុង Next, Prev, និង Page Numbers។",
+          "**Multi-Field Validation**: ត្រួតពិនិត្យភាពត្រឹមត្រូវនៃ Email, Phone Number, GPA (0.0 - 4.0), និង Major មុនពេល Submit Form។",
+          "**Multi-Criteria Filtering**: ត្រងតាមជំនាញសិក្សា (Major), ស្ថានភាពសិស្ស (Active, Graduated, Probation) និងពាក្យគន្លឹះស្វែងរក។"
         ],
-        "codeSnippet": "// Features: Student List, Add/Edit Modal, Delete confirmation, Search, Filter, Pagination.",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 02 Overview"
+        "codeSnippet": "import { useMemo, useState } from \"react\";\n\nexport interface Student {\n  id: string;\n  name: string;\n  email: string;\n  major: string;\n  gpa: number;\n  status: \"Active\" | \"Graduated\" | \"Probation\";\n}\n\nexport function useStudentTable(students: Student[], pageSize = 10) {\n  const [search, setSearch] = useState(\"\");\n  const [selectedMajor, setSelectedMajor] = useState(\"All\");\n  const [currentPage, setCurrentPage] = useState(1);\n  const [sortKey, setSortKey] = useState<keyof Student>(\"name\");\n  const [sortOrder, setSortOrder] = useState<\"asc\" | \"desc\">(\"asc\");\n\n  // 1. Filtered Students\n  const filtered = useMemo(() => {\n    return students.filter((s) => {\n      const matchSearch = s.name.toLowerCase().includes(search.toLowerCase()) || s.email.includes(search);\n      const matchMajor = selectedMajor === \"All\" || s.major === selectedMajor;\n      return matchSearch && matchMajor;\n    });\n  }, [students, search, selectedMajor]);\n\n  // 2. Sorted Students\n  const sorted = useMemo(() => {\n    return [...filtered].sort((a, b) => {\n      const valA = a[sortKey];\n      const valB = b[sortKey];\n      if (valA < valB) return sortOrder === \"asc\" ? -1 : 1;\n      if (valA > valB) return sortOrder === \"asc\" ? 1 : -1;\n      return 0;\n    });\n  }, [filtered, sortKey, sortOrder]);\n\n  // 3. Paginated Slice\n  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));\n  const paginatedStudents = useMemo(() => {\n    const start = (currentPage - 1) * pageSize;\n    return sorted.slice(start, start + pageSize);\n  }, [sorted, currentPage, pageSize]);\n\n  return {\n    paginatedStudents,\n    totalPages,\n    currentPage,\n    setCurrentPage,\n    search,\n    setSearch: (val: string) => { setSearch(val); setCurrentPage(1); },\n    sortKey,\n    sortOrder,\n    toggleSort: (key: keyof Student) => {\n      if (sortKey === key) setSortOrder(prev => prev === \"asc\" ? \"desc\" : \"asc\");\n      else { setSortKey(key); setSortOrder(\"asc\"); }\n    }\n  };\n}",
+        "codeLanguage": "tsx",
+        "codeTitle": "Student Pagination & Sorting Logic",
+        "proTip": "នៅពេលបង្កើត Client-side Pagination ត្រូវគណនា Total Pages តាមរយៈ `Math.ceil(filteredStudents.length / pageSize)` ដោយផ្អែកលើ Filtered List មិនមែន Original Array ទាំងមូលឡើយ។",
+        "pitfall": "កុំភ្លេច Reset Current Page មកលេខ 1 វិញនៅពេលដែល User វាយពាក្យ Search ឬប្តូរ Category Filter បើពុំនោះទេ User អាចនឹងជាប់នៅលើទំព័រទទេដែលគ្មានទិន្នន័យ (Empty State)។"
       },
       {
         "id": "m27-03",
         "number": "03",
         "title": "Project 03: Product Management Dashboard",
-        "summary": "Enterprise catalog with REST API integration, skeletons, and metrics.",
-        "explanation": "Service layer abstraction with Axios and asynchronous lifecycle handling.",
+        "summary": "ផ្ទាំង Dashboard សន្និធិផលិតផលភ្ជាប់ជាមួយ REST API, Axios Client, Loading Skeletons, និង Inventory Metrics Cards។",
+        "explanation": "នៅក្នុងគម្រោងនេះ អ្នកនឹងអនុវត្តការតភ្ជាប់ React ជាមួយ REST API តាមកម្រិតស្តង់ដារសហគ្រាស (Enterprise Architecture) ដោយរៀបចំ **Service Layer Pattern** តាមរយៈ Axios។ គម្រោងនេះរួមបញ្ចូលទាំងការគ្រប់គ្រង Asynchronous States (Loading Skeletons, Empty States, Error Retries), ការគណនា Metrics កាតសង្ខេប (Total Inventory, Low Stock Alerts), និងការ Filter តាមប្រភេទផលិតផល និង Price Range Slider។",
         "keyPoints": [
-          "Loading skeletons during latency.",
-          "Product inventory metrics cards."
+          "**Service Layer Abstraction**: បំបែក Logic នៃការហៅ API ទៅកាន់ `services/api/productService.ts` ដាច់ដោយឡែកពី UI Components។",
+          "**High-Fidelity Skeleton Loading**: បង្ហាញ UI Skeleton យ៉ាងរលូនក្នុងកំឡុងពេលទាញយកទិន្នន័យពី Backend Network។",
+          "**Inventory Metrics Summary**: គណនា KPI សំខាន់ៗ (ចំនួនទំនិញសរុប, តម្លៃស្តុកសរុប, ចំនួនទំនិញជិតដាច់ស្តុក) ដោយស្វ័យប្រវត្តិ។",
+          "**Optimistic UI Updates**: ធ្វើបច្ចុប្បន្នភាពចំនួនស្តុកលើផ្ទាំងអេក្រង់ភ្លាមៗ មុនពេល API ឆ្លើយតបជោគជ័យ ដើម្បីបង្កើនល្បឿន UX ឱ្យកាន់តែរហ័ស។"
         ],
-        "codeSnippet": "// Features: REST API, Axios client, Category tree filter, Price slider, Inventory metrics.",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 03 Overview"
+        "codeSnippet": "import { useState, useEffect, useCallback } from \"react\";\nimport axios from \"axios\";\n\nexport interface Product {\n  id: string;\n  name: string;\n  category: string;\n  price: number;\n  stock: number;\n}\n\n// 1. Service Layer\nexport const productService = {\n  async getAll(): Promise<Product[]> {\n    const { data } = await axios.get<Product[]>(\"/api/products\");\n    return data;\n  },\n  async updateStock(id: string, stock: number): Promise<Product> {\n    const { data } = await axios.patch<Product>(`/api/products/${id}`, { stock });\n    return data;\n  }\n};\n\n// 2. Custom Data Fetching Hook\nexport function useProducts() {\n  const [products, setProducts] = useState<Product[]>([]);\n  const [isLoading, setIsLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  const fetchProducts = useCallback(async () => {\n    setIsLoading(true);\n    setError(null);\n    try {\n      const data = await productService.getAll();\n      setProducts(data);\n    } catch (err: any) {\n      setError(err.response?.data?.message || \"បរាជ័យក្នុងការទាញយកទិន្នន័យផលិតផល\");\n    } finally {\n      setIsLoading(false);\n    }\n  }, []);\n\n  useEffect(() => {\n    fetchProducts();\n  }, [fetchProducts]);\n\n  return { products, isLoading, error, refetch: fetchProducts };\n}",
+        "codeLanguage": "tsx",
+        "codeTitle": "Product Service & API Integration Hook",
+        "proTip": "បង្កើត Service Layer ដាច់ដោយឡែក (`productService.ts`) ជៀសវាងការហៅ `axios.get()` ដោយផ្ទាល់នៅខាងក្នុង Components ដើម្បីឱ្យកូដមានភាពងាយស្រួល Refactor និង Mock ពេលសរសេរ Unit Tests។",
+        "pitfall": "កុំភ្លេចគ្រប់គ្រង Asynchronous Lifecycle States ឱ្យបានគ្រប់ជ្រុងជ្រោយ (Idle, Loading, Error, Success)។ កុំទុកឱ្យ User ជាប់គាំងលើ Loading Skeleton រហូតនៅពេល API ឆ្លើយតបមកដោយ Error ឡើយ។"
       },
       {
         "id": "m27-04",
         "number": "04",
         "title": "Project 04: Authentication Dashboard",
-        "summary": "Role-Based Access Control (RBAC) portal with token refresh interceptors.",
-        "explanation": "Production authentication architecture: JWT access tokens, refresh tokens, and protected routes.",
+        "summary": "ប្រព័ន្ធគ្រប់គ្រងសិទ្ធិ Role-Based Access Control (RBAC) ជាមួយ JWT Tokens, Refresh Interceptors, និង Protected Routes។",
+        "explanation": "នៅក្នុងគម្រោងនេះ អ្នកនឹងបង្កើតស្ថាបត្យកម្ម Authentication និង Authorization កម្រិត Production។ គម្រោងនេះគ្របដណ្តប់លើការគ្រប់គ្រង JWT Access Tokens, Silent Refresh Tokens តាមរយៈ Axios Interceptors, ការការពារទំព័រតាមរយៈ `ProtectedRoute`, ការបែងចែកសិទ្ធិមើលទិន្នន័យតាមតួនាទី (**Role-Based Access Control - RBAC**) រវាង Admin, Editor, និង Viewer ព្រមទាំងការគ្រប់គ្រង User Profile។",
         "keyPoints": [
-          "Login, Register, Logout.",
-          "Protected layout routes and role guards."
+          "**JWT Authentication Lifecycle**: ដំណើរការ Login, ផ្ទៀងផ្ទាត់ Credentials, រក្សាទុក Token, និង Logout សម្អាត State ទាំងមូល។",
+          "**Axios 401 Interceptors**: យន្តការស្ទាក់ចាប់ Token ផុតកំណត់ និងដំណើរការ Refresh Token ដោយស្វ័យប្រវត្តិកុំឱ្យដាច់ Session របស់ User។",
+          "**Protected Layout Routes**: បិទមិនឱ្យ User ដែលមិនទាន់ Login អាចចូលទៅកាន់ទំព័រ Dashboard បាន ដោយបង្វែរ (Redirect) ទៅកាន់ `/login` ដោយស្វ័យប្រវត្តិ។",
+          "**Role Guards (RBAC)**: អនុញ្ញាតឱ្យបង្ហាញ Menu ឬ Button ជាក់លាក់មួយទៅតាមតួនាទីរបស់អ្នកប្រើប្រាស់ (ឧទាហរណ៍៖ មានតែ Admin ទើបឃើញប៊ូតុង Delete User)។"
         ],
-        "codeSnippet": "// Features: JWT auth, Axios 401 interceptors, ProtectedRoute, RBAC gates, User Profile.",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 04 Overview"
+        "codeSnippet": "import React, { createContext, useContext, ReactNode } from \"react\";\nimport { Navigate, useLocation } from \"react-router-dom\";\n\nexport type UserRole = \"admin\" | \"editor\" | \"viewer\";\n\nexport interface User {\n  id: string;\n  name: string;\n  email: string;\n  role: UserRole;\n}\n\ninterface AuthContextType {\n  user: User | null;\n  isAuthenticated: boolean;\n  isLoading: boolean;\n  logout: () => void;\n}\n\nexport const AuthContext = createContext<AuthContextType | null>(null);\n\nexport function useAuth() {\n  const context = useContext(AuthContext);\n  if (!context) throw new Error(\"useAuth must be used within an AuthProvider\");\n  return context;\n}\n\n// Protected Route & RBAC Component Guard\nexport function ProtectedRoute({\n  children,\n  allowedRoles,\n}: {\n  children: ReactNode;\n  allowedRoles?: UserRole[];\n}) {\n  const { user, isAuthenticated, isLoading } = useAuth();\n  const location = useLocation();\n\n  if (isLoading) {\n    return <div className=\"p-8 text-center text-slate-400\">ផ្ទៀងផ្ទាត់គណនី...</div>;\n  }\n\n  if (!isAuthenticated || !user) {\n    return <Navigate to=\"/login\" state={{ from: location }} replace />;\n  }\n\n  if (allowedRoles && !allowedRoles.includes(user.role)) {\n    return <Navigate to=\"/unauthorized\" replace />;\n  }\n\n  return <>{children}</>;\n}",
+        "codeLanguage": "tsx",
+        "codeTitle": "Role-Based Protected Route Guard",
+        "proTip": "រៀបចំ Axios Response Interceptor ដើម្បីស្ទាក់ចាប់កំហុស HTTP 401 (Unauthorized) និងហៅ Refresh Token API ដោយស្វ័យប្រវត្តិ មុននឹងព្យាយាមបញ្ជូន Request ដើមទៅម្តងទៀត (Auto-retry failed request)។",
+        "pitfall": "កុំពិនិត្យសិទ្ធិ Role តែនៅលើ Frontend UI តែមួយមុខឱ្យសោះ។ Protected Route នៅលើ React គឺសម្រាប់តែបទពិសោធន៍ User Interface (UX) ប៉ុណ្ណោះ ចំណែកសុវត្ថិភាពទិន្នន័យពិតប្រាកដត្រូវតែផ្ទៀងផ្ទាត់សិទ្ធិ Authorization នៅលើ Backend API ជានិច្ច។"
       },
       {
         "id": "m27-05",
         "number": "05",
         "title": "Project 05: E-Commerce Frontend",
-        "summary": "Full storefront with global Zustand cart, wishlist, and checkout pipeline.",
-        "explanation": "Combines React Router with global Zustand state and persistent checkout wizards.",
+        "summary": "ហាងទំនិញ Online ពេញលេញជាមួយ Zustand Global Cart Store, Persistent Storage, Wishlist, និង Multi-step Checkout Wizard។",
+        "explanation": "គម្រោងនេះរួមបញ្ចូលគ្នានូវ **React Router**, ការគ្រប់គ្រង Global State តាមរយៈ **Zustand**, និងការរចនា UX ហាងលក់ទំនិញ Online ទំនើប។ អ្នកនឹងកសាងទំព័រ Catalog ជាមួយ Dynamic Category Tabs, ទំព័រពិនិត្យលម្អិតទំនិញ (Product Details), ផ្ទាំង Shopping Cart Slide-out Drawer, ប្រព័ន្ធ Wishlist, និងដំណាក់កាលទូទាត់ប្រាក់ច្រើនជំហាន (**Multi-step Checkout Pipeline**: Shipping → Payment → Order Summary)។",
         "keyPoints": [
-          "Cart slide-out drawer.",
-          "Multi-step checkout pipeline."
+          "**Global Cart Management**: គ្រប់គ្រងចំនួនទំនិញ, បន្ថែមចូលកន្ត្រក, កែប្រែបរិមាណ, និងគណនាតម្លៃសរុបជាមួយ Zustand។",
+          "**Persistent Storage**: រក្សាទុកកន្ត្រកទំនិញជាប់ក្នុង Browser Storage តាមរយៈ Zustand `persist` middleware។",
+          "**Slide-out Cart Drawer**: បង្ហាញផ្ទាំង Cart Drawer យ៉ាងរលូនពីចំហៀងអេក្រង់ ដោយមិនបាច់ផ្លាស់ប្តូរទំព័រ។",
+          "**Multi-Step Checkout Wizard**: ដំណើរការបញ្ជាទិញជាជំហានៗ ជាមួយការត្រួតពិនិត្យភាពត្រឹមត្រូវនៃអាសយដ្ឋានដឹកជញ្ជូន និងវិធីសាស្ត្រទូទាត់។"
         ],
-        "codeSnippet": "// Features: Dynamic catalog, Product detail, Zustand Cart Store, Wishlist, Checkout Wizard.",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 05 Overview"
+        "codeSnippet": "import { create } from \"zustand\";\nimport { persist } from \"zustand/middleware\";\n\nexport interface CartItem {\n  id: string;\n  name: string;\n  price: number;\n  quantity: number;\n  image: string;\n}\n\ninterface CartStore {\n  items: CartItem[];\n  isDrawerOpen: boolean;\n  openDrawer: () => void;\n  closeDrawer: () => void;\n  addItem: (product: Omit<CartItem, \"quantity\">) => void;\n  removeItem: (id: string) => void;\n  updateQuantity: (id: string, quantity: number) => void;\n  clearCart: () => void;\n  getTotalPrice: () => number;\n  getTotalItems: () => number;\n}\n\nexport const useCartStore = create<CartStore>()(\n  persist(\n    (set, get) => ({\n      items: [],\n      isDrawerOpen: false,\n      openDrawer: () => set({ isDrawerOpen: true }),\n      closeDrawer: () => set({ isDrawerOpen: false }),\n\n      addItem: (product) => {\n        set((state) => {\n          const existing = state.items.find((item) => item.id === product.id);\n          if (existing) {\n            return {\n              items: state.items.map((item) =>\n                item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item\n              ),\n            };\n          }\n          return { items: [...state.items, { ...product, quantity: 1 }] };\n        });\n      },\n\n      removeItem: (id) => {\n        set((state) => ({ items: state.items.filter((item) => item.id !== id) }));\n      },\n\n      updateQuantity: (id, quantity) => {\n        if (quantity <= 0) {\n          get().removeItem(id);\n          return;\n        }\n        set((state) => ({\n          items: state.items.map((item) => (item.id === id ? { ...item, quantity } : item)),\n        }));\n      },\n\n      clearCart: () => set({ items: [] }),\n\n      getTotalPrice: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),\n      getTotalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),\n    }),\n    {\n      name: \"ecommerce-cart-storage\",\n    }\n  )\n);",
+        "codeLanguage": "tsx",
+        "codeTitle": "Zustand Global Shopping Cart Store",
+        "proTip": "ប្រើប្រាស់ `persist` middleware របស់ Zustand សម្រាប់ Shopping Cart Store ដើម្បីឱ្យទំនិញក្នុងកន្ត្រកនៅតែរក្សាទុកដដែល ទោះបីជា User បិទផ្ទាំង Browser ឬ Refresh ក៏ដោយ។",
+        "pitfall": "កុំគណនា Subtotal ឬតម្លៃទំនិញសរុបក្នុង Local Component State ដាច់ដោយឡែកពីគ្នា។ ត្រូវគណនាផលបូកទាំងអស់ (Derived Value) ដោយផ្ទាល់នៅក្នុង Zustand Store ដើម្បីធានាបាននូវ Single Source of Truth។"
       },
       {
         "id": "m27-06",
         "number": "06",
         "title": "Project 06: Final Capstone Application",
-        "summary": "The ultimate full-stack React application integrating all 26 modules.",
-        "explanation": "Synthesis of Next.js, TanStack Query v5, Zustand, React Hook Form, Zod, and Shadcn UI.",
+        "summary": "កម្មវិធី Full-Scale Enterprise React កម្រិតកំពូលដែលរួមបញ្ចូលចំណេះដឹងពី Module 01 ដល់ Module 26 ទាំងអស់ (Next.js, TanStack Query v5, Zustand, React Hook Form, Zod, Shadcn UI, Vitest)។",
+        "explanation": "នេះគឺជាគម្រោងចុងក្រោយបង្អស់ (**Final Capstone**) ដែលសំយោគចំណេះដឹងទាំងអស់ពី Module 01 ដល់ Module 26 ទៅជាកម្មវិធីកម្រិតសហគ្រាស (**Enterprise-Grade Application**) ពេញលេញមួយ។ គម្រោងនេះរួមបញ្ចូលស្ថាបត្យកម្មទំនើប៖ **Next.js / React 19**, **TanStack Query v5** សម្រាប់ Server-state Caching និង Optimistic Updates, **Zustand** សម្រាប់ Global Client UI State, **React Hook Form + Zod** សម្រាប់ Type-safe Form Validation, **Tailwind CSS + Shadcn UI** សម្រាប់ Design System, និង **Vitest** សម្រាប់ Automated Testing។",
         "keyPoints": [
-          "Full 5-tier architecture.",
-          "Production-ready build with Vitest testing suite."
+          "**Enterprise 5-Tier Architecture**: បែងចែកស្រទាប់កូដច្បាស់លាស់ (Presentation → Features → Services → Store → Types/Utils)។",
+          "**Server Cache Invalidation**: ប្រើ TanStack Query `useMutation` ជាមួយ `queryClient.invalidateQueries` និង Optimistic UI Rollback។",
+          "**Type-Safe Validation**: បង្កើត Zod Schema តែមួយសម្រាប់បង្កើតទាំង TypeScript Type និង Form Validation Logic។",
+          "**Production-Ready Standards**: រៀបចំ Error Boundaries, Suspense Skeletons, SEO Metadata, និង Unit Test Suite ជាមួយ Vitest & React Testing Library។"
         ],
-        "codeSnippet": "// Complete multi-tier architecture:\n// React/Next.js -> TanStack Query -> Zustand -> React Hook Form + Zod -> REST API",
-        "codeLanguage": "jsx",
-        "codeTitle": "Project 06 Final Capstone"
+        "codeSnippet": "import React from \"react\";\nimport { useQuery, useMutation, useQueryClient } from \"@tanstack/react-query\";\nimport { useForm } from \"react-hook-form\";\nimport { zodResolver } from \"@hookform/resolvers/zod\";\nimport { z } from \"zod\";\nimport { useUIStore } from \"@/store/useUIStore\";\n\n// 1. Zod Schema & Inferred Type\nexport const customerSchema = z.object({\n  name: z.string().min(2, \"ឈ្មោះត្រូវមានយ៉ាងតិច ២ តួអក្សរ\"),\n  email: z.string().email(\"ទម្រង់ Email មិនត្រឹមត្រូវ\"),\n  plan: z.enum([\"starter\", \"pro\", \"enterprise\"]),\n});\n\nexport type CustomerInput = z.infer<typeof customerSchema>;\n\n// 2. Enterprise Feature Component\nexport function CustomerManagementFeature() {\n  const queryClient = useQueryClient();\n  const { addToast } = useUIStore();\n\n  // Data Fetching via TanStack Query v5\n  const { data: customers, isLoading } = useQuery({\n    queryKey: [\"customers\"],\n    queryFn: async () => {\n      const res = await fetch(\"/api/customers\");\n      if (!res.ok) throw new Error(\"បរាជ័យក្នុងការទាញយកទិន្នន័យ\");\n      return res.json();\n    },\n  });\n\n  // Form Management with React Hook Form & Zod\n  const form = useForm<CustomerInput>({\n    resolver: zodResolver(customerSchema),\n    defaultValues: { name: \"\", email: \"\", plan: \"starter\" },\n  });\n\n  // Mutation with Cache Invalidation\n  const mutation = useMutation({\n    mutationFn: async (newCustomer: CustomerInput) => {\n      const res = await fetch(\"/api/customers\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(newCustomer),\n      });\n      return res.json();\n    },\n    onSuccess: () => {\n      queryClient.invalidateQueries({ queryKey: [\"customers\"] });\n      form.reset();\n      addToast({ type: \"success\", message: \"បង្កើតអតិថិជនថ្មីបានជោគជ័យ!\" });\n    },\n  });\n\n  return (\n    <div className=\"space-y-6\">\n      <h2 className=\"text-2xl font-bold text-slate-100\">Customer Management</h2>\n      {/* Forms, Tables, Skeletons, and Metrics integrate here */}\n    </div>\n  );\n}",
+        "codeLanguage": "tsx",
+        "codeTitle": "Enterprise 5-Tier Architecture Integration",
+        "proTip": "អនុវត្ត 5-Tier Architecture ឱ្យបានដាច់ស្រឡះ៖ Presentation (Components), Domain Features, State/Caching (TanStack Query + Zustand), Network Service (Axios), និង Type/Validation Schemas (TypeScript + Zod)។",
+        "pitfall": "កុំច្រឡំរវាង Server State និង Client State! ទិន្នន័យពី Database/API ត្រូវទុកឱ្យ TanStack Query ជាអ្នកគ្រប់គ្រង Cache និង Revalidation ចំណែក Client-only State (ដូចជា Dark/Light mode, Sidebar collapse, Active filter tabs) ទើបត្រូវរក្សាទុកក្នុង Zustand។"
       }
     ]
   }

@@ -5,22 +5,85 @@ title: "Project 06: Final Capstone Application"
 moduleId: "module-27"
 moduleNumber: "27"
 category: "Projects"
-summary: "The ultimate full-stack React application integrating all 26 modules."
-codeTitle: "Project 06 Final Capstone"
+summary: "កម្មវិធី Full-Scale Enterprise React កម្រិតកំពូលដែលរួមបញ្ចូលចំណេះដឹងពី Module 01 ដល់ Module 26 ទាំងអស់ (Next.js, TanStack Query v5, Zustand, React Hook Form, Zod, Shadcn UI, Vitest)។"
+proTip: "អនុវត្ត 5-Tier Architecture ឱ្យបានដាច់ស្រឡះ៖ Presentation (Components), Domain Features, State/Caching (TanStack Query + Zustand), Network Service (Axios), និង Type/Validation Schemas (TypeScript + Zod)។"
+pitfall: "កុំច្រឡំរវាង Server State និង Client State! ទិន្នន័យពី Database/API ត្រូវទុកឱ្យ TanStack Query ជាអ្នកគ្រប់គ្រង Cache និង Revalidation ចំណែក Client-only State (ដូចជា Dark/Light mode, Sidebar collapse, Active filter tabs) ទើបត្រូវរក្សាទុកក្នុង Zustand។"
+codeTitle: "Enterprise 5-Tier Architecture Integration"
 ---
 
 # Project 06: Final Capstone Application
 
-Synthesis of Next.js, TanStack Query v5, Zustand, React Hook Form, Zod, and Shadcn UI.
+នេះគឺជាគម្រោងចុងក្រោយបង្អស់ (**Final Capstone**) ដែលសំយោគចំណេះដឹងទាំងអស់ពី Module 01 ដល់ Module 26 ទៅជាកម្មវិធីកម្រិតសហគ្រាស (**Enterprise-Grade Application**) ពេញលេញមួយ។ គម្រោងនេះរួមបញ្ចូលស្ថាបត្យកម្មទំនើប៖ **Next.js / React 19**, **TanStack Query v5** សម្រាប់ Server-state Caching និង Optimistic Updates, **Zustand** សម្រាប់ Global Client UI State, **React Hook Form + Zod** សម្រាប់ Type-safe Form Validation, **Tailwind CSS + Shadcn UI** សម្រាប់ Design System, និង **Vitest** សម្រាប់ Automated Testing។
 
 ### Key Concepts & Rules:
 
-- Full 5-tier architecture.
-- Production-ready build with Vitest testing suite.
+- **Enterprise 5-Tier Architecture**: បែងចែកស្រទាប់កូដច្បាស់លាស់ (Presentation → Features → Services → Store → Types/Utils)។
+- **Server Cache Invalidation**: ប្រើ TanStack Query `useMutation` ជាមួយ `queryClient.invalidateQueries` និង Optimistic UI Rollback។
+- **Type-Safe Validation**: បង្កើត Zod Schema តែមួយសម្រាប់បង្កើតទាំង TypeScript Type និង Form Validation Logic។
+- **Production-Ready Standards**: រៀបចំ Error Boundaries, Suspense Skeletons, SEO Metadata, និង Unit Test Suite ជាមួយ Vitest & React Testing Library។
 
-### Code Example: Project 06 Final Capstone
+### Code Example: Enterprise 5-Tier Architecture Integration
 
-```jsx
-// Complete multi-tier architecture:
-// React/Next.js -> TanStack Query -> Zustand -> React Hook Form + Zod -> REST API
+```tsx
+import React from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useUIStore } from "@/store/useUIStore";
+
+// 1. Zod Schema & Inferred Type
+export const customerSchema = z.object({
+  name: z.string().min(2, "ឈ្មោះត្រូវមានយ៉ាងតិច ២ តួអក្សរ"),
+  email: z.string().email("ទម្រង់ Email មិនត្រឹមត្រូវ"),
+  plan: z.enum(["starter", "pro", "enterprise"]),
+});
+
+export type CustomerInput = z.infer<typeof customerSchema>;
+
+// 2. Enterprise Feature Component
+export function CustomerManagementFeature() {
+  const queryClient = useQueryClient();
+  const { addToast } = useUIStore();
+
+  // Data Fetching via TanStack Query v5
+  const { data: customers, isLoading } = useQuery({
+    queryKey: ["customers"],
+    queryFn: async () => {
+      const res = await fetch("/api/customers");
+      if (!res.ok) throw new Error("បរាជ័យក្នុងការទាញយកទិន្នន័យ");
+      return res.json();
+    },
+  });
+
+  // Form Management with React Hook Form & Zod
+  const form = useForm<CustomerInput>({
+    resolver: zodResolver(customerSchema),
+    defaultValues: { name: "", email: "", plan: "starter" },
+  });
+
+  // Mutation with Cache Invalidation
+  const mutation = useMutation({
+    mutationFn: async (newCustomer: CustomerInput) => {
+      const res = await fetch("/api/customers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCustomer),
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      form.reset();
+      addToast({ type: "success", message: "បង្កើតអតិថិជនថ្មីបានជោគជ័យ!" });
+    },
+  });
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-slate-100">Customer Management</h2>
+      {/* Forms, Tables, Skeletons, and Metrics integrate here */}
+    </div>
+  );
+}
 ```
