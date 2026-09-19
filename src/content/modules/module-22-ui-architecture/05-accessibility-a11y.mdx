@@ -5,26 +5,35 @@ title: "Accessibility (a11y)"
 moduleId: "module-22"
 moduleNumber: "22"
 category: "Enterprise & Production"
-summary: "Color contrast, screen readers, semantic tags, and keyboard focus."
+summary: "ការបង្កើត UI ដែលគាំទ្រ Accessibility (A11y) រួមមាន Color Contrast, Screen Readers, Semantic HTML Tags, និង Keyboard Focus Rings។"
+proTip: "កុំលុប `outline: none` ចោលដោយមិនបានជំនួសដោយ `:focus-visible` ring ឱ្យសោះ! អ្នកប្រើប្រាស់ដែលបញ្ជាតាម Keyboard ត្រូវការ Focus Ring ច្បាស់លាស់ដើម្បីដឹងថា Cursor កំពុងស្ថិតនៅលើប៊ូតុង ឬ Input ណាមួយ។"
 codeTitle: "Accessible Focus Ring"
 ---
 
 # Accessibility (a11y)
 
-Build accessible interfaces that all users can navigate using keyboards and screen readers.
+**Web Accessibility (a11y)** ធានាថាមនុស្សគ្រប់រូប រួមទាំងអ្នកដែលមានពិការភាពភ្នែក ឬពិការភាពរាងកាយ អាចប្រើប្រាស់ និងបញ្ជាកម្មវិធីរបស់អ្នកបានយ៉ាងពេញលេញតាមរយៈ Screen Readers និង Keyboard។ នេះរួមបញ្ចូលទាំងកម្រិតពណ៌កម្រិតពន្លឺ (Color Contrast យ៉ាងហោចណាស់ 4.5:1), Semantic HTML Tags, និងការកំណត់ Focus Indicators។
 
 ### Key Concepts & Rules:
 
-- Ensure visible `:focus-visible` outlines.
-- Use semantic `<header>`, `<main>`, `<nav>`, and `<button>` elements.
+- ប្រើប្រាស់ Semantic HTML Elements (`<nav>`, `<header>`, `<main>`, `<button>`) ជំនួសឱ្យការប្រើ `<div>` នៅគ្រប់កន្លែង។
+- ត្រូវតែផ្តល់ `aria-label` សម្រាប់ប៊ូតុងណាដែលមានតែ Icon (គ្មានអក្សរ) ដូចជាប៊ូតុងបិទផ្ទាំង Dialog។
+- ប្រើប្រាស់ `focus-visible:ring-2` ដើម្បីបង្ហាញរង្វង់ព័ទ្ធជុំវិញនៅពេលបញ្ជាតាម Keyboard។
 
 ### Code Example: Accessible Focus Ring
 
 ```jsx
-<button 
-  className="focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
-  aria-label="Close dialog"
->
-  <X className="w-5 h-5" />
-</button>
+import { X } from 'lucide-react';
+
+export function CloseButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button 
+      onClick={onClick}
+      aria-label="បិទផ្ទាំងសន្ទនា" // ចាំបាច់សម្រាប់ Screen Readers ពេលប៊ូតុងគ្មានអត្ថបទ
+      className="p-2 rounded-lg text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 transition-colors"
+    >
+      <X className="w-5 h-5" />
+    </button>
+  );
+}
 ```

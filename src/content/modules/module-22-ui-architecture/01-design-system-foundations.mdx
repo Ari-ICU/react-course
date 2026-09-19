@@ -5,26 +5,41 @@ title: "Design System Foundations"
 moduleId: "module-22"
 moduleNumber: "22"
 category: "Enterprise & Production"
-summary: "Color tokens, typography scales, spacing, and CSS variables."
+summary: "ការកំណត់ Design Tokens (Colors, Spacing, Typography, Radius) និងការប្រើប្រាស់ CSS Variables សម្រាប់ Design System ទាំងមូល។"
+proTip: "ការប្រើប្រាស់ទម្រង់ពណ៌ HSL (Hue, Saturation, Lightness) នៅក្នុង CSS Variables (ដូចជា `--background: 222.2 84% 4.9%`) ជួយឱ្យអ្នកអាចប្តូរ Dark Mode ឬអនុវត្តពណ៌ថ្លា (Opacity `/80`) ក្នុង Tailwind CSS បានយ៉ាងងាយស្រួលបំផុត។"
 codeTitle: "CSS Variable Design Tokens"
 ---
 
 # Design System Foundations
 
-A robust design system standardizes visual language across an entire engineering team using design tokens for colors, spacing, radius, and elevation.
+ប្រព័ន្ធ Design System ដ៏រឹងមាំជួយធ្វើឱ្យរចនាបថ និងភាសាមើលឃើញ (Visual Language) មានភាពស៊ីសង្វាក់គ្នានៅទូទាំងក្រុមការងារវិស្វកម្មទាំងមូល។ នេះត្រូវបានសម្រេចឡើងតាមរយៈការបង្កើត **Design Tokens** សម្រាប់ពណ៌ (Colors), គម្លាត (Spacing), កម្រិតកោង (Border Radius), និងស្រមោល (Elevation) ដោយប្រើប្រាស់ CSS Variables។
 
 ### Key Concepts & Rules:
 
-- HSL color variables enable effortless theme swapping (Dark/Light mode).
-- Semantic color naming (`primary`, `muted`, `accent`, `destructive`).
+- ប្រើប្រាស់ CSS Variables ជាមួយតម្លៃពណ៌ HSL ជួយសម្រួលដល់ការប្តូរ Dark/Light Themes។
+- ដាក់ឈ្មោះពណ៌តាមតួនាទី Semantics (ដូចជា `primary`, `secondary`, `muted`, `accent`, `destructive`) ជៀសវាងការដាក់ឈ្មោះតាមពណ៌ជាក់ស្តែង (ដូចជា `blue-500`)។
+- ភ្ជាប់ CSS Variables ទៅក្នុង `tailwind.config.js` ដើម្បីអាចហៅប្រើជាមួយ Tailwind Utility Classes។
 
 ### Code Example: CSS Variable Design Tokens
 
-```jsx
-:root {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
-  --destructive: 0 62.8% 30.6%;
+```css
+@layer base {
+  :root {
+    /* Light Mode Tokens */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+  }
+
+  .dark {
+    /* Dark Mode Tokens */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 62.8% 30.6%;
+  }
 }
 ```

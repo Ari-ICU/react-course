@@ -5,39 +5,47 @@ title: "Component Variants with CVA"
 moduleId: "module-22"
 moduleNumber: "22"
 category: "Enterprise & Production"
-summary: "Managing component style permutations cleanly."
+summary: "ការគ្រប់គ្រង Style Permutations នៃ Component (Sizes, Variants, States) ដោយស្អាត និងមាន Type-Safety ជាមួយ Class Variance Authority (CVA)។"
+proTip: "CVA គឺជាស្តង់ដារឧស្សាហកម្មដែលប្រើក្នុង Shadcn UI។ វាជួយការពារកុំឱ្យមានការតភ្ជាប់ String (String concatenation) រញ៉េរញ៉ៃ និងផ្តល់នូវ TypeScript Types ត្រឹមត្រូវសម្រាប់ Props ដូចជា `variant='outline'` និង `size='lg'`។"
 codeTitle: "CVA Button Variants"
 ---
 
 # Component Variants with CVA
 
-Class Variance Authority (`cva`) lets you define type-safe variants (sizes: sm/md/lg, variants: primary/secondary/ghost) without string concatenation spaghetti.
+បណ្ណាល័យ **Class Variance Authority (`cva`)** គឺជាឧបករណ៍ដ៏មានឥទ្ធិពលសម្រាប់គ្រប់គ្រងបន្សំនៃ Styles (Variants, Sizes, States) របស់ Component ដោយគ្មានការសរសេរលក្ខខណ្ឌ Ternary `? :` ឬ String Concatenation ដ៏ស្មុគស្មាញឡើយ។ CVA នឹងបង្កើត TypeScript Types ដោយស្វ័យប្រវត្តិស្របតាម Props ដែលបានកំណត់។
 
 ### Key Concepts & Rules:
 
-- Standard pattern used by Shadcn UI.
+- កំណត់ Base Styles ដែលចែករំលែករួមគ្នាក្នុង Component។
+- កំណត់ Variants (ដូចជា `variant: { default, ghost, outline }` និង `size: { sm, md, lg }`)។
+- កំណត់ `defaultVariants` សម្រាប់ករណីដែល User មិនបានបញ្ជាក់ Prop។
+- ប្រើប្រាស់ `VariantProps<typeof componentVariants>` សម្រាប់ TypeScript Interface។
 
 ### Code Example: CVA Button Variants
 
 ```jsx
-const buttonVariants = cva(
-  "inline-flex items-center justify-center font-medium rounded-lg transition-colors",
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:pointer-events-none',
   {
     variants: {
       variant: {
-        default: "bg-blue-600 text-white hover:bg-blue-700",
-        ghost: "hover:bg-slate-800 text-slate-300",
-        outline: "border border-slate-700 hover:bg-slate-800",
+        default: 'bg-blue-600 text-white hover:bg-blue-700',
+        ghost: 'hover:bg-slate-800 text-slate-300',
+        outline: 'border border-slate-700 hover:bg-slate-800 text-slate-200',
+        destructive: 'bg-rose-600 text-white hover:bg-rose-700',
       },
       size: {
-        sm: "h-8 px-3 text-xs",
-        md: "h-10 px-4 text-sm",
-        lg: "h-12 px-6 text-base",
+        sm: 'h-8 px-3 text-xs',
+        md: 'h-10 px-4 text-sm',
+        lg: 'h-12 px-6 text-base',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "md",
+      variant: 'default',
+      size: 'md',
     },
   }
 );

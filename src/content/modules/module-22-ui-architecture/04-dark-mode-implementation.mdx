@@ -5,17 +5,20 @@ title: "Dark Mode Implementation"
 moduleId: "module-22"
 moduleNumber: "22"
 category: "Enterprise & Production"
-summary: "CSS class-based dark mode toggling with system preference detection."
+summary: "ការបង្កើតមុខងារ Dark Mode តាមរយៈ CSS Class (.dark), ការរក្សាទុកក្នុង localStorage, និងការចាប់យក System Preference។"
+proTip: "ប្រើប្រាស់ Class-based Dark Mode (`class` strategy ក្នុង Tailwind) ដោយបន្ថែម ឬដក class `.dark` លើ `<html>` element។ កុំភ្លេចពិនិត្យមើល `window.matchMedia('(prefers-color-scheme: dark)')` ដើម្បីកំណត់ Theme ស្របតាមប្រព័ន្ធប្រតិបត្តិការរបស់ User ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Dark Mode Class Toggle"
 ---
 
 # Dark Mode Implementation
 
-Toggle a `.dark` class on the root `<html>` element. Tailwind's `dark:` variant automatically updates all colors seamlessly.
+ការអនុវត្ត Dark Mode ប្រកបដោយវិជ្ជាជីវៈនៅក្នុង React និង Tailwind CSS ត្រូវបានធ្វើឡើងតាមរយៈ **Class Strategy**។ នៅពេលដែលអ្នកប្រើប្រាស់ប្តូរ Theme យើងគ្រាន់តែបន្ថែម ឬដក Class `.dark` ចេញពី `<html>` element រួចរក្សាទុកជម្រើសនោះក្នុង `localStorage` ដើម្បីកុំឱ្យបាត់ពេល Refresh Page។
 
 ### Key Concepts & Rules:
 
-- Persist theme in `localStorage` and detect `prefers-color-scheme`.
+- កំណត់ `darkMode: 'class'` នៅក្នុង `tailwind.config.js`។
+- ប្រើប្រាស់ `dark:` modifier ក្នុង Tailwind (ឧទាហរណ៍៖ `bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100`)។
+- ពិនិត្យមើលជម្រើសរបស់ប្រព័ន្ធប្រតិបត្តិការតាមរយៈ `window.matchMedia('(prefers-color-scheme: dark)')`។
 
 ### Code Example: Dark Mode Class Toggle
 
@@ -23,5 +26,17 @@ Toggle a `.dark` class on the root `<html>` element. Tailwind's `dark:` variant 
 export function toggleDarkMode() {
   const isDark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+// ដំណើរការពិនិត្យពេល App ចាប់ផ្តើមដំណើរការដំបូង៖
+export function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
 }
 ```

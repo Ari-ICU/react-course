@@ -5,22 +5,35 @@ title: "Responsive UI Architecture"
 moduleId: "module-22"
 moduleNumber: "22"
 category: "Enterprise & Production"
-summary: "Mobile-first layouts with Tailwind breakpoints."
+summary: "ការរចនា Layout បែប Mobile-First ដោយប្រើប្រាស់ Tailwind Breakpoints (sm, md, lg, xl)។"
+proTip: "តែងតែរចនាទម្រង់អេក្រង់ទូរស័ព្ទ (Mobile-First) ជាមុនសិន (`grid-cols-1`) រួចពង្រីកទៅកាន់ Tablet (`md:grid-cols-2`) និង Desktop (`lg:grid-cols-4`)។ ជៀសវាងការដាក់កម្ពស់ ឬទទឹងជា Fixed Pixels (`w-[500px]`) ដែលបណ្តាលឱ្យហៀរអេក្រង់លើទូរស័ព្ទ (Horizontal Scroll)។"
 codeTitle: "Mobile-First Grid Layout"
 ---
 
 # Responsive UI Architecture
 
-Design for mobile screens first (`w-full`), then enhance for tablets (`md:grid-cols-2`) and desktop (`lg:grid-cols-3`).
+នៅក្នុងការអភិវឌ្ឍ UI ទំនើប គោលការណ៍ **Mobile-First** គឺជាកាតព្វកិច្ចចម្បង។ នៅក្នុង Tailwind CSS រាល់ Class ធម្មតាដែលគ្មាន prefix (ដូចជា `w-full`, `p-4`, `grid-cols-1`) គឺអនុវត្តលើអេក្រង់តូចបំផុត (ទូរស័ព្ទដៃ)។ Breakpoint prefixes ដូចជា `sm:`, `md:`, `lg:`, `xl:` ត្រូវបានប្រើសម្រាប់បន្ថែម និងកែលម្អ Layout លើអេក្រង់ធំៗជាបន្តបន្ទាប់។
 
 ### Key Concepts & Rules:
 
-- Avoid fixed pixel widths that cause horizontal scrollbars on mobile.
+- **Mobile-First**: ចាប់ផ្តើមពីអេក្រង់តូច (`col-span-1`) រួចពង្រីកលើអេក្រង់ធំ (`md:col-span-2`, `lg:col-span-3`)។
+- ជៀសវាង Fixed Pixel Widths ដែលបណ្តាលឱ្យបែកប្លង់ ឬកើតមានរបារ Horizontal Scrollbar លើទូរស័ព្ទ។
+- ប្រើ Flexbox និង CSS Grid ជាមួយ Fluid Gap (`gap-4 md:gap-6`)។
 
 ### Code Example: Mobile-First Grid Layout
 
 ```jsx
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  {/* Automatically responsive cards */}
-</div>
+// Layout បែប Mobile-First៖
+// - ទូរស័ព្ទ៖ បង្ហាញ ១ ជួរឈរ (grid-cols-1)
+// - Tablet (>=768px)៖ បង្ហាញ ២ ជួរឈរ (md:grid-cols-2)
+// - Desktop (>=1024px)៖ បង្ហាញ ៤ ជួរឈរ (lg:grid-cols-4)
+export function CourseGrid({ courses }: CourseGridProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      {courses.map((course) => (
+        <CourseCard key={course.id} course={course} />
+      ))}
+    </div>
+  );
+}
 ```

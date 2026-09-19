@@ -4076,75 +4076,89 @@ export const modulesData: ModuleItem[] = [
     "number": "22",
     "title": "UI Architecture",
     "category": "Enterprise & Production",
-    "summary": "Design systems, Shadcn UI architecture, component variants with CVA, layout systems, skeleton loaders, and dark mode.",
+    "summary": "ស្ថាបត្យកម្ម Design System, រចនាសម្ព័ន្ធបែប Shadcn UI, Component Variants ជាមួយ CVA, Responsive Layout Systems, Dark Mode Implementation, និង Accessibility (a11y)។",
     "iconName": "Palette",
     "topics": [
       {
         "id": "m22-01",
         "number": "01",
         "title": "Design System Foundations",
-        "summary": "Color tokens, typography scales, spacing, and CSS variables.",
-        "explanation": "A robust design system standardizes visual language across an entire engineering team using design tokens for colors, spacing, radius, and elevation.",
+        "summary": "ការកំណត់ Design Tokens (Colors, Spacing, Typography, Radius) និងការប្រើប្រាស់ CSS Variables សម្រាប់ Design System ទាំងមូល។",
+        "explanation": "ប្រព័ន្ធ Design System ដ៏រឹងមាំជួយធ្វើឱ្យរចនាបថ និងភាសាមើលឃើញ (Visual Language) មានភាពស៊ីសង្វាក់គ្នានៅទូទាំងក្រុមការងារវិស្វកម្មទាំងមូល។ នេះត្រូវបានសម្រេចឡើងតាមរយៈការបង្កើត **Design Tokens** សម្រាប់ពណ៌ (Colors), គម្លាត (Spacing), កម្រិតកោង (Border Radius), និងស្រមោល (Elevation) ដោយប្រើប្រាស់ CSS Variables។",
         "keyPoints": [
-          "HSL color variables enable effortless theme swapping (Dark/Light mode).",
-          "Semantic color naming (`primary`, `muted`, `accent`, `destructive`)."
+          "ប្រើប្រាស់ CSS Variables ជាមួយតម្លៃពណ៌ HSL ជួយសម្រួលដល់ការប្តូរ Dark/Light Themes។",
+          "ដាក់ឈ្មោះពណ៌តាមតួនាទី Semantics (ដូចជា `primary`, `secondary`, `muted`, `accent`, `destructive`) ជៀសវាងការដាក់ឈ្មោះតាមពណ៌ជាក់ស្តែង (ដូចជា `blue-500`)។",
+          "ភ្ជាប់ CSS Variables ទៅក្នុង `tailwind.config.js` ដើម្បីអាចហៅប្រើជាមួយ Tailwind Utility Classes។"
         ],
-        "codeSnippet": ":root {\n  --background: 222.2 84% 4.9%;\n  --foreground: 210 40% 98%;\n  --primary: 217.2 91.2% 59.8%;\n  --destructive: 0 62.8% 30.6%;\n}",
-        "codeLanguage": "jsx",
-        "codeTitle": "CSS Variable Design Tokens"
+        "codeSnippet": "@layer base {\n  :root {\n    /* Light Mode Tokens */\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --primary: 221.2 83.2% 53.3%;\n    --primary-foreground: 210 40% 98%;\n    --destructive: 0 84.2% 60.2%;\n  }\n\n  .dark {\n    /* Dark Mode Tokens */\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --primary: 217.2 91.2% 59.8%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 62.8% 30.6%;\n  }\n}",
+        "codeLanguage": "css",
+        "codeTitle": "CSS Variable Design Tokens",
+        "proTip": "ការប្រើប្រាស់ទម្រង់ពណ៌ HSL (Hue, Saturation, Lightness) នៅក្នុង CSS Variables (ដូចជា `--background: 222.2 84% 4.9%`) ជួយឱ្យអ្នកអាចប្តូរ Dark Mode ឬអនុវត្តពណ៌ថ្លា (Opacity `/80`) ក្នុង Tailwind CSS បានយ៉ាងងាយស្រួលបំផុត។"
       },
       {
         "id": "m22-02",
         "number": "02",
         "title": "Component Variants with CVA",
-        "summary": "Managing component style permutations cleanly.",
-        "explanation": "Class Variance Authority (`cva`) lets you define type-safe variants (sizes: sm/md/lg, variants: primary/secondary/ghost) without string concatenation spaghetti.",
+        "summary": "ការគ្រប់គ្រង Style Permutations នៃ Component (Sizes, Variants, States) ដោយស្អាត និងមាន Type-Safety ជាមួយ Class Variance Authority (CVA)។",
+        "explanation": "បណ្ណាល័យ **Class Variance Authority (`cva`)** គឺជាឧបករណ៍ដ៏មានឥទ្ធិពលសម្រាប់គ្រប់គ្រងបន្សំនៃ Styles (Variants, Sizes, States) របស់ Component ដោយគ្មានការសរសេរលក្ខខណ្ឌ Ternary `? :` ឬ String Concatenation ដ៏ស្មុគស្មាញឡើយ។ CVA នឹងបង្កើត TypeScript Types ដោយស្វ័យប្រវត្តិស្របតាម Props ដែលបានកំណត់។",
         "keyPoints": [
-          "Standard pattern used by Shadcn UI."
+          "កំណត់ Base Styles ដែលចែករំលែករួមគ្នាក្នុង Component។",
+          "កំណត់ Variants (ដូចជា `variant: { default, ghost, outline }` និង `size: { sm, md, lg }`)។",
+          "កំណត់ `defaultVariants` សម្រាប់ករណីដែល User មិនបានបញ្ជាក់ Prop។",
+          "ប្រើប្រាស់ `VariantProps<typeof componentVariants>` សម្រាប់ TypeScript Interface។"
         ],
-        "codeSnippet": "const buttonVariants = cva(\n  \"inline-flex items-center justify-center font-medium rounded-lg transition-colors\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-blue-600 text-white hover:bg-blue-700\",\n        ghost: \"hover:bg-slate-800 text-slate-300\",\n        outline: \"border border-slate-700 hover:bg-slate-800\",\n      },\n      size: {\n        sm: \"h-8 px-3 text-xs\",\n        md: \"h-10 px-4 text-sm\",\n        lg: \"h-12 px-6 text-base\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"md\",\n    },\n  }\n);",
+        "codeSnippet": "import { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nexport const buttonVariants = cva(\n  'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:pointer-events-none',\n  {\n    variants: {\n      variant: {\n        default: 'bg-blue-600 text-white hover:bg-blue-700',\n        ghost: 'hover:bg-slate-800 text-slate-300',\n        outline: 'border border-slate-700 hover:bg-slate-800 text-slate-200',\n        destructive: 'bg-rose-600 text-white hover:bg-rose-700',\n      },\n      size: {\n        sm: 'h-8 px-3 text-xs',\n        md: 'h-10 px-4 text-sm',\n        lg: 'h-12 px-6 text-base',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'md',\n    },\n  }\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "CVA Button Variants"
+        "codeTitle": "CVA Button Variants",
+        "proTip": "CVA គឺជាស្តង់ដារឧស្សាហកម្មដែលប្រើក្នុង Shadcn UI។ វាជួយការពារកុំឱ្យមានការតភ្ជាប់ String (String concatenation) រញ៉េរញ៉ៃ និងផ្តល់នូវ TypeScript Types ត្រឹមត្រូវសម្រាប់ Props ដូចជា `variant='outline'` និង `size='lg'`។"
       },
       {
         "id": "m22-03",
         "number": "03",
         "title": "Responsive UI Architecture",
-        "summary": "Mobile-first layouts with Tailwind breakpoints.",
-        "explanation": "Design for mobile screens first (`w-full`), then enhance for tablets (`md:grid-cols-2`) and desktop (`lg:grid-cols-3`).",
+        "summary": "ការរចនា Layout បែប Mobile-First ដោយប្រើប្រាស់ Tailwind Breakpoints (sm, md, lg, xl)។",
+        "explanation": "នៅក្នុងការអភិវឌ្ឍ UI ទំនើប គោលការណ៍ **Mobile-First** គឺជាកាតព្វកិច្ចចម្បង។ នៅក្នុង Tailwind CSS រាល់ Class ធម្មតាដែលគ្មាន prefix (ដូចជា `w-full`, `p-4`, `grid-cols-1`) គឺអនុវត្តលើអេក្រង់តូចបំផុត (ទូរស័ព្ទដៃ)។ Breakpoint prefixes ដូចជា `sm:`, `md:`, `lg:`, `xl:` ត្រូវបានប្រើសម្រាប់បន្ថែម និងកែលម្អ Layout លើអេក្រង់ធំៗជាបន្តបន្ទាប់។",
         "keyPoints": [
-          "Avoid fixed pixel widths that cause horizontal scrollbars on mobile."
+          "**Mobile-First**: ចាប់ផ្តើមពីអេក្រង់តូច (`col-span-1`) រួចពង្រីកលើអេក្រង់ធំ (`md:col-span-2`, `lg:col-span-3`)។",
+          "ជៀសវាង Fixed Pixel Widths ដែលបណ្តាលឱ្យបែកប្លង់ ឬកើតមានរបារ Horizontal Scrollbar លើទូរស័ព្ទ។",
+          "ប្រើ Flexbox និង CSS Grid ជាមួយ Fluid Gap (`gap-4 md:gap-6`)។"
         ],
-        "codeSnippet": "<div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n  {/* Automatically responsive cards */}\n</div>",
+        "codeSnippet": "// Layout បែប Mobile-First៖\n// - ទូរស័ព្ទ៖ បង្ហាញ ១ ជួរឈរ (grid-cols-1)\n// - Tablet (>=768px)៖ បង្ហាញ ២ ជួរឈរ (md:grid-cols-2)\n// - Desktop (>=1024px)៖ បង្ហាញ ៤ ជួរឈរ (lg:grid-cols-4)\nexport function CourseGrid({ courses }: CourseGridProps) {\n  return (\n    <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6\">\n      {courses.map((course) => (\n        <CourseCard key={course.id} course={course} />\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Mobile-First Grid Layout"
+        "codeTitle": "Mobile-First Grid Layout",
+        "proTip": "តែងតែរចនាទម្រង់អេក្រង់ទូរស័ព្ទ (Mobile-First) ជាមុនសិន (`grid-cols-1`) រួចពង្រីកទៅកាន់ Tablet (`md:grid-cols-2`) និង Desktop (`lg:grid-cols-4`)។ ជៀសវាងការដាក់កម្ពស់ ឬទទឹងជា Fixed Pixels (`w-[500px]`) ដែលបណ្តាលឱ្យហៀរអេក្រង់លើទូរស័ព្ទ (Horizontal Scroll)។"
       },
       {
         "id": "m22-04",
         "number": "04",
         "title": "Dark Mode Implementation",
-        "summary": "CSS class-based dark mode toggling with system preference detection.",
-        "explanation": "Toggle a `.dark` class on the root `<html>` element. Tailwind's `dark:` variant automatically updates all colors seamlessly.",
+        "summary": "ការបង្កើតមុខងារ Dark Mode តាមរយៈ CSS Class (.dark), ការរក្សាទុកក្នុង localStorage, និងការចាប់យក System Preference។",
+        "explanation": "ការអនុវត្ត Dark Mode ប្រកបដោយវិជ្ជាជីវៈនៅក្នុង React និង Tailwind CSS ត្រូវបានធ្វើឡើងតាមរយៈ **Class Strategy**។ នៅពេលដែលអ្នកប្រើប្រាស់ប្តូរ Theme យើងគ្រាន់តែបន្ថែម ឬដក Class `.dark` ចេញពី `<html>` element រួចរក្សាទុកជម្រើសនោះក្នុង `localStorage` ដើម្បីកុំឱ្យបាត់ពេល Refresh Page។",
         "keyPoints": [
-          "Persist theme in `localStorage` and detect `prefers-color-scheme`."
+          "កំណត់ `darkMode: 'class'` នៅក្នុង `tailwind.config.js`។",
+          "ប្រើប្រាស់ `dark:` modifier ក្នុង Tailwind (ឧទាហរណ៍៖ `bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100`)។",
+          "ពិនិត្យមើលជម្រើសរបស់ប្រព័ន្ធប្រតិបត្តិការតាមរយៈ `window.matchMedia('(prefers-color-scheme: dark)')`។"
         ],
-        "codeSnippet": "export function toggleDarkMode() {\n  const isDark = document.documentElement.classList.toggle('dark');\n  localStorage.setItem('theme', isDark ? 'dark' : 'light');\n}",
+        "codeSnippet": "export function toggleDarkMode() {\n  const isDark = document.documentElement.classList.toggle('dark');\n  localStorage.setItem('theme', isDark ? 'dark' : 'light');\n}\n\n// ដំណើរការពិនិត្យពេល App ចាប់ផ្តើមដំណើរការដំបូង៖\nexport function initTheme() {\n  const savedTheme = localStorage.getItem('theme');\n  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;\n\n  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {\n    document.documentElement.classList.add('dark');\n  } else {\n    document.documentElement.classList.remove('dark');\n  }\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Dark Mode Class Toggle"
+        "codeTitle": "Dark Mode Class Toggle",
+        "proTip": "ប្រើប្រាស់ Class-based Dark Mode (`class` strategy ក្នុង Tailwind) ដោយបន្ថែម ឬដក class `.dark` លើ `<html>` element។ កុំភ្លេចពិនិត្យមើល `window.matchMedia('(prefers-color-scheme: dark)')` ដើម្បីកំណត់ Theme ស្របតាមប្រព័ន្ធប្រតិបត្តិការរបស់ User ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m22-05",
         "number": "05",
         "title": "Accessibility (a11y)",
-        "summary": "Color contrast, screen readers, semantic tags, and keyboard focus.",
-        "explanation": "Build accessible interfaces that all users can navigate using keyboards and screen readers.",
+        "summary": "ការបង្កើត UI ដែលគាំទ្រ Accessibility (A11y) រួមមាន Color Contrast, Screen Readers, Semantic HTML Tags, និង Keyboard Focus Rings។",
+        "explanation": "**Web Accessibility (a11y)** ធានាថាមនុស្សគ្រប់រូប រួមទាំងអ្នកដែលមានពិការភាពភ្នែក ឬពិការភាពរាងកាយ អាចប្រើប្រាស់ និងបញ្ជាកម្មវិធីរបស់អ្នកបានយ៉ាងពេញលេញតាមរយៈ Screen Readers និង Keyboard។ នេះរួមបញ្ចូលទាំងកម្រិតពណ៌កម្រិតពន្លឺ (Color Contrast យ៉ាងហោចណាស់ 4.5:1), Semantic HTML Tags, និងការកំណត់ Focus Indicators។",
         "keyPoints": [
-          "Ensure visible `:focus-visible` outlines.",
-          "Use semantic `<header>`, `<main>`, `<nav>`, and `<button>` elements."
+          "ប្រើប្រាស់ Semantic HTML Elements (`<nav>`, `<header>`, `<main>`, `<button>`) ជំនួសឱ្យការប្រើ `<div>` នៅគ្រប់កន្លែង។",
+          "ត្រូវតែផ្តល់ `aria-label` សម្រាប់ប៊ូតុងណាដែលមានតែ Icon (គ្មានអក្សរ) ដូចជាប៊ូតុងបិទផ្ទាំង Dialog។",
+          "ប្រើប្រាស់ `focus-visible:ring-2` ដើម្បីបង្ហាញរង្វង់ព័ទ្ធជុំវិញនៅពេលបញ្ជាតាម Keyboard។"
         ],
-        "codeSnippet": "<button \n  className=\"focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none\"\n  aria-label=\"Close dialog\"\n>\n  <X className=\"w-5 h-5\" />\n</button>",
+        "codeSnippet": "import { X } from 'lucide-react';\n\nexport function CloseButton({ onClick }: { onClick: () => void }) {\n  return (\n    <button \n      onClick={onClick}\n      aria-label=\"បិទផ្ទាំងសន្ទនា\" // ចាំបាច់សម្រាប់ Screen Readers ពេលប៊ូតុងគ្មានអត្ថបទ\n      className=\"p-2 rounded-lg text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 transition-colors\"\n    >\n      <X className=\"w-5 h-5\" />\n    </button>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Accessible Focus Ring"
+        "codeTitle": "Accessible Focus Ring",
+        "proTip": "កុំលុប `outline: none` ចោលដោយមិនបានជំនួសដោយ `:focus-visible` ring ឱ្យសោះ! អ្នកប្រើប្រាស់ដែលបញ្ជាតាម Keyboard ត្រូវការ Focus Ring ច្បាស់លាស់ដើម្បីដឹងថា Cursor កំពុងស្ថិតនៅលើប៊ូតុង ឬ Input ណាមួយ។"
       }
     ]
   },
