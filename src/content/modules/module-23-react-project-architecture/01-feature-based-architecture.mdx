@@ -5,29 +5,31 @@ title: "Feature-Based Architecture"
 moduleId: "module-23"
 moduleNumber: "23"
 category: "Enterprise & Production"
-summary: "Organizing enterprise applications by business domain rather than technical file types."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធកម្មវិធីតាម Business Domain (Features) ជំនួសឱ្យការបែងចែកតាមប្រភេទឯកសារបច្ចេកទេស (File Types)។"
+proTip: "កុំដាក់ឯកសារទាំងអស់ច្របូកច្របល់ក្នុង folders ធំៗដូចជា `components/`, `hooks/`, `services/` ដែលមានរាប់រយ files ឱ្យសោះ! ចូរប្រមូលផ្តុំ components, hooks, types, និង services នៃមុខងារមួយទៅក្នុង folder តែមួយ (ដូចជា `features/auth/`, `features/cart/`) ដើម្បីងាយស្រួលអភិវឌ្ឍ និងលុបចេញពេលលែងត្រូវការ។"
 codeTitle: "Enterprise Feature-Based Layout"
 ---
 
 # Feature-Based Architecture
 
-Colocate components, hooks, services, and types that belong together. This makes navigating, editing, and deleting features effortless.
+នៅក្នុងគម្រោងខ្នាតធំ (Enterprise Scale) ការរៀបចំ Folder តាមប្រភេទឯកសារបច្ចេកទេស (Technical Layering ដូចជា ដាក់គ្រប់ Components ទាំងអស់ក្នុង `src/components/`, គ្រប់ Hooks ក្នុង `src/hooks/`) នឹងធ្វើឱ្យពិបាកស្វែងរកកូដនៅពេលគម្រោងកើនឡើងដល់រាប់រយឯកសារ។ **Feature-Based Architecture** ដោះស្រាយបញ្ហានេះដោយប្រមូលផ្តុំកូដដែលទាក់ទងគ្នាទៅតាមមុខងារអាជីវកម្ម (Business Domain) ដូចជា Auth, Products, Cart, និង Checkout។
 
 ### Key Concepts & Rules:
 
-- Prevents monolith folders with 100+ unrelated files.
-- Feature boundaries keep mental overhead low.
+- **Colocation**: ដាក់ Components, Hooks, API Services, និង Types ដែលដំណើរការរួមគ្នាឱ្យនៅជិតគ្នាបំផុត។
+- កាត់បន្ថយការភ័ន្តច្រឡំផ្លូវចិត្ត (Mental Overhead) របស់ Developer នៅពេលបង្កើត ឬកែប្រែមុខងារមួយ។
+- ងាយស្រួលលុបមុខងារ (Delete Feature) ចេញពីគម្រោងដោយមិនបន្សល់ទុក Dead Code នៅកន្លែងផ្សេងឡើយ។
 
 ### Code Example: Enterprise Feature-Based Layout
 
 ```jsx
 src/
-├── app/                  # Route layouts and pages
-├── components/ui/        # Reusable design system primitives
-├── features/
-│   ├── auth/             # Login, Register, useAuth, authService
-│   ├── catalog/          # ProductList, CategoryFilter, useProducts
+├── app/                  # Route Pages និង Layouts (Next.js App Router)
+├── components/ui/        # Reusable Design System Primitives (Button, Modal, Input)
+├── features/             # ម៉ូឌុលមុខងារនីមួយៗ (Feature Slices)
+│   ├── auth/             # LoginForm, useAuth, authService, authStore
+│   ├── catalog/          # ProductList, CategoryFilter, useProducts, productService
 │   └── cart/             # CartDrawer, CartItem, useCartStore
-├── lib/                  # Shared utilities (cn, date formatters)
-└── types/                # Global TypeScript definitions
+├── lib/                  # Shared Utilities (cn helper, axios client, date formatters)
+└── types/                # Global TypeScript Type Definitions
 ```

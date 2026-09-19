@@ -5,28 +5,37 @@ title: "Path Aliases"
 moduleId: "module-23"
 moduleNumber: "23"
 category: "Enterprise & Production"
-summary: "Eliminating brittle relative paths with @/ imports."
+summary: "ការលុបបំបាត់ Relative Paths ដ៏វែងអន្លាយ (`../../../../`) តាមរយៈការកំណត់ Path Aliases `@/*` ក្នុង tsconfig.json។"
+proTip: "ការប្រើប្រាស់ `@/*` ជួយឱ្យកូដ Import មើលទៅស្អាត មានលក្ខណៈស្តង់ដារ និងធ្វើឱ្យការផ្លាស់ប្តូរទីតាំងឯកសារ (Move/Refactor files) មិនបណ្តាលឱ្យខូច Broken Import Paths ឡើយ។"
 codeTitle: "Path Alias tsconfig Configuration"
 ---
 
 # Path Aliases
 
-Configure `@/*` in `tsconfig.json` so you never write `../../../../components/ui/button` again.
+ការប្រើប្រាស់ Relative Paths ដ៏វែងអន្លាយដូចជា `import { Button } from '../../../../components/ui/button'` មិនត្រឹមតែមើលទៅច្របូកច្របល់ប៉ុណ្ណោះទេ ប៉ុន្តែវាងាយនឹងបណ្តាលឱ្យខូច (Broken Imports) យ៉ាងខ្លាំងនៅពេលអ្នកផ្លាស់ប្តូរទីតាំងឯកសារ។ តាមរយៈការកំណត់ **Path Aliases** (`@/*`) នៅក្នុង `tsconfig.json` យើងអាច Import ពី Root `src/` ដោយផ្ទាល់ពីគ្រប់ទីកន្លែង។
 
 ### Key Concepts & Rules:
 
-- Makes copying and moving files between folders painless.
+- កំណត់ `baseUrl: "."` និង `paths: { "@/*": ["./src/*"] }` ក្នុង `tsconfig.json`។
+- ជួយឱ្យការ Refactor ឬចម្លងកូដរវាង Folders មានភាពរលូន និងគ្មានកំហុស។
+- អាចកំណត់ Aliases បន្ថែមដូចជា `@components/*` ឬ `@features/*` តាមការចង់បាន។
 
 ### Code Example: Path Alias tsconfig Configuration
 
-```jsx
+```json
 // tsconfig.json
 {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@features/*": ["./src/features/*"]
     }
   }
 }
+
+// របៀប Import ស្អាត និងមានរបៀប៖
+// import { Button } from '@/components/ui/button';
+// import { useAuth } from '@/features/auth';
 ```

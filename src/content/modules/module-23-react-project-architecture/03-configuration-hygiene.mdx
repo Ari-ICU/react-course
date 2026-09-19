@@ -5,24 +5,34 @@ title: "Configuration Hygiene"
 moduleId: "module-23"
 moduleNumber: "23"
 category: "Enterprise & Production"
-summary: "ESLint, Prettier, TypeScript strict mode, and environment variables."
+summary: "ការកំណត់ស្តង់ដារ TypeScript Strict Mode, ESLint, Prettier, និង Environment Variables ដើម្បីទប់ស្កាត់ Bugs មុនពេល Push កូដ។"
+proTip: "តែងតែបើក `"strict": true` និង `"noUncheckedIndexedAccess": true` នៅក្នុង `tsconfig.json` ដើម្បីបង្ខំឱ្យ TypeScript ត្រួតពិនិត្យករណី `undefined` ពេលចូលប្រើ Arrays ឬ Objects ជៀសវាង Runtime Crash លើ Production។"
 codeTitle: "Strict TypeScript Configuration"
 ---
 
 # Configuration Hygiene
 
-Enforce strict TypeScript (`strict: true`) and automated lint rules to prevent bugs before code hits pull requests.
+ការកំណត់ស្តង់ដារអភិវឌ្ឍន៍ (Tooling & Configuration) តាំងពីថ្ងៃដំបូង គឺជាការវិនិយោគដ៏មានតម្លៃបំផុតសម្រាប់គម្រោង។ ការបើកដំណើរការ **TypeScript Strict Mode**, ការកំណត់ច្បាប់ **ESLint** សម្រាប់ React Hooks, និងការប្រើ **Prettier** សម្រាប់ Formatting ជួយលុបបំបាត់ Bugs និងរក្សាគុណភាពកូដឱ្យមានស្តង់ដារខ្ពស់ស្មើគ្នានៅទូទាំងក្រុមការងារ។
 
 ### Key Concepts & Rules:
 
-- Enforce consistent code style across engineering teams.
+- **Strict Mode**: បើកដំណើរការ Type Checking កម្រិតខ្ពស់បំផុត (`"strict": true`)។
+- **Unchecked Indexes**: ប្រើ `"noUncheckedIndexedAccess": true` ដើម្បីការពារ Bug `Cannot read properties of undefined`។
+- **Husky & Lint-staged**: រត់ Lint និង Format ពិនិត្យកូដដោយស្វ័យប្រវត្តិតាមរយៈ Git Pre-commit Hooks។
 
 ### Code Example: Strict TypeScript Configuration
 
-```jsx
+```json
 // tsconfig.json
-"compilerOptions": {
-  "strict": true,
-  "noUncheckedIndexedAccess": true
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  }
 }
 ```

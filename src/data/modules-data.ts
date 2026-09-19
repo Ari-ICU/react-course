@@ -4167,48 +4167,56 @@ export const modulesData: ModuleItem[] = [
     "number": "23",
     "title": "React Project Architecture",
     "category": "Enterprise & Production",
-    "summary": "Scalable folder structures, feature-based architectures, shared services, type organization, path aliases, and configuration hygiene.",
+    "summary": "រចនាសម្ព័ន្ធ Folder ដែលអាចពង្រីកបាន (Scalable Folder Structures), ស្ថាបត្យកម្ម Feature-based, Shared Services, ការរៀបចំ Types, Path Aliases (@/), និងស្តង់ដារ Configuration Hygiene។",
     "iconName": "FolderTree",
     "topics": [
       {
         "id": "m23-01",
         "number": "01",
         "title": "Feature-Based Architecture",
-        "summary": "Organizing enterprise applications by business domain rather than technical file types.",
-        "explanation": "Colocate components, hooks, services, and types that belong together. This makes navigating, editing, and deleting features effortless.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធកម្មវិធីតាម Business Domain (Features) ជំនួសឱ្យការបែងចែកតាមប្រភេទឯកសារបច្ចេកទេស (File Types)។",
+        "explanation": "នៅក្នុងគម្រោងខ្នាតធំ (Enterprise Scale) ការរៀបចំ Folder តាមប្រភេទឯកសារបច្ចេកទេស (Technical Layering ដូចជា ដាក់គ្រប់ Components ទាំងអស់ក្នុង `src/components/`, គ្រប់ Hooks ក្នុង `src/hooks/`) នឹងធ្វើឱ្យពិបាកស្វែងរកកូដនៅពេលគម្រោងកើនឡើងដល់រាប់រយឯកសារ។ **Feature-Based Architecture** ដោះស្រាយបញ្ហានេះដោយប្រមូលផ្តុំកូដដែលទាក់ទងគ្នាទៅតាមមុខងារអាជីវកម្ម (Business Domain) ដូចជា Auth, Products, Cart, និង Checkout។",
         "keyPoints": [
-          "Prevents monolith folders with 100+ unrelated files.",
-          "Feature boundaries keep mental overhead low."
+          "**Colocation**: ដាក់ Components, Hooks, API Services, និង Types ដែលដំណើរការរួមគ្នាឱ្យនៅជិតគ្នាបំផុត។",
+          "កាត់បន្ថយការភ័ន្តច្រឡំផ្លូវចិត្ត (Mental Overhead) របស់ Developer នៅពេលបង្កើត ឬកែប្រែមុខងារមួយ។",
+          "ងាយស្រួលលុបមុខងារ (Delete Feature) ចេញពីគម្រោងដោយមិនបន្សល់ទុក Dead Code នៅកន្លែងផ្សេងឡើយ។"
         ],
-        "codeSnippet": "src/\n├── app/                  # Route layouts and pages\n├── components/ui/        # Reusable design system primitives\n├── features/\n│   ├── auth/             # Login, Register, useAuth, authService\n│   ├── catalog/          # ProductList, CategoryFilter, useProducts\n│   └── cart/             # CartDrawer, CartItem, useCartStore\n├── lib/                  # Shared utilities (cn, date formatters)\n└── types/                # Global TypeScript definitions",
+        "codeSnippet": "src/\n├── app/                  # Route Pages និង Layouts (Next.js App Router)\n├── components/ui/        # Reusable Design System Primitives (Button, Modal, Input)\n├── features/             # ម៉ូឌុលមុខងារនីមួយៗ (Feature Slices)\n│   ├── auth/             # LoginForm, useAuth, authService, authStore\n│   ├── catalog/          # ProductList, CategoryFilter, useProducts, productService\n│   └── cart/             # CartDrawer, CartItem, useCartStore\n├── lib/                  # Shared Utilities (cn helper, axios client, date formatters)\n└── types/                # Global TypeScript Type Definitions",
         "codeLanguage": "jsx",
-        "codeTitle": "Enterprise Feature-Based Layout"
+        "codeTitle": "Enterprise Feature-Based Layout",
+        "proTip": "កុំដាក់ឯកសារទាំងអស់ច្របូកច្របល់ក្នុង folders ធំៗដូចជា `components/`, `hooks/`, `services/` ដែលមានរាប់រយ files ឱ្យសោះ! ចូរប្រមូលផ្តុំ components, hooks, types, និង services នៃមុខងារមួយទៅក្នុង folder តែមួយ (ដូចជា `features/auth/`, `features/cart/`) ដើម្បីងាយស្រួលអភិវឌ្ឍ និងលុបចេញពេលលែងត្រូវការ។"
       },
       {
         "id": "m23-02",
         "number": "02",
         "title": "Path Aliases",
-        "summary": "Eliminating brittle relative paths with @/ imports.",
-        "explanation": "Configure `@/*` in `tsconfig.json` so you never write `../../../../components/ui/button` again.",
+        "summary": "ការលុបបំបាត់ Relative Paths ដ៏វែងអន្លាយ (`../../../../`) តាមរយៈការកំណត់ Path Aliases `@/*` ក្នុង tsconfig.json។",
+        "explanation": "ការប្រើប្រាស់ Relative Paths ដ៏វែងអន្លាយដូចជា `import { Button } from '../../../../components/ui/button'` មិនត្រឹមតែមើលទៅច្របូកច្របល់ប៉ុណ្ណោះទេ ប៉ុន្តែវាងាយនឹងបណ្តាលឱ្យខូច (Broken Imports) យ៉ាងខ្លាំងនៅពេលអ្នកផ្លាស់ប្តូរទីតាំងឯកសារ។ តាមរយៈការកំណត់ **Path Aliases** (`@/*`) នៅក្នុង `tsconfig.json` យើងអាច Import ពី Root `src/` ដោយផ្ទាល់ពីគ្រប់ទីកន្លែង។",
         "keyPoints": [
-          "Makes copying and moving files between folders painless."
+          "កំណត់ `baseUrl: \".\"` និង `paths: { \"@/*\": [\"./src/*\"] }` ក្នុង `tsconfig.json`។",
+          "ជួយឱ្យការ Refactor ឬចម្លងកូដរវាង Folders មានភាពរលូន និងគ្មានកំហុស។",
+          "អាចកំណត់ Aliases បន្ថែមដូចជា `@components/*` ឬ `@features/*` តាមការចង់បាន។"
         ],
-        "codeSnippet": "// tsconfig.json\n{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  }\n}",
-        "codeLanguage": "jsx",
-        "codeTitle": "Path Alias tsconfig Configuration"
+        "codeSnippet": "// tsconfig.json\n{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"],\n      \"@components/*\": [\"./src/components/*\"],\n      \"@features/*\": [\"./src/features/*\"]\n    }\n  }\n}\n\n// របៀប Import ស្អាត និងមានរបៀប៖\n// import { Button } from '@/components/ui/button';\n// import { useAuth } from '@/features/auth';",
+        "codeLanguage": "json",
+        "codeTitle": "Path Alias tsconfig Configuration",
+        "proTip": "ការប្រើប្រាស់ `@/*` ជួយឱ្យកូដ Import មើលទៅស្អាត មានលក្ខណៈស្តង់ដារ និងធ្វើឱ្យការផ្លាស់ប្តូរទីតាំងឯកសារ (Move/Refactor files) មិនបណ្តាលឱ្យខូច Broken Import Paths ឡើយ។"
       },
       {
         "id": "m23-03",
         "number": "03",
         "title": "Configuration Hygiene",
-        "summary": "ESLint, Prettier, TypeScript strict mode, and environment variables.",
-        "explanation": "Enforce strict TypeScript (`strict: true`) and automated lint rules to prevent bugs before code hits pull requests.",
+        "summary": "ការកំណត់ស្តង់ដារ TypeScript Strict Mode, ESLint, Prettier, និង Environment Variables ដើម្បីទប់ស្កាត់ Bugs មុនពេល Push កូដ។",
+        "explanation": "ការកំណត់ស្តង់ដារអភិវឌ្ឍន៍ (Tooling & Configuration) តាំងពីថ្ងៃដំបូង គឺជាការវិនិយោគដ៏មានតម្លៃបំផុតសម្រាប់គម្រោង។ ការបើកដំណើរការ **TypeScript Strict Mode**, ការកំណត់ច្បាប់ **ESLint** សម្រាប់ React Hooks, និងការប្រើ **Prettier** សម្រាប់ Formatting ជួយលុបបំបាត់ Bugs និងរក្សាគុណភាពកូដឱ្យមានស្តង់ដារខ្ពស់ស្មើគ្នានៅទូទាំងក្រុមការងារ។",
         "keyPoints": [
-          "Enforce consistent code style across engineering teams."
+          "**Strict Mode**: បើកដំណើរការ Type Checking កម្រិតខ្ពស់បំផុត (`\"strict\": true`)។",
+          "**Unchecked Indexes**: ប្រើ `\"noUncheckedIndexedAccess\": true` ដើម្បីការពារ Bug `Cannot read properties of undefined`។",
+          "**Husky & Lint-staged**: រត់ Lint និង Format ពិនិត្យកូដដោយស្វ័យប្រវត្តិតាមរយៈ Git Pre-commit Hooks។"
         ],
-        "codeSnippet": "// tsconfig.json\n\"compilerOptions\": {\n  \"strict\": true,\n  \"noUncheckedIndexedAccess\": true\n}",
-        "codeLanguage": "jsx",
-        "codeTitle": "Strict TypeScript Configuration"
+        "codeSnippet": "// tsconfig.json\n{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\",\n    \"lib\": [\"dom\", \"dom.iterable\", \"esnext\"],\n    \"strict\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"noImplicitOverride\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"skipLibCheck\": true\n  }\n}",
+        "codeLanguage": "json",
+        "codeTitle": "Strict TypeScript Configuration",
+        "proTip": "តែងតែបើក `\"strict\": true` និង `\"noUncheckedIndexedAccess\": true` នៅក្នុង `tsconfig.json` ដើម្បីបង្ខំឱ្យ TypeScript ត្រួតពិនិត្យករណី `undefined` ពេលចូលប្រើ Arrays ឬ Objects ជៀសវាង Runtime Crash លើ Production។"
       }
     ]
   },
