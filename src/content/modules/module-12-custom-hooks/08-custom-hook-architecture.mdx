@@ -5,17 +5,20 @@ title: "Custom Hook Architecture"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Organizing hooks directory and composable hook pipelines."
+summary: "ការរៀបចំ Directory រចនាសម្ព័ន្ធ Folder និងការផ្គុំ Composable Hook Pipelines។"
+proTip: "គោលការណ៍ Colocation សម្រាប់ Hooks៖ Hooks ទូទៅ (Generic) ទុកក្នុង `@/hooks` រីឯ Hooks សម្រាប់ feature ជាក់លាក់ ទុកក្នុង folder របស់ feature នោះ (ឧ. `@/features/students/hooks`)។"
 codeTitle: "Hooks Folder Architecture"
 ---
 
 # Custom Hook Architecture
 
-Compose custom hooks from smaller custom hooks (e.g. `useUser` uses `useFetch` which uses `useLocalStorage`).
+នៅក្នុងគម្រោងធំៗ អ្នកអាចផ្គុំ Custom Hooks តូចៗបញ្ចូលគ្នាដើម្បីបង្កើតជា Hook កម្រិតខ្ពស់ (Composable Pipeline) ដូចជា `useUser` ហៅប្រើ `useFetch` ហើយ `useFetch` ហៅប្រើ `useLocalStorage` ជាដើម។ ការរៀបចំ Folder ឱ្យមានរបៀបរៀបរយគឺមានសារៈសំខាន់ខ្លាំងណាស់សម្រាប់ភាពងាយស្រួលក្នុងការស្វែងរក និងថែទាំ។
 
 ### Key Concepts & Rules:
 
-- Colocate domain hooks in feature folders; put generic hooks in `@/hooks`.
+- **Global Hooks** (`src/hooks/`)៖ សម្រាប់ hooks ទូទៅដែលប្រើឆ្លងកាត់ project ទាំងមូល (ដូចជា `useDebounce`, `useLocalStorage`)។
+- **Feature Hooks** (`src/features/*/hooks/`)៖ សម្រាប់ hooks ដែលទាក់ទងនឹង business domain ជាក់លាក់។
+- លើកកម្ពស់គោលការណ៍ Single Responsibility Principle លើ hook នីមួយៗ។
 
 ### Code Example: Hooks Folder Architecture
 

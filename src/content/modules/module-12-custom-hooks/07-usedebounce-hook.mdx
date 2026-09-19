@@ -5,17 +5,20 @@ title: "useDebounce Hook"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Delaying rapid state updates for search inputs."
+summary: "ការពន្យារពេល State updates សម្រាប់ការស្វែងរក (Search Inputs) ដើម្បីកាត់បន្ថយ API calls។"
+proTip: "ប្រសិនបើគ្មាន debounce ទេ ការវាយពាក្យ 'react' នឹងបាញ់ API request ចំនួន ៥ ដង! ជាមួយ `useDebounce` វាបាញ់ API តែម្តងគត់នៅពេល user វាយចប់។"
 codeTitle: "useDebounce Custom Hook"
 ---
 
 # useDebounce Hook
 
-Prevents making an API request on every keystroke by delaying the updated value until the user pauses typing for specified milliseconds.
+`useDebounce` គឺជា Custom Hook ដ៏ចាំបាច់សម្រាប់ search inputs និង filter forms។ វាជួយទប់ស្កាត់ការហៅ API រាល់ពេលចុចអក្សរម្តងៗ (keystroke) ដោយពន្យារពេលរហូតដល់អ្នកប្រើប្រាស់ផ្អាកវាយអក្សរតាមចំនួន milliseconds ដែលបានកំណត់ (ឧទាហរណ៍៖ 300ms ឬ 500ms)។
 
 ### Key Concepts & Rules:
 
-- Essential for search query inputs and resize handlers.
+- បង្កើត timer តាមរយៈ `setTimeout` និងសម្អាត timer វិញតាមរយៈ `clearTimeout` ក្នុង cleanup function។
+- កាត់បន្ថយបន្ទុក Server (Server Load) និងសន្សំសំចៃ Network Bandwidth យ៉ាងច្រើន។
+- ផ្តល់នូវបទពិសោធន៍រលូន និងមិនធ្វើឱ្យ UI កន្ត្រាក់អំឡុងពេលវាយបញ្ចូលទិន្នន័យ។
 
 ### Code Example: useDebounce Custom Hook
 

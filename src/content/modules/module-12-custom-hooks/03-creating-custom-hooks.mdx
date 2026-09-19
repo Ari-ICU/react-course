@@ -5,17 +5,20 @@ title: "Creating Custom Hooks"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Rules, naming conventions, and returning values."
+summary: "ច្បាប់នៃការបង្កើត Hook, ក្បួនដាក់ឈ្មោះ និងទម្រង់នៃការ return តម្លៃ (Tuples vs Objects)។"
+proTip: "ច្បាប់ក្នុងការ Return តម្លៃ៖ Return ជា Array/Tuple `[value, setter]` ប្រសិនបើតម្លៃមាន ១ ឬ ២ ដូច `useState`។ Return ជា Object `{ data, isLoading, error }` ប្រសិនបើតម្លៃមានចាប់ពី ៣ ឡើងទៅ ដើម្បីឱ្យងាយស្រួល destructure តាមឈ្មោះ។"
 codeTitle: "useWindowDimensions Hook"
 ---
 
 # Creating Custom Hooks
 
-Custom hooks follow the standard Rules of Hooks. Return either a tuple `[value, setter]` or an object `{ data, isLoading, error }`.
+ការបង្កើត Custom Hook ត្រូវអនុវត្តតាម Rules of Hooks ទាំងអស់។ នៅពេល return តម្លៃត្រឡប់មកវិញ អ្នកអាចជ្រើសរើស return ជា Array Tuple `[value, updater]` ឬ return ជា Object `{ data, isLoading, error }` អាស្រ័យលើចំនួនទិន្នន័យ និងភាពងាយស្រួលរបស់អ្នកប្រើប្រាស់។
 
 ### Key Concepts & Rules:
 
-- Return tuples for 1-2 values; return objects for 3+ values.
+- ប្រើ **Tuple `[val, fn]`** សម្រាប់ទិន្នន័យតិច (១ ទៅ ២) ដែលអនុញ្ញាតឱ្យ consumer អាចប្តូរឈ្មោះ variable តាមចិត្តពេល destructuring។
+- ប្រើ **Object `{ ... }`** សម្រាប់ទិន្នន័យច្រើន (៣ ឡើងទៅ) ដើម្បីឱ្យ consumer អាចជ្រើសរើសទាញយកតែ property ណាដែលត្រូវការ។
+- អាចទទួល parameters សម្រាប់ configure ឥរិយាបថរបស់ Hook បានដូច function ធម្មតា។
 
 ### Code Example: useWindowDimensions Hook
 

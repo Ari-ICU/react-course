@@ -5,18 +5,20 @@ title: "Why Custom Hooks?"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Code reuse, component decluttering, and testable domain logic."
+summary: "អត្ថប្រយោជន៍នៃការ reuse កូដ, ការធ្វើឱ្យ UI component ស្រឡះស្អាត និងភាពងាយស្រួលក្នុងការធ្វើ Unit Test។"
+proTip: "នៅពេលដែល Component របស់អ្នកចាប់ផ្តើមមាន `useEffect` និង `useState` ច្រើនជាន់ ចូរពិចារណាទាញពួកវាចេញទៅជា Custom Hook ដើម្បីឱ្យ Component នៅសល់តែកូដ Declarative UI ស្រឡះស្អាត។"
 codeTitle: "Using Custom Hooks in Components"
 ---
 
 # Why Custom Hooks?
 
-Extracting complex effects and state workflows into custom hooks keeps your UI components clean, declarative, and focused solely on layout.
+ការទាញយក State workflows និង Effects ស្មុគស្មាញទៅដាក់ក្នុង Custom Hooks ជួយឱ្យ UI Components របស់អ្នកនៅសល់តែកូដខ្លីៗ ស្រឡះស្អាត និងផ្តោតសំខាន់តែលើ Layout និង Markup ប៉ុណ្ណោះ។ លើសពីនេះ វាក៏ជួយឱ្យ Business Logic អាចយកទៅធ្វើ Unit Test បានយ៉ាងងាយស្រួលដោយឡែកពី UI ផងដែរ។
 
 ### Key Concepts & Rules:
 
-- Eliminates copy-paste code across pages.
-- Decouples business logic from rendering.
+- លុបបំបាត់ការចម្លងកូដ (Copy-Paste) ដដែលៗឆ្លងកាត់ទំព័រជាច្រើនក្នុងកម្មវិធី។
+- ផ្តាច់ Business Logic ឱ្យនៅដាច់ដោយឡែកពី Rendering Presentation។
+- ធ្វើឱ្យកូដងាយស្រួលអាន ងាយស្រួលថែទាំ និងមានភាព modular ខ្ពស់។
 
 ### Code Example: Using Custom Hooks in Components
 

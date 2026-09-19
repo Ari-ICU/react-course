@@ -5,17 +5,20 @@ title: "Custom Hook Best Practices"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Ensuring stable callbacks with useCallback and accurate TypeScript return types."
+summary: "ការប្រើប្រាស់ as const សម្រាប់ Type Inference ត្រឹមត្រូវ និងការរក្សា Stable Callbacks ជាមួយ useCallback។"
+proTip: "នៅពេល return tuple array ពី Custom Hook ក្នុង TypeScript ត្រូវបន្ថែម `as const` នៅខាងចុងជានិច្ច ដើម្បីឱ្យ TypeScript ដឹងច្បាស់ថាធាតុទីមួយជាតម្លៃ និងធាតុទីពីរជា function (មិនច្រឡំជា union type `(number | Function)[]`)។"
 codeTitle: "Tuple Return with as const"
 ---
 
 # Custom Hook Best Practices
 
-Use `as const` on tuple returns or explicit TypeScript return types so consumers get accurate tuple types rather than union arrays.
+ដើម្បីបង្កើត Custom Hooks ប្រកបដោយគុណភាពខ្ពស់ និងផ្តល់នូវបទពិសោធន៍ល្អបំផុតដល់ Developer ដទៃទៀត (Developer Experience - DX) អ្នកគួរតែអនុវត្តតាមគោលការណ៍សំខាន់ៗមួយចំនួន ជាពិសេសការគ្រប់គ្រង TypeScript Type Inference និងការរក្សា Function References ឱ្យមានស្ថេរភាព។
 
 ### Key Concepts & Rules:
 
-- Add `as const` to tuple returns for instant type inference.
+- បន្ថែម **`as const`** នៅលើ Tuple Return ដើម្បីឱ្យ TypeScript យល់ច្បាស់ពី Type នៃធាតុនីមួយៗដោយស្វ័យប្រវត្តិ។
+- ប្រើប្រាស់ **`useCallback`** សម្រាប់រាល់ function ណាដែល return ចេញពី Hook ប្រសិនបើ function នោះអាចត្រូវបានយកទៅប្រើក្នុង dependency array នៃ components ដទៃទៀត។
+- ផ្តល់នូវ Default Parameters ដែលសមស្រប ដើម្បីឱ្យ Hook មានភាពងាយស្រួលក្នុងការហៅប្រើប្រាស់។
 
 ### Code Example: Tuple Return with as const
 

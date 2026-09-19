@@ -5,17 +5,20 @@ title: "Reusing Logic"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Sharing behavior without duplicating state instances."
+summary: "ការចែករំលែកឥរិយាបថ (Behavior) ដោយរក្សា State Instance ដាច់ដោយឡែកពីគ្នា។"
+pitfall: "Custom Hooks ចែករំលែកតែ 'Logic' ប៉ុណ្ណោះ មិនមែនចែករំលែក 'State' រួមគ្នានោះទេ! ប្រសិនបើ Component A និង Component B ហៅ `useToggle()` នោះពួកវាទាំងពីរមាន State ដាច់ដោយឡែកពីគ្នា ១០០%។"
 codeTitle: "Isolated Hook State Instances"
 ---
 
 # Reusing Logic
 
-Remember that invoking a custom hook in two different components creates two completely isolated state environments.
+ចំណុចសំខាន់ដែលត្រូវចងចាំគឺថា ការហៅ Custom Hook មួយនៅក្នុង Components ពីរផ្សេងគ្នា នឹងបង្កើត State Instances ពីរដាច់ដោយឡែកពីគ្នាទាំងស្រុង។ Custom Hooks ជួយយើងក្នុងការចែករំលែករូបមន្តនៃការគណនា និងឥរិយាបថ (Stateful Logic) មិនមែនជាការចែករំលែកទិន្នន័យ State រួមគ្នានោះឡើយ។
 
 ### Key Concepts & Rules:
 
-- To share the SAME state across components, use React Context or Zustand.
+- រាល់ការហៅ Hook ម្តងៗ គឺស្មើនឹងការបង្កើត state និង effects ថ្មីមួយសម្រាប់តែ component នោះ។
+- ប្រសិនបើអ្នកចង់ចែករំលែក **ទិន្នន័យ State តែមួយគត់** ឆ្លងកាត់ Components ជាច្រើន ចូរប្រើ **React Context** ឬ **Zustand** ជំនួសវិញ។
+- ជួយឱ្យ components នីមួយៗរក្សាភាពឯករាជ្យ និងគ្មានផលប៉ះពាល់ដល់គ្នាទៅវិញទៅមក (No Side Coupling)។
 
 ### Code Example: Isolated Hook State Instances
 

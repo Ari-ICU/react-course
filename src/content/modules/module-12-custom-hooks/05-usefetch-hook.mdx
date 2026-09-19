@@ -5,17 +5,20 @@ title: "useFetch Hook"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Extracting HTTP requests, loading states, and error handling."
+summary: "ការបង្កើត Custom Hook សម្រាប់គ្រប់គ្រង HTTP Requests, Loading State និង Error Handling។"
+proTip: "ការប្រើប្រាស់ flag `ignore = true` នៅក្នុង cleanup function គឺជាវិធីសាស្ត្រដ៏សាមញ្ញក្នុងការការពារកុំឱ្យ stale network response មក update លើ component ដែល unmount រួច។"
 codeTitle: "Production useFetch Custom Hook"
 ---
 
 # useFetch Hook
 
-A custom hook encapsulating the network request lifecycle with cancellation support.
+`useFetch` គឺជាគំរូ Custom Hook ដ៏ពេញនិយមបំផុតមួយ ដែលធ្វើការប្រមូលផ្តុំ lifecycle ទាំងមូលនៃការហៅ network request រួមមាន៖ ការរក្សាទុកទិន្នន័យ `data`, ស្ថានភាពកំពុងទាញយក `isLoading`, សារប្រាប់កំហុស `error`, និងយន្តការ cleanup ការពារ memory leaks។
 
 ### Key Concepts & Rules:
 
-- Returns `{ data, isLoading, error, refetch }`.
+- Return ចេញជា object `{ data, isLoading, error }` ដែលមានភាពងាយស្រួលក្នុងការយកទៅ render លើ UI។
+- ប្រើប្រាស់ boolean flag `ignore` ឬ `AbortController` ក្នុង cleanup function ដើម្បីចៀសវាង race conditions។
+- គាំទ្រ TypeScript Generics `<T>` ដើម្បីធានាថាទិន្នន័យដែល return មកមាន Type Safety ត្រឹមត្រូវ។
 
 ### Code Example: Production useFetch Custom Hook
 

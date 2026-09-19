@@ -5,17 +5,20 @@ title: "useLocalStorage Hook"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "Persisting state to browser storage with automatic JSON serialization."
+summary: "ការរក្សាទុក State ទៅក្នុង Browser LocalStorage ដោយស្វ័យប្រវត្តិតាមរយៈ JSON serialization។"
+proTip: "តែងតែពិនិត្យ `typeof window !== 'undefined'` ជានិច្ច មុនពេលចូលទៅកាន់ `localStorage` ដើម្បីកុំឱ្យមានកំហុស Error ពេលដំណើរការលើ Next.js Server-Side Rendering (SSR)។"
 codeTitle: "Enterprise useLocalStorage Hook"
 ---
 
 # useLocalStorage Hook
 
-Combines `useState` with `localStorage` so that changes automatically persist and re-hydrate on page refresh.
+Custom Hook `useLocalStorage` ធ្វើការរួមបញ្ចូលគ្នារវាង `useState` ជាមួយនឹង browser `localStorage` API។ រាល់ពេលដែល State ប្រែប្រួលតម្លៃ វានឹងធ្វើការ serialize ទៅជា JSON string និងរក្សាទុកក្នុង Storage ដោយស្វ័យប្រវត្តិ ហើយនៅពេលដែល user refresh ទំព័រ វានឹង re-hydrate ទិន្នន័យត្រឡប់មកវិញភ្លាមៗ។
 
 ### Key Concepts & Rules:
 
-- Handles SSR guards (`typeof window !== 'undefined'`) and try/catch parsing.
+- មានសុវត្ថិភាពខ្ពស់ជាមួយ SSR តាមរយៈការពិនិត្យ `typeof window !== 'undefined'`។
+- ប្រើប្រាស់ `try/catch` block ដើម្បីការពារកុំឱ្យ crash នៅពេលដែលទិន្នន័យ JSON ខូច ឬ user បិទ storage access។
+- គាំទ្រទាំងតម្លៃផ្ទាល់ និង functional updater pattern ដូចជា `setValue(prev => ...)`។
 
 ### Code Example: Enterprise useLocalStorage Hook
 

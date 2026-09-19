@@ -2108,128 +2108,153 @@ export const modulesData: ModuleItem[] = [
     "number": "12",
     "title": "Custom Hooks",
     "category": "Hooks & Lifecycle",
-    "summary": "Creating reusable hooks, extracting logic, useFetch, useLocalStorage, useDebounce, and hook architecture.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពីការបង្កើត Reusable Custom Hooks, ការទាញយក Business Logic ចេញពី UI, ការកសាង useFetch, useLocalStorage, useDebounce, ស្ថាបត្យកម្ម Hooks និងគោលការណ៍ Best Practices ក្នុង TypeScript។",
     "iconName": "Wrench",
     "topics": [
       {
         "id": "m12-01",
         "number": "01",
         "title": "What is a Custom Hook?",
-        "summary": "JavaScript functions starting with 'use' that encapsulate other hooks.",
-        "explanation": "A custom hook is a standard JavaScript function whose name starts with `use` and can call other React hooks (`useState`, `useEffect`, `useRef`). Custom hooks allow sharing stateful logic between components without duplicating code.",
+        "summary": "JavaScript Functions ដែលចាប់ផ្តើមដោយពាក្យ 'use' និងប្រមូលផ្តុំ React Hooks ផ្សេងៗបញ្ចូលគ្នា។",
+        "explanation": "Custom Hook គឺជា JavaScript Function ធម្មតាមួយដែលឈ្មោះរបស់វាចាប់ផ្តើមដោយពាក្យ `use` (ដូចជា `useToggle`, `useFetch`, `useLocalStorage`) និងមានសមត្ថភាពហៅ React Hooks ផ្សេងទៀតនៅខាងក្នុងខ្លួនវា។ Custom Hooks ជួយឱ្យយើងអាចទាញយក State និង Effect Logic ស្មុគស្មាញចេញពី Component ដើម្បីយកទៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែងដោយមិនបាច់សរសេរកូដស្ទួន។",
         "keyPoints": [
-          "Must begin with `use` (e.g., `useDebounce`, `useLocalStorage`).",
-          "Shares stateful logic, NOT shared state (each caller gets an independent state instance)."
+          "ឈ្មោះត្រូវតែចាប់ផ្តើមដោយពាក្យ `use` ជាដាច់ខាត (ឧ. `useDebounce`, `useLocalStorage`) ដើម្បីឱ្យ React និង Linter ដឹងថាវាជា Hook។",
+          "ចែករំលែក Stateful Logic មិនមែនចែករំលែក State នោះទេ (រាល់ Component ដែលហៅ Custom Hook នឹងទទួលបាន State Instance ឯករាជ្យរៀងៗខ្លួន)។",
+          "ត្រូវតែគោរពតាមច្បាប់ Rules of Hooks ដូចជា Built-in Hooks ដែរ (មិនត្រូវហៅក្នុង loops ឬ conditions ឡើយ)។"
         ],
         "codeSnippet": "// Basic Custom Hook:\nexport function useToggle(initialValue = false): [boolean, () => void] {\n  const [value, setValue] = useState(initialValue);\n  const toggle = () => setValue(v => !v);\n  return [value, toggle];\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Simple useToggle Custom Hook",
+        "proTip": "Custom Hook គ្រាន់តែជា JavaScript function ធម្មតាប៉ុណ្ណោះ ប៉ុន្តែវាមានសមត្ថភាពពិសេសអាចហៅ Built-in Hooks ដទៃទៀតដូចជា `useState`, `useEffect`, ឬ `useRef` បាន។",
         "interactiveDemoKey": "CustomHookDemo"
       },
       {
         "id": "m12-02",
         "number": "02",
         "title": "Why Custom Hooks?",
-        "summary": "Code reuse, component decluttering, and testable domain logic.",
-        "explanation": "Extracting complex effects and state workflows into custom hooks keeps your UI components clean, declarative, and focused solely on layout.",
+        "summary": "អត្ថប្រយោជន៍នៃការ reuse កូដ, ការធ្វើឱ្យ UI component ស្រឡះស្អាត និងភាពងាយស្រួលក្នុងការធ្វើ Unit Test។",
+        "explanation": "ការទាញយក State workflows និង Effects ស្មុគស្មាញទៅដាក់ក្នុង Custom Hooks ជួយឱ្យ UI Components របស់អ្នកនៅសល់តែកូដខ្លីៗ ស្រឡះស្អាត និងផ្តោតសំខាន់តែលើ Layout និង Markup ប៉ុណ្ណោះ។ លើសពីនេះ វាក៏ជួយឱ្យ Business Logic អាចយកទៅធ្វើ Unit Test បានយ៉ាងងាយស្រួលដោយឡែកពី UI ផងដែរ។",
         "keyPoints": [
-          "Eliminates copy-paste code across pages.",
-          "Decouples business logic from rendering."
+          "លុបបំបាត់ការចម្លងកូដ (Copy-Paste) ដដែលៗឆ្លងកាត់ទំព័រជាច្រើនក្នុងកម្មវិធី។",
+          "ផ្តាច់ Business Logic ឱ្យនៅដាច់ដោយឡែកពី Rendering Presentation។",
+          "ធ្វើឱ្យកូដងាយស្រួលអាន ងាយស្រួលថែទាំ និងមានភាព modular ខ្ពស់។"
         ],
         "codeSnippet": "// Component remains pure and concise:\nexport function SettingsView() {\n  const [isDarkMode, toggleTheme] = useToggle(true);\n  const [isNotificationsEnabled, toggleNotifications] = useToggle(false);\n\n  return (\n    <div>\n      <button onClick={toggleTheme}>Dark Mode: {isDarkMode ? 'ON' : 'OFF'}</button>\n      <button onClick={toggleNotifications}>Alerts: {isNotificationsEnabled ? 'ON' : 'OFF'}</button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Using Custom Hooks in Components"
+        "codeTitle": "Using Custom Hooks in Components",
+        "proTip": "នៅពេលដែល Component របស់អ្នកចាប់ផ្តើមមាន `useEffect` និង `useState` ច្រើនជាន់ ចូរពិចារណាទាញពួកវាចេញទៅជា Custom Hook ដើម្បីឱ្យ Component នៅសល់តែកូដ Declarative UI ស្រឡះស្អាត។"
       },
       {
         "id": "m12-03",
         "number": "03",
         "title": "Creating Custom Hooks",
-        "summary": "Rules, naming conventions, and returning values.",
-        "explanation": "Custom hooks follow the standard Rules of Hooks. Return either a tuple `[value, setter]` or an object `{ data, isLoading, error }`.",
+        "summary": "ច្បាប់នៃការបង្កើត Hook, ក្បួនដាក់ឈ្មោះ និងទម្រង់នៃការ return តម្លៃ (Tuples vs Objects)។",
+        "explanation": "ការបង្កើត Custom Hook ត្រូវអនុវត្តតាម Rules of Hooks ទាំងអស់។ នៅពេល return តម្លៃត្រឡប់មកវិញ អ្នកអាចជ្រើសរើស return ជា Array Tuple `[value, updater]` ឬ return ជា Object `{ data, isLoading, error }` អាស្រ័យលើចំនួនទិន្នន័យ និងភាពងាយស្រួលរបស់អ្នកប្រើប្រាស់។",
         "keyPoints": [
-          "Return tuples for 1-2 values; return objects for 3+ values."
+          "ប្រើ **Tuple `[val, fn]`** សម្រាប់ទិន្នន័យតិច (១ ទៅ ២) ដែលអនុញ្ញាតឱ្យ consumer អាចប្តូរឈ្មោះ variable តាមចិត្តពេល destructuring។",
+          "ប្រើ **Object `{ ... }`** សម្រាប់ទិន្នន័យច្រើន (៣ ឡើងទៅ) ដើម្បីឱ្យ consumer អាចជ្រើសរើសទាញយកតែ property ណាដែលត្រូវការ។",
+          "អាចទទួល parameters សម្រាប់ configure ឥរិយាបថរបស់ Hook បានដូច function ធម្មតា។"
         ],
         "codeSnippet": "// Return object with named properties:\nexport function useWindowDimensions() {\n  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });\n\n  useEffect(() => {\n    const handleResize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });\n    handleResize();\n    window.addEventListener('resize', handleResize);\n    return () => window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return dimensions;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useWindowDimensions Hook"
+        "codeTitle": "useWindowDimensions Hook",
+        "proTip": "ច្បាប់ក្នុងការ Return តម្លៃ៖ Return ជា Array/Tuple `[value, setter]` ប្រសិនបើតម្លៃមាន ១ ឬ ២ ដូច `useState`។ Return ជា Object `{ data, isLoading, error }` ប្រសិនបើតម្លៃមានចាប់ពី ៣ ឡើងទៅ ដើម្បីឱ្យងាយស្រួល destructure តាមឈ្មោះ។"
       },
       {
         "id": "m12-04",
         "number": "04",
         "title": "Reusing Logic",
-        "summary": "Sharing behavior without duplicating state instances.",
-        "explanation": "Remember that invoking a custom hook in two different components creates two completely isolated state environments.",
+        "summary": "ការចែករំលែកឥរិយាបថ (Behavior) ដោយរក្សា State Instance ដាច់ដោយឡែកពីគ្នា។",
+        "explanation": "ចំណុចសំខាន់ដែលត្រូវចងចាំគឺថា ការហៅ Custom Hook មួយនៅក្នុង Components ពីរផ្សេងគ្នា នឹងបង្កើត State Instances ពីរដាច់ដោយឡែកពីគ្នាទាំងស្រុង។ Custom Hooks ជួយយើងក្នុងការចែករំលែករូបមន្តនៃការគណនា និងឥរិយាបថ (Stateful Logic) មិនមែនជាការចែករំលែកទិន្នន័យ State រួមគ្នានោះឡើយ។",
         "keyPoints": [
-          "To share the SAME state across components, use React Context or Zustand."
+          "រាល់ការហៅ Hook ម្តងៗ គឺស្មើនឹងការបង្កើត state និង effects ថ្មីមួយសម្រាប់តែ component នោះ។",
+          "ប្រសិនបើអ្នកចង់ចែករំលែក **ទិន្នន័យ State តែមួយគត់** ឆ្លងកាត់ Components ជាច្រើន ចូរប្រើ **React Context** ឬ **Zustand** ជំនួសវិញ។",
+          "ជួយឱ្យ components នីមួយៗរក្សាភាពឯករាជ្យ និងគ្មានផលប៉ះពាល់ដល់គ្នាទៅវិញទៅមក (No Side Coupling)។"
         ],
         "codeSnippet": "// Component A has its own independent toggle state;\n// Component B has its own independent toggle state.",
         "codeLanguage": "jsx",
-        "codeTitle": "Isolated Hook State Instances"
+        "codeTitle": "Isolated Hook State Instances",
+        "pitfall": "Custom Hooks ចែករំលែកតែ 'Logic' ប៉ុណ្ណោះ មិនមែនចែករំលែក 'State' រួមគ្នានោះទេ! ប្រសិនបើ Component A និង Component B ហៅ `useToggle()` នោះពួកវាទាំងពីរមាន State ដាច់ដោយឡែកពីគ្នា ១០០%។"
       },
       {
         "id": "m12-05",
         "number": "05",
         "title": "useFetch Hook",
-        "summary": "Extracting HTTP requests, loading states, and error handling.",
-        "explanation": "A custom hook encapsulating the network request lifecycle with cancellation support.",
+        "summary": "ការបង្កើត Custom Hook សម្រាប់គ្រប់គ្រង HTTP Requests, Loading State និង Error Handling។",
+        "explanation": "`useFetch` គឺជាគំរូ Custom Hook ដ៏ពេញនិយមបំផុតមួយ ដែលធ្វើការប្រមូលផ្តុំ lifecycle ទាំងមូលនៃការហៅ network request រួមមាន៖ ការរក្សាទុកទិន្នន័យ `data`, ស្ថានភាពកំពុងទាញយក `isLoading`, សារប្រាប់កំហុស `error`, និងយន្តការ cleanup ការពារ memory leaks។",
         "keyPoints": [
-          "Returns `{ data, isLoading, error, refetch }`."
+          "Return ចេញជា object `{ data, isLoading, error }` ដែលមានភាពងាយស្រួលក្នុងការយកទៅ render លើ UI។",
+          "ប្រើប្រាស់ boolean flag `ignore` ឬ `AbortController` ក្នុង cleanup function ដើម្បីចៀសវាង race conditions។",
+          "គាំទ្រ TypeScript Generics `<T>` ដើម្បីធានាថាទិន្នន័យដែល return មកមាន Type Safety ត្រឹមត្រូវ។"
         ],
         "codeSnippet": "export function useFetch<T>(url: string) {\n  const [data, setData] = useState<T | null>(null);\n  const [isLoading, setIsLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    let ignore = false;\n    setIsLoading(true);\n\n    fetch(url)\n      .then(res => res.json())\n      .then(result => {\n        if (!ignore) {\n          setData(result);\n          setIsLoading(false);\n        }\n      })\n      .catch(err => {\n        if (!ignore) {\n          setError(err.message);\n          setIsLoading(false);\n        }\n      });\n\n    return () => { ignore = true; };\n  }, [url]);\n\n  return { data, isLoading, error };\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Production useFetch Custom Hook"
+        "codeTitle": "Production useFetch Custom Hook",
+        "proTip": "ការប្រើប្រាស់ flag `ignore = true` នៅក្នុង cleanup function គឺជាវិធីសាស្ត្រដ៏សាមញ្ញក្នុងការការពារកុំឱ្យ stale network response មក update លើ component ដែល unmount រួច។"
       },
       {
         "id": "m12-06",
         "number": "06",
         "title": "useLocalStorage Hook",
-        "summary": "Persisting state to browser storage with automatic JSON serialization.",
-        "explanation": "Combines `useState` with `localStorage` so that changes automatically persist and re-hydrate on page refresh.",
+        "summary": "ការរក្សាទុក State ទៅក្នុង Browser LocalStorage ដោយស្វ័យប្រវត្តិតាមរយៈ JSON serialization។",
+        "explanation": "Custom Hook `useLocalStorage` ធ្វើការរួមបញ្ចូលគ្នារវាង `useState` ជាមួយនឹង browser `localStorage` API។ រាល់ពេលដែល State ប្រែប្រួលតម្លៃ វានឹងធ្វើការ serialize ទៅជា JSON string និងរក្សាទុកក្នុង Storage ដោយស្វ័យប្រវត្តិ ហើយនៅពេលដែល user refresh ទំព័រ វានឹង re-hydrate ទិន្នន័យត្រឡប់មកវិញភ្លាមៗ។",
         "keyPoints": [
-          "Handles SSR guards (`typeof window !== 'undefined'`) and try/catch parsing."
+          "មានសុវត្ថិភាពខ្ពស់ជាមួយ SSR តាមរយៈការពិនិត្យ `typeof window !== 'undefined'`។",
+          "ប្រើប្រាស់ `try/catch` block ដើម្បីការពារកុំឱ្យ crash នៅពេលដែលទិន្នន័យ JSON ខូច ឬ user បិទ storage access។",
+          "គាំទ្រទាំងតម្លៃផ្ទាល់ និង functional updater pattern ដូចជា `setValue(prev => ...)`។"
         ],
         "codeSnippet": "export function useLocalStorage<T>(key: string, initialValue: T): [T, (val: T | ((prev: T) => T)) => void] {\n  const [storedValue, setStoredValue] = useState<T>(() => {\n    if (typeof window === 'undefined') return initialValue;\n    try {\n      const item = window.localStorage.getItem(key);\n      return item ? JSON.parse(item) : initialValue;\n    } catch (error) {\n      return initialValue;\n    }\n  });\n\n  const setValue = (value: T | ((prev: T) => T)) => {\n    try {\n      const valueToStore = value instanceof Function ? value(storedValue) : value;\n      setStoredValue(valueToStore);\n      if (typeof window !== 'undefined') {\n        window.localStorage.setItem(key, JSON.stringify(valueToStore));\n      }\n    } catch (error) {\n      console.error(error);\n    }\n  };\n\n  return [storedValue, setValue];\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Enterprise useLocalStorage Hook"
+        "codeTitle": "Enterprise useLocalStorage Hook",
+        "proTip": "តែងតែពិនិត្យ `typeof window !== 'undefined'` ជានិច្ច មុនពេលចូលទៅកាន់ `localStorage` ដើម្បីកុំឱ្យមានកំហុស Error ពេលដំណើរការលើ Next.js Server-Side Rendering (SSR)។"
       },
       {
         "id": "m12-07",
         "number": "07",
         "title": "useDebounce Hook",
-        "summary": "Delaying rapid state updates for search inputs.",
-        "explanation": "Prevents making an API request on every keystroke by delaying the updated value until the user pauses typing for specified milliseconds.",
+        "summary": "ការពន្យារពេល State updates សម្រាប់ការស្វែងរក (Search Inputs) ដើម្បីកាត់បន្ថយ API calls។",
+        "explanation": "`useDebounce` គឺជា Custom Hook ដ៏ចាំបាច់សម្រាប់ search inputs និង filter forms។ វាជួយទប់ស្កាត់ការហៅ API រាល់ពេលចុចអក្សរម្តងៗ (keystroke) ដោយពន្យារពេលរហូតដល់អ្នកប្រើប្រាស់ផ្អាកវាយអក្សរតាមចំនួន milliseconds ដែលបានកំណត់ (ឧទាហរណ៍៖ 300ms ឬ 500ms)។",
         "keyPoints": [
-          "Essential for search query inputs and resize handlers."
+          "បង្កើត timer តាមរយៈ `setTimeout` និងសម្អាត timer វិញតាមរយៈ `clearTimeout` ក្នុង cleanup function។",
+          "កាត់បន្ថយបន្ទុក Server (Server Load) និងសន្សំសំចៃ Network Bandwidth យ៉ាងច្រើន។",
+          "ផ្តល់នូវបទពិសោធន៍រលូន និងមិនធ្វើឱ្យ UI កន្ត្រាក់អំឡុងពេលវាយបញ្ចូលទិន្នន័យ។"
         ],
         "codeSnippet": "export function useDebounce<T>(value: T, delay: number = 300): T {\n  const [debouncedValue, setDebouncedValue] = useState<T>(value);\n\n  useEffect(() => {\n    const handler = setTimeout(() => {\n      setDebouncedValue(value);\n    }, delay);\n\n    return () => clearTimeout(handler);\n  }, [value, delay]);\n\n  return debouncedValue;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useDebounce Custom Hook"
+        "codeTitle": "useDebounce Custom Hook",
+        "proTip": "ប្រសិនបើគ្មាន debounce ទេ ការវាយពាក្យ 'react' នឹងបាញ់ API request ចំនួន ៥ ដង! ជាមួយ `useDebounce` វាបាញ់ API តែម្តងគត់នៅពេល user វាយចប់។"
       },
       {
         "id": "m12-08",
         "number": "08",
         "title": "Custom Hook Architecture",
-        "summary": "Organizing hooks directory and composable hook pipelines.",
-        "explanation": "Compose custom hooks from smaller custom hooks (e.g. `useUser` uses `useFetch` which uses `useLocalStorage`).",
+        "summary": "ការរៀបចំ Directory រចនាសម្ព័ន្ធ Folder និងការផ្គុំ Composable Hook Pipelines។",
+        "explanation": "នៅក្នុងគម្រោងធំៗ អ្នកអាចផ្គុំ Custom Hooks តូចៗបញ្ចូលគ្នាដើម្បីបង្កើតជា Hook កម្រិតខ្ពស់ (Composable Pipeline) ដូចជា `useUser` ហៅប្រើ `useFetch` ហើយ `useFetch` ហៅប្រើ `useLocalStorage` ជាដើម។ ការរៀបចំ Folder ឱ្យមានរបៀបរៀបរយគឺមានសារៈសំខាន់ខ្លាំងណាស់សម្រាប់ភាពងាយស្រួលក្នុងការស្វែងរក និងថែទាំ។",
         "keyPoints": [
-          "Colocate domain hooks in feature folders; put generic hooks in `@/hooks`."
+          "**Global Hooks** (`src/hooks/`)៖ សម្រាប់ hooks ទូទៅដែលប្រើឆ្លងកាត់ project ទាំងមូល (ដូចជា `useDebounce`, `useLocalStorage`)។",
+          "**Feature Hooks** (`src/features/*/hooks/`)៖ សម្រាប់ hooks ដែលទាក់ទងនឹង business domain ជាក់លាក់។",
+          "លើកកម្ពស់គោលការណ៍ Single Responsibility Principle លើ hook នីមួយៗ។"
         ],
         "codeSnippet": "src/\n├── hooks/\n│   ├── useLocalStorage.ts\n│   ├── useDebounce.ts\n│   └── useMediaQuery.ts\n└── features/students/hooks/\n    └── useStudentFilters.ts",
         "codeLanguage": "jsx",
-        "codeTitle": "Hooks Folder Architecture"
+        "codeTitle": "Hooks Folder Architecture",
+        "proTip": "គោលការណ៍ Colocation សម្រាប់ Hooks៖ Hooks ទូទៅ (Generic) ទុកក្នុង `@/hooks` រីឯ Hooks សម្រាប់ feature ជាក់លាក់ ទុកក្នុង folder របស់ feature នោះ (ឧ. `@/features/students/hooks`)។"
       },
       {
         "id": "m12-09",
         "number": "09",
         "title": "Custom Hook Best Practices",
-        "summary": "Ensuring stable callbacks with useCallback and accurate TypeScript return types.",
-        "explanation": "Use `as const` on tuple returns or explicit TypeScript return types so consumers get accurate tuple types rather than union arrays.",
+        "summary": "ការប្រើប្រាស់ as const សម្រាប់ Type Inference ត្រឹមត្រូវ និងការរក្សា Stable Callbacks ជាមួយ useCallback។",
+        "explanation": "ដើម្បីបង្កើត Custom Hooks ប្រកបដោយគុណភាពខ្ពស់ និងផ្តល់នូវបទពិសោធន៍ល្អបំផុតដល់ Developer ដទៃទៀត (Developer Experience - DX) អ្នកគួរតែអនុវត្តតាមគោលការណ៍សំខាន់ៗមួយចំនួន ជាពិសេសការគ្រប់គ្រង TypeScript Type Inference និងការរក្សា Function References ឱ្យមានស្ថេរភាព។",
         "keyPoints": [
-          "Add `as const` to tuple returns for instant type inference."
+          "បន្ថែម **`as const`** នៅលើ Tuple Return ដើម្បីឱ្យ TypeScript យល់ច្បាស់ពី Type នៃធាតុនីមួយៗដោយស្វ័យប្រវត្តិ។",
+          "ប្រើប្រាស់ **`useCallback`** សម្រាប់រាល់ function ណាដែល return ចេញពី Hook ប្រសិនបើ function នោះអាចត្រូវបានយកទៅប្រើក្នុង dependency array នៃ components ដទៃទៀត។",
+          "ផ្តល់នូវ Default Parameters ដែលសមស្រប ដើម្បីឱ្យ Hook មានភាពងាយស្រួលក្នុងការហៅប្រើប្រាស់។"
         ],
         "codeSnippet": "// Using \"as const\" for tuple inference:\nexport function useCounter(initial = 0) {\n  const [count, setCount] = useState(initial);\n  const increment = () => setCount(c => c + 1);\n  return [count, increment] as const;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Tuple Return with as const"
+        "codeTitle": "Tuple Return with as const",
+        "proTip": "នៅពេល return tuple array ពី Custom Hook ក្នុង TypeScript ត្រូវបន្ថែម `as const` នៅខាងចុងជានិច្ច ដើម្បីឱ្យ TypeScript ដឹងច្បាស់ថាធាតុទីមួយជាតម្លៃ និងធាតុទីពីរជា function (មិនច្រឡំជា union type `(number | Function)[]`)។"
       }
     ]
   },

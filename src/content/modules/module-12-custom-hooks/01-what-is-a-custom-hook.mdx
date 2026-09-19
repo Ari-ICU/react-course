@@ -5,19 +5,21 @@ title: "What is a Custom Hook?"
 moduleId: "module-12"
 moduleNumber: "12"
 category: "Hooks & Lifecycle"
-summary: "JavaScript functions starting with 'use' that encapsulate other hooks."
+summary: "JavaScript Functions ដែលចាប់ផ្តើមដោយពាក្យ 'use' និងប្រមូលផ្តុំ React Hooks ផ្សេងៗបញ្ចូលគ្នា។"
 interactiveDemoKey: "CustomHookDemo"
+proTip: "Custom Hook គ្រាន់តែជា JavaScript function ធម្មតាប៉ុណ្ណោះ ប៉ុន្តែវាមានសមត្ថភាពពិសេសអាចហៅ Built-in Hooks ដទៃទៀតដូចជា `useState`, `useEffect`, ឬ `useRef` បាន។"
 codeTitle: "Simple useToggle Custom Hook"
 ---
 
 # What is a Custom Hook?
 
-A custom hook is a standard JavaScript function whose name starts with `use` and can call other React hooks (`useState`, `useEffect`, `useRef`). Custom hooks allow sharing stateful logic between components without duplicating code.
+Custom Hook គឺជា JavaScript Function ធម្មតាមួយដែលឈ្មោះរបស់វាចាប់ផ្តើមដោយពាក្យ `use` (ដូចជា `useToggle`, `useFetch`, `useLocalStorage`) និងមានសមត្ថភាពហៅ React Hooks ផ្សេងទៀតនៅខាងក្នុងខ្លួនវា។ Custom Hooks ជួយឱ្យយើងអាចទាញយក State និង Effect Logic ស្មុគស្មាញចេញពី Component ដើម្បីយកទៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែងដោយមិនបាច់សរសេរកូដស្ទួន។
 
 ### Key Concepts & Rules:
 
-- Must begin with `use` (e.g., `useDebounce`, `useLocalStorage`).
-- Shares stateful logic, NOT shared state (each caller gets an independent state instance).
+- ឈ្មោះត្រូវតែចាប់ផ្តើមដោយពាក្យ `use` ជាដាច់ខាត (ឧ. `useDebounce`, `useLocalStorage`) ដើម្បីឱ្យ React និង Linter ដឹងថាវាជា Hook។
+- ចែករំលែក Stateful Logic មិនមែនចែករំលែក State នោះទេ (រាល់ Component ដែលហៅ Custom Hook នឹងទទួលបាន State Instance ឯករាជ្យរៀងៗខ្លួន)។
+- ត្រូវតែគោរពតាមច្បាប់ Rules of Hooks ដូចជា Built-in Hooks ដែរ (មិនត្រូវហៅក្នុង loops ឬ conditions ឡើយ)។
 
 ### Code Example: Simple useToggle Custom Hook
 
