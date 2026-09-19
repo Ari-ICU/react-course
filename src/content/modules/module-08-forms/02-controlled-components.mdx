@@ -5,18 +5,20 @@ title: "Controlled Components"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Inputs whose values are strictly driven by React state."
+summary: "ការគ្រប់គ្រងតម្លៃ Inputs ទាំងស្រុងតាមរយៈ React State (Single Source of Truth)។"
+proTip: "Controlled Components អនុញ្ញាតឱ្យអ្នកធ្វើការ format ឬ sanitize ទិន្នន័យ (ដូចជាលេខទូរស័ព្ទ ឬកាតធនាគារ) បានភ្លាមៗមុនពេលវាត្រូវបានបង្ហាញលើអេក្រង់។"
 codeTitle: "Controlled Input with Sanitization"
 ---
 
 # Controlled Components
 
-A controlled component guarantees that what the user sees on screen is always in sync with component state. It allows validating, formatting, and masking input values in real-time.
+Controlled Component ធានាថារាល់អ្វីៗដែលអ្នកប្រើប្រាស់មើលឃើញនៅលើអេក្រង់ គឺតែងតែស៊ីសង្វាក់គ្នា (synchronized) ជាមួយ React State ជានិច្ច។ វិធីសាស្ត្រនេះអនុញ្ញាតឱ្យយើងអាចត្រួតពិនិត្យ (validate), កែតម្រូវទម្រង់ (format), និងសម្អាត (sanitize) តម្លៃដែលបញ្ចូលមកបានភ្លាមៗក្នុង real-time។
 
 ### Key Concepts & Rules:
 
-- Value is governed by state.
-- Mutations pass through `onChange` handler before reflecting on screen.
+- តម្លៃរបស់ element ត្រូវបានកំណត់ និងគ្រប់គ្រងដោយ State ជានិច្ច (`value={state}`)។
+- រាល់ការផ្លាស់ប្តូរតម្លៃត្រូវតែឆ្លងកាត់ `onChange` handler ជាមុនសិន មុនពេលបង្ហាញឡើងវិញនៅលើអេក្រង់។
+- អ្នកអាចបដិសេធ ឬកែសម្រួលអក្សរដែលអ្នកប្រើប្រាស់វាយចូល (ឧទាហរណ៍៖ អនុញ្ញាតឱ្យវាយតែលេខ) យ៉ាងងាយស្រួល។
 
 ### Code Example: Controlled Input with Sanitization
 

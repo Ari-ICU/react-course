@@ -5,17 +5,20 @@ title: "Textarea"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Multi-line text input with controlled value prop."
+summary: "ការគ្រប់គ្រង multi-line text input ដោយប្រើ controlled value prop ជំនួសឱ្យ children។"
+pitfall: "នៅក្នុង HTML ធម្មតា អត្ថបទក្នុង textarea ត្រូវសរសេរនៅចន្លោះ tags `<textarea>hello</textarea>`។ ប៉ុន្តែក្នុង React ការធ្វើបែបនេះជាកំហុស! អ្នកត្រូវតែប្រើ `value` attribute ជានិច្ច `<textarea value={bio} />`។"
 codeTitle: "Controlled Textarea"
 ---
 
 # Textarea
 
-Unlike HTML where textarea content sits between tags (`<textarea>hello</textarea>`), React uses the `value` attribute: `<textarea value={bio} onChange={...} />`.
+ខុសប្លែកពី HTML ស្តង់ដារដែលអត្ថបទរបស់ textarea ត្រូវស្ថិតនៅចន្លោះបើក និងបិទ tags នៅក្នុង React ធាតុ `<textarea>` ត្រូវបានរចនាឡើងឱ្យប្រើប្រាស់ `value` attribute ដូចគ្នានឹង `<input>` ធម្មតាដែរ។ ការធ្វើបែបនេះជួយឱ្យ API នៃ form elements ទាំងអស់មានភាពស៊ីសង្វាក់គ្នាតែមួយ។
 
 ### Key Concepts & Rules:
 
-- Use `value` attribute, not children.
+- ប្រើប្រាស់ `value` attribute សម្រាប់កំណត់តម្លៃអត្ថបទ មិនត្រូវដាក់ជា children ឡើយ។
+- ប្រើ `rows` និង `cols` ឬ CSS classes ដើម្បីកំណត់កម្ពស់ដំបូងនៃ textarea។
+- ភ្ជាប់ `onChange={(e) => setBio(e.target.value)}` ដើម្បី update state ពេលវាយបញ្ចូល។
 
 ### Code Example: Controlled Textarea
 

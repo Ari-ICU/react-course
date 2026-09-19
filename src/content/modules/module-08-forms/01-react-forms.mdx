@@ -5,18 +5,21 @@ title: "React Forms"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "HTML form elements vs React's state-driven input models."
+summary: "ភាពខុសគ្នារវាងទម្រង់ Form ធម្មតាក្នុង HTML និង State-driven model របស់ React។"
 interactiveDemoKey: "FormValidationDemo"
+proTip: "នៅក្នុង React យើងមិនទាញតម្លៃ input ចេញពី DOM តាមរយៈ `document.getElementById` ឡើយ។ យើងចងភ្ជាប់តម្លៃ input ជាមួយ State ដើម្បីឱ្យ React ក្លាយជា Single Source of Truth។"
 codeTitle: "Controlled Input"
 ---
 
 # React Forms
 
-In standard HTML, form inputs hold their own internal DOM state. In React, we bind input values to React state, making React the single source of truth.
+នៅក្នុង HTML ធម្មតា ធាតុ form inputs ដូចជា `<input>`, `<textarea>`, និង `<select>` តែងតែរក្សាទុក state ផ្ទៃក្នុងរបស់វាដោយផ្ទាល់នៅលើ DOM។ ប៉ុន្តែនៅក្នុង React វិញ យើងចងភ្ជាប់តម្លៃរបស់ input ទៅនឹង React State ដោយធ្វើឱ្យ State ដើរតួជា Single Source of Truth (ប្រភពទិន្នន័យតែមួយគត់ដែលគួរឱ្យទុកចិត្ត)។
 
 ### Key Concepts & Rules:
 
-- Controlled inputs bind `value` to state and `onChange` to state setters.
+- **Controlled Inputs**៖ ចងភ្ជាប់ attribute `value` ទៅនឹង State និងប្រើ event handler `onChange` ដើម្បី update State នោះ។
+- Component គ្រប់គ្រងរាល់អ្វីៗទាំងអស់ដែលបង្ហាញនៅលើ screen ធ្វើឱ្យការ validate និង format ទិន្នន័យមានភាពងាយស្រួល។
+- ជួយឱ្យ UI ឆ្លើយតបទាន់ចិត្តភ្លាមៗរាល់ពេលដែលអ្នកប្រើប្រាស់វាយបញ្ចូលអក្សរ។
 
 ### Code Example: Controlled Input
 

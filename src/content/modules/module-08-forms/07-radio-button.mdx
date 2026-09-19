@@ -5,17 +5,20 @@ title: "Radio Button"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Single-choice selection from a group."
+summary: "ការគ្រប់គ្រងការជ្រើសរើសជម្រើសតែមួយគត់ចេញពីក្រុម (Radio Group)។"
+proTip: "Radio buttons ទាំងអស់នៅក្នុង group តែមួយត្រូវតែមាន `name` attribute ដូចគ្នា និងចងភ្ជាប់ទៅកាន់ State string តែមួយគត់។"
 codeTitle: "Controlled Radio Group"
 ---
 
 # Radio Button
 
-Radio buttons share a common `name` attribute and are controlled by comparing `checked={selectedOption === value}`.
+Radio Buttons ត្រូវបានប្រើប្រាស់នៅពេលដែលអ្នកចង់ឱ្យអ្នកប្រើប្រាស់ជ្រើសរើសយកជម្រើសតែមួយគត់ (Single-choice) ចេញពីជម្រើសជាច្រើន។ គ្រប់ radio inputs នៅក្នុង group តែមួយត្រូវតែប្រើប្រាស់ `name` attribute ដូចគ្នា និងត្រូវគ្រប់គ្រងដោយការប្រៀបធៀប `checked={selectedOption === value}`។
 
 ### Key Concepts & Rules:
 
-- Bind all radios in group to the same state string.
+- ចងភ្ជាប់ radio buttons ទាំងអស់ក្នុង group ទៅកាន់ state string តែមួយ។
+- លក្ខខណ្ឌជ្រើសរើសត្រូវបានកំណត់តាមរយៈ boolean expression៖ `checked={plan === option}`។
+- ប្រើ `.map()` ដើម្បី render radio buttons ចេញពី array ដើម្បីកាត់បន្ថយកូដស្ទួន។
 
 ### Code Example: Controlled Radio Group
 

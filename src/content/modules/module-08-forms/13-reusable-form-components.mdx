@@ -5,17 +5,20 @@ title: "Reusable Form Components"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Building generic TextField, CheckboxField, and SelectField components."
+summary: "ការកសាង reusable wrappers ដូចជា FormField, TextField និង SelectField សម្រាប់ enterprise apps។"
+proTip: "ការបង្កើត reusable `<FormField />` component ជួយកាត់បន្ថយកូដស្ទួនរាប់រយបន្ទាត់នៅក្នុង Form ធំៗ និងធានាថា Label, Helper Text និង Error Messages មាន Style ដូចគ្នាបេះបិទលើគ្រប់ទំព័រ។"
 codeTitle: "Reusable FormField Wrapper"
 ---
 
 # Reusable Form Components
 
-Encapsulate label, input, helper text, and error messages into reusable field wrappers.
+នៅក្នុងកម្មវិធីកម្រិត Enterprise ដែលមានទម្រង់ form រាប់សិបទំព័រ ការសរសេរ markup សម្រាប់ label, error message, និង layout ម្តងហើយម្តងទៀត គឺជាការខ្ជះខ្ជាយពេលវេលា។ ការបង្កើត reusable field wrapper (ដូចជា `<FormField />`) ជួយប្រមូលផ្តុំរចនាសម្ព័ន្ធទូទៅទាំងនេះឱ្យនៅកន្លែងតែមួយ។
 
 ### Key Concepts & Rules:
 
-- Massively cuts down boilerplate in enterprise apps.
+- បង្កើត component wrapper ដែលទទួល `label`, `error`, និង `children` ជា props។
+- រក្សាភាពបត់បែនដោយប្រើ `children` prop ដើម្បីឱ្យវាអាចរុំ input គ្រប់ប្រភេទ មិនថា text, select ឬ textarea។
+- ជួយឱ្យ styling និង design system នៃ form ទាំងមូលមានភាពឯកភាព និងងាយស្រួលកែប្រែទៅថ្ងៃមុខ។
 
 ### Code Example: Reusable FormField Wrapper
 

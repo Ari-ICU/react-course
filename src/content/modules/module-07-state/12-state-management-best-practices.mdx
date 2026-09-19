@@ -5,17 +5,20 @@ title: "State Management Best Practices"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Keep state local, lift state only when needed, and avoid duplicate sources of truth."
+summary: "គោលការណ៍ State Colocation, ការរក្សា state ឱ្យនៅកៀក UI បំផុត និង Single Source of Truth។"
+proTip: "គោលការណ៍ State Colocation៖ ប្រសិនបើមានតែ ComponentA មួយគត់ដែលប្រើប្រាស់ state នោះ ចូរទុកវានៅក្នុង ComponentA កុំទាន់ប្រញាប់លើកវាទៅដាក់ក្នុង Global Store ឬ App Root!"
 codeTitle: "State Colocation Rule"
 ---
 
 # State Management Best Practices
 
-State should live as close to where it is used as possible. Only lift state to common ancestors when siblings require synchronization.
+ការគ្រប់គ្រង State ឱ្យមានរបៀបរៀបរយគឺជាគន្លឹះចម្បងក្នុងការជៀសវាង bugs និងធ្វើឱ្យកម្មវិធី React ងាយស្រួលពង្រីក។ គោលការណ៍ចម្បងគឺត្រូវរក្សា State ឱ្យនៅជិតបំផុតទៅនឹងទីកន្លែងដែលត្រូវប្រើប្រាស់វា (State Colocation) និងជៀសវាងការបង្កើត Global State ដោយមិនចាំបាច់។
 
 ### Key Concepts & Rules:
 
-- Colocate state with the components that render it.
+- **State Colocation**៖ រក្សា state ឱ្យនៅខាងក្នុង component ផ្ទាល់។ លើក state ឡើងទៅ parent (Lifting State Up) លុះត្រាតែមាន sibling components ផ្សេងទៀតត្រូវការប្រើប្រាស់ទិន្នន័យនោះរួមគ្នា។
+- **Single Source of Truth**៖ កុំចម្លង props ទៅដាក់ក្នុង state លុះត្រាតែអ្នកមានបំណងចង់ឱ្យវាដើរតួជា initial value ស៊ីដាច់ដោយឡែក។
+- រក្សា state ឱ្យនៅជាទម្រង់សាមញ្ញ និងប្រើ derived values ជំនួសការបង្កើត state ស្ទួន។
 
 ### Code Example: State Colocation Rule
 

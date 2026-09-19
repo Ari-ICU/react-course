@@ -5,18 +5,20 @@ title: "Updating State"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Direct replacement vs functional updater pattern."
+summary: "ភាពខុសគ្នារវាងការជំនួសតម្លៃផ្ទាល់ និងការប្រើប្រាស់ Functional Updater Pattern (prev => prev + 1)។"
+proTip: "នៅពេលណាដែលតម្លៃ State ថ្មីត្រូវពឹងផ្អែកលើតម្លៃ State ចាស់ ចូរប្រើ Functional Updater (`prev => ...`) ជានិច្ច ដើម្បីការពារបញ្ហា Stale State ពេលមាន batching ឬ async calls។"
 codeTitle: "Functional State Updates"
 ---
 
 # Updating State
 
-When new state depends on previous state, always pass an updater function: `setCount(prev => prev + 1)`. This prevents stale closure bugs during batched updates.
+នៅពេលដែលតម្លៃ state ថ្មីត្រូវការគណនាផ្អែកលើតម្លៃ state ចាស់ អ្នកគួរតែបញ្ជូន callback function ទៅឱ្យ updater ជានិច្ច ដូចជា៖ `setCount(prev => prev + 1)`។ វិធីនេះធានាថាអ្នកនឹងទទួលបានតម្លៃ state ចុងក្រោយបង្អស់ជានិច្ច និងការពារបញ្ហា Stale Closure អំឡុងពេលមាន batched updates។
 
 ### Key Concepts & Rules:
 
-- Functional update: `setCount(prev => prev + 1)`.
-- Guarantees reading the most recent state value in asynchronous callbacks.
+- **Functional update pattern**៖ `setCount(prev => prev + 1)`។
+- ធានាថានឹងទាញយកតម្លៃ state ថ្មីបំផុតពិតប្រាកដ ទោះបីជាហៅច្រើនដងជាប់គ្នាក្នុង event តែមួយក៏ដោយ។
+- ជួយការពារ bugs នៅពេលដំណើរការក្នុង asynchronous callbacks (ដូចជា `setTimeout` ឬ `fetch`)។
 
 ### Code Example: Functional State Updates
 

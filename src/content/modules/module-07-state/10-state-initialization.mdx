@@ -5,18 +5,20 @@ title: "State Initialization"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Lazy state initialization for expensive setup computations."
+summary: "ការប្រើប្រាស់ Lazy State Initialization Function សម្រាប់ប្រតិបត្តិការ setup ដែលស៊ី memory ឬ CPU ខ្លាំង។"
+proTip: "ប្រសិនបើការទាញយក initial value ត្រូវការអានពី `localStorage` ឬ parse JSON ធំ ចូរប្រើ `useState(() => getHeavyData())` ព្រោះវាដំណើរការតែម្តងគត់ពេល component mount ដំបូង។"
 codeTitle: "Lazy State Initialization Function"
 ---
 
 # State Initialization
 
-If your initial state requires heavy computation (like parsing JSON from `localStorage`), pass an initializer function to `useState(() => computeValue())`. It runs only once on initial mount!
+ប្រសិនបើតម្លៃដំបូង (initial state) នៃ component របស់អ្នកត្រូវការការគណនាស្មុគស្មាញ ឬអានទិន្នន័យពី Storage (ដូចជាការ parse JSON ពី `localStorage`) អ្នកគួរតែបញ្ជូន function ទៅកាន់ `useState(() => computeValue())` ដែលហៅថា **Lazy State Initialization**។ Function នេះនឹងដំណើរការតែម្តងគត់នៅពេល component ត្រូវ mount ដំបូង។
 
 ### Key Concepts & Rules:
 
-- `useState(computeValue())` runs on every render.
-- `useState(() => computeValue())` runs ONLY on mount.
+- ការសរសេរ `useState(computeValue())` នឹងដំណើរការ `computeValue()` រាល់ពេលដែល component ធ្វើការ re-render (ខ្ជះខ្ជាយ CPU)។
+- ការសរសេរ `useState(() => computeValue())` ដំណើរការតែម្តងគត់នៅពេល initial mount។
+- ជួយបង្កើន performance របស់ application យ៉ាងខ្លាំងចំពោះ heavy setup operations។
 
 ### Code Example: Lazy State Initialization Function
 

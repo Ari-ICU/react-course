@@ -5,17 +5,20 @@ title: "Multiple State Variables"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "When to split state vs when to group related fields into an object."
+summary: "ពេលណាដែលត្រូវបំបែក state ជាច្រើន និងពេលណាដែលគួរប្រមូលផ្តុំជា object តែមួយ។"
+proTip: "បំបែក state ប្រសិនបើតម្លៃទាំងនោះផ្លាស់ប្តូរដាច់ដោយឡែកពីគ្នា។ ប្រមូលផ្តុំជា object តែមួយប្រសិនបើតម្លៃទាំងនោះតែងតែផ្លាស់ប្តូរជាមួយគ្នា (ដូចជា mouse coordinates `{x, y}`) ឬជា form inputs។"
 codeTitle: "Multiple State Slices"
 ---
 
 # Multiple State Variables
 
-Split unrelated state into independent `useState` calls. Group state into an object only if fields change together or represent a unified form model.
+អ្នកអាចហៅ `useState` ច្រើនដងនៅក្នុង component តែមួយបាន។ គោលការណ៍ល្អគឺត្រូវបំបែក state ណាដែលមិនទាក់ទងគ្នាឱ្យនៅជាអថេរឯករាជ្យដាច់ដោយឡែកពីគ្នា។ វិធីនេះជួយឱ្យកូដងាយស្រួលអាន ងាយស្រួលថែទាំ និងងាយស្រួល refactor ទៅថ្ងៃមុខ។
 
 ### Key Concepts & Rules:
 
-- Independent state variables make code easier to reason about and refactor.
+- អថេរ State ដាច់ដោយឡែកពីគ្នាធ្វើឱ្យ logic មានភាពសាមញ្ញ និងកាត់បន្ថយភាពស្មុគស្មាញនៃការ update។
+- ដាក់បញ្ចូលគ្នាជា Object លុះត្រាតែវាជា fields នៃ Form តែមួយ ឬតម្លៃដែលផ្លាស់ប្តូរទន្ទឹមគ្នាជានិច្ច។
+- ជួយជៀសវាងការ spread properties ច្រើនជាន់ដោយមិនចាំបាច់។
 
 ### Code Example: Multiple State Slices
 

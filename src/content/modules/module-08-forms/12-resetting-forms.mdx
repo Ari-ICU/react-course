@@ -5,17 +5,20 @@ title: "Resetting Forms"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Restoring form state back to clean initial values."
+summary: "ការសម្អាត និងកំណត់ទម្រង់ form ឱ្យត្រឡប់ទៅតម្លៃដើមវិញក្រោយ submit រួច។"
+proTip: "ទាញ initial values ចេញមកជា constant នៅខាងក្រៅ component (ឧ. `INITIAL_FORM`) ដើម្បីងាយស្រួលហៅប្រើឡើងវិញទាំងពេល mount និងពេល reset form។"
 codeTitle: "Resetting Form State"
 ---
 
 # Resetting Forms
 
-Reset state back to initial constants after a successful submission.
+បន្ទាប់ពីទិន្នន័យត្រូវបានបញ្ជូនទៅកាន់ server ដោយជោគជ័យ អ្នកត្រូវតែសម្អាត fields ទាំងអស់ឱ្យត្រឡប់ទៅជាតម្លៃទទេស្អាតវិញ (clean initial state)។ វិធីល្អបំផុតគឺកំណត់ initial state ជា constant ខាងក្រៅ ដើម្បីងាយស្រួល reset ដោយគ្រាន់តែហៅ `setForm(INITIAL_STATE)`។
 
 ### Key Concepts & Rules:
 
-- Extract `INITIAL_STATE` constant for easy resetting.
+- បង្កើត constant `INITIAL_FORM` នៅខាងក្រៅ component function។
+- កំណត់ `setForm(INITIAL_FORM)` និង `setErrors({})` នៅពេល request ទទួលបានជោគជ័យ។
+- ជៀសវាងការសរសេរ reset fields ម្តងមួយៗដោយដៃ ដែលអាចបណ្តាលឱ្យភ្លេច field ណាមួយ។
 
 ### Code Example: Resetting Form State
 

@@ -5,18 +5,20 @@ title: "React Events"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Cross-browser SyntheticEvent wrapper system."
+summary: "ប្រព័ន្ធ SyntheticEvent របស់ React ដែលធ្វើការ wrap native browser events ឱ្យដំណើរការដូចគ្នានៅលើគ្រប់ browsers។"
+proTip: "SyntheticEvent ផ្តល់នូវ interface ដូចគ្នាបេះបិទទៅនឹង W3C native event specification ដូច្នេះអ្នកអាចប្រើ `e.target`, `e.preventDefault()`, ឬ `e.clientX` បានយ៉ាងងាយស្រួល។"
 codeTitle: "React SyntheticEvent Handling"
 ---
 
 # React Events
 
-React wraps native browser events in a cross-browser `SyntheticEvent` instance that ensures identical event behavior across Safari, Chrome, Firefox, and Edge.
+នៅក្នុង React រាល់ event ទាំងអស់មិនត្រូវបាន bind ទៅលើ DOM ផ្ទាល់ដូច JavaScript ធម្មតានោះឡើយ។ React ប្រើប្រាស់ប្រព័ន្ធ `SyntheticEvent` ដែលជា wrapper ព័ទ្ធជុំវិញ native browser event ដើម្បីធានាថា event ដំណើរការដូចគ្នាបេះបិទលើគ្រប់ web browsers ទាំងអស់ មិនថា Chrome, Safari, Firefox, ឬ Edge ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Synthetic events match W3C standards.
-- Named in camelCase: `onClick`, `onChange`, `onKeyDown`.
+- React Synthetic Events ត្រូវគ្នានឹងស្តង់ដារ W3C និងផ្តល់នូវ cross-browser consistency យ៉ាងរលូន។
+- Event attributes នៅក្នុង JSX ត្រូវបានសរសេរជាទម្រង់ camelCase ជានិច្ច ដូចជា `onClick`, `onChange`, `onKeyDown` ជំនួសឱ្យ `onclick`, `onchange`។
+- React ធ្វើការ delegated events នៅកម្រិត root container ដើម្បីបង្កើន memory performance និងល្បឿនប្រតិបត្តិការ។
 
 ### Code Example: React SyntheticEvent Handling
 

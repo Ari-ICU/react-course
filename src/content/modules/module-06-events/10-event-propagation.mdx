@@ -5,17 +5,20 @@ title: "Event Propagation"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Event bubbling and e.stopPropagation()."
+summary: "ស្វែងយល់អំពី Event Bubbling និងការទប់ស្កាត់ parent trigger ដោយប្រើ e.stopPropagation()។"
+pitfall: "នៅពេលដែលមានប៊ូតុង 'Delete' ឬ 'Like' នៅខាងក្នុង Card ដែលអាចចុចបើកមើល detail បាន ប្រសិនបើអ្នកមិនប្រើ `e.stopPropagation()` ទេ នោះការចុច Delete ក៏នឹងបើក Card នោះដែរ!"
 codeTitle: "e.stopPropagation() in Nested Elements"
 ---
 
 # Event Propagation
 
-Events bubble up the React tree. Calling `e.stopPropagation()` prevents parent handlers from triggering when clicking nested child controls.
+នៅក្នុង Document Object Model (DOM) ព្រឹត្តិការណ៍ clicks និង interactions ផ្សេងៗនឹងធ្វើដំណើរផុសឡើងលើ (Event Bubbling) ពី child element ឡើងទៅកាន់ parent elements តាមលំដាប់រហូតដល់ root។ ការហៅ `e.stopPropagation()` អនុញ្ញាតឱ្យយើងបញ្ឈប់ដំណើរ bubbling នេះមិនឱ្យប៉ះពាល់ដល់ parent handlers ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Crucial when a card has an `onClick` but also contains a nested 'Delete' or 'Favorite' button.
+- សំខាន់បំផុតសម្រាប់ nested clickable elements ដូចជាប៊ូតុង "Delete" ឬ "Bookmark" ដែលស្ថិតនៅក្នុង clickable card។
+- `e.stopPropagation()` បញ្ឈប់ការបញ្ជូន event ទៅកាន់ parent components ខាងលើ។
+- ខុសពី `e.preventDefault()`៖ `preventDefault` ទប់ស្កាត់ browser default action ចំណែក `stopPropagation` ទប់ស្កាត់កុំឱ្យ event រត់ឡើងទៅ parent។
 
 ### Code Example: e.stopPropagation() in Nested Elements
 

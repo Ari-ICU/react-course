@@ -5,17 +5,20 @@ title: "Validation Errors"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Rendering user-friendly error banners and inline field messages."
+summary: "ការបង្ហាញសារប្រាប់ error ឱ្យស្អាត និងងាយយល់នៅកៀកនឹង input fields នីមួយៗ (Inline Errors)។"
+proTip: "Inline error messages ផ្តល់ UX ល្អជាង alert popups ឆ្ងាយណាស់ ព្រោះវាប្រាប់អ្នកប្រើប្រាស់យ៉ាងច្បាស់ចំចំណុចនៃបញ្ហា។"
 codeTitle: "Inline Validation Error"
 ---
 
 # Validation Errors
 
-Display red borders on invalid inputs and contextual error messages below them.
+ការបង្ហាញកំហុសនៅលើ UI គួរតែមានភាពច្បាស់លាស់ និងនៅកៀកនឹង input field ផ្ទាល់ (Inline Errors)។ អ្នកអាចផ្លាស់ប្តូរពណ៌ border នៃ input ទៅជាពណ៌ក្រហម (rose/red) និងបង្ហាញ error text នៅពីក្រោម input ដើម្បីឱ្យអ្នកប្រើប្រាស់ងាយស្រួលកែតម្រូវ។
 
 ### Key Concepts & Rules:
 
-- Accessible error messages linked via `aria-describedby`.
+- ផ្លាស់ប្តូរ CSS border classes ដោយផ្អែកលើវត្តមានរបស់ error (ឧ. `errors.email && "border-rose-500"`).
+- បង្ហាញ conditional message ខាងក្រោម input ដោយប្រើ syntax `errors.field && <p>{errors.field}</p>`។
+- ប្រើ attribute `aria-describedby` សម្រាប់ accessibility ដើម្បីឱ្យ screen readers អាចអាន error message បាន។
 
 ### Code Example: Inline Validation Error
 

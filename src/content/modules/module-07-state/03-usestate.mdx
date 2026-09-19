@@ -5,18 +5,20 @@ title: "useState"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Declaring state variables and updater functions."
+summary: "ការប្រកាស State variables និង updater functions ដោយប្រើប្រាស់ standard hook របស់ React។"
+proTip: "គោរពតាមច្បាប់ Rules of Hooks ជានិច្ច៖ ហៅ `useState` នៅកម្រិតខាងលើបង្អស់ (Top Level) នៃ Component មិនត្រូវដាក់ក្នុង if conditions ឬ loops ឡើយ។"
 codeTitle: "useState TypeScript Declarations"
 ---
 
 # useState
 
-The `useState` hook returns a tuple containing the current state value and an updater function: `const [state, setState] = useState(initialValue)`.
+Hook `useState` គឺជា built-in hook មូលដ្ឋានបំផុតក្នុង React។ នៅពេលហៅប្រើ វា return ត្រឡប់មកវិញនូវ Array Destructuring ដែលមាន ២ ធាតុ៖ ទីមួយគឺជាតម្លៃ State បច្ចុប្បន្ន និងទីពីរគឺជា Updater Function សម្រាប់កែប្រែតម្លៃនោះ (`const [state, setState] = useState(initialValue)`)។
 
 ### Key Concepts & Rules:
 
-- Always call hooks at the top level of your component.
-- Never call hooks inside loops, conditions, or nested functions.
+- ត្រូវតែហៅ hooks នៅកម្រិតកំពូល (Top level) នៃ React function component ជានិច្ច។
+- ដាច់ខាតកុំហៅ hooks នៅខាងក្នុង loops, conditions, ឬ nested functions។
+- នៅក្នុង TypeScript អ្នកអាចកំណត់ Generic type ដូចជា `useState<User | null>(null)` ដើម្បីធានា Type Safety។
 
 ### Code Example: useState TypeScript Declarations
 

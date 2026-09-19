@@ -5,17 +5,20 @@ title: "Input Fields"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Handling text, number, email, and password types."
+summary: "ការគ្រប់គ្រង input types ផ្សេងៗដូចជា text, number, email និង password។"
+proTip: "សម្រាប់ `type=\"number\"` ចងចាំថា `e.target.value` នៅតែ return ជា string ជានិច្ច។ ដូច្នេះអ្នកត្រូវប្រើ `Number(e.target.value)` ឬ `e.target.valueAsNumber` ប្រសិនបើចង់បានតម្លៃជាលេខពិតប្រាកដ។"
 codeTitle: "Password Input"
 ---
 
 # Input Fields
 
-Standard input types behave identically to HTML, with camelCase attributes.
+ធាតុ `<input>` ស្តង់ដារនៅក្នុង React មានឥរិយាបថដូចគ្នានឹង HTML input ធម្មតាដែរ ប៉ុន្តែ attributes មួយចំនួនត្រូវបានប្តូរទៅជាទម្រង់ camelCase។ អ្នកអាចប្រើប្រាស់ input types ផ្សេងៗដូចជា `text`, `email`, `password`, ឬ `number` ជាមួយ Controlled State បានយ៉ាងរលូន។
 
 ### Key Concepts & Rules:
 
-- Use `type="email"` or `type="password"` with controlled values.
+- ប្រើប្រាស់ `type="email"` ឬ `type="password"` ជាមួយនឹង controlled values ជានិច្ច។
+- តែងតែផ្តល់នូវ `placeholder` និង label ច្បាស់លាស់ដើម្បីបង្កើន accessibility និងបទពិសោធន៍អ្នកប្រើប្រាស់។
+- ប្រើ Tailwind classes ដើម្បីរៀបចំ styles ឱ្យស្រស់ស្អាត ដូចជា focus ring និង border states។
 
 ### Code Example: Password Input
 

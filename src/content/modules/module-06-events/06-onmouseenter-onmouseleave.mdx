@@ -5,17 +5,20 @@ title: "onMouseEnter & onMouseLeave"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Hover states and tooltips."
+summary: "ការគ្រប់គ្រង Hover interactions, animations និងការបង្ហាញ tooltips។"
+proTip: "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` តែនៅពេលដែលអ្នកត្រូវការផ្លាស់ប្តូរ state ឬ render dynamic JSX ប៉ុណ្ណោះ។"
 codeTitle: "Hover Handlers"
 ---
 
 # onMouseEnter & onMouseLeave
 
-Used to build interactive tooltips, preview cards, and custom cursor animations.
+`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត dynamic tooltips, preview popovers, dropdown menus ឬ custom cursor animations។
 
 ### Key Concepts & Rules:
 
-- React's mouseEnter does not bubble, mimicking standard CSS hover.
+- `onMouseEnter` និង `onMouseLeave` មិនធ្វើការ bubble ឡើងលើ parent ឡើយ (ខុសពី `onMouseOver` និង `onMouseOut`) ដែលជួយកាត់បន្ថយបញ្ហា flickering នៅពេល hover លើ child elements។
+- ប្រើសម្រាប់ update state នៅពេលដែល hover logic ត្រូវការទិន្នន័យ JavaScript ស្មុគស្មាញ។
+- ត្រូវប្រាកដថាបានផ្តល់នូវ keyboard alternative (ដូចជា `onFocus` និង `onBlur`) សម្រាប់អ្នកប្រើប្រាស់ដែលមិនប្រើ mouse។
 
 ### Code Example: Hover Handlers
 

@@ -3,26 +3,26 @@ id: "module-07"
 number: "07"
 title: "State"
 category: "Core Concepts"
-summary: "useState, state vs props, re-rendering triggers, updating objects and arrays immutably, and derived state."
+summary: "ស្វែងយល់ស៊ីជម្រៅអំពី useState Hook, ភាពខុសគ្នារវាង State vs Props, យន្តការ Re-rendering, គោលការណ៍ Immutability លើ Objects និង Arrays, Derived State និង State Batching ក្នុង React 18+។"
 iconName: "Sliders"
 totalLessons: 12
 ---
 
 # Module 07: State
 
-useState, state vs props, re-rendering triggers, updating objects and arrays immutably, and derived state.
+ស្វែងយល់ស៊ីជម្រៅអំពី useState Hook, ភាពខុសគ្នារវាង State vs Props, យន្តការ Re-rendering, គោលការណ៍ Immutability លើ Objects និង Arrays, Derived State និង State Batching ក្នុង React 18+។
 
 ## Module Syllabus (12 Lessons)
 
-- **Lesson 01**: What is State? - *Component memory that triggers UI re-renders upon mutation.*
-- **Lesson 02**: State vs Props - *Internal mutable component data vs external immutable inputs.*
-- **Lesson 03**: useState - *Declaring state variables and updater functions.*
-- **Lesson 04**: Updating State - *Direct replacement vs functional updater pattern.*
-- **Lesson 05**: State and Re-rendering - *How React triggers reconciliation when Object.is() returns false.*
-- **Lesson 06**: Updating Objects - *Copying object properties with spread syntax.*
-- **Lesson 07**: Updating Arrays - *Adding, filtering, updating, and removing array elements immutably.*
-- **Lesson 08**: Multiple State Variables - *When to split state vs when to group related fields into an object.*
-- **Lesson 09**: Derived State - *Calculating values on the fly instead of storing redundant state.*
-- **Lesson 10**: State Initialization - *Lazy state initialization for expensive setup computations.*
-- **Lesson 11**: State Batching - *React 18+ automatic grouping of multiple updates in promises and timeouts.*
-- **Lesson 12**: State Management Best Practices - *Keep state local, lift state only when needed, and avoid duplicate sources of truth.*
+- **Lesson 01**: What is State? - *សតិចងចាំរបស់ Component (Memory) ដែលធ្វើឱ្យ UI ធ្វើការ re-render ដោយស្វ័យប្រវត្តិនៅពេលទិន្នន័យប្រែប្រួល។*
+- **Lesson 02**: State vs Props - *ការប្រៀបធៀបរវាងទិន្នន័យខាងក្នុងដែលអាចកែប្រែបាន (State) និងទិន្នន័យបញ្ជូនពីក្រៅដែលមិនអាចកែប្រែបាន (Props)។*
+- **Lesson 03**: useState - *ការប្រកាស State variables និង updater functions ដោយប្រើប្រាស់ standard hook របស់ React។*
+- **Lesson 04**: Updating State - *ភាពខុសគ្នារវាងការជំនួសតម្លៃផ្ទាល់ និងការប្រើប្រាស់ Functional Updater Pattern (`prev => prev + 1`)។*
+- **Lesson 05**: State and Re-rendering - *របៀបដែល React ធ្វើការប្រៀបធៀប Object.is() ដើម្បីសម្រេចថាតើត្រូវ re-render ឬអត់។*
+- **Lesson 06**: Updating Objects - *ការ update object state ដោយរក្សាគោលការណ៍ Immutability តាមរយៈ Object Spread Operator (`...`)។*
+- **Lesson 07**: Updating Arrays - *វិធីសាស្ត្របន្ថែម លុប កែប្រែ និង filter ធាតុក្នុង array ដោយមិន mutate តម្លៃដើម។*
+- **Lesson 08**: Multiple State Variables - *ពេលណាដែលត្រូវបំបែក state ជាច្រើន និងពេលណាដែលគួរប្រមូលផ្តុំជា object តែមួយ។*
+- **Lesson 09**: Derived State - *ការគណនាតម្លៃចេញពី state/props ដែលមានស្រាប់អំឡុងពេល render ដោយមិនចាំបាច់បង្កើត state ជាន់គ្នា។*
+- **Lesson 10**: State Initialization - *ការប្រើប្រាស់ Lazy State Initialization Function សម្រាប់ប្រតិបត្តិការ setup ដែលស៊ី memory ឬ CPU ខ្លាំង។*
+- **Lesson 11**: State Batching - *យន្តការ Automatic Batching ក្នុង React 18+ ដែលប្រមូលផ្តុំ updates ច្រើនក្នុង async calls ឱ្យ render តែម្តងគត់។*
+- **Lesson 12**: State Management Best Practices - *គោលការណ៍ State Colocation, ការរក្សា state ឱ្យនៅកៀក UI បំផុត និង Single Source of Truth។*

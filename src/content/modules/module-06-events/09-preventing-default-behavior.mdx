@@ -5,17 +5,20 @@ title: "Preventing Default Behavior"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Using e.preventDefault() on forms, links, and keyboard events."
+summary: "ការប្រើប្រាស់ e.preventDefault() លើ forms, links និង keyboard shortcuts។"
+proTip: "នៅក្នុង React ការសរសេរ `return false;` មិនអាចទប់ស្កាត់លំនាំដើមរបស់ browser បានដូចក្នុង vanilla JS ឬ jQuery ឡើយ។ អ្នកត្រូវតែហៅ `e.preventDefault()` ជានិច្ច។"
 codeTitle: "e.preventDefault() Usage"
 ---
 
 # Preventing Default Behavior
 
-Prevents the default browser action (e.g. following links, submitting forms, scrolling on arrow keys).
+ធាតុ HTML មួយចំនួនមានឥរិយាបថលំនាំដើមរបស់ browser (default browser action) ដូចជា tag `<a>` នឹងបើកតំណភ្ជាប់ថ្មី, tag `<form>` នឹង reload ទំព័រពេល submit, ឬគ្រាប់ចុច arrow keys នឹង scroll ទំព័រ។ តាមរយៈ method `e.preventDefault()` យើងអាចទប់ស្កាត់សកម្មភាពទាំងនេះ ដើម្បីជំនួសដោយ custom logic របស់យើងវិញ។
 
 ### Key Concepts & Rules:
 
-- In React, returning `false` does not work; you must call `e.preventDefault()`.
+- នៅក្នុង React ការ return `false` ពី handler មិនមានប្រសិទ្ធភាពទប់ស្កាត់ default behavior ឡើយ — អ្នកត្រូវតែហៅ `e.preventDefault()` ដោយផ្ទាល់។
+- ប្រើលើ `<form onSubmit>` ដើម្បីការពារកុំឱ្យ reload ទំព័រ។
+- ប្រើលើ tag `<a>` នៅពេលដែលអ្នកចង់ប្រើ SPA routing (ដូចជា `router.push`) ជំនួសឱ្យ hard browser navigation។
 
 ### Code Example: e.preventDefault() Usage
 

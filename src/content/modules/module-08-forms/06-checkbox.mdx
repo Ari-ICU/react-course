@@ -5,17 +5,20 @@ title: "Checkbox"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Boolean inputs using checked prop and e.target.checked."
+summary: "ការគ្រប់គ្រង boolean inputs តាមរយៈ checked prop និង e.target.checked។"
+pitfall: "ដាច់ខាតកុំអាន `e.target.value` លើ checkbox ព្រោះវានឹងផ្តល់តម្លៃ string 'on' ជានិច្ច! ត្រូវអាន `e.target.checked` ដែលផ្តល់តម្លៃ boolean (`true` ឬ `false`)។"
 codeTitle: "Controlled Checkbox"
 ---
 
 # Checkbox
 
-Checkboxes use `checked={isChecked}` instead of `value`, and you read `e.target.checked` in the handler.
+Checkbox ត្រូវបានប្រើប្រាស់សម្រាប់ទិន្នន័យប្រភេទ Boolean (`true` ឬ `false`) ដូចជាការយល់ព្រមលើលក្ខខណ្ឌ ឬការបើក/បិទមុខងារណាមួយ។ នៅក្នុង React អ្នកត្រូវប្រើប្រាស់ attribute `checked={isChecked}` ជំនួសឱ្យ `value` ហើយអានតម្លៃតាមរយៈ `e.target.checked`។
 
 ### Key Concepts & Rules:
 
-- Read `e.target.checked`, not `e.target.value`.
+- ប្រើ `checked={booleanValue}` ដើម្បីកំណត់ស្ថានភាពជ្រើសរើស។
+- អានតម្លៃតាមរយៈ `e.target.checked` មិនមែន `e.target.value` ឡើយ។
+- តែងតែរុំព័ទ្ធ checkbox នៅក្នុង `<label>` ជាមួយនឹង text ដើម្បីឱ្យ user អាចចុចលើអក្សរបាន (Clickable area ធំជាងមុន)។
 
 ### Code Example: Controlled Checkbox
 

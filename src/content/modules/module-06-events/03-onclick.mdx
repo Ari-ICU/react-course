@@ -5,17 +5,20 @@ title: "onClick"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Handling click interactions on buttons, links, and cards."
+summary: "ការចាប់យក និងគ្រប់គ្រង Click interactions លើ buttons, links, និង UI cards។"
+proTip: "គួរប្រើ native `<button>` element ជានិច្ចសម្រាប់ធាតុដែលអាចចុចបាន (clickable elements) ព្រោះវាគាំទ្រ accessibility (a11y) និង keyboard interaction (Enter/Space) ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "onClick Handler"
 ---
 
 # onClick
 
-The most common event handler in web applications, triggered when an element is pressed or activated via keyboard Enter.
+`onClick` គឺជា event handler ដែលត្រូវបានប្រើប្រាស់ញឹកញាប់បំផុតនៅក្នុងកម្មវិធី React។ វាត្រូវបាន trigger នៅពេលដែលអ្នកប្រើប្រាស់ចុច mouse, ប៉ះលើ touchscreen, ឬចុចគ្រាប់ចុច Enter/Space នៅលើ element នោះ។
 
 ### Key Concepts & Rules:
 
-- Works with mouse, touchscreen, and keyboard accessibility.
+- ដំណើរការជាមួយ mouse clicks, mobile touches និង keyboard navigation នៅពេលប្រើប្រាស់ HTML elements ស្តង់ដារដូចជា `<button>`។
+- ប្រសិនបើអ្នកដាក់ `onClick` លើ `<div>` ធម្មតា ត្រូវប្រាកដថាបានបន្ថែម accessibility attributes ដូចជា `role="button"` និង `tabIndex={0}`។
+- អាចចាប់យក click coordinates, modifier keys (Shift, Ctrl, Alt) តាមរយៈ event object `e`។
 
 ### Code Example: onClick Handler
 

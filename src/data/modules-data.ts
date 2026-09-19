@@ -1014,167 +1014,200 @@ export const modulesData: ModuleItem[] = [
     "number": "06",
     "title": "Events",
     "category": "Core Concepts",
-    "summary": "React synthetic events, onClick, onChange, onSubmit, event propagation, preventDefault, and event handling patterns.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី React SyntheticEvent System, onClick, onChange, onSubmit, Event Bubbling/Propagation, ការប្រើប្រាស់ preventDefault និងគោលការណ៍ Best Practices ក្នុងការគ្រប់គ្រង Events ឱ្យមានសុវត្ថិភាព។",
     "iconName": "Zap",
     "topics": [
       {
         "id": "m06-01",
         "number": "01",
         "title": "React Events",
-        "summary": "Cross-browser SyntheticEvent wrapper system.",
-        "explanation": "React wraps native browser events in a cross-browser `SyntheticEvent` instance that ensures identical event behavior across Safari, Chrome, Firefox, and Edge.",
+        "summary": "ប្រព័ន្ធ SyntheticEvent របស់ React ដែលធ្វើការ wrap native browser events ឱ្យដំណើរការដូចគ្នានៅលើគ្រប់ browsers។",
+        "explanation": "នៅក្នុង React រាល់ event ទាំងអស់មិនត្រូវបាន bind ទៅលើ DOM ផ្ទាល់ដូច JavaScript ធម្មតានោះឡើយ។ React ប្រើប្រាស់ប្រព័ន្ធ `SyntheticEvent` ដែលជា wrapper ព័ទ្ធជុំវិញ native browser event ដើម្បីធានាថា event ដំណើរការដូចគ្នាបេះបិទលើគ្រប់ web browsers ទាំងអស់ មិនថា Chrome, Safari, Firefox, ឬ Edge ឡើយ។",
         "keyPoints": [
-          "Synthetic events match W3C standards.",
-          "Named in camelCase: `onClick`, `onChange`, `onKeyDown`."
+          "React Synthetic Events ត្រូវគ្នានឹងស្តង់ដារ W3C និងផ្តល់នូវ cross-browser consistency យ៉ាងរលូន។",
+          "Event attributes នៅក្នុង JSX ត្រូវបានសរសេរជាទម្រង់ camelCase ជានិច្ច ដូចជា `onClick`, `onChange`, `onKeyDown` ជំនួសឱ្យ `onclick`, `onchange`។",
+          "React ធ្វើការ delegated events នៅកម្រិត root container ដើម្បីបង្កើន memory performance និងល្បឿនប្រតិបត្តិការ។"
         ],
         "codeSnippet": "export function EventLogger() {\n  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {\n    console.log(\"Event Type:\", e.type);\n    console.log(\"Coordinates:\", e.clientX, e.clientY);\n  };\n\n  return <button onClick={handleClick}>Log Event</button>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "React SyntheticEvent Handling"
+        "codeTitle": "React SyntheticEvent Handling",
+        "proTip": "SyntheticEvent ផ្តល់នូវ interface ដូចគ្នាបេះបិទទៅនឹង W3C native event specification ដូច្នេះអ្នកអាចប្រើ `e.target`, `e.preventDefault()`, ឬ `e.clientX` បានយ៉ាងងាយស្រួល។"
       },
       {
         "id": "m06-02",
         "number": "02",
         "title": "Event Handlers",
-        "summary": "Passing handler function references vs invoking functions.",
-        "explanation": "You must pass the function reference (`onClick={handleClick}`), NOT invoke it (`onClick={handleClick()}`). Invoking it runs the function during render!",
+        "summary": "ភាពខុសគ្នារវាងការបញ្ជូន Function Reference និងការហៅ Function (Invocation) ពេល render។",
+        "explanation": "កំហុសឆ្គងទូទៅបំផុតមួយសម្រាប់អ្នកចាប់ផ្តើមរៀន React គឺការដាក់វង់ក្រចក `()` នៅពេលភ្ជាប់ handler។ អ្នកត្រូវតែបញ្ជូន **Function Reference** (`onClick={handleClick}`) មិនមែនជាការហៅ function ដោយផ្ទាល់ (`onClick={handleClick()}`) នោះទេ ព្រោះការហៅ function នឹងធ្វើឱ្យកូដនោះដំណើរការភ្លាមៗនៅពេល component កំពុង render។",
         "keyPoints": [
-          "Pass function reference: `onClick={handleClick}`.",
-          "Pass inline arrow function if parameters are needed: `onClick={() => handleDelete(id)}`."
+          "បញ្ជូន Function Reference ដោយគ្មានវង់ក្រចក៖ `onClick={handleClick}`។",
+          "ប្រសិនបើអ្នកត្រូវការបញ្ជូន arguments បន្ថែម ចូរប្រើ inline arrow function៖ `onClick={() => handleDelete(id)}`។",
+          "ការសរសេរ `onClick={handleClick()}` នឹង return តម្លៃរបស់ function ទៅឱ្យ onClick ដែលមិនត្រឹមតែរត់ខុសពេលនោះទេ ថែមទាំងធ្វើឱ្យ event លែងដំណើរការទៀតផង។"
         ],
         "codeSnippet": "// ❌ Wrong: handleClick runs immediately on render!\n// <button onClick={handleClick()}>Click</button>\n\n// ✅ Correct: Function reference passed\n<button onClick={handleClick}>Click</button>\n\n// ✅ Correct: Arrow function wrapper for arguments\n<button onClick={() => handleDelete(item.id)}>Delete</button>",
         "codeLanguage": "jsx",
-        "codeTitle": "Function Reference vs Invocation"
+        "codeTitle": "Function Reference vs Invocation",
+        "pitfall": "ដាច់ខាតកុំដាក់វង់ក្រចក `()` នៅខាងចុង handler ដូចជា `onClick={handleClick()}` ព្រោះវានឹងរត់ភ្លាមៗនៅពេល render ហើយបង្កជា infinite loop ប្រសិនបើមាន state update នៅខាងក្នុង!"
       },
       {
         "id": "m06-03",
         "number": "03",
         "title": "onClick",
-        "summary": "Handling click interactions on buttons, links, and cards.",
-        "explanation": "The most common event handler in web applications, triggered when an element is pressed or activated via keyboard Enter.",
+        "summary": "ការចាប់យក និងគ្រប់គ្រង Click interactions លើ buttons, links, និង UI cards។",
+        "explanation": "`onClick` គឺជា event handler ដែលត្រូវបានប្រើប្រាស់ញឹកញាប់បំផុតនៅក្នុងកម្មវិធី React។ វាត្រូវបាន trigger នៅពេលដែលអ្នកប្រើប្រាស់ចុច mouse, ប៉ះលើ touchscreen, ឬចុចគ្រាប់ចុច Enter/Space នៅលើ element នោះ។",
         "keyPoints": [
-          "Works with mouse, touchscreen, and keyboard accessibility."
+          "ដំណើរការជាមួយ mouse clicks, mobile touches និង keyboard navigation នៅពេលប្រើប្រាស់ HTML elements ស្តង់ដារដូចជា `<button>`។",
+          "ប្រសិនបើអ្នកដាក់ `onClick` លើ `<div>` ធម្មតា ត្រូវប្រាកដថាបានបន្ថែម accessibility attributes ដូចជា `role=\"button\"` និង `tabIndex={0}`។",
+          "អាចចាប់យក click coordinates, modifier keys (Shift, Ctrl, Alt) តាមរយៈ event object `e`។"
         ],
         "codeSnippet": "<button \n  onClick={(e) => {\n    e.stopPropagation();\n    console.log(\"Clicked!\");\n  }}\n  className=\"px-4 py-2 bg-blue-600 rounded-lg text-white\"\n>\n  Click Me\n</button>",
         "codeLanguage": "jsx",
-        "codeTitle": "onClick Handler"
+        "codeTitle": "onClick Handler",
+        "proTip": "គួរប្រើ native `<button>` element ជានិច្ចសម្រាប់ធាតុដែលអាចចុចបាន (clickable elements) ព្រោះវាគាំទ្រ accessibility (a11y) និង keyboard interaction (Enter/Space) ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m06-04",
         "number": "04",
         "title": "onChange",
-        "summary": "Tracking input, textarea, and select changes in real time.",
-        "explanation": "Unlike vanilla JS where `change` only fires when an input loses focus, React's `onChange` fires on every single keystroke, making controlled components trivial.",
+        "summary": "ការតាមដានការផ្លាស់ប្តូរទិន្នន័យ (Real-time updates) លើ text inputs, textareas, និង select dropdowns។",
+        "explanation": "ខុសប្លែកពី vanilla JavaScript ដែល `change` event ដំណើរការតែនៅពេលដែល input បាត់បង់ focus (blur) នៅក្នុង React វិញ `onChange` ត្រូវបាន trigger ភ្លាមៗរាល់ពេលដែលតម្លៃក្នុង input ប្រែប្រួល (សូម្បីតែការវាយអក្សរតែមួយតួ)។ នេះជាមូលដ្ឋានគ្រឹះដ៏សំខាន់សម្រាប់គ្រប់គ្រង Form State ក្នុងទម្រង់ Controlled Components។",
         "keyPoints": [
-          "Access input value via `e.target.value`."
+          "ទាញយកតម្លៃថ្មីរបស់ input តាមរយៈ `e.target.value`។",
+          "សម្រាប់ checkboxes ត្រូវទាញយកតាមរយៈ `e.target.checked` ជំនួសឱ្យ `value`។",
+          "ប្រើរួមគ្នាជាមួយ `value` prop ដើម្បីបង្កើតជា Controlled Input ដែលមានលំហូរទិន្នន័យច្បាស់លាស់។"
         ],
         "codeSnippet": "export function SearchInput({ value, onChange }: SearchInputProps) {\n  return (\n    <input \n      type=\"text\" \n      value={value} \n      onChange={(e) => onChange(e.target.value)}\n      placeholder=\"Filter topics...\"\n      className=\"w-full bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg text-white\"\n    />\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "onChange Event Handler"
+        "codeTitle": "onChange Event Handler",
+        "proTip": "នៅក្នុង React ព្រឹត្តិការណ៍ `onChange` ដំណើរការលើរាល់ការចុចអក្សរម្តងៗ (keystroke) ដូច `oninput` ក្នុង JavaScript ធម្មតាដែរ ដែលជួយឱ្យការបង្កើត Controlled Components មានភាពងាយស្រួលបំផុត។"
       },
       {
         "id": "m06-05",
         "number": "05",
         "title": "onSubmit",
-        "summary": "Handling form submissions and preventing full-page reloads.",
-        "explanation": "Form submissions naturally trigger a browser page refresh. Use `e.preventDefault()` inside `onSubmit` to retain SPA state and handle submission via JavaScript.",
+        "summary": "ការគ្រប់គ្រង Form submissions និងការការពារមិនឱ្យ browser refresh/reload ទំព័រ។",
+        "explanation": "តាមលំនាំដើមរបស់ browser នៅពេលដែល form ត្រូវបាន submit វានឹងធ្វើការ refresh ទំព័រទាំងមូល ឬបញ្ជូន HTTP request ទៅកាន់ action URL។ នៅក្នុងកម្មវិធី Single Page Application (SPA) យើងត្រូវតែប្រើប្រាស់ `e.preventDefault()` នៅខាងក្នុង `onSubmit` handler ដើម្បីទប់ស្កាត់ការ reload និងអនុញ្ញាតឱ្យ JavaScript ចាត់ចែង submission តាមរយៈ API។",
         "keyPoints": [
-          "Always invoke `e.preventDefault()`.",
-          "Attach `onSubmit` to `<form>` rather than `onClick` to submit button to allow Enter key submissions."
+          "ត្រូវហៅ `e.preventDefault()` ជានិច្ចនៅដើមបន្ទាត់នៃ form handler function។",
+          "ភ្ជាប់ `onSubmit` ទៅកាន់ `<form>` tag ផ្ទាល់ មិនមែនភ្ជាប់ `onClick` ទៅកាន់ submit button នោះទេ ដើម្បីឱ្យ user អាច submit តាមរយៈការចុច Enter បាន។",
+          "ជួយឱ្យ form validation ដើរស្របតាមស្តង់ដារ HTML5 (ដូចជា required attributes) មុនពេល handler ដំណើរការ។"
         ],
         "codeSnippet": "export function LoginForm() {\n  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {\n    e.preventDefault();\n    console.log(\"Form submitted safely without page reload!\");\n  };\n\n  return (\n    <form onSubmit={handleSubmit} className=\"space-y-3\">\n      <input type=\"email\" placeholder=\"Email\" required />\n      <button type=\"submit\" className=\"bg-blue-600 px-4 py-2 rounded text-white\">Log In</button>\n    </form>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "onSubmit Form Handler"
+        "codeTitle": "onSubmit Form Handler",
+        "pitfall": "ប្រសិនបើអ្នកភ្លេចហៅ `e.preventDefault()` នោះ browser នឹងធ្វើការ reload ទំព័រទាំងមូល និងបាត់បង់ state ទាំងអស់នៃ Single Page Application (SPA) របស់អ្នក!"
       },
       {
         "id": "m06-06",
         "number": "06",
         "title": "onMouseEnter & onMouseLeave",
-        "summary": "Hover states and tooltips.",
-        "explanation": "Used to build interactive tooltips, preview cards, and custom cursor animations.",
+        "summary": "ការគ្រប់គ្រង Hover interactions, animations និងការបង្ហាញ tooltips។",
+        "explanation": "`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត dynamic tooltips, preview popovers, dropdown menus ឬ custom cursor animations។",
         "keyPoints": [
-          "React's mouseEnter does not bubble, mimicking standard CSS hover."
+          "`onMouseEnter` និង `onMouseLeave` មិនធ្វើការ bubble ឡើងលើ parent ឡើយ (ខុសពី `onMouseOver` និង `onMouseOut`) ដែលជួយកាត់បន្ថយបញ្ហា flickering នៅពេល hover លើ child elements។",
+          "ប្រើសម្រាប់ update state នៅពេលដែល hover logic ត្រូវការទិន្នន័យ JavaScript ស្មុគស្មាញ។",
+          "ត្រូវប្រាកដថាបានផ្តល់នូវ keyboard alternative (ដូចជា `onFocus` និង `onBlur`) សម្រាប់អ្នកប្រើប្រាស់ដែលមិនប្រើ mouse។"
         ],
         "codeSnippet": "export function HoverPreview() {\n  const [isHovered, setIsHovered] = useState(false);\n\n  return (\n    <div \n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => setIsHovered(false)}\n      className=\"p-4 border rounded-lg transition-colors bg-slate-900 hover:border-blue-500\"\n    >\n      Hover over me!\n      {isHovered && <p className=\"text-xs text-blue-400 mt-1\">✨ Tooltip content visible</p>}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Hover Handlers"
+        "codeTitle": "Hover Handlers",
+        "proTip": "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` តែនៅពេលដែលអ្នកត្រូវការផ្លាស់ប្តូរ state ឬ render dynamic JSX ប៉ុណ្ណោះ។"
       },
       {
         "id": "m06-07",
         "number": "07",
         "title": "Passing Event Functions",
-        "summary": "Passing custom event triggers through props.",
-        "explanation": "Prefix custom event props with `on` (e.g., `onSelectTopic`, `onDelete`) and implementation handlers with `handle` (`handleSelectTopic`).",
+        "summary": "ការបញ្ជូន custom event callback functions ឆ្លងកាត់ props ចុះទៅកាន់ child components។",
+        "explanation": "នៅក្នុង React ទិន្នន័យហូរពីលើចុះក្រោម (One-way Data Flow) ប៉ុន្តែនៅពេលដែល child component ចង់ប្រាប់ parent អំពីសកម្មភាពណាមួយ Parent ត្រូវតែបញ្ជូន callback function មួយចុះក្រោមតាមរយៈ props ដើម្បីឱ្យ child អាចហៅ (trigger) ឡើងវិញបាន។",
         "keyPoints": [
-          "Naming convention: `onEvent` for props, `handleEvent` for functions."
+          "**ក្បួនដាក់ឈ្មោះស្តង់ដារ**៖ ប្រើបុព្វបទ `on*` សម្រាប់ props (ឧ. `onSelect`, `onSubmit`) និង `handle*` សម្រាប់ function definitions (ឧ. `handleSelect`, `handleSubmit`)។",
+          "Parent component ជាអ្នកគ្រប់គ្រង state និងសម្រេចចិត្តថាតើត្រូវធ្វើអ្វីបន្ត នៅពេលដែល child ធ្វើការ trigger event។",
+          "ជួយឱ្យ child components មានភាព reusable ខ្ពស់ ព្រោះពួកវាមិនចាំបាច់ដឹងពី business logic ស៊ីជម្រៅរបស់ parent ឡើយ។"
         ],
         "codeSnippet": "interface TopicItemProps {\n  topic: TopicItem;\n  onSelectTopic: (topic: TopicItem) => void;\n}\n\nexport function TopicCard({ topic, onSelectTopic }: TopicItemProps) {\n  return (\n    <div onClick={() => onSelectTopic(topic)} className=\"cursor-pointer\">\n      <h4>{topic.title}</h4>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Passing Event Callbacks"
+        "codeTitle": "Passing Event Callbacks",
+        "proTip": "គោរពតាម React Naming Convention៖ ប្រើបុព្វបទ `on` សម្រាប់ឈ្មោះ Prop (`onSelectTopic`, `onDelete`) និងប្រើបុព្វបទ `handle` សម្រាប់ឈ្មោះ Function អនុវត្តផ្ទាល់ (`handleSelectTopic`, `handleDelete`)។"
       },
       {
         "id": "m06-08",
         "number": "08",
         "title": "Event Parameters",
-        "summary": "Supplying additional data along with synthetic events.",
-        "explanation": "Use inline arrow functions to pass record IDs, indices, or custom payloads into event handlers.",
+        "summary": "ការបញ្ជូន arguments បន្ថែម (ដូចជា record ID) ទៅកាន់ event handlers តាមរយៈ inline arrow functions។",
+        "explanation": "ជាញឹកញាប់នៅក្នុងបញ្ជីទិន្នន័យ (Lists) អ្នកត្រូវការបញ្ជូនតម្លៃជាក់លាក់ណាមួយ (ដូចជា Item ID, index ឬ record object) ទៅកាន់ handler ពេលចុចលើធាតុនីមួយៗ។ ដំណោះស្រាយដ៏សាមញ្ញ និងមានប្រសិទ្ធភាពបំផុតគឺការប្រើ inline arrow function ដើម្បី wrap ពីលើ handler នោះ។",
         "keyPoints": [
-          "Signature: `(e) => handleAction(id, e)`."
+          "ប្រើ syntax៖ `onClick={(e) => handleAction(item.id, e)}` ដើម្បីបញ្ជូនទាំង ID និង event object។",
+          "ជៀសវាងការសរសេរ `onClick={handleAction(item.id)}` ដាច់ខាត ព្រោះវានឹងរត់កូដភ្លាមៗពេល render។",
+          "វិធីសាស្ត្រនេះជួយឱ្យកូដមានភាពសាមញ្ញ ងាយយល់ និងស្អាតបាត។"
         ],
         "codeSnippet": "<button onClick={(e) => handleArchive(item.id, e)}>\n  Archive Item\n</button>",
         "codeLanguage": "jsx",
-        "codeTitle": "Passing Custom Parameters"
+        "codeTitle": "Passing Custom Parameters",
+        "proTip": "ប្រសិនបើអ្នកត្រូវការទាំង custom argument និង event object ដើម ចូរទទួលយក `e` ក្នុង arrow function រួចបញ្ជូនបន្ត៖ `(e) => handleAction(id, e)`។"
       },
       {
         "id": "m06-09",
         "number": "09",
         "title": "Preventing Default Behavior",
-        "summary": "Using e.preventDefault() on forms, links, and keyboard events.",
-        "explanation": "Prevents the default browser action (e.g. following links, submitting forms, scrolling on arrow keys).",
+        "summary": "ការប្រើប្រាស់ e.preventDefault() លើ forms, links និង keyboard shortcuts។",
+        "explanation": "ធាតុ HTML មួយចំនួនមានឥរិយាបថលំនាំដើមរបស់ browser (default browser action) ដូចជា tag `<a>` នឹងបើកតំណភ្ជាប់ថ្មី, tag `<form>` នឹង reload ទំព័រពេល submit, ឬគ្រាប់ចុច arrow keys នឹង scroll ទំព័រ។ តាមរយៈ method `e.preventDefault()` យើងអាចទប់ស្កាត់សកម្មភាពទាំងនេះ ដើម្បីជំនួសដោយ custom logic របស់យើងវិញ។",
         "keyPoints": [
-          "In React, returning `false` does not work; you must call `e.preventDefault()`."
+          "នៅក្នុង React ការ return `false` ពី handler មិនមានប្រសិទ្ធភាពទប់ស្កាត់ default behavior ឡើយ — អ្នកត្រូវតែហៅ `e.preventDefault()` ដោយផ្ទាល់។",
+          "ប្រើលើ `<form onSubmit>` ដើម្បីការពារកុំឱ្យ reload ទំព័រ។",
+          "ប្រើលើ tag `<a>` នៅពេលដែលអ្នកចង់ប្រើ SPA routing (ដូចជា `router.push`) ជំនួសឱ្យ hard browser navigation។"
         ],
         "codeSnippet": "const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {\n  e.preventDefault();\n  router.push('/custom-destination');\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "e.preventDefault() Usage"
+        "codeTitle": "e.preventDefault() Usage",
+        "proTip": "នៅក្នុង React ការសរសេរ `return false;` មិនអាចទប់ស្កាត់លំនាំដើមរបស់ browser បានដូចក្នុង vanilla JS ឬ jQuery ឡើយ។ អ្នកត្រូវតែហៅ `e.preventDefault()` ជានិច្ច។"
       },
       {
         "id": "m06-10",
         "number": "10",
         "title": "Event Propagation",
-        "summary": "Event bubbling and e.stopPropagation().",
-        "explanation": "Events bubble up the React tree. Calling `e.stopPropagation()` prevents parent handlers from triggering when clicking nested child controls.",
+        "summary": "ស្វែងយល់អំពី Event Bubbling និងការទប់ស្កាត់ parent trigger ដោយប្រើ e.stopPropagation()។",
+        "explanation": "នៅក្នុង Document Object Model (DOM) ព្រឹត្តិការណ៍ clicks និង interactions ផ្សេងៗនឹងធ្វើដំណើរផុសឡើងលើ (Event Bubbling) ពី child element ឡើងទៅកាន់ parent elements តាមលំដាប់រហូតដល់ root។ ការហៅ `e.stopPropagation()` អនុញ្ញាតឱ្យយើងបញ្ឈប់ដំណើរ bubbling នេះមិនឱ្យប៉ះពាល់ដល់ parent handlers ឡើយ។",
         "keyPoints": [
-          "Crucial when a card has an `onClick` but also contains a nested 'Delete' or 'Favorite' button."
+          "សំខាន់បំផុតសម្រាប់ nested clickable elements ដូចជាប៊ូតុង \"Delete\" ឬ \"Bookmark\" ដែលស្ថិតនៅក្នុង clickable card។",
+          "`e.stopPropagation()` បញ្ឈប់ការបញ្ជូន event ទៅកាន់ parent components ខាងលើ។",
+          "ខុសពី `e.preventDefault()`៖ `preventDefault` ទប់ស្កាត់ browser default action ចំណែក `stopPropagation` ទប់ស្កាត់កុំឱ្យ event រត់ឡើងទៅ parent។"
         ],
         "codeSnippet": "export function CardWithAction() {\n  return (\n    <div onClick={() => console.log(\"Card opened\")} className=\"p-4 border rounded\">\n      <h3>Card Title</h3>\n      <button \n        onClick={(e) => {\n          e.stopPropagation(); // Prevents card opening!\n          console.log(\"Deleted\");\n        }}\n        className=\"text-rose-500\"\n      >\n        Delete\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "e.stopPropagation() in Nested Elements"
+        "codeTitle": "e.stopPropagation() in Nested Elements",
+        "pitfall": "នៅពេលដែលមានប៊ូតុង 'Delete' ឬ 'Like' នៅខាងក្នុង Card ដែលអាចចុចបើកមើល detail បាន ប្រសិនបើអ្នកមិនប្រើ `e.stopPropagation()` ទេ នោះការចុច Delete ក៏នឹងបើក Card នោះដែរ!"
       },
       {
         "id": "m06-11",
         "number": "11",
         "title": "Keyboard Events",
-        "summary": "Handling onKeyDown, Escape modal closing, and Cmd+K shortcuts.",
-        "explanation": "Detecting keys like `Enter`, `Escape`, or `MetaKey` to build accessible keyboard navigation and modal dismissals.",
+        "summary": "ការគ្រប់គ្រង Keyboard interactions ដូចជាការចុច Enter, Escape ដើម្បីបិទ modal, និង shortcut Cmd+K។",
+        "explanation": "ការគ្រប់គ្រង keyboard events (ដូចជា `onKeyDown`, `onKeyUp`) អនុញ្ញាតឱ្យអ្នកបង្កើតនូវបទពិសោធន៍ប្រើប្រាស់ដ៏សម្បូរបែប ដូចជាការបិទ Modal ដោយចុចគ្រាប់ចុច `Escape`, ការបញ្ជូនសារដោយចុច `Enter`, ឬការបើកផ្ទាំងស្វែងរកដោយប្រើផ្លូវកាត់ `Cmd+K` / `Ctrl+K`។",
         "keyPoints": [
-          "Use `e.key === 'Escape'` or `(e.metaKey || e.ctrlKey) && e.key === 'k'`."
+          "ពិនិត្យគ្រាប់ចុចដោយប្រើប្រាស់ `e.key` (ឧ. `e.key === 'Escape'`, `e.key === 'Enter'`)។",
+          "សម្រាប់ shortcut keys បញ្ចូលគ្នា ត្រូវពិនិត្យ boolean flags ដូចជា `e.metaKey` (សម្រាប់ Mac Command) ឬ `e.ctrlKey` (សម្រាប់ Windows Ctrl)។",
+          "នៅពេលបន្ថែម global listener លើ `window` ជាមួយ `useEffect` ត្រូវប្រាកដថាបាន return cleanup function ដើម្បី remove listener ជានិច្ច។"
         ],
         "codeSnippet": "useEffect(() => {\n  const handleKeyDown = (e: KeyboardEvent) => {\n    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {\n      e.preventDefault();\n      setIsSearchOpen(prev => !prev);\n    }\n  };\n  window.addEventListener('keydown', handleKeyDown);\n  return () => window.removeEventListener('keydown', handleKeyDown);\n}, []);",
         "codeLanguage": "jsx",
-        "codeTitle": "Global Keyboard Shortcut Listener"
+        "codeTitle": "Global Keyboard Shortcut Listener",
+        "proTip": "ប្រើប្រាស់ `e.key` ជំនួសឱ្យ `e.keyCode` (deprecated) ព្រោះ `e.key` ផ្តល់ឈ្មោះគ្រាប់ចុចច្បាស់លាស់ដូចជា `'Enter'`, `'Escape'`, ឬ `'ArrowDown'`។"
       },
       {
         "id": "m06-12",
         "number": "12",
         "title": "Event Handling Best Practices",
-        "summary": "Debouncing rapid clicks, avoiding inline allocations when unnecessary.",
-        "explanation": "Keep handlers clean, extract complex business logic into custom hooks, and debounce high-frequency events like search input or window resize.",
+        "summary": "គោលការណ៍ល្អៗដូចជា Debouncing, ការការពារ Double-submit, និងការរៀបចំ handler logic ឱ្យមានរបៀប។",
+        "explanation": "ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ស្មុគស្មាញចេញពី JSX markup និងការពារបញ្ហាទូទៅដូចជាការចុចស្ទួន (rapid double clicks)។",
         "keyPoints": [
-          "Avoid side-effects inside JSX; keep handlers focused."
+          "**បំបែក Handler ចេញពី JSX**៖ សរសេរ handler functions ដាច់ដោយឡែកនៅផ្នែកខាងលើនៃ component ដើម្បីឱ្យ JSX markup មានភាពស្រឡះ និងងាយស្រួលអាន។",
+          "**ការពារ Double-submit**៖ ប្រើប្រាស់ state ដូចជា `isSubmitting` ដើម្បីទប់ស្កាត់ការចុច submit ច្រើនដងក្នុងពេលតែមួយ។",
+          "**Debounce High-Frequency Events**៖ ចំពោះ events ដែលកើតឡើងញឹកញាប់ខ្លាំង (ដូចជា window resize, scrolling, ឬ keystrokes ក្នុងការស្វែងរក) គួរប្រើ debounce ឬ throttle ដើម្បីការពារកុំឱ្យប៉ះពាល់ដល់ performance។"
         ],
         "codeSnippet": "// Clean extracted handler pattern\nexport function RegistrationForm() {\n  const [email, setEmail] = useState('');\n  const [isSubmitting, setIsSubmitting] = useState(false);\n\n  const handleSubmit = async (e: React.FormEvent) => {\n    e.preventDefault();\n    if (isSubmitting) return; // Prevent double submit\n    setIsSubmitting(true);\n    try {\n      await registerUser(email);\n    } finally {\n      setIsSubmitting(false);\n    }\n  };\n\n  return <form onSubmit={handleSubmit}>...</form>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Best Practice Event Handler"
+        "codeTitle": "Best Practice Event Handler",
+        "proTip": "តែងតែការពារបញ្ហា Double-submit លើ forms តាមរយៈ boolean flag (`isSubmitting`) ឬ disable submit button រហូតដល់ network request បានបញ្ចប់ទាំងស្រុង។"
       }
     ]
   },
@@ -1183,176 +1216,202 @@ export const modulesData: ModuleItem[] = [
     "number": "07",
     "title": "State",
     "category": "Core Concepts",
-    "summary": "useState, state vs props, re-rendering triggers, updating objects and arrays immutably, and derived state.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី useState Hook, ភាពខុសគ្នារវាង State vs Props, យន្តការ Re-rendering, គោលការណ៍ Immutability លើ Objects និង Arrays, Derived State និង State Batching ក្នុង React 18+។",
     "iconName": "Sliders",
     "topics": [
       {
         "id": "m07-01",
         "number": "01",
         "title": "What is State?",
-        "summary": "Component memory that triggers UI re-renders upon mutation.",
-        "explanation": "State is data that changes over time in response to user actions or network responses. When state changes, React schedules a re-render of the component and updates the DOM.",
+        "summary": "សតិចងចាំរបស់ Component (Memory) ដែលធ្វើឱ្យ UI ធ្វើការ re-render ដោយស្វ័យប្រវត្តិនៅពេលទិន្នន័យប្រែប្រួល។",
+        "explanation": "State គឺជាទិន្នន័យដែលផ្លាស់ប្តូរទៅតាមពេលវេលា ឆ្លើយតបទៅនឹងសកម្មភាពរបស់អ្នកប្រើប្រាស់ (User Actions) ឬការឆ្លើយតបពីបណ្តាញ (Network Responses)។ នៅពេលដែល state ប្រែប្រួលតម្លៃ React នឹងរៀបចំកាលវិភាគ (schedule) ដើម្បីធ្វើការ re-render component នោះឡើងវិញ និង update លើ DOM ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "State is private to the component instance.",
-          "State persists across re-renders.",
-          "Updating state triggers reconciliation."
+          "State មានលក្ខណៈឯកជន (private) សម្រាប់តែ instance នៃ component ផ្ទាល់ខ្លួនប៉ុណ្ណោះ។",
+          "State ត្រូវបាន React រក្សាទុកតម្លៃឆ្លងកាត់ការ re-render នីមួយៗ (ខុសពីអថេរធម្មតាដែលត្រូវប្រកាសឡើងវិញ)។",
+          "ការ update តម្លៃ state គឺជាកត្តាចម្បងដែល trigger ឱ្យមានដំណើរការ reconciliation និងការ re-render UI។"
         ],
         "codeSnippet": "import { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button onClick={() => setCount(count + 1)} className=\"px-4 py-2 bg-blue-600 text-white rounded\">\n      Count: {count}\n    </button>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Basic State Declaration",
+        "proTip": "គិតពី State ដូចជាសតិចងចាំ (Memory) របស់ Component៖ អថេរធម្មតាក្នុង function នឹងត្រូវ reset ឡើងវិញរាល់ពេល render តែ State ត្រូវបាន React រក្សាទុកឆ្លងកាត់ការ render ទាំងអស់។",
         "interactiveDemoKey": "StateDemo"
       },
       {
         "id": "m07-02",
         "number": "02",
         "title": "State vs Props",
-        "summary": "Internal mutable component data vs external immutable inputs.",
-        "explanation": "Props configure a component from the outside; State stores interactive changes on the inside.",
+        "summary": "ការប្រៀបធៀបរវាងទិន្នន័យខាងក្នុងដែលអាចកែប្រែបាន (State) និងទិន្នន័យបញ្ជូនពីក្រៅដែលមិនអាចកែប្រែបាន (Props)។",
+        "explanation": "ខណៈពេលដែល Props ត្រូវបានប្រើដើម្បី configure component ពីខាងក្រៅ (ដូច parameters នៃ function) State វិញត្រូវបានប្រើដើម្បីផ្ទុក និងគ្រប់គ្រងទិន្នន័យដែលមានប្រតិកម្មរហ័ស (interactive changes) នៅខាងក្នុង component ផ្ទាល់។",
         "keyPoints": [
-          "Props are passed down; State is managed internally."
+          "**Props**៖ បញ្ជូនពីលើចុះក្រោម (Parent -> Child) និងមានលក្ខណៈ Read-only (Immutable)។",
+          "**State**៖ បង្កើត និងគ្រប់គ្រងផ្ទៃក្នុង component ដោយអាចធ្វើការកែប្រែតម្លៃបានតាមរយៈ updater function។",
+          "Component អាចបញ្ជូន state របស់ខ្លួនចុះក្រោមទៅឱ្យ child component ប្រើប្រាស់ក្នុងនាមជា props បាន។"
         ],
         "codeSnippet": "// Props: Read-only input from parent\nfunction Display({ message }: { message: string }) {\n  return <h1>{message}</h1>;\n}\n\n// State: Internal interactive value\nfunction Editor() {\n  const [text, setText] = useState(\"Hello\");\n  return <Display message={text} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "State vs Props in Action"
+        "codeTitle": "State vs Props in Action",
+        "proTip": "ច្បាប់ងាយចងចាំ៖ ប្រសិនបើទិន្នន័យនោះបញ្ជូនមកពី Parent ហើយមិនអាចកែប្រែបាន វាគឺជា Props។ ប្រសិនបើ Component ខ្លួនឯងជាអ្នកបង្កើត គ្រប់គ្រង និងផ្លាស់ប្តូរ វាគឺជា State។"
       },
       {
         "id": "m07-03",
         "number": "03",
         "title": "useState",
-        "summary": "Declaring state variables and updater functions.",
-        "explanation": "The `useState` hook returns a tuple containing the current state value and an updater function: `const [state, setState] = useState(initialValue)`.",
+        "summary": "ការប្រកាស State variables និង updater functions ដោយប្រើប្រាស់ standard hook របស់ React។",
+        "explanation": "Hook `useState` គឺជា built-in hook មូលដ្ឋានបំផុតក្នុង React។ នៅពេលហៅប្រើ វា return ត្រឡប់មកវិញនូវ Array Destructuring ដែលមាន ២ ធាតុ៖ ទីមួយគឺជាតម្លៃ State បច្ចុប្បន្ន និងទីពីរគឺជា Updater Function សម្រាប់កែប្រែតម្លៃនោះ (`const [state, setState] = useState(initialValue)`)។",
         "keyPoints": [
-          "Always call hooks at the top level of your component.",
-          "Never call hooks inside loops, conditions, or nested functions."
+          "ត្រូវតែហៅ hooks នៅកម្រិតកំពូល (Top level) នៃ React function component ជានិច្ច។",
+          "ដាច់ខាតកុំហៅ hooks នៅខាងក្នុង loops, conditions, ឬ nested functions។",
+          "នៅក្នុង TypeScript អ្នកអាចកំណត់ Generic type ដូចជា `useState<User | null>(null)` ដើម្បីធានា Type Safety។"
         ],
         "codeSnippet": "const [isOpen, setIsOpen] = useState(false);\nconst [user, setUser] = useState<User | null>(null);\nconst [tags, setTags] = useState<string[]>([]);",
         "codeLanguage": "jsx",
-        "codeTitle": "useState TypeScript Declarations"
+        "codeTitle": "useState TypeScript Declarations",
+        "proTip": "គោរពតាមច្បាប់ Rules of Hooks ជានិច្ច៖ ហៅ `useState` នៅកម្រិតខាងលើបង្អស់ (Top Level) នៃ Component មិនត្រូវដាក់ក្នុង if conditions ឬ loops ឡើយ។"
       },
       {
         "id": "m07-04",
         "number": "04",
         "title": "Updating State",
-        "summary": "Direct replacement vs functional updater pattern.",
-        "explanation": "When new state depends on previous state, always pass an updater function: `setCount(prev => prev + 1)`. This prevents stale closure bugs during batched updates.",
+        "summary": "ភាពខុសគ្នារវាងការជំនួសតម្លៃផ្ទាល់ និងការប្រើប្រាស់ Functional Updater Pattern (prev => prev + 1)។",
+        "explanation": "នៅពេលដែលតម្លៃ state ថ្មីត្រូវការគណនាផ្អែកលើតម្លៃ state ចាស់ អ្នកគួរតែបញ្ជូន callback function ទៅឱ្យ updater ជានិច្ច ដូចជា៖ `setCount(prev => prev + 1)`។ វិធីនេះធានាថាអ្នកនឹងទទួលបានតម្លៃ state ចុងក្រោយបង្អស់ជានិច្ច និងការពារបញ្ហា Stale Closure អំឡុងពេលមាន batched updates។",
         "keyPoints": [
-          "Functional update: `setCount(prev => prev + 1)`.",
-          "Guarantees reading the most recent state value in asynchronous callbacks."
+          "**Functional update pattern**៖ `setCount(prev => prev + 1)`។",
+          "ធានាថានឹងទាញយកតម្លៃ state ថ្មីបំផុតពិតប្រាកដ ទោះបីជាហៅច្រើនដងជាប់គ្នាក្នុង event តែមួយក៏ដោយ។",
+          "ជួយការពារ bugs នៅពេលដំណើរការក្នុង asynchronous callbacks (ដូចជា `setTimeout` ឬ `fetch`)។"
         ],
         "codeSnippet": "// ⚠️ Problem with direct state:\n// setCount(count + 1);\n// setCount(count + 1); // count is still stale; only increments by 1!\n\n// ✅ Solution: Functional updates\nsetCount(prev => prev + 1);\nsetCount(prev => prev + 1); // Increments by 2 safely!",
         "codeLanguage": "jsx",
-        "codeTitle": "Functional State Updates"
+        "codeTitle": "Functional State Updates",
+        "proTip": "នៅពេលណាដែលតម្លៃ State ថ្មីត្រូវពឹងផ្អែកលើតម្លៃ State ចាស់ ចូរប្រើ Functional Updater (`prev => ...`) ជានិច្ច ដើម្បីការពារបញ្ហា Stale State ពេលមាន batching ឬ async calls។"
       },
       {
         "id": "m07-05",
         "number": "05",
         "title": "State and Re-rendering",
-        "summary": "How React triggers reconciliation when Object.is() returns false.",
-        "explanation": "React compares old state with new state using `Object.is()`. If the reference is unchanged, React skips re-rendering. This is why mutating objects in place fails to trigger updates!",
+        "summary": "របៀបដែល React ធ្វើការប្រៀបធៀប Object.is() ដើម្បីសម្រេចថាតើត្រូវ re-render ឬអត់។",
+        "explanation": "React ធ្វើការប្រៀបធៀបតម្លៃ state ចាស់ និងថ្មីដោយប្រើប្រាស់ algorithm `Object.is()`។ ប្រសិនបើតម្លៃ memory reference នៅដដែល (មិនប្រែប្រួល) React នឹងសន្មតថាគ្មានអ្វីផ្លាស់ប្តូរឡើយ ហើយរំលងការ re-render ចោល។ ហេតុនេះហើយបានជាការ mutate objects ឬ arrays ដោយផ្ទាល់មិនអាចធ្វើឱ្យ UI ធ្វើបច្ចុប្បន្នភាពបាន។",
         "keyPoints": [
-          "Mutating an object/array in-place keeps identical memory reference -> no re-render!",
-          "Always return a new object or array copy via spread operator."
+          "ការ mutate object/array ដោយផ្ទាល់រក្សា memory reference ដដែល -> React មិន trigger re-render ឡើយ!",
+          "ត្រូវតែ return object ឬ array ថ្មីជានិច្ចតាមរយៈ Spread Operator (`...`) ឬ Immutable methods។",
+          "រាល់ការផ្លាស់ប្តូរ state ដោយជោគជ័យនឹងជំរុញឱ្យ component និង child components របស់វា re-render ឡើងវិញ។"
         ],
         "codeSnippet": "// ❌ Bug: Mutating array in place fails to re-render\n/*\nitems.push(newItem);\nsetItems(items); // Identical reference! React does nothing.\n*/\n\n// ✅ Fix: Create new array reference via spread\nsetItems(prev => [...prev, newItem]);",
         "codeLanguage": "jsx",
         "codeTitle": "Immutability & Object.is() Comparison",
-        "pitfall": "Directly mutating an array with `.push()` or `.splice()` will NOT trigger a re-render. Always use `[...prev, newItem]`."
+        "pitfall": "ការកែប្រែ array ឬ object ដោយផ្ទាល់ (in-place mutation) ដូចជា `.push()` ឬ `.splice()` នឹងមិន trigger ឱ្យមានការ re-render ឡើយ! ត្រូវតែបង្កើត reference ថ្មីជានិច្ច `[...prev, newItem]`។"
       },
       {
         "id": "m07-06",
         "number": "06",
         "title": "Updating Objects",
-        "summary": "Copying object properties with spread syntax.",
-        "explanation": "Use the object spread operator `...` to copy existing properties and overwrite the changed fields.",
+        "summary": "ការ update object state ដោយរក្សាគោលការណ៍ Immutability តាមរយៈ Object Spread Operator (...)។",
+        "explanation": "នៅក្នុង JavaScript អថេរ object គឺជា reference type។ នៅពេលអ្នកចង់កែប្រែ property ណាមួយនៅក្នុង object state អ្នកត្រូវតែប្រើប្រាស់ Object Spread Operator (`...`) ដើម្បីចម្លង properties ចាស់ៗទាំងអស់ រួច overwrite លើ property ណាដែលអ្នកចង់ផ្លាស់ប្តូរតម្លៃ។",
         "keyPoints": [
-          "Pattern: `setUser(prev => ({ ...prev, name: 'New Name' }))`."
+          "រូបមន្តទូទៅ៖ `setUser(prev => ({ ...prev, name: 'New Name' }))`។",
+          "កុំកែប្រែដោយផ្ទាល់ដូចជា `user.name = 'New Name'` ដាច់ខាត។",
+          "ត្រូវប្រាកដថា wrap object literals ដោយវង់ក្រចក `({ ... })` ពេល return ចេញពី arrow function។"
         ],
         "codeSnippet": "interface Profile {\n  name: string;\n  theme: 'light' | 'dark';\n  notifications: boolean;\n}\n\nconst [profile, setProfile] = useState<Profile>({\n  name: 'Alex',\n  theme: 'dark',\n  notifications: true,\n});\n\n// Update single field safely:\nconst toggleTheme = () => {\n  setProfile(prev => ({\n    ...prev,\n    theme: prev.theme === 'dark' ? 'light' : 'dark',\n  }));\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Updating Object State Immutably"
+        "codeTitle": "Updating Object State Immutably",
+        "proTip": "ត្រូវចងចាំថា Spread Operator `...prev` ធ្វើការ copy តែ shallow level ប៉ុណ្ណោះ។ ប្រសិនបើមាន nested objects ជ្រៅ អ្នកត្រូវ spread តាមដំណាក់កាលនីមួយៗ ឬពិចារណាប្រើ Immer library។"
       },
       {
         "id": "m07-07",
         "number": "07",
         "title": "Updating Arrays",
-        "summary": "Adding, filtering, updating, and removing array elements immutably.",
-        "explanation": "Use `.filter()` to delete, `.map()` to update an item, and `[...prev, item]` to add items.",
+        "summary": "វិធីសាស្ត្របន្ថែម លុប កែប្រែ និង filter ធាតុក្នុង array ដោយមិន mutate តម្លៃដើម។",
+        "explanation": "Arrays នៅក្នុង State មិនត្រូវកែប្រែតាមរយៈ mutating methods ដូចជា `.push()`, `.pop()`, `.splice()`, ឬ `.reverse()` ឡើយ។ ជំនួសមកវិញ អ្នកត្រូវតែប្រើប្រាស់ immutable methods ដូចជា `.filter()` សម្រាប់លុបធាតុ, `.map()` សម្រាប់កែប្រែធាតុ និង `[...prev, item]` សម្រាប់បន្ថែមធាតុថ្មី។",
         "keyPoints": [
-          "Add: `[...items, newItem]`",
-          "Remove: `items.filter(i => i.id !== id)`",
-          "Update: `items.map(i => i.id === id ? { ...i, done: true } : i)`"
+          "**បន្ថែមធាតុថ្មី**៖ `[...items, newItem]`",
+          "**លុបធាតុ**៖ `items.filter(i => i.id !== id)`",
+          "**កែប្រែធាតុជាក់លាក់**៖ `items.map(i => i.id === id ? { ...i, done: true } : i)`",
+          "វិធីសាស្ត្រទាំងអស់នេះបង្កើត array ថ្មីមួយជានិច្ច ដែលធ្វើឱ្យ React ដឹងពីការប្រែប្រួល និង re-render UI ភ្លាមៗ។"
         ],
         "codeSnippet": "// Common Immutable Array Operations:\n// 1. Add\nsetTodos(prev => [...prev, newTodo]);\n\n// 2. Remove\nsetTodos(prev => prev.filter(todo => todo.id !== deleteId));\n\n// 3. Update single item\nsetTodos(prev => prev.map(todo => \n  todo.id === targetId ? { ...todo, completed: !todo.completed } : todo\n));",
         "codeLanguage": "jsx",
-        "codeTitle": "Immutable Array Helpers"
+        "codeTitle": "Immutable Array Helpers",
+        "proTip": "ចងចាំក្បួន ៣ យ៉ាងសម្រាប់ Array State៖ បន្ថែមប្រើ `[...prev, item]`, លុបប្រើ `.filter()`, និងកែប្រែតម្លៃប្រើ `.map()`។"
       },
       {
         "id": "m07-08",
         "number": "08",
         "title": "Multiple State Variables",
-        "summary": "When to split state vs when to group related fields into an object.",
-        "explanation": "Split unrelated state into independent `useState` calls. Group state into an object only if fields change together or represent a unified form model.",
+        "summary": "ពេលណាដែលត្រូវបំបែក state ជាច្រើន និងពេលណាដែលគួរប្រមូលផ្តុំជា object តែមួយ។",
+        "explanation": "អ្នកអាចហៅ `useState` ច្រើនដងនៅក្នុង component តែមួយបាន។ គោលការណ៍ល្អគឺត្រូវបំបែក state ណាដែលមិនទាក់ទងគ្នាឱ្យនៅជាអថេរឯករាជ្យដាច់ដោយឡែកពីគ្នា។ វិធីនេះជួយឱ្យកូដងាយស្រួលអាន ងាយស្រួលថែទាំ និងងាយស្រួល refactor ទៅថ្ងៃមុខ។",
         "keyPoints": [
-          "Independent state variables make code easier to reason about and refactor."
+          "អថេរ State ដាច់ដោយឡែកពីគ្នាធ្វើឱ្យ logic មានភាពសាមញ្ញ និងកាត់បន្ថយភាពស្មុគស្មាញនៃការ update។",
+          "ដាក់បញ្ចូលគ្នាជា Object លុះត្រាតែវាជា fields នៃ Form តែមួយ ឬតម្លៃដែលផ្លាស់ប្តូរទន្ទឹមគ្នាជានិច្ច។",
+          "ជួយជៀសវាងការ spread properties ច្រើនជាន់ដោយមិនចាំបាច់។"
         ],
         "codeSnippet": "// Good: Independent concerns kept separate\nconst [searchQuery, setSearchQuery] = useState('');\nconst [currentPage, setCurrentPage] = useState(1);\nconst [isLoading, setIsLoading] = useState(false);",
         "codeLanguage": "jsx",
-        "codeTitle": "Multiple State Slices"
+        "codeTitle": "Multiple State Slices",
+        "proTip": "បំបែក state ប្រសិនបើតម្លៃទាំងនោះផ្លាស់ប្តូរដាច់ដោយឡែកពីគ្នា។ ប្រមូលផ្តុំជា object តែមួយប្រសិនបើតម្លៃទាំងនោះតែងតែផ្លាស់ប្តូរជាមួយគ្នា (ដូចជា mouse coordinates `{x, y}`) ឬជា form inputs។"
       },
       {
         "id": "m07-09",
         "number": "09",
         "title": "Derived State",
-        "summary": "Calculating values on the fly instead of storing redundant state.",
-        "explanation": "Never store in state what can be calculated from existing props or state! Calculate derived values directly during rendering.",
+        "summary": "ការគណនាតម្លៃចេញពី state/props ដែលមានស្រាប់អំឡុងពេល render ដោយមិនចាំបាច់បង្កើត state ជាន់គ្នា។",
+        "explanation": "កំហុសដ៏ធំបំផុតមួយក្នុង React គឺការបង្កើត State ស្ទួន (redundant state) សម្រាប់ទិន្នន័យដែលអាចគណនាចេញពី props ឬ state ដទៃទៀតបាន។ អ្នកមិនចាំបាច់រក្សាទុកអ្វីដែលជាលទ្ធផលនៃការគណនានោះទេ ចូរគណនាវាដោយផ្ទាល់ (Derived on the fly) អំឡុងពេល render។",
         "keyPoints": [
-          "Storing redundant state leads to out-of-sync bugs.",
-          "Use `useMemo` only if derived calculation is computationally heavy."
+          "ការរក្សាទុក State ស្ទួននឹងនាំឱ្យកើតមាន bugs ធ្ងន់ធ្ងរនៅពេលដែលទិន្នន័យទាំងពីរមិនស៊ីសង្វាក់គ្នា (Out-of-sync)។",
+          "គណនាដោយផ្ទាល់ក្នុង component body៖ `const count = items.length;`។",
+          "ប្រើប្រាស់ `useMemo` លុះត្រាតែការគណនានោះមានភាពស្មុគស្មាញ និងស៊ីធនធាន CPU ខ្លាំង (expensive calculation) ប៉ុណ្ណោះ។"
         ],
         "codeSnippet": "// ❌ Redundant state anti-pattern:\n// const [items, setItems] = useState([]);\n// const [itemCount, setItemCount] = useState(0); // Redundant!\n\n// ✅ Derived state:\nexport function CartView({ items }: { items: CartItem[] }) {\n  // Purely derived calculation during render:\n  const itemCount = items.length;\n  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);\n\n  return <div>Total ({itemCount} items): ${totalPrice.toFixed(2)}</div>;\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Derived State Pattern",
-        "proTip": "Ask yourself: Can I calculate this value from existing state or props? If yes, do NOT put it in useState!"
+        "proTip": "ចូរសួរខ្លួនឯងថា៖ តើតម្លៃនេះអាចគណនាចេញពី Props ឬ State ដែលមានស្រាប់បានដែរឬទេ? ប្រសិនបើអាច ដាច់ខាតកុំយកវាទៅដាក់ក្នុង `useState`!"
       },
       {
         "id": "m07-10",
         "number": "10",
         "title": "State Initialization",
-        "summary": "Lazy state initialization for expensive setup computations.",
-        "explanation": "If your initial state requires heavy computation (like parsing JSON from `localStorage`), pass an initializer function to `useState(() => computeValue())`. It runs only once on initial mount!",
+        "summary": "ការប្រើប្រាស់ Lazy State Initialization Function សម្រាប់ប្រតិបត្តិការ setup ដែលស៊ី memory ឬ CPU ខ្លាំង។",
+        "explanation": "ប្រសិនបើតម្លៃដំបូង (initial state) នៃ component របស់អ្នកត្រូវការការគណនាស្មុគស្មាញ ឬអានទិន្នន័យពី Storage (ដូចជាការ parse JSON ពី `localStorage`) អ្នកគួរតែបញ្ជូន function ទៅកាន់ `useState(() => computeValue())` ដែលហៅថា **Lazy State Initialization**។ Function នេះនឹងដំណើរការតែម្តងគត់នៅពេល component ត្រូវ mount ដំបូង។",
         "keyPoints": [
-          "`useState(computeValue())` runs on every render.",
-          "`useState(() => computeValue())` runs ONLY on mount."
+          "ការសរសេរ `useState(computeValue())` នឹងដំណើរការ `computeValue()` រាល់ពេលដែល component ធ្វើការ re-render (ខ្ជះខ្ជាយ CPU)។",
+          "ការសរសេរ `useState(() => computeValue())` ដំណើរការតែម្តងគត់នៅពេល initial mount។",
+          "ជួយបង្កើន performance របស់ application យ៉ាងខ្លាំងចំពោះ heavy setup operations។"
         ],
         "codeSnippet": "// Runs only once on initial mount:\nconst [savedTheme, setSavedTheme] = useState(() => {\n  if (typeof window === 'undefined') return 'dark';\n  return localStorage.getItem('theme') || 'dark';\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Lazy State Initialization Function"
+        "codeTitle": "Lazy State Initialization Function",
+        "proTip": "ប្រសិនបើការទាញយក initial value ត្រូវការអានពី `localStorage` ឬ parse JSON ធំ ចូរប្រើ `useState(() => getHeavyData())` ព្រោះវាដំណើរការតែម្តងគត់ពេល component mount ដំបូង។"
       },
       {
         "id": "m07-11",
         "number": "11",
         "title": "State Batching",
-        "summary": "React 18+ automatic grouping of multiple updates in promises and timeouts.",
-        "explanation": "React automatically batches state updates across async boundaries (setTimeout, fetch promises, native events) into a single re-render.",
+        "summary": "យន្តការ Automatic Batching ក្នុង React 18+ ដែលប្រមូលផ្តុំ updates ច្រើនក្នុង async calls ឱ្យ render តែម្តងគត់។",
+        "explanation": "State Batching គឺជាយន្តការឆ្លាតវៃរបស់ React ដែលធ្វើការប្រមូលផ្តុំការផ្លាស់ប្តូរ state ជាច្រើនបញ្ចូលគ្នា រួចធ្វើការ re-render តែមួយលើកគត់ ដើម្បីបង្កើនល្បឿន និងប្រសិទ្ធភាពនៃ application។ ចាប់ពី React 18 ឡើងទៅ យន្តការ **Automatic Batching** នេះដំណើរការលើគ្រប់ស្ថានភាពទាំងអស់ រួមទាំង asynchronous operations ដូចជា Promises, `setTimeout`, ឬ native event listeners។",
         "keyPoints": [
-          "Reduces unnecessary intermediate renders and boosts performance."
+          "កាត់បន្ថយការ re-render កម្រិតមធ្យមដែលមិនចាំបាច់ (prevents unnecessary intermediate re-renders)។",
+          "ជួយបង្កើន overall rendering performance របស់កម្មវិធី។",
+          "ប្រសិនបើអ្នកត្រូវការ force update ភ្លាមៗ (កម្រជួប) អ្នកអាចប្រើ `flushSync()` ពី `react-dom` បាន។"
         ],
         "codeSnippet": "async function handleAsyncSave() {\n  await api.save();\n  // In React 18+, both updates batch into 1 single render:\n  setIsLoading(false);\n  setSuccess(true);\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Automatic Async Batching"
+        "codeTitle": "Automatic Async Batching",
+        "proTip": "នៅក្នុង React 18+ Automatic Batching ដំណើរការគ្រប់ទីកន្លែង រួមទាំងខាងក្នុង `setTimeout`, Promises និង Native Event Handlers ផងដែរ។"
       },
       {
         "id": "m07-12",
         "number": "12",
         "title": "State Management Best Practices",
-        "summary": "Keep state local, lift state only when needed, and avoid duplicate sources of truth.",
-        "explanation": "State should live as close to where it is used as possible. Only lift state to common ancestors when siblings require synchronization.",
+        "summary": "គោលការណ៍ State Colocation, ការរក្សា state ឱ្យនៅកៀក UI បំផុត និង Single Source of Truth។",
+        "explanation": "ការគ្រប់គ្រង State ឱ្យមានរបៀបរៀបរយគឺជាគន្លឹះចម្បងក្នុងការជៀសវាង bugs និងធ្វើឱ្យកម្មវិធី React ងាយស្រួលពង្រីក។ គោលការណ៍ចម្បងគឺត្រូវរក្សា State ឱ្យនៅជិតបំផុតទៅនឹងទីកន្លែងដែលត្រូវប្រើប្រាស់វា (State Colocation) និងជៀសវាងការបង្កើត Global State ដោយមិនចាំបាច់។",
         "keyPoints": [
-          "Colocate state with the components that render it."
+          "**State Colocation**៖ រក្សា state ឱ្យនៅខាងក្នុង component ផ្ទាល់។ លើក state ឡើងទៅ parent (Lifting State Up) លុះត្រាតែមាន sibling components ផ្សេងទៀតត្រូវការប្រើប្រាស់ទិន្នន័យនោះរួមគ្នា។",
+          "**Single Source of Truth**៖ កុំចម្លង props ទៅដាក់ក្នុង state លុះត្រាតែអ្នកមានបំណងចង់ឱ្យវាដើរតួជា initial value ស៊ីដាច់ដោយឡែក។",
+          "រក្សា state ឱ្យនៅជាទម្រង់សាមញ្ញ និងប្រើ derived values ជំនួសការបង្កើត state ស្ទួន។"
         ],
         "codeSnippet": "// State Colocation Rule:\n// If only ComponentA needs 'isModalOpen', keep it inside ComponentA,\n// NOT in the global store or App root!",
         "codeLanguage": "jsx",
-        "codeTitle": "State Colocation Rule"
+        "codeTitle": "State Colocation Rule",
+        "proTip": "គោលការណ៍ State Colocation៖ ប្រសិនបើមានតែ ComponentA មួយគត់ដែលប្រើប្រាស់ state នោះ ចូរទុកវានៅក្នុង ComponentA កុំទាន់ប្រញាប់លើកវាទៅដាក់ក្នុង Global Store ឬ App Root!"
       }
     ]
   },
@@ -1361,179 +1420,217 @@ export const modulesData: ModuleItem[] = [
     "number": "08",
     "title": "Forms",
     "category": "Core Concepts",
-    "summary": "Controlled vs uncontrolled components, input types, form validation, error states, and reusable form components.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី Controlled vs Uncontrolled Components, ប្រភេទ Input ផ្សេងៗ (Text, Textarea, Select, Checkbox, Radio), Form Validation, ការគ្រប់គ្រង Error States និងការបង្កើត Reusable Form Components។",
     "iconName": "FileText",
     "topics": [
       {
         "id": "m08-01",
         "number": "01",
         "title": "React Forms",
-        "summary": "HTML form elements vs React's state-driven input models.",
-        "explanation": "In standard HTML, form inputs hold their own internal DOM state. In React, we bind input values to React state, making React the single source of truth.",
+        "summary": "ភាពខុសគ្នារវាងទម្រង់ Form ធម្មតាក្នុង HTML និង State-driven model របស់ React។",
+        "explanation": "នៅក្នុង HTML ធម្មតា ធាតុ form inputs ដូចជា `<input>`, `<textarea>`, និង `<select>` តែងតែរក្សាទុក state ផ្ទៃក្នុងរបស់វាដោយផ្ទាល់នៅលើ DOM។ ប៉ុន្តែនៅក្នុង React វិញ យើងចងភ្ជាប់តម្លៃរបស់ input ទៅនឹង React State ដោយធ្វើឱ្យ State ដើរតួជា Single Source of Truth (ប្រភពទិន្នន័យតែមួយគត់ដែលគួរឱ្យទុកចិត្ត)។",
         "keyPoints": [
-          "Controlled inputs bind `value` to state and `onChange` to state setters."
+          "**Controlled Inputs**៖ ចងភ្ជាប់ attribute `value` ទៅនឹង State និងប្រើ event handler `onChange` ដើម្បី update State នោះ។",
+          "Component គ្រប់គ្រងរាល់អ្វីៗទាំងអស់ដែលបង្ហាញនៅលើ screen ធ្វើឱ្យការ validate និង format ទិន្នន័យមានភាពងាយស្រួល។",
+          "ជួយឱ្យ UI ឆ្លើយតបទាន់ចិត្តភ្លាមៗរាល់ពេលដែលអ្នកប្រើប្រាស់វាយបញ្ចូលអក្សរ។"
         ],
         "codeSnippet": "export function SimpleForm() {\n  const [name, setName] = useState('');\n  return (\n    <input \n      value={name} \n      onChange={(e) => setName(e.target.value)} \n      className=\"p-2 border rounded\"\n    />\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Controlled Input",
+        "proTip": "នៅក្នុង React យើងមិនទាញតម្លៃ input ចេញពី DOM តាមរយៈ `document.getElementById` ឡើយ។ យើងចងភ្ជាប់តម្លៃ input ជាមួយ State ដើម្បីឱ្យ React ក្លាយជា Single Source of Truth។",
         "interactiveDemoKey": "FormValidationDemo"
       },
       {
         "id": "m08-02",
         "number": "02",
         "title": "Controlled Components",
-        "summary": "Inputs whose values are strictly driven by React state.",
-        "explanation": "A controlled component guarantees that what the user sees on screen is always in sync with component state. It allows validating, formatting, and masking input values in real-time.",
+        "summary": "ការគ្រប់គ្រងតម្លៃ Inputs ទាំងស្រុងតាមរយៈ React State (Single Source of Truth)។",
+        "explanation": "Controlled Component ធានាថារាល់អ្វីៗដែលអ្នកប្រើប្រាស់មើលឃើញនៅលើអេក្រង់ គឺតែងតែស៊ីសង្វាក់គ្នា (synchronized) ជាមួយ React State ជានិច្ច។ វិធីសាស្ត្រនេះអនុញ្ញាតឱ្យយើងអាចត្រួតពិនិត្យ (validate), កែតម្រូវទម្រង់ (format), និងសម្អាត (sanitize) តម្លៃដែលបញ្ចូលមកបានភ្លាមៗក្នុង real-time។",
         "keyPoints": [
-          "Value is governed by state.",
-          "Mutations pass through `onChange` handler before reflecting on screen."
+          "តម្លៃរបស់ element ត្រូវបានកំណត់ និងគ្រប់គ្រងដោយ State ជានិច្ច (`value={state}`)។",
+          "រាល់ការផ្លាស់ប្តូរតម្លៃត្រូវតែឆ្លងកាត់ `onChange` handler ជាមុនសិន មុនពេលបង្ហាញឡើងវិញនៅលើអេក្រង់។",
+          "អ្នកអាចបដិសេធ ឬកែសម្រួលអក្សរដែលអ្នកប្រើប្រាស់វាយចូល (ឧទាហរណ៍៖ អនុញ្ញាតឱ្យវាយតែលេខ) យ៉ាងងាយស្រួល។"
         ],
         "codeSnippet": "export function PhoneInput() {\n  const [phone, setPhone] = useState('');\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    // Only allow digits:\n    const cleaned = e.target.value.replace(/\\D/g, '').slice(0, 10);\n    setPhone(cleaned);\n  };\n\n  return <input value={phone} onChange={handleChange} placeholder=\"Digits only\" />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Input with Sanitization"
+        "codeTitle": "Controlled Input with Sanitization",
+        "proTip": "Controlled Components អនុញ្ញាតឱ្យអ្នកធ្វើការ format ឬ sanitize ទិន្នន័យ (ដូចជាលេខទូរស័ព្ទ ឬកាតធនាគារ) បានភ្លាមៗមុនពេលវាត្រូវបានបង្ហាញលើអេក្រង់។"
       },
       {
         "id": "m08-03",
         "number": "03",
         "title": "Input Fields",
-        "summary": "Handling text, number, email, and password types.",
-        "explanation": "Standard input types behave identically to HTML, with camelCase attributes.",
+        "summary": "ការគ្រប់គ្រង input types ផ្សេងៗដូចជា text, number, email និង password។",
+        "explanation": "ធាតុ `<input>` ស្តង់ដារនៅក្នុង React មានឥរិយាបថដូចគ្នានឹង HTML input ធម្មតាដែរ ប៉ុន្តែ attributes មួយចំនួនត្រូវបានប្តូរទៅជាទម្រង់ camelCase។ អ្នកអាចប្រើប្រាស់ input types ផ្សេងៗដូចជា `text`, `email`, `password`, ឬ `number` ជាមួយ Controlled State បានយ៉ាងរលូន។",
         "keyPoints": [
-          "Use `type=\"email\"` or `type=\"password\"` with controlled values."
+          "ប្រើប្រាស់ `type=\"email\"` ឬ `type=\"password\"` ជាមួយនឹង controlled values ជានិច្ច។",
+          "តែងតែផ្តល់នូវ `placeholder` និង label ច្បាស់លាស់ដើម្បីបង្កើន accessibility និងបទពិសោធន៍អ្នកប្រើប្រាស់។",
+          "ប្រើ Tailwind classes ដើម្បីរៀបចំ styles ឱ្យស្រស់ស្អាត ដូចជា focus ring និង border states។"
         ],
         "codeSnippet": "<input \n  type=\"password\"\n  value={password}\n  onChange={(e) => setPassword(e.target.value)}\n  placeholder=\"Enter secure password\"\n  className=\"px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white\"\n/>",
         "codeLanguage": "jsx",
-        "codeTitle": "Password Input"
+        "codeTitle": "Password Input",
+        "proTip": "សម្រាប់ `type=\"number\"` ចងចាំថា `e.target.value` នៅតែ return ជា string ជានិច្ច។ ដូច្នេះអ្នកត្រូវប្រើ `Number(e.target.value)` ឬ `e.target.valueAsNumber` ប្រសិនបើចង់បានតម្លៃជាលេខពិតប្រាកដ។"
       },
       {
         "id": "m08-04",
         "number": "04",
         "title": "Textarea",
-        "summary": "Multi-line text input with controlled value prop.",
-        "explanation": "Unlike HTML where textarea content sits between tags (`<textarea>hello</textarea>`), React uses the `value` attribute: `<textarea value={bio} onChange={...} />`.",
+        "summary": "ការគ្រប់គ្រង multi-line text input ដោយប្រើ controlled value prop ជំនួសឱ្យ children។",
+        "explanation": "ខុសប្លែកពី HTML ស្តង់ដារដែលអត្ថបទរបស់ textarea ត្រូវស្ថិតនៅចន្លោះបើក និងបិទ tags នៅក្នុង React ធាតុ `<textarea>` ត្រូវបានរចនាឡើងឱ្យប្រើប្រាស់ `value` attribute ដូចគ្នានឹង `<input>` ធម្មតាដែរ។ ការធ្វើបែបនេះជួយឱ្យ API នៃ form elements ទាំងអស់មានភាពស៊ីសង្វាក់គ្នាតែមួយ។",
         "keyPoints": [
-          "Use `value` attribute, not children."
+          "ប្រើប្រាស់ `value` attribute សម្រាប់កំណត់តម្លៃអត្ថបទ មិនត្រូវដាក់ជា children ឡើយ។",
+          "ប្រើ `rows` និង `cols` ឬ CSS classes ដើម្បីកំណត់កម្ពស់ដំបូងនៃ textarea។",
+          "ភ្ជាប់ `onChange={(e) => setBio(e.target.value)}` ដើម្បី update state ពេលវាយបញ្ចូល។"
         ],
         "codeSnippet": "<textarea \n  value={bio} \n  onChange={(e) => setBio(e.target.value)} \n  rows={4} \n  className=\"w-full bg-slate-900 border rounded-lg p-3 text-white\"\n/>",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Textarea"
+        "codeTitle": "Controlled Textarea",
+        "pitfall": "នៅក្នុង HTML ធម្មតា អត្ថបទក្នុង textarea ត្រូវសរសេរនៅចន្លោះ tags `<textarea>hello</textarea>`។ ប៉ុន្តែក្នុង React ការធ្វើបែបនេះជាកំហុស! អ្នកត្រូវតែប្រើ `value` attribute ជានិច្ច `<textarea value={bio} />`។"
       },
       {
         "id": "m08-05",
         "number": "05",
         "title": "Select",
-        "summary": "Dropdown select with controlled option values.",
-        "explanation": "In React, you put the `value` prop directly on the `<select>` tag rather than marking an `<option selected>`.",
+        "summary": "ការគ្រប់គ្រង Dropdown select ដោយកំណត់ value ផ្ទាល់លើ <select> tag។",
+        "explanation": "នៅក្នុង HTML ធម្មតា ដើម្បីកំណត់ថាជម្រើសណាមួយត្រូវបានជ្រើសរើស អ្នកត្រូវដាក់ attribute `selected` ទៅលើ `<option selected>` ជាក់លាក់នោះ។ ប៉ុន្តែនៅក្នុង React អ្នកគ្រាន់តែបញ្ជាក់ `value` prop ទៅលើ tag `<select>` ផ្ទាល់តែម្តង ដែលធ្វើឱ្យការគ្រប់គ្រង dropdown selection កាន់តែមានភាពងាយស្រួល។",
         "keyPoints": [
-          "`<select value={selected}>` defines active selection."
+          "`<select value={selected}>` ជាអ្នកកំណត់ថាតើ option ណាដែលកំពុង active។",
+          "តម្លៃក្នុង `<select>` នឹង update តាមរយៈ `onChange={(e) => setRole(e.target.value)}`។",
+          "អាច loop បង្ហាញ options ពី array នៃទិន្នន័យដោយប្រើ `.map()` រួមជាមួយ `key` prop។"
         ],
         "codeSnippet": "<select \n  value={role} \n  onChange={(e) => setRole(e.target.value)}\n  className=\"bg-slate-900 border border-slate-800 text-white rounded-lg p-2\"\n>\n  <option value=\"student\">Student</option>\n  <option value=\"instructor\">Instructor</option>\n  <option value=\"admin\">Administrator</option>\n</select>",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Select Dropdown"
+        "codeTitle": "Controlled Select Dropdown",
+        "proTip": "នៅក្នុង React កុំដាក់ attribute `selected` នៅលើ `<option>` ឡើយ។ គ្រាន់តែបញ្ជាក់ `value={selectedRole}` នៅលើ `<select>` tag គឺគ្រប់គ្រាន់ហើយ។"
       },
       {
         "id": "m08-06",
         "number": "06",
         "title": "Checkbox",
-        "summary": "Boolean inputs using checked prop and e.target.checked.",
-        "explanation": "Checkboxes use `checked={isChecked}` instead of `value`, and you read `e.target.checked` in the handler.",
+        "summary": "ការគ្រប់គ្រង boolean inputs តាមរយៈ checked prop និង e.target.checked។",
+        "explanation": "Checkbox ត្រូវបានប្រើប្រាស់សម្រាប់ទិន្នន័យប្រភេទ Boolean (`true` ឬ `false`) ដូចជាការយល់ព្រមលើលក្ខខណ្ឌ ឬការបើក/បិទមុខងារណាមួយ។ នៅក្នុង React អ្នកត្រូវប្រើប្រាស់ attribute `checked={isChecked}` ជំនួសឱ្យ `value` ហើយអានតម្លៃតាមរយៈ `e.target.checked`។",
         "keyPoints": [
-          "Read `e.target.checked`, not `e.target.value`."
+          "ប្រើ `checked={booleanValue}` ដើម្បីកំណត់ស្ថានភាពជ្រើសរើស។",
+          "អានតម្លៃតាមរយៈ `e.target.checked` មិនមែន `e.target.value` ឡើយ។",
+          "តែងតែរុំព័ទ្ធ checkbox នៅក្នុង `<label>` ជាមួយនឹង text ដើម្បីឱ្យ user អាចចុចលើអក្សរបាន (Clickable area ធំជាងមុន)។"
         ],
         "codeSnippet": "<label className=\"flex items-center gap-2 cursor-pointer\">\n  <input \n    type=\"checkbox\" \n    checked={agreed} \n    onChange={(e) => setAgreed(e.target.checked)}\n    className=\"w-4 h-4 rounded text-blue-600\"\n  />\n  <span className=\"text-sm text-slate-300\">I accept terms and conditions</span>\n</label>",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Checkbox"
+        "codeTitle": "Controlled Checkbox",
+        "pitfall": "ដាច់ខាតកុំអាន `e.target.value` លើ checkbox ព្រោះវានឹងផ្តល់តម្លៃ string 'on' ជានិច្ច! ត្រូវអាន `e.target.checked` ដែលផ្តល់តម្លៃ boolean (`true` ឬ `false`)។"
       },
       {
         "id": "m08-07",
         "number": "07",
         "title": "Radio Button",
-        "summary": "Single-choice selection from a group.",
-        "explanation": "Radio buttons share a common `name` attribute and are controlled by comparing `checked={selectedOption === value}`.",
+        "summary": "ការគ្រប់គ្រងការជ្រើសរើសជម្រើសតែមួយគត់ចេញពីក្រុម (Radio Group)។",
+        "explanation": "Radio Buttons ត្រូវបានប្រើប្រាស់នៅពេលដែលអ្នកចង់ឱ្យអ្នកប្រើប្រាស់ជ្រើសរើសយកជម្រើសតែមួយគត់ (Single-choice) ចេញពីជម្រើសជាច្រើន។ គ្រប់ radio inputs នៅក្នុង group តែមួយត្រូវតែប្រើប្រាស់ `name` attribute ដូចគ្នា និងត្រូវគ្រប់គ្រងដោយការប្រៀបធៀប `checked={selectedOption === value}`។",
         "keyPoints": [
-          "Bind all radios in group to the same state string."
+          "ចងភ្ជាប់ radio buttons ទាំងអស់ក្នុង group ទៅកាន់ state string តែមួយ។",
+          "លក្ខខណ្ឌជ្រើសរើសត្រូវបានកំណត់តាមរយៈ boolean expression៖ `checked={plan === option}`។",
+          "ប្រើ `.map()` ដើម្បី render radio buttons ចេញពី array ដើម្បីកាត់បន្ថយកូដស្ទួន។"
         ],
         "codeSnippet": "export function PlanSelector() {\n  const [plan, setPlan] = useState<'free' | 'pro'>('pro');\n\n  return (\n    <div className=\"flex gap-4\">\n      {['free', 'pro'].map((option) => (\n        <label key={option} className=\"flex items-center gap-2\">\n          <input \n            type=\"radio\" \n            name=\"plan\" \n            value={option} \n            checked={plan === option} \n            onChange={(e) => setPlan(e.target.value as 'free' | 'pro')} \n          />\n          <span className=\"capitalize\">{option} Plan</span>\n        </label>\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlled Radio Group"
+        "codeTitle": "Controlled Radio Group",
+        "proTip": "Radio buttons ទាំងអស់នៅក្នុង group តែមួយត្រូវតែមាន `name` attribute ដូចគ្នា និងចងភ្ជាប់ទៅកាន់ State string តែមួយគត់។"
       },
       {
         "id": "m08-08",
         "number": "08",
         "title": "Form Submission",
-        "summary": "Packaging form data and sending to API endpoints.",
-        "explanation": "Handle form submission on `<form onSubmit={...}>` with validation before dispatching to an API service.",
+        "summary": "ការវេចខ្ចប់ទិន្នន័យ Form និងការបញ្ជូនទៅកាន់ API endpoints ដោយសុវត្ថិភាព។",
+        "explanation": "ការគ្រប់គ្រង Form Submission នៅក្នុង React ត្រូវបានធ្វើឡើងតាមរយៈ event `onSubmit` នៅលើ `<form>` tag។ មុនពេលបញ្ជូនទិន្នន័យទៅកាន់ API endpoint យើងត្រូវធ្វើការ validation ពិនិត្យភាពត្រឹមត្រូវ និងគ្រប់គ្រង loading state ដើម្បីកុំឱ្យអ្នកប្រើប្រាស់ចុច submit ស្ទួនច្រើនដង។",
         "keyPoints": [
-          "Always prevent default browser reload."
+          "ត្រូវតែហៅ `e.preventDefault()` ជានិច្ចដើម្បីការពារមិនឱ្យ browser ធ្វើការ refresh ទំព័រ។",
+          "បើក `isSubmitting = true` អំឡុងពេល network request កំពុងដំណើរការ និងបិទ submit button។",
+          "បង្ហាញ notification banners ឬ toast messages នៅពេល submission ជោគជ័យ ឬជួបកំហុស error។"
         ],
         "codeSnippet": "const handleSubmit = async (e: React.FormEvent) => {\n  e.preventDefault();\n  setIsSubmitting(true);\n  try {\n    await apiClient.post('/users', formData);\n    showSuccessToast('User registered successfully');\n  } catch (err) {\n    showErrorToast('Failed to register user');\n  } finally {\n    setIsSubmitting(false);\n  }\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Safe Form Submission Handler"
+        "codeTitle": "Safe Form Submission Handler",
+        "proTip": "ប្រើ try/catch/finally block រួមជាមួយ `isSubmitting` state ជានិច្ច ដើម្បីការពារការចុច double-submit និងបង្ហាញ visual loading feedback ដល់ user។"
       },
       {
         "id": "m08-09",
         "number": "09",
         "title": "Form State",
-        "summary": "Managing multi-field forms with a single state object.",
-        "explanation": "Instead of 10 individual `useState` calls for a 10-field form, use a single state object indexed with `e.target.name`.",
+        "summary": "ការគ្រប់គ្រង inputs ច្រើន fields ក្នុងពេលតែមួយដោយប្រើ State Object តែមួយ។",
+        "explanation": "ប្រសិនបើ form របស់អ្នកមាន input fields ច្រើន (ឧទាហរណ៍ ៥ ទៅ ១០ fields) ការបង្កើត `useState` ដាច់ដោយឡែកសម្រាប់ field នីមួយៗនឹងធ្វើឱ្យកូដវែងអន្លាយ និងពិបាកគ្រប់គ្រង។ ដំណោះស្រាយដ៏ប្រសើរគឺការប្រើប្រាស់ **Single State Object** រួមជាមួយ dynamic object key `[e.target.name]: e.target.value`។",
         "keyPoints": [
-          "Dynamic object keys: `[e.target.name]: e.target.value`."
+          "ប្រើ Dynamic Object Property Keys ក្នុង JavaScript៖ `[e.target.name]: e.target.value`។",
+          "ត្រូវប្រាកដថាបាន spread state ចាស់ជានិច្ច (`...prev`) ដើម្បីកុំឱ្យបាត់បង់ទិន្នន័យក្នុង fields ដទៃទៀត។",
+          "ងាយស្រួលក្នុងការ reset form ទាំងមូលត្រឡប់ទៅជា clean object វិញក្រោយពេល submit។"
         ],
         "codeSnippet": "export function MultiFieldForm() {\n  const [form, setForm] = useState({ firstName: '', lastName: '', email: '' });\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    setForm(prev => ({\n      ...prev,\n      [e.target.name]: e.target.value,\n    }));\n  };\n\n  return (\n    <form className=\"space-y-2\">\n      <input name=\"firstName\" value={form.firstName} onChange={handleChange} placeholder=\"First Name\" />\n      <input name=\"lastName\" value={form.lastName} onChange={handleChange} placeholder=\"Last Name\" />\n      <input name=\"email\" value={form.email} onChange={handleChange} placeholder=\"Email\" />\n    </form>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Unified Multi-Field Form Handler"
+        "codeTitle": "Unified Multi-Field Form Handler",
+        "proTip": "កំណត់ attribute `name` លើ input នីមួយៗឱ្យដូចគ្នាបេះបិទនឹង key នៅក្នុង Form State Object នោះអ្នកអាចប្រើ generic `handleChange` តែមួយមុខគត់សម្រាប់គ្រប់ fields ទាំងអស់!"
       },
       {
         "id": "m08-10",
         "number": "10",
         "title": "Form Validation",
-        "summary": "Client-side synchronous validation rules.",
-        "explanation": "Validate inputs against rules (minimum length, email regex, required fields) and store errors in a dedicated error object.",
+        "summary": "ក្បួនច្បាប់នៃការ validate ទិន្នន័យ synchronously នៅខាង client-side។",
+        "explanation": "Client-side Form Validation គឺជាដំណាក់កាលត្រួតពិនិត្យភាពត្រឹមត្រូវនៃទិន្នន័យដែលអ្នកប្រើប្រាស់បានបញ្ចូល (ដូចជា ប្រវែងអប្បបរមា, ទម្រង់ Email regex, ឬ Required fields) មុនពេលបញ្ជូនទៅកាន់ server។ រាល់កំហុសដែលរកឃើញនឹងត្រូវរក្សាទុកក្នុង Errors Object ដើម្បីយកទៅបង្ហាញលើ UI។",
         "keyPoints": [
-          "Validate either `onChange`, `onBlur`, or `onSubmit`."
+          "បង្កើត validation function ដែល return boolean (`isValid`) ឬ error map object។",
+          "ពិនិត្យលក្ខខណ្ឌច្បាស់លាស់ ដូចជាវត្តមានតួអក្សរ `@` ក្នុង email ឬប្រវែង password យ៉ាងតិច ៨ តួ។",
+          "ប្រសិនបើមាន errors ត្រូវបញ្ឈប់ដំណើរការ submission ភ្លាមៗ និងបង្ហាញសារប្រាប់ user។"
         ],
         "codeSnippet": "const validate = () => {\n  const newErrors: Record<string, string> = {};\n  if (!form.email.includes('@')) newErrors.email = 'Invalid email address';\n  if (form.password.length < 8) newErrors.password = 'Password must be at least 8 characters';\n  setErrors(newErrors);\n  return Object.keys(newErrors).length === 0;\n};",
         "codeLanguage": "jsx",
-        "codeTitle": "Synchronous Validation Logic"
+        "codeTitle": "Synchronous Validation Logic",
+        "proTip": "ការ validate អាចធ្វើឡើងនៅពេល `onSubmit` (សាមញ្ញបំផុត), `onBlur` (ពេល user ចាកចេញពី field), ឬ `onChange` (real-time feedback) ផ្អែកលើបទពិសោធន៍ UX ដែលអ្នកចង់ផ្តល់ជូន។"
       },
       {
         "id": "m08-11",
         "number": "11",
         "title": "Validation Errors",
-        "summary": "Rendering user-friendly error banners and inline field messages.",
-        "explanation": "Display red borders on invalid inputs and contextual error messages below them.",
+        "summary": "ការបង្ហាញសារប្រាប់ error ឱ្យស្អាត និងងាយយល់នៅកៀកនឹង input fields នីមួយៗ (Inline Errors)។",
+        "explanation": "ការបង្ហាញកំហុសនៅលើ UI គួរតែមានភាពច្បាស់លាស់ និងនៅកៀកនឹង input field ផ្ទាល់ (Inline Errors)។ អ្នកអាចផ្លាស់ប្តូរពណ៌ border នៃ input ទៅជាពណ៌ក្រហម (rose/red) និងបង្ហាញ error text នៅពីក្រោម input ដើម្បីឱ្យអ្នកប្រើប្រាស់ងាយស្រួលកែតម្រូវ។",
         "keyPoints": [
-          "Accessible error messages linked via `aria-describedby`."
+          "ផ្លាស់ប្តូរ CSS border classes ដោយផ្អែកលើវត្តមានរបស់ error (ឧ. `errors.email && \"border-rose-500\"`).",
+          "បង្ហាញ conditional message ខាងក្រោម input ដោយប្រើ syntax `errors.field && <p>{errors.field}</p>`។",
+          "ប្រើ attribute `aria-describedby` សម្រាប់ accessibility ដើម្បីឱ្យ screen readers អាចអាន error message បាន។"
         ],
         "codeSnippet": "<div>\n  <input \n    className={cn(\"border rounded p-2\", errors.email && \"border-rose-500 bg-rose-950/20\")}\n    value={email}\n    onChange={(e) => setEmail(e.target.value)}\n  />\n  {errors.email && <p className=\"text-xs text-rose-400 mt-1\">{errors.email}</p>}\n</div>",
         "codeLanguage": "jsx",
-        "codeTitle": "Inline Validation Error"
+        "codeTitle": "Inline Validation Error",
+        "proTip": "Inline error messages ផ្តល់ UX ល្អជាង alert popups ឆ្ងាយណាស់ ព្រោះវាប្រាប់អ្នកប្រើប្រាស់យ៉ាងច្បាស់ចំចំណុចនៃបញ្ហា។"
       },
       {
         "id": "m08-12",
         "number": "12",
         "title": "Resetting Forms",
-        "summary": "Restoring form state back to clean initial values.",
-        "explanation": "Reset state back to initial constants after a successful submission.",
+        "summary": "ការសម្អាត និងកំណត់ទម្រង់ form ឱ្យត្រឡប់ទៅតម្លៃដើមវិញក្រោយ submit រួច។",
+        "explanation": "បន្ទាប់ពីទិន្នន័យត្រូវបានបញ្ជូនទៅកាន់ server ដោយជោគជ័យ អ្នកត្រូវតែសម្អាត fields ទាំងអស់ឱ្យត្រឡប់ទៅជាតម្លៃទទេស្អាតវិញ (clean initial state)។ វិធីល្អបំផុតគឺកំណត់ initial state ជា constant ខាងក្រៅ ដើម្បីងាយស្រួល reset ដោយគ្រាន់តែហៅ `setForm(INITIAL_STATE)`។",
         "keyPoints": [
-          "Extract `INITIAL_STATE` constant for easy resetting."
+          "បង្កើត constant `INITIAL_FORM` នៅខាងក្រៅ component function។",
+          "កំណត់ `setForm(INITIAL_FORM)` និង `setErrors({})` នៅពេល request ទទួលបានជោគជ័យ។",
+          "ជៀសវាងការសរសេរ reset fields ម្តងមួយៗដោយដៃ ដែលអាចបណ្តាលឱ្យភ្លេច field ណាមួយ។"
         ],
         "codeSnippet": "const INITIAL_FORM = { title: '', description: '' };\n\nexport function CreateTaskForm() {\n  const [form, setForm] = useState(INITIAL_FORM);\n\n  const handleSuccess = () => {\n    // Reset to blank:\n    setForm(INITIAL_FORM);\n  };\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Resetting Form State"
+        "codeTitle": "Resetting Form State",
+        "proTip": "ទាញ initial values ចេញមកជា constant នៅខាងក្រៅ component (ឧ. `INITIAL_FORM`) ដើម្បីងាយស្រួលហៅប្រើឡើងវិញទាំងពេល mount និងពេល reset form។"
       },
       {
         "id": "m08-13",
         "number": "13",
         "title": "Reusable Form Components",
-        "summary": "Building generic TextField, CheckboxField, and SelectField components.",
-        "explanation": "Encapsulate label, input, helper text, and error messages into reusable field wrappers.",
+        "summary": "ការកសាង reusable wrappers ដូចជា FormField, TextField និង SelectField សម្រាប់ enterprise apps។",
+        "explanation": "នៅក្នុងកម្មវិធីកម្រិត Enterprise ដែលមានទម្រង់ form រាប់សិបទំព័រ ការសរសេរ markup សម្រាប់ label, error message, និង layout ម្តងហើយម្តងទៀត គឺជាការខ្ជះខ្ជាយពេលវេលា។ ការបង្កើត reusable field wrapper (ដូចជា `<FormField />`) ជួយប្រមូលផ្តុំរចនាសម្ព័ន្ធទូទៅទាំងនេះឱ្យនៅកន្លែងតែមួយ។",
         "keyPoints": [
-          "Massively cuts down boilerplate in enterprise apps."
+          "បង្កើត component wrapper ដែលទទួល `label`, `error`, និង `children` ជា props។",
+          "រក្សាភាពបត់បែនដោយប្រើ `children` prop ដើម្បីឱ្យវាអាចរុំ input គ្រប់ប្រភេទ មិនថា text, select ឬ textarea។",
+          "ជួយឱ្យ styling និង design system នៃ form ទាំងមូលមានភាពឯកភាព និងងាយស្រួលកែប្រែទៅថ្ងៃមុខ។"
         ],
         "codeSnippet": "interface FormFieldProps {\n  label: string;\n  error?: string;\n  children: React.ReactNode;\n}\n\nexport function FormField({ label, error, children }: FormFieldProps) {\n  return (\n    <div className=\"space-y-1\">\n      <label className=\"block text-xs font-semibold text-slate-300 uppercase tracking-wider\">{label}</label>\n      {children}\n      {error && <p className=\"text-xs text-rose-400 font-medium\">{error}</p>}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Reusable FormField Wrapper"
+        "codeTitle": "Reusable FormField Wrapper",
+        "proTip": "ការបង្កើត reusable `<FormField />` component ជួយកាត់បន្ថយកូដស្ទួនរាប់រយបន្ទាត់នៅក្នុង Form ធំៗ និងធានាថា Label, Helper Text និង Error Messages មាន Style ដូចគ្នាបេះបិទលើគ្រប់ទំព័រ។"
       }
     ]
   },

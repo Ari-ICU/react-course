@@ -5,17 +5,20 @@ title: "Select"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Dropdown select with controlled option values."
+summary: "ការគ្រប់គ្រង Dropdown select ដោយកំណត់ value ផ្ទាល់លើ <select> tag។"
+proTip: "នៅក្នុង React កុំដាក់ attribute `selected` នៅលើ `<option>` ឡើយ។ គ្រាន់តែបញ្ជាក់ `value={selectedRole}` នៅលើ `<select>` tag គឺគ្រប់គ្រាន់ហើយ។"
 codeTitle: "Controlled Select Dropdown"
 ---
 
 # Select
 
-In React, you put the `value` prop directly on the `<select>` tag rather than marking an `<option selected>`.
+នៅក្នុង HTML ធម្មតា ដើម្បីកំណត់ថាជម្រើសណាមួយត្រូវបានជ្រើសរើស អ្នកត្រូវដាក់ attribute `selected` ទៅលើ `<option selected>` ជាក់លាក់នោះ។ ប៉ុន្តែនៅក្នុង React អ្នកគ្រាន់តែបញ្ជាក់ `value` prop ទៅលើ tag `<select>` ផ្ទាល់តែម្តង ដែលធ្វើឱ្យការគ្រប់គ្រង dropdown selection កាន់តែមានភាពងាយស្រួល។
 
 ### Key Concepts & Rules:
 
-- `<select value={selected}>` defines active selection.
+- `<select value={selected}>` ជាអ្នកកំណត់ថាតើ option ណាដែលកំពុង active។
+- តម្លៃក្នុង `<select>` នឹង update តាមរយៈ `onChange={(e) => setRole(e.target.value)}`។
+- អាច loop បង្ហាញ options ពី array នៃទិន្នន័យដោយប្រើ `.map()` រួមជាមួយ `key` prop។
 
 ### Code Example: Controlled Select Dropdown
 

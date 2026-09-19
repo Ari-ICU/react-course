@@ -5,18 +5,20 @@ title: "Event Handlers"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Passing handler function references vs invoking functions."
+summary: "ភាពខុសគ្នារវាងការបញ្ជូន Function Reference និងការហៅ Function (Invocation) ពេល render។"
+pitfall: "ដាច់ខាតកុំដាក់វង់ក្រចក `()` នៅខាងចុង handler ដូចជា `onClick={handleClick()}` ព្រោះវានឹងរត់ភ្លាមៗនៅពេល render ហើយបង្កជា infinite loop ប្រសិនបើមាន state update នៅខាងក្នុង!"
 codeTitle: "Function Reference vs Invocation"
 ---
 
 # Event Handlers
 
-You must pass the function reference (`onClick={handleClick}`), NOT invoke it (`onClick={handleClick()}`). Invoking it runs the function during render!
+កំហុសឆ្គងទូទៅបំផុតមួយសម្រាប់អ្នកចាប់ផ្តើមរៀន React គឺការដាក់វង់ក្រចក `()` នៅពេលភ្ជាប់ handler។ អ្នកត្រូវតែបញ្ជូន **Function Reference** (`onClick={handleClick}`) មិនមែនជាការហៅ function ដោយផ្ទាល់ (`onClick={handleClick()}`) នោះទេ ព្រោះការហៅ function នឹងធ្វើឱ្យកូដនោះដំណើរការភ្លាមៗនៅពេល component កំពុង render។
 
 ### Key Concepts & Rules:
 
-- Pass function reference: `onClick={handleClick}`.
-- Pass inline arrow function if parameters are needed: `onClick={() => handleDelete(id)}`.
+- បញ្ជូន Function Reference ដោយគ្មានវង់ក្រចក៖ `onClick={handleClick}`។
+- ប្រសិនបើអ្នកត្រូវការបញ្ជូន arguments បន្ថែម ចូរប្រើ inline arrow function៖ `onClick={() => handleDelete(id)}`។
+- ការសរសេរ `onClick={handleClick()}` នឹង return តម្លៃរបស់ function ទៅឱ្យ onClick ដែលមិនត្រឹមតែរត់ខុសពេលនោះទេ ថែមទាំងធ្វើឱ្យ event លែងដំណើរការទៀតផង។
 
 ### Code Example: Function Reference vs Invocation
 

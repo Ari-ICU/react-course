@@ -5,17 +5,20 @@ title: "Form State"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Managing multi-field forms with a single state object."
+summary: "ការគ្រប់គ្រង inputs ច្រើន fields ក្នុងពេលតែមួយដោយប្រើ State Object តែមួយ។"
+proTip: "កំណត់ attribute `name` លើ input នីមួយៗឱ្យដូចគ្នាបេះបិទនឹង key នៅក្នុង Form State Object នោះអ្នកអាចប្រើ generic `handleChange` តែមួយមុខគត់សម្រាប់គ្រប់ fields ទាំងអស់!"
 codeTitle: "Unified Multi-Field Form Handler"
 ---
 
 # Form State
 
-Instead of 10 individual `useState` calls for a 10-field form, use a single state object indexed with `e.target.name`.
+ប្រសិនបើ form របស់អ្នកមាន input fields ច្រើន (ឧទាហរណ៍ ៥ ទៅ ១០ fields) ការបង្កើត `useState` ដាច់ដោយឡែកសម្រាប់ field នីមួយៗនឹងធ្វើឱ្យកូដវែងអន្លាយ និងពិបាកគ្រប់គ្រង។ ដំណោះស្រាយដ៏ប្រសើរគឺការប្រើប្រាស់ **Single State Object** រួមជាមួយ dynamic object key `[e.target.name]: e.target.value`។
 
 ### Key Concepts & Rules:
 
-- Dynamic object keys: `[e.target.name]: e.target.value`.
+- ប្រើ Dynamic Object Property Keys ក្នុង JavaScript៖ `[e.target.name]: e.target.value`។
+- ត្រូវប្រាកដថាបាន spread state ចាស់ជានិច្ច (`...prev`) ដើម្បីកុំឱ្យបាត់បង់ទិន្នន័យក្នុង fields ដទៃទៀត។
+- ងាយស្រួលក្នុងការ reset form ទាំងមូលត្រឡប់ទៅជា clean object វិញក្រោយពេល submit។
 
 ### Code Example: Unified Multi-Field Form Handler
 

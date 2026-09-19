@@ -5,17 +5,20 @@ title: "State vs Props"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Internal mutable component data vs external immutable inputs."
+summary: "ការប្រៀបធៀបរវាងទិន្នន័យខាងក្នុងដែលអាចកែប្រែបាន (State) និងទិន្នន័យបញ្ជូនពីក្រៅដែលមិនអាចកែប្រែបាន (Props)។"
+proTip: "ច្បាប់ងាយចងចាំ៖ ប្រសិនបើទិន្នន័យនោះបញ្ជូនមកពី Parent ហើយមិនអាចកែប្រែបាន វាគឺជា Props។ ប្រសិនបើ Component ខ្លួនឯងជាអ្នកបង្កើត គ្រប់គ្រង និងផ្លាស់ប្តូរ វាគឺជា State។"
 codeTitle: "State vs Props in Action"
 ---
 
 # State vs Props
 
-Props configure a component from the outside; State stores interactive changes on the inside.
+ខណៈពេលដែល Props ត្រូវបានប្រើដើម្បី configure component ពីខាងក្រៅ (ដូច parameters នៃ function) State វិញត្រូវបានប្រើដើម្បីផ្ទុក និងគ្រប់គ្រងទិន្នន័យដែលមានប្រតិកម្មរហ័ស (interactive changes) នៅខាងក្នុង component ផ្ទាល់។
 
 ### Key Concepts & Rules:
 
-- Props are passed down; State is managed internally.
+- **Props**៖ បញ្ជូនពីលើចុះក្រោម (Parent -> Child) និងមានលក្ខណៈ Read-only (Immutable)។
+- **State**៖ បង្កើត និងគ្រប់គ្រងផ្ទៃក្នុង component ដោយអាចធ្វើការកែប្រែតម្លៃបានតាមរយៈ updater function។
+- Component អាចបញ្ជូន state របស់ខ្លួនចុះក្រោមទៅឱ្យ child component ប្រើប្រាស់ក្នុងនាមជា props បាន។
 
 ### Code Example: State vs Props in Action
 

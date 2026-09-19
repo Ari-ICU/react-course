@@ -5,17 +5,20 @@ title: "Form Validation"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Client-side synchronous validation rules."
+summary: "ក្បួនច្បាប់នៃការ validate ទិន្នន័យ synchronously នៅខាង client-side។"
+proTip: "ការ validate អាចធ្វើឡើងនៅពេល `onSubmit` (សាមញ្ញបំផុត), `onBlur` (ពេល user ចាកចេញពី field), ឬ `onChange` (real-time feedback) ផ្អែកលើបទពិសោធន៍ UX ដែលអ្នកចង់ផ្តល់ជូន។"
 codeTitle: "Synchronous Validation Logic"
 ---
 
 # Form Validation
 
-Validate inputs against rules (minimum length, email regex, required fields) and store errors in a dedicated error object.
+Client-side Form Validation គឺជាដំណាក់កាលត្រួតពិនិត្យភាពត្រឹមត្រូវនៃទិន្នន័យដែលអ្នកប្រើប្រាស់បានបញ្ចូល (ដូចជា ប្រវែងអប្បបរមា, ទម្រង់ Email regex, ឬ Required fields) មុនពេលបញ្ជូនទៅកាន់ server។ រាល់កំហុសដែលរកឃើញនឹងត្រូវរក្សាទុកក្នុង Errors Object ដើម្បីយកទៅបង្ហាញលើ UI។
 
 ### Key Concepts & Rules:
 
-- Validate either `onChange`, `onBlur`, or `onSubmit`.
+- បង្កើត validation function ដែល return boolean (`isValid`) ឬ error map object។
+- ពិនិត្យលក្ខខណ្ឌច្បាស់លាស់ ដូចជាវត្តមានតួអក្សរ `@` ក្នុង email ឬប្រវែង password យ៉ាងតិច ៨ តួ។
+- ប្រសិនបើមាន errors ត្រូវបញ្ឈប់ដំណើរការ submission ភ្លាមៗ និងបង្ហាញសារប្រាប់ user។
 
 ### Code Example: Synchronous Validation Logic
 

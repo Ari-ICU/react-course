@@ -5,19 +5,21 @@ title: "Updating Arrays"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Adding, filtering, updating, and removing array elements immutably."
+summary: "វិធីសាស្ត្របន្ថែម លុប កែប្រែ និង filter ធាតុក្នុង array ដោយមិន mutate តម្លៃដើម។"
+proTip: "ចងចាំក្បួន ៣ យ៉ាងសម្រាប់ Array State៖ បន្ថែមប្រើ `[...prev, item]`, លុបប្រើ `.filter()`, និងកែប្រែតម្លៃប្រើ `.map()`។"
 codeTitle: "Immutable Array Helpers"
 ---
 
 # Updating Arrays
 
-Use `.filter()` to delete, `.map()` to update an item, and `[...prev, item]` to add items.
+Arrays នៅក្នុង State មិនត្រូវកែប្រែតាមរយៈ mutating methods ដូចជា `.push()`, `.pop()`, `.splice()`, ឬ `.reverse()` ឡើយ។ ជំនួសមកវិញ អ្នកត្រូវតែប្រើប្រាស់ immutable methods ដូចជា `.filter()` សម្រាប់លុបធាតុ, `.map()` សម្រាប់កែប្រែធាតុ និង `[...prev, item]` សម្រាប់បន្ថែមធាតុថ្មី។
 
 ### Key Concepts & Rules:
 
-- Add: `[...items, newItem]`
-- Remove: `items.filter(i => i.id !== id)`
-- Update: `items.map(i => i.id === id ? { ...i, done: true } : i)`
+- **បន្ថែមធាតុថ្មី**៖ `[...items, newItem]`
+- **លុបធាតុ**៖ `items.filter(i => i.id !== id)`
+- **កែប្រែធាតុជាក់លាក់**៖ `items.map(i => i.id === id ? { ...i, done: true } : i)`
+- វិធីសាស្ត្រទាំងអស់នេះបង្កើត array ថ្មីមួយជានិច្ច ដែលធ្វើឱ្យ React ដឹងពីការប្រែប្រួល និង re-render UI ភ្លាមៗ។
 
 ### Code Example: Immutable Array Helpers
 

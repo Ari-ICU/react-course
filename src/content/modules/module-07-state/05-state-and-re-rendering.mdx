@@ -5,19 +5,20 @@ title: "State and Re-rendering"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "How React triggers reconciliation when Object.is() returns false."
-pitfall: "Directly mutating an array with `.push()` or `.splice()` will NOT trigger a re-render. Always use `[...prev, newItem]`."
+summary: "របៀបដែល React ធ្វើការប្រៀបធៀប Object.is() ដើម្បីសម្រេចថាតើត្រូវ re-render ឬអត់។"
+pitfall: "ការកែប្រែ array ឬ object ដោយផ្ទាល់ (in-place mutation) ដូចជា `.push()` ឬ `.splice()` នឹងមិន trigger ឱ្យមានការ re-render ឡើយ! ត្រូវតែបង្កើត reference ថ្មីជានិច្ច `[...prev, newItem]`។"
 codeTitle: "Immutability & Object.is() Comparison"
 ---
 
 # State and Re-rendering
 
-React compares old state with new state using `Object.is()`. If the reference is unchanged, React skips re-rendering. This is why mutating objects in place fails to trigger updates!
+React ធ្វើការប្រៀបធៀបតម្លៃ state ចាស់ និងថ្មីដោយប្រើប្រាស់ algorithm `Object.is()`។ ប្រសិនបើតម្លៃ memory reference នៅដដែល (មិនប្រែប្រួល) React នឹងសន្មតថាគ្មានអ្វីផ្លាស់ប្តូរឡើយ ហើយរំលងការ re-render ចោល។ ហេតុនេះហើយបានជាការ mutate objects ឬ arrays ដោយផ្ទាល់មិនអាចធ្វើឱ្យ UI ធ្វើបច្ចុប្បន្នភាពបាន។
 
 ### Key Concepts & Rules:
 
-- Mutating an object/array in-place keeps identical memory reference -> no re-render!
-- Always return a new object or array copy via spread operator.
+- ការ mutate object/array ដោយផ្ទាល់រក្សា memory reference ដដែល -> React មិន trigger re-render ឡើយ!
+- ត្រូវតែ return object ឬ array ថ្មីជានិច្ចតាមរយៈ Spread Operator (`...`) ឬ Immutable methods។
+- រាល់ការផ្លាស់ប្តូរ state ដោយជោគជ័យនឹងជំរុញឱ្យ component និង child components របស់វា re-render ឡើងវិញ។
 
 ### Code Example: Immutability & Object.is() Comparison
 

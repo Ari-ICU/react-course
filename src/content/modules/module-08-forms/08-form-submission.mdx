@@ -5,17 +5,20 @@ title: "Form Submission"
 moduleId: "module-08"
 moduleNumber: "08"
 category: "Core Concepts"
-summary: "Packaging form data and sending to API endpoints."
+summary: "ការវេចខ្ចប់ទិន្នន័យ Form និងការបញ្ជូនទៅកាន់ API endpoints ដោយសុវត្ថិភាព។"
+proTip: "ប្រើ try/catch/finally block រួមជាមួយ `isSubmitting` state ជានិច្ច ដើម្បីការពារការចុច double-submit និងបង្ហាញ visual loading feedback ដល់ user។"
 codeTitle: "Safe Form Submission Handler"
 ---
 
 # Form Submission
 
-Handle form submission on `<form onSubmit={...}>` with validation before dispatching to an API service.
+ការគ្រប់គ្រង Form Submission នៅក្នុង React ត្រូវបានធ្វើឡើងតាមរយៈ event `onSubmit` នៅលើ `<form>` tag។ មុនពេលបញ្ជូនទិន្នន័យទៅកាន់ API endpoint យើងត្រូវធ្វើការ validation ពិនិត្យភាពត្រឹមត្រូវ និងគ្រប់គ្រង loading state ដើម្បីកុំឱ្យអ្នកប្រើប្រាស់ចុច submit ស្ទួនច្រើនដង។
 
 ### Key Concepts & Rules:
 
-- Always prevent default browser reload.
+- ត្រូវតែហៅ `e.preventDefault()` ជានិច្ចដើម្បីការពារមិនឱ្យ browser ធ្វើការ refresh ទំព័រ។
+- បើក `isSubmitting = true` អំឡុងពេល network request កំពុងដំណើរការ និងបិទ submit button។
+- បង្ហាញ notification banners ឬ toast messages នៅពេល submission ជោគជ័យ ឬជួបកំហុស error។
 
 ### Code Example: Safe Form Submission Handler
 

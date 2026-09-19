@@ -5,17 +5,20 @@ title: "onChange"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Tracking input, textarea, and select changes in real time."
+summary: "ការតាមដានការផ្លាស់ប្តូរទិន្នន័យ (Real-time updates) លើ text inputs, textareas, និង select dropdowns។"
+proTip: "នៅក្នុង React ព្រឹត្តិការណ៍ `onChange` ដំណើរការលើរាល់ការចុចអក្សរម្តងៗ (keystroke) ដូច `oninput` ក្នុង JavaScript ធម្មតាដែរ ដែលជួយឱ្យការបង្កើត Controlled Components មានភាពងាយស្រួលបំផុត។"
 codeTitle: "onChange Event Handler"
 ---
 
 # onChange
 
-Unlike vanilla JS where `change` only fires when an input loses focus, React's `onChange` fires on every single keystroke, making controlled components trivial.
+ខុសប្លែកពី vanilla JavaScript ដែល `change` event ដំណើរការតែនៅពេលដែល input បាត់បង់ focus (blur) នៅក្នុង React វិញ `onChange` ត្រូវបាន trigger ភ្លាមៗរាល់ពេលដែលតម្លៃក្នុង input ប្រែប្រួល (សូម្បីតែការវាយអក្សរតែមួយតួ)។ នេះជាមូលដ្ឋានគ្រឹះដ៏សំខាន់សម្រាប់គ្រប់គ្រង Form State ក្នុងទម្រង់ Controlled Components។
 
 ### Key Concepts & Rules:
 
-- Access input value via `e.target.value`.
+- ទាញយកតម្លៃថ្មីរបស់ input តាមរយៈ `e.target.value`។
+- សម្រាប់ checkboxes ត្រូវទាញយកតាមរយៈ `e.target.checked` ជំនួសឱ្យ `value`។
+- ប្រើរួមគ្នាជាមួយ `value` prop ដើម្បីបង្កើតជា Controlled Input ដែលមានលំហូរទិន្នន័យច្បាស់លាស់។
 
 ### Code Example: onChange Event Handler
 

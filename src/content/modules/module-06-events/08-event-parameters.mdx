@@ -5,17 +5,20 @@ title: "Event Parameters"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Supplying additional data along with synthetic events."
+summary: "ការបញ្ជូន arguments បន្ថែម (ដូចជា record ID) ទៅកាន់ event handlers តាមរយៈ inline arrow functions។"
+proTip: "ប្រសិនបើអ្នកត្រូវការទាំង custom argument និង event object ដើម ចូរទទួលយក `e` ក្នុង arrow function រួចបញ្ជូនបន្ត៖ `(e) => handleAction(id, e)`។"
 codeTitle: "Passing Custom Parameters"
 ---
 
 # Event Parameters
 
-Use inline arrow functions to pass record IDs, indices, or custom payloads into event handlers.
+ជាញឹកញាប់នៅក្នុងបញ្ជីទិន្នន័យ (Lists) អ្នកត្រូវការបញ្ជូនតម្លៃជាក់លាក់ណាមួយ (ដូចជា Item ID, index ឬ record object) ទៅកាន់ handler ពេលចុចលើធាតុនីមួយៗ។ ដំណោះស្រាយដ៏សាមញ្ញ និងមានប្រសិទ្ធភាពបំផុតគឺការប្រើ inline arrow function ដើម្បី wrap ពីលើ handler នោះ។
 
 ### Key Concepts & Rules:
 
-- Signature: `(e) => handleAction(id, e)`.
+- ប្រើ syntax៖ `onClick={(e) => handleAction(item.id, e)}` ដើម្បីបញ្ជូនទាំង ID និង event object។
+- ជៀសវាងការសរសេរ `onClick={handleAction(item.id)}` ដាច់ខាត ព្រោះវានឹងរត់កូដភ្លាមៗពេល render។
+- វិធីសាស្ត្រនេះជួយឱ្យកូដមានភាពសាមញ្ញ ងាយយល់ និងស្អាតបាត។
 
 ### Code Example: Passing Custom Parameters
 

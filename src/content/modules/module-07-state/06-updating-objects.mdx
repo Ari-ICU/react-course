@@ -5,17 +5,20 @@ title: "Updating Objects"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Copying object properties with spread syntax."
+summary: "ការ update object state ដោយរក្សាគោលការណ៍ Immutability តាមរយៈ Object Spread Operator (...)។"
+proTip: "ត្រូវចងចាំថា Spread Operator `...prev` ធ្វើការ copy តែ shallow level ប៉ុណ្ណោះ។ ប្រសិនបើមាន nested objects ជ្រៅ អ្នកត្រូវ spread តាមដំណាក់កាលនីមួយៗ ឬពិចារណាប្រើ Immer library។"
 codeTitle: "Updating Object State Immutably"
 ---
 
 # Updating Objects
 
-Use the object spread operator `...` to copy existing properties and overwrite the changed fields.
+នៅក្នុង JavaScript អថេរ object គឺជា reference type។ នៅពេលអ្នកចង់កែប្រែ property ណាមួយនៅក្នុង object state អ្នកត្រូវតែប្រើប្រាស់ Object Spread Operator (`...`) ដើម្បីចម្លង properties ចាស់ៗទាំងអស់ រួច overwrite លើ property ណាដែលអ្នកចង់ផ្លាស់ប្តូរតម្លៃ។
 
 ### Key Concepts & Rules:
 
-- Pattern: `setUser(prev => ({ ...prev, name: 'New Name' }))`.
+- រូបមន្តទូទៅ៖ `setUser(prev => ({ ...prev, name: 'New Name' }))`។
+- កុំកែប្រែដោយផ្ទាល់ដូចជា `user.name = 'New Name'` ដាច់ខាត។
+- ត្រូវប្រាកដថា wrap object literals ដោយវង់ក្រចក `({ ... })` ពេល return ចេញពី arrow function។
 
 ### Code Example: Updating Object State Immutably
 

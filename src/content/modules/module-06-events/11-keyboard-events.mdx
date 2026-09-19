@@ -5,17 +5,20 @@ title: "Keyboard Events"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Handling onKeyDown, Escape modal closing, and Cmd+K shortcuts."
+summary: "ការគ្រប់គ្រង Keyboard interactions ដូចជាការចុច Enter, Escape ដើម្បីបិទ modal, និង shortcut Cmd+K។"
+proTip: "ប្រើប្រាស់ `e.key` ជំនួសឱ្យ `e.keyCode` (deprecated) ព្រោះ `e.key` ផ្តល់ឈ្មោះគ្រាប់ចុចច្បាស់លាស់ដូចជា `'Enter'`, `'Escape'`, ឬ `'ArrowDown'`។"
 codeTitle: "Global Keyboard Shortcut Listener"
 ---
 
 # Keyboard Events
 
-Detecting keys like `Enter`, `Escape`, or `MetaKey` to build accessible keyboard navigation and modal dismissals.
+ការគ្រប់គ្រង keyboard events (ដូចជា `onKeyDown`, `onKeyUp`) អនុញ្ញាតឱ្យអ្នកបង្កើតនូវបទពិសោធន៍ប្រើប្រាស់ដ៏សម្បូរបែប ដូចជាការបិទ Modal ដោយចុចគ្រាប់ចុច `Escape`, ការបញ្ជូនសារដោយចុច `Enter`, ឬការបើកផ្ទាំងស្វែងរកដោយប្រើផ្លូវកាត់ `Cmd+K` / `Ctrl+K`។
 
 ### Key Concepts & Rules:
 
-- Use `e.key === 'Escape'` or `(e.metaKey || e.ctrlKey) && e.key === 'k'`.
+- ពិនិត្យគ្រាប់ចុចដោយប្រើប្រាស់ `e.key` (ឧ. `e.key === 'Escape'`, `e.key === 'Enter'`)។
+- សម្រាប់ shortcut keys បញ្ចូលគ្នា ត្រូវពិនិត្យ boolean flags ដូចជា `e.metaKey` (សម្រាប់ Mac Command) ឬ `e.ctrlKey` (សម្រាប់ Windows Ctrl)។
+- នៅពេលបន្ថែម global listener លើ `window` ជាមួយ `useEffect` ត្រូវប្រាកដថាបាន return cleanup function ដើម្បី remove listener ជានិច្ច។
 
 ### Code Example: Global Keyboard Shortcut Listener
 

@@ -5,20 +5,21 @@ title: "What is State?"
 moduleId: "module-07"
 moduleNumber: "07"
 category: "Core Concepts"
-summary: "Component memory that triggers UI re-renders upon mutation."
+summary: "សតិចងចាំរបស់ Component (Memory) ដែលធ្វើឱ្យ UI ធ្វើការ re-render ដោយស្វ័យប្រវត្តិនៅពេលទិន្នន័យប្រែប្រួល។"
 interactiveDemoKey: "StateDemo"
+proTip: "គិតពី State ដូចជាសតិចងចាំ (Memory) របស់ Component៖ អថេរធម្មតាក្នុង function នឹងត្រូវ reset ឡើងវិញរាល់ពេល render តែ State ត្រូវបាន React រក្សាទុកឆ្លងកាត់ការ render ទាំងអស់។"
 codeTitle: "Basic State Declaration"
 ---
 
 # What is State?
 
-State is data that changes over time in response to user actions or network responses. When state changes, React schedules a re-render of the component and updates the DOM.
+State គឺជាទិន្នន័យដែលផ្លាស់ប្តូរទៅតាមពេលវេលា ឆ្លើយតបទៅនឹងសកម្មភាពរបស់អ្នកប្រើប្រាស់ (User Actions) ឬការឆ្លើយតបពីបណ្តាញ (Network Responses)។ នៅពេលដែល state ប្រែប្រួលតម្លៃ React នឹងរៀបចំកាលវិភាគ (schedule) ដើម្បីធ្វើការ re-render component នោះឡើងវិញ និង update លើ DOM ដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- State is private to the component instance.
-- State persists across re-renders.
-- Updating state triggers reconciliation.
+- State មានលក្ខណៈឯកជន (private) សម្រាប់តែ instance នៃ component ផ្ទាល់ខ្លួនប៉ុណ្ណោះ។
+- State ត្រូវបាន React រក្សាទុកតម្លៃឆ្លងកាត់ការ re-render នីមួយៗ (ខុសពីអថេរធម្មតាដែលត្រូវប្រកាសឡើងវិញ)។
+- ការ update តម្លៃ state គឺជាកត្តាចម្បងដែល trigger ឱ្យមានដំណើរការ reconciliation និងការ re-render UI។
 
 ### Code Example: Basic State Declaration
 

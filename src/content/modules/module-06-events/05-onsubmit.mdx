@@ -5,18 +5,20 @@ title: "onSubmit"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Handling form submissions and preventing full-page reloads."
+summary: "ការគ្រប់គ្រង Form submissions និងការការពារមិនឱ្យ browser refresh/reload ទំព័រ។"
+pitfall: "ប្រសិនបើអ្នកភ្លេចហៅ `e.preventDefault()` នោះ browser នឹងធ្វើការ reload ទំព័រទាំងមូល និងបាត់បង់ state ទាំងអស់នៃ Single Page Application (SPA) របស់អ្នក!"
 codeTitle: "onSubmit Form Handler"
 ---
 
 # onSubmit
 
-Form submissions naturally trigger a browser page refresh. Use `e.preventDefault()` inside `onSubmit` to retain SPA state and handle submission via JavaScript.
+តាមលំនាំដើមរបស់ browser នៅពេលដែល form ត្រូវបាន submit វានឹងធ្វើការ refresh ទំព័រទាំងមូល ឬបញ្ជូន HTTP request ទៅកាន់ action URL។ នៅក្នុងកម្មវិធី Single Page Application (SPA) យើងត្រូវតែប្រើប្រាស់ `e.preventDefault()` នៅខាងក្នុង `onSubmit` handler ដើម្បីទប់ស្កាត់ការ reload និងអនុញ្ញាតឱ្យ JavaScript ចាត់ចែង submission តាមរយៈ API។
 
 ### Key Concepts & Rules:
 
-- Always invoke `e.preventDefault()`.
-- Attach `onSubmit` to `<form>` rather than `onClick` to submit button to allow Enter key submissions.
+- ត្រូវហៅ `e.preventDefault()` ជានិច្ចនៅដើមបន្ទាត់នៃ form handler function។
+- ភ្ជាប់ `onSubmit` ទៅកាន់ `<form>` tag ផ្ទាល់ មិនមែនភ្ជាប់ `onClick` ទៅកាន់ submit button នោះទេ ដើម្បីឱ្យ user អាច submit តាមរយៈការចុច Enter បាន។
+- ជួយឱ្យ form validation ដើរស្របតាមស្តង់ដារ HTML5 (ដូចជា required attributes) មុនពេល handler ដំណើរការ។
 
 ### Code Example: onSubmit Form Handler
 

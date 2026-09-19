@@ -5,17 +5,20 @@ title: "Event Handling Best Practices"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "Debouncing rapid clicks, avoiding inline allocations when unnecessary."
+summary: "គោលការណ៍ល្អៗដូចជា Debouncing, ការការពារ Double-submit, និងការរៀបចំ handler logic ឱ្យមានរបៀប។"
+proTip: "តែងតែការពារបញ្ហា Double-submit លើ forms តាមរយៈ boolean flag (`isSubmitting`) ឬ disable submit button រហូតដល់ network request បានបញ្ចប់ទាំងស្រុង។"
 codeTitle: "Best Practice Event Handler"
 ---
 
 # Event Handling Best Practices
 
-Keep handlers clean, extract complex business logic into custom hooks, and debounce high-frequency events like search input or window resize.
+ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ស្មុគស្មាញចេញពី JSX markup និងការពារបញ្ហាទូទៅដូចជាការចុចស្ទួន (rapid double clicks)។
 
 ### Key Concepts & Rules:
 
-- Avoid side-effects inside JSX; keep handlers focused.
+- **បំបែក Handler ចេញពី JSX**៖ សរសេរ handler functions ដាច់ដោយឡែកនៅផ្នែកខាងលើនៃ component ដើម្បីឱ្យ JSX markup មានភាពស្រឡះ និងងាយស្រួលអាន។
+- **ការពារ Double-submit**៖ ប្រើប្រាស់ state ដូចជា `isSubmitting` ដើម្បីទប់ស្កាត់ការចុច submit ច្រើនដងក្នុងពេលតែមួយ។
+- **Debounce High-Frequency Events**៖ ចំពោះ events ដែលកើតឡើងញឹកញាប់ខ្លាំង (ដូចជា window resize, scrolling, ឬ keystrokes ក្នុងការស្វែងរក) គួរប្រើ debounce ឬ throttle ដើម្បីការពារកុំឱ្យប៉ះពាល់ដល់ performance។
 
 ### Code Example: Best Practice Event Handler
 
