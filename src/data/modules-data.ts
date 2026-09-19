@@ -812,171 +812,200 @@ export const modulesData: ModuleItem[] = [
     "number": "05",
     "title": "Rendering Data",
     "category": "Core Concepts",
-    "summary": "Iterating arrays with map(), key prop rules, conditional rendering, loading skeletons, and error UI states.",
+    "summary": "ស្វែងយល់អំពីការបង្ហាញទិន្នន័យលើ UI តាមរយៈ .map(), ក្បួនច្បាប់នៃការប្រើប្រាស់ Key prop, Conditional Rendering, Skeleton Loading UI និងការរៀបចំ Error States ឱ្យមានប្រសិទ្ធភាពខ្ពស់។",
     "iconName": "ListTree",
     "topics": [
       {
         "id": "m05-01",
         "number": "01",
         "title": "Rendering Arrays",
-        "summary": "Displaying collections of primitives or objects on screen.",
-        "explanation": "React allows rendering arrays of elements directly. When an array of JSX elements is passed, React iterates and mounts each element in sequence.",
+        "summary": "ការបង្ហាញទិន្នន័យជាបណ្តុំ (Arrays) នៃ primitives ឬ objects នៅលើអេក្រង់។",
+        "explanation": "React អនុញ្ញាតឱ្យយើង render arrays នៃ elements ដោយផ្ទាល់នៅលើ UI។ នៅពេលដែល array នៃ JSX elements ត្រូវបានបញ្ជូនចូល React នឹងធ្វើការ iterate និង mount រាល់ element នីមួយៗតាមលំដាប់លំដោយ។",
         "keyPoints": [
-          "Arrays are rendered in order.",
-          "Each top-level element in the array requires a unique `key` prop."
+          "Arrays ត្រូវបាន render ទៅលើ screen តាមលំដាប់លំដោយនៃធាតុនៅក្នុង array។",
+          "រាល់ top-level element ទាំងអស់នៅក្នុង array ចាំបាច់ត្រូវតែមាន `key` prop មួយដែលមានតម្លៃ unique (មិនជាន់គ្នា)។",
+          "ជៀសវាងការ render array ដែលផ្ទុក plain objects ដោយផ្ទាល់ ព្រោះ React មិនអនុញ្ញាតឱ្យ render object ជា child element ឡើយ។"
         ],
         "codeSnippet": "export function NumberList() {\n  const numbers = [10, 20, 30, 40, 50];\n  return (\n    <ul className=\"flex gap-2\">\n      {numbers.map((n) => (\n        <li key={n} className=\"px-3 py-1 bg-slate-800 rounded text-blue-400 font-mono\">\n          {n}\n        </li>\n      ))}\n    </ul>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Rendering Simple Arrays"
+        "codeTitle": "Rendering Simple Arrays",
+        "proTip": "React អាច render array នៃ JSX elements បានដោយស្វ័យប្រវត្តិ ប៉ុន្តែរាល់ element នីមួយៗត្រូវតែមាន `key` prop តែមួយគត់ (unique key)។"
       },
       {
         "id": "m05-02",
         "number": "02",
         "title": "map() in React",
-        "summary": "The standard declarative array transformation method for JSX.",
-        "explanation": "JavaScript's `.map()` method transforms an array of data into an array of JSX elements. Because `.map()` returns a new array, it embeds cleanly into JSX curly braces.",
+        "summary": "ការប្រើប្រាស់ declarative array method ស្តង់ដារដើម្បីបំប្លែងទិន្នន័យទៅជា JSX elements។",
+        "explanation": "Method `.map()` របស់ JavaScript គឺជាវិធីសាស្ត្រស្តង់ដារដ៏ពេញនិយមបំផុតសម្រាប់បំប្លែង (transform) array នៃទិន្នន័យទៅជា array នៃ JSX elements។ ដោយសារតែ `.map()` return ត្រឡប់មកវិញនូវ new array នោះយើងអាចបង្កប់វាដោយផ្ទាល់នៅក្នុងរង្វង់ក្រចកទោល `{}` នៃ JSX បានយ៉ាងងាយស្រួល។",
         "keyPoints": [
-          "Use `.map()` rather than `forEach` because `.map()` returns a transformed array.",
-          "Keep mapping functions pure and concise."
+          "ប្រើ `.map()` ជំនួសឱ្យ `forEach` ឬ `for` loop ធម្មតា ព្រោះ `.map()` return នូវ array ថ្មីដែល React អាចយកទៅ render បានភ្លាមៗ។",
+          "រក្សា mapping callback function ឱ្យនៅជា pure function និងសរសេរឱ្យខ្លី ងាយយល់។",
+          "ត្រូវប្រាកដថាបានដាក់ `key` prop នៅលើ outer element បំផុតដែលបាន return ចេញពី `.map()`។"
         ],
         "codeSnippet": "interface Student {\n  id: string;\n  name: string;\n  score: number;\n}\n\nexport function Leaderboard({ students }: { students: Student[] }) {\n  return (\n    <div className=\"divide-y divide-slate-800\">\n      {students.map((student, index) => (\n        <div key={student.id} className=\"flex justify-between py-2 text-sm\">\n          <span className=\"text-slate-300\">#{index + 1} {student.name}</span>\n          <span className=\"font-bold text-emerald-400\">{student.score} pts</span>\n        </div>\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Mapping Objects to JSX Elements"
+        "codeTitle": "Mapping Objects to JSX Elements",
+        "proTip": "ជៀសវាងការប្រើ `.forEach()` ក្នុង JSX ព្រោះវា return `undefined`។ ប្រើ `.map()` ជានិច្ច ព្រោះវាបង្កើត និង return នូវ new array នៃ JSX elements។"
       },
       {
         "id": "m05-03",
         "number": "03",
         "title": "Rendering Objects",
-        "summary": "Accessing and formatting object properties inside templates.",
-        "explanation": "You cannot render a raw JavaScript object directly inside JSX (`<div>{user}</div>` throws an error). You must render individual primitive properties (`user.name`) or serialize with `JSON.stringify`.",
+        "summary": "របៀបទាញយក និងបង្ហាញ properties របស់ object នៅខាងក្នុង JSX templates ឱ្យបានត្រឹមត្រូវ។",
+        "explanation": "នៅក្នុង React អ្នកមិនអាច render JavaScript object ទាំងមូលដោយផ្ទាល់នៅខាងក្នុង JSX បានទេ (ឧទាហរណ៍៖ `<div>{user}</div>` នឹងបណ្តាលឱ្យមាន runtime error)។ អ្នកត្រូវតែទាញយក properties នីមួយៗដែលជា primitive values (`user.name`) មកបង្ហាញ ឬបំប្លែងវាទៅជា string ដោយប្រើ `JSON.stringify`។",
         "keyPoints": [
-          "Objects are not valid React children.",
-          "Render specific properties or map over `Object.entries(obj)`."
+          "Plain JavaScript objects មិនមែនជា valid React children នោះឡើយ។",
+          "ត្រូវចូលទៅកាន់ property ជាក់លាក់ (ឧ. `object.property`) ឬប្រើ `Object.entries(obj)` រួចធ្វើការ map ដើម្បីបង្ហាញទិន្នន័យ។",
+          "ប្រើប្រាស់ optional chaining (`user?.address?.city`) ដើម្បីការពារបញ្ហា crash នៅពេលដែល nested object មានតម្លៃ null ឬ undefined។"
         ],
         "codeSnippet": "// ❌ Error: Objects are not valid as a React child:\n// return <div>{user}</div>;\n\n// ✅ Correct:\nexport function UserProfile({ user }: { user: { name: string; email: string } }) {\n  return (\n    <div>\n      <h4 className=\"font-semibold text-white\">{user.name}</h4>\n      <p className=\"text-xs text-slate-400\">{user.email}</p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Rendering Object Properties Correctly"
+        "codeTitle": "Rendering Object Properties Correctly",
+        "proTip": "ប្រសិនបើអ្នកចង់ inspect មើលរចនាសម្ព័ន្ធ object ទាំងមូលលើ UI សម្រាប់ debugging អ្នកអាចប្រើ `<pre>{JSON.stringify(user, null, 2)}</pre>` បាន។"
       },
       {
         "id": "m05-04",
         "number": "04",
         "title": "Rendering Lists",
-        "summary": "Building scalable dynamic lists and cards from data feeds.",
-        "explanation": "Combining `.map()` with reusable card components enables dynamic rendering of products, blog posts, or comments.",
+        "summary": "ការកសាង dynamic lists និង card grids ដែលមានទំហំធំ និងអាច scale បានយ៉ាងងាយស្រួល។",
+        "explanation": "ការរួមបញ្ចូលគ្នារវាង `.map()` ជាមួយនឹង reusable components អនុញ្ញាតឱ្យយើងបង្កើត dynamic lists, product feeds, ឬ comment sections បានយ៉ាងរលូន និងមានរចនាសម្ព័ន្ធច្បាស់លាស់។",
         "keyPoints": [
-          "Extract list items into dedicated subcomponents for clarity and memoization."
+          "បំបែក list item នីមួយៗឱ្យទៅជា dedicated component ដាច់ដោយឡែក ដើម្បីបង្កើនភាពច្បាស់លាស់នៃកូដ និងងាយស្រួលធ្វើ memoization។",
+          "បញ្ជូន data ទៅកាន់ child component តាមរយៈ props ឬ object prop (`module={mod}`)។",
+          "ដាក់ `key` prop នៅលើ custom component ផ្ទាល់នៅកម្រិត loop (`<ModuleCard key={mod.id} ... />`) មិនមែននៅខាងក្នុង root tag របស់ component នោះទេ។"
         ],
         "codeSnippet": "export function ModuleGrid({ modules }: { modules: ModuleItem[] }) {\n  return (\n    <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n      {modules.map((mod) => (\n        <ModuleCard key={mod.id} module={mod} />\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Rendering List of Grid Cards"
+        "codeTitle": "Rendering List of Grid Cards",
+        "proTip": "នៅពេលដែលកូដខាងក្នុង loop មានភាពស្មុគស្មាញ ចូរទាញវាចេញទៅជា reusable subcomponent (ដូចជា `<ModuleCard />`) ដើម្បីឱ្យកូដមានរបៀប និងងាយស្រួល optimize performance។"
       },
       {
         "id": "m05-05",
         "number": "05",
         "title": "Keys",
-        "summary": "Why React requires keys and how reconciliation uses them.",
-        "explanation": "Keys give elements a stable identity across renders. When array items change order, get added, or are deleted, React compares keys to determine which DOM nodes to reuse or recreate without re-rendering the entire list.",
+        "summary": "សារៈសំខាន់នៃ key prop និងរបៀបដែល React reconciliation ប្រើវាដើម្បីតាមដានធាតុនីមួយៗ។",
+        "explanation": "Keys ផ្តល់នូវអត្តសញ្ញាណស្ថិតស្ថេរ (stable identity) ដល់ elements ឆ្លងកាត់ការ render នីមួយៗ។ នៅពេលដែលធាតុក្នុង array ផ្លាស់ប្តូរលំដាប់ ត្រូវបានបន្ថែម ឬលុបចេញ React នឹងប្រៀបធៀប keys ទាំងនេះដើម្បីដឹងថាតើ DOM nodes ណាខ្លះត្រូវរក្សាទុកប្រើឡើងវិញ (reuse) ឬត្រូវបង្កើតជាថ្មី ដោយមិនចាំបាច់ render បញ្ជីទាំងមូលឡើងវិញឡើយ។",
         "keyPoints": [
-          "Keys must be unique among siblings.",
-          "Never use `Math.random()` as a key; it destroys DOM nodes on every render.",
-          "Avoid array index as key when list order can change."
+          "Keys ត្រូវតែមានតម្លៃ unique (មិនជាន់គ្នា) ក្នុងចំណោមធាតុបងប្អូន (siblings) ជាមួយគ្នា។",
+          "ដាច់ខាតកុំប្រើ `Math.random()` ជា key ព្រោះវានឹងផ្លាស់ប្តូរតម្លៃគ្រប់ពេល render ដែលធ្វើឱ្យ React បង្កើត DOM node ថ្មីរាល់ពេល។",
+          "ចៀសវាងការប្រើ array index ជា key ប្រសិនបើតារាងទិន្នន័យអាចមានការ sort, filter, ឬបន្ថែម/លុបធាតុ។"
         ],
         "codeSnippet": "// ✅ Use stable IDs from your database/backend\n{todos.map(todo => (\n  <TodoItem key={todo.id} todo={todo} />\n))}\n\n// ⚠️ Array index is acceptable ONLY if list is strictly static:\n{['Home', 'About', 'Contact'].map((item, idx) => (\n  <span key={idx}>{item}</span>\n))}",
         "codeLanguage": "jsx",
         "codeTitle": "Correct Key Usage in React",
-        "pitfall": "Using array index as key when deleting or sorting items causes state from one input item to persist in a different item after re-ordering!"
+        "pitfall": "ការប្រើប្រាស់ array index ជា key នៅពេលដែលមានការលុប បន្ថែម ឬ sort ទិន្នន័យ នឹងបណ្តាលឱ្យ component state ច្រឡំធាតុគ្នា និងបង្កើត bugs ធ្ងន់ធ្ងរនៅលើ UI!"
       },
       {
         "id": "m05-06",
         "number": "06",
         "title": "Dynamic Components",
-        "summary": "Selecting components at runtime using lookup dictionaries.",
-        "explanation": "Map string identifiers or status keys to specific component constructors dynamically.",
+        "summary": "ការជ្រើសរើស component មកបង្ហាញដោយស្វ័យប្រវត្តិតាម runtime ដោយប្រើ lookup dictionaries/maps។",
+        "explanation": "Dynamic Components គឺជាបច្ចេកទេសផ្គូផ្គង string identifier ឬ status key ទៅកាន់ React component constructor ជាក់លាក់ណាមួយនៅពេល runtime។ វិធីសាស្ត្រនេះជួយកាត់បន្ថយការសរសេរ `if/else` ឬ `switch` វែងអន្លាយ និងធ្វើឱ្យកូដងាយស្រួលពង្រីក (scalable)។",
         "keyPoints": [
-          "Store components in a dictionary object and index with dynamic key."
+          "រក្សាទុក components នៅក្នុង dictionary/lookup object ហើយហៅប្រើវាដោយប្រើ dynamic key (ឧ. `iconMap[type]`)។",
+          "ត្រូវប្រាកដថាតម្លៃ component ដែលទាញចេញមកត្រូវបានចាត់ទុកជា identifier ដែលចាប់ផ្តើមដោយអក្សរធំ (Capitalized variable name ដូចជា `IconComponent`) មុនពេលយកទៅ render ជា JSX tag (`<IconComponent />`)។",
+          "កំណត់ fallback component សម្រាប់ករណីដែល key មិនត្រូវគ្នានឹងទិន្នន័យក្នុង dictionary។"
         ],
         "codeSnippet": "import { CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';\n\nconst iconMap = {\n  success: CheckCircle,\n  warning: AlertTriangle,\n  error: XCircle,\n  info: Info,\n};\n\nexport function DynamicStatusIcon({ type }: { type: 'success' | 'warning' | 'error' | 'info' }) {\n  const IconComponent = iconMap[type];\n  return <IconComponent className=\"w-5 h-5\" />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Dynamic Component Lookup Map"
+        "codeTitle": "Dynamic Component Lookup Map",
+        "proTip": "បង្កើត lookup object នៅខាងក្រៅ component function ដើម្បីជៀសវាងការបង្កើត object ឡើងវិញរាល់ពេល component ធ្វើការ render។"
       },
       {
         "id": "m05-07",
         "number": "07",
         "title": "Conditional Rendering",
-        "summary": "Strategies for rendering different UI based on state flags.",
-        "explanation": "Choose between early return, ternary operators, or switch statements depending on whether the UI is mutually exclusive or inline.",
+        "summary": "យុទ្ធសាស្ត្រផ្សេងៗក្នុងការបង្ហាញ UI ផ្អែកលើលក្ខខណ្ឌ និង state របស់កម្មវិធី។",
+        "explanation": "នៅក្នុង React យើងអាចជ្រើសរើសបង្ហាញ UI ផ្សេងៗគ្នាអាស្រ័យលើតម្លៃនៃ state ឬ props។ អ្នកអាចជ្រើសរើសប្រើប្រាស់បច្ចេកទេស early return, ternary operators (`? :`), ឬ `switch` statement ផ្អែកលើទម្រង់ UI ជាក់ស្តែង។",
         "keyPoints": [
-          "Early return for page-level state guards (unauthenticated, loading, error).",
-          "Ternary for inline component switches."
+          "ប្រើ **Early Return** សម្រាប់គ្រប់គ្រង state កម្រិតទំព័រ (page-level guards) ដូចជាស្ថានភាព unauthenticated, loading, ឬ error។",
+          "ប្រើ **Ternary Operator** សម្រាប់ការផ្លាស់ប្តូរ UI ពីរជម្រើសនៅខាងក្នុង JSX markup ដោយផ្ទាល់។",
+          "រៀបចំកូដឱ្យមានភាពច្បាស់លាស់ ដោយជៀសវាងការដាក់ nested conditionals ច្រើនជាន់ដែលពិបាកអាន។"
         ],
         "codeSnippet": "export function AccountStatus({ status }: { status: 'loading' | 'verified' | 'unverified' }) {\n  if (status === 'loading') {\n    return <p className=\"text-slate-500\">Checking status...</p>;\n  }\n\n  return (\n    <div>\n      {status === 'verified' ? (\n        <span className=\"text-emerald-400\">Account Active ✓</span>\n      ) : (\n        <span className=\"text-amber-400\">Please verify your email address</span>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Conditional Rendering Pattern"
+        "codeTitle": "Conditional Rendering Pattern",
+        "proTip": "ប្រើ Early Return Pattern ដើម្បីការពារកុំឱ្យកូដខាងក្រោមដំណើរការ នៅពេលដែលទិន្នន័យកំពុងស្ថិតក្នុងដំណាក់កាល Loading ឬជួប Error។"
       },
       {
         "id": "m05-08",
         "number": "08",
         "title": "Ternary Rendering",
-        "summary": "Compact inline if/else expression.",
-        "explanation": "The ternary operator `condition ? <A /> : <B />` is ideal for toggling between two mutually exclusive UI elements inside JSX markup.",
+        "summary": "ការប្រើប្រាស់ Ternary Operator (? :) សម្រាប់ inline if/else logic យ៉ាងខ្លីស្អាត។",
+        "explanation": "Ternary operator តាមទម្រង់ `condition ? <ComponentA /> : <ComponentB />` គឺជាដំណោះស្រាយដ៏ស័ក្តិសមបំផុតសម្រាប់ប្តូររវាង UI ពីរផ្សេងគ្នា (mutually exclusive) នៅខាងក្នុង JSX markup ដោយផ្ទាល់។",
         "keyPoints": [
-          "Great for binary switches: Dark/Light theme, Active/Inactive tab."
+          "ល្អបំផុតសម្រាប់ binary switches ដូចជា Dark/Light theme, Active/Inactive state, ឬ Login/Logout buttons។",
+          "ជួយឱ្យកូដ JSX មានភាពខ្លី និងមានភាព declarative ខ្ពស់។",
+          "អាចប្រើសម្រាប់កំណត់ dynamic CSS class names ផ្អែកលើ state ផងដែរ។"
         ],
         "codeSnippet": "<button className={isActive ? \"bg-blue-600 text-white\" : \"bg-slate-800 text-slate-400\"}>\n  {isActive ? \"Currently Selected\" : \"Select Option\"}\n</button>",
         "codeLanguage": "jsx",
-        "codeTitle": "Inline Ternary Operator"
+        "codeTitle": "Inline Ternary Operator",
+        "proTip": "កុំសរសេរ ternary តត្រួតគ្នា (nested ternaries) នៅក្នុង JSX ព្រោះវាពិបាកអាន និងងាយបង្កើតកំហុស។ ប្រសិនបើមានលើសពី ២ លក្ខខណ្ឌ ចូរប្រើ early return ឬ helper function ជំនួសវិញ។"
       },
       {
         "id": "m05-09",
         "number": "09",
         "title": "Logical AND Rendering",
-        "summary": "Rendering an element only when a condition is truthy.",
-        "explanation": "Using `condition && <Element />` renders `<Element />` if `condition` is truthy, and ignores it if `false` or `null`.",
+        "summary": "ការប្រើប្រាស់ Logical AND (&&) ដើម្បី render UI នៅពេលដែលលក្ខខណ្ឌពិត (truthy)។",
+        "explanation": "ការប្រើប្រាស់ syntax `condition && <Element />` នឹងធ្វើការ render `<Element />` ប្រសិនបើ `condition` មានតម្លៃ truthy ហើយវានឹងរំលងមិន render អ្វីទាំងអស់ប្រសិនបើតម្លៃជា `false` ឬ `null`។",
         "keyPoints": [
-          "Always ensure the left operand is a strict boolean: `Boolean(val)` or `val > 0`."
+          "ប្រើប្រាស់នៅពេលដែលអ្នកចង់បង្ហាញ UI តែមួយជម្រើស (render ពេលពិត ឬមិន render ទាល់តែសោះ)។",
+          "ត្រូវប្រាកដថា operand ខាងឆ្វេងមានតម្លៃជា boolean ពិតប្រាកដ (ឧ. `Boolean(val)`, `val > 0`, ឬ `!!val`) ដើម្បីជៀសវាងការ render ចេញលេខ `0` ឬ `NaN` ដោយអចេតនា។",
+          "ស័ក្តិសមបំផុតសម្រាប់ badge alerts, discount banners, ឬ error indicators។"
         ],
         "codeSnippet": "export function NotificationBanner({ hasDiscount, discountCode }: BannerProps) {\n  return (\n    <div>\n      {hasDiscount && (\n        <div className=\"bg-emerald-950/80 border border-emerald-800 p-2 text-emerald-300 text-xs rounded\">\n          Use code <strong>{discountCode}</strong> for 20% off!\n        </div>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Logical AND Guard"
+        "codeTitle": "Logical AND Guard",
+        "pitfall": "ប្រយ័ត្នបញ្ហាលេខ `0`៖ ការសរសេរ `items.length && <List />` នឹងបង្ហាញលេខ `0` លើអេក្រង់នៅពេលដែល array ទទេ! ត្រូវសរសេរ `items.length > 0 && <List />` ជានិច្ច។"
       },
       {
         "id": "m05-10",
         "number": "10",
         "title": "Empty States",
-        "summary": "Designing engaging fallbacks when arrays or datasets are empty.",
-        "explanation": "Always provide clear guidance when search queries yield zero results or task lists have no items.",
+        "summary": "ការរចនាទម្រង់ Empty State ប្រកបដោយភាពទាក់ទាញ នៅពេលដែលបញ្ជីទិន្នន័យទទេស្អាត។",
+        "explanation": "Empty States គឺជាផ្ទាំង UI ដែលត្រូវបង្ហាញនៅពេលដែលបណ្តុំទិន្នន័យគ្មានធាតុ (empty array) ដូចជាលទ្ធផលស្វែងរកមិនឃើញ ឬមិនទាន់មានទិន្នន័យបង្កើតថ្មី។ ការរចនា Empty State ច្បាស់លាស់ជួយណែនាំអ្នកប្រើប្រាស់ និងលើកកម្ពស់ UX ឱ្យកាន់តែប្រសើរ។",
         "keyPoints": [
-          "Include an icon, explanatory heading, and call to action (e.g. 'Create your first item')."
+          "ពិនិត្យប្រវែង array មុនពេលបង្ហាញ (`data.length === 0`) ដើម្បីប្តូរទៅ render Empty State។",
+          "គួររួមបញ្ចូលនូវ Icon តំណាង, ចំណងជើងពន្យល់ច្បាស់លាស់, និង Call-to-Action (CTA) button ដើម្បីជំរុញឱ្យអ្នកប្រើប្រាស់បង្កើតទិន្នន័យដំបូង។",
+          "ជៀសវាងការទុកឱ្យទំព័រនៅសល់តែចន្លោះទទេស្អាត ដែលអាចធ្វើឱ្យអ្នកប្រើប្រាស់គិតថាកម្មវិធីខូច ឬគាំង។"
         ],
         "codeSnippet": "export function EmptyState({ onAction }: { onAction: () => void }) {\n  return (\n    <div className=\"text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl\">\n      <Inbox className=\"w-12 h-12 text-slate-600 mx-auto mb-3\" />\n      <h3 className=\"text-lg font-medium text-white\">No tasks created yet</h3>\n      <p className=\"text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4\">\n        Get started by creating your first task using the input above.\n      </p>\n      <button onClick={onAction} className=\"px-4 py-2 bg-blue-600 text-white rounded-lg text-sm\">\n        Add New Task\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Engaging Empty State Component"
+        "codeTitle": "Engaging Empty State Component",
+        "proTip": "Empty State ដ៏ល្អមិនត្រឹមតែប្រាប់ថា 'គ្មានទិន្នន័យ' ប៉ុណ្ណោះទេ តែត្រូវតែណែនាំអ្នកប្រើប្រាស់ពីសកម្មភាពបន្ទាប់ (Next Action) តាមរយៈ Call-to-Action (CTA) button។"
       },
       {
         "id": "m05-11",
         "number": "11",
         "title": "Loading UI",
-        "summary": "Skeleton loaders vs spinners for modern UX perceived performance.",
-        "explanation": "Skeletons prevent content layout shifts (CLS) by mirroring the exact shape of incoming data before it finishes loading.",
+        "summary": "ការប្រើ Skeleton loaders និង spinners ដើម្បីបង្កើន perceived performance សម្រាប់ UX ទំនើប។",
+        "explanation": "Skeleton loaders ជួយកាត់បន្ថយបាតុភូត Cumulative Layout Shift (CLS) ដោយការបង្ហាញគ្រោង layout ដែលមានទម្រង់ និងទំហំប្រហាក់ប្រហែលនឹងទិន្នន័យពិត ខណៈពេលដែល network request កំពុងដំណើរការ។",
         "keyPoints": [
-          "Use Tailwind's `animate-pulse` utility for skeleton placeholders."
+          "ប្រើប្រាស់ utility class ដូចជា `animate-pulse` របស់ Tailwind CSS ដើម្បីបង្កើត effect ភ្លឺផ្លេកៗសម្រាប់ skeleton placeholders។",
+          "រៀបចំ skeleton ឱ្យត្រូវគ្នានឹង card, list item, ឬ page structure ដែលនឹងត្រូវបង្ហាញ។",
+          "ជួយបង្កើន perceived performance ធ្វើឱ្យអ្នកប្រើប្រាស់មានអារម្មណ៍ថាកម្មវិធីដំណើរការរហ័ស និងឆ្លើយតបទាន់ចិត្ត។"
         ],
         "codeSnippet": "export function CardSkeleton() {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl animate-pulse space-y-3\">\n      <div className=\"h-5 bg-slate-800 rounded w-2/3\" />\n      <div className=\"h-4 bg-slate-800/60 rounded w-full\" />\n      <div className=\"h-4 bg-slate-800/60 rounded w-4/5\" />\n      <div className=\"h-8 bg-slate-800 rounded w-24 mt-4\" />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Tailwind Skeleton Loader"
+        "codeTitle": "Tailwind Skeleton Loader",
+        "proTip": "Skeleton loading ផ្តល់អារម្មណ៍ថាកម្មវិធីដើរលឿនជាង Spinner ធម្មតា ព្រោះវាបង្ហាញទម្រង់ទ្រង់ទ្រាយនៃ Layout ជាមុន (Perceived Performance)។"
       },
       {
         "id": "m05-12",
         "number": "12",
         "title": "Error UI",
-        "summary": "Displaying informative error recovery states.",
-        "explanation": "When network requests fail, show actionable error messages with retry buttons.",
+        "summary": "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និងប៊ូតុង retry ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។",
+        "explanation": "នៅពេលដែល network requests ឬ data fetching ជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI ដែលច្បាស់លាស់ ផ្តល់ព័ត៌មានមានប្រយោជន៍ និងភ្ជាប់មកជាមួយប៊ូតុង retry ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចទាញយកទិន្នន័យឡើងវិញបាន។",
         "keyPoints": [
-          "Include error message and retry callback."
+          "បង្ហាញ error message ដែលងាយស្រួលយល់ និងមិនស្មុគស្មាញពេកសម្រាប់អ្នកប្រើប្រាស់ទូទៅ។",
+          "ភ្ជាប់មកជាមួយ retry callback function ជានិច្ច ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមទាញយកទិន្នន័យម្តងទៀតដោយមិនចាំបាច់ reload ទំព័រទាំងមូល។",
+          "ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ជាមួយនឹង icon សមរម្យដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ។"
         ],
         "codeSnippet": "export function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {\n  return (\n    <div className=\"p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center\">\n      <p className=\"text-rose-300 font-medium\">{message}</p>\n      <button \n        onClick={onRetry}\n        className=\"mt-3 px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white rounded text-xs font-semibold\"\n      >\n        Retry Request\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Error Recovery Component"
+        "codeTitle": "Error Recovery Component",
+        "proTip": "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយដំណោះស្រាយ ដូចជាប៊ូតុង 'Retry' ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមម្តងទៀតបាន។"
       }
     ]
   },

@@ -5,17 +5,20 @@ title: "Loading UI"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Skeleton loaders vs spinners for modern UX perceived performance."
+summary: "ការប្រើ Skeleton loaders និង spinners ដើម្បីបង្កើន perceived performance សម្រាប់ UX ទំនើប។"
+proTip: "Skeleton loading ផ្តល់អារម្មណ៍ថាកម្មវិធីដើរលឿនជាង Spinner ធម្មតា ព្រោះវាបង្ហាញទម្រង់ទ្រង់ទ្រាយនៃ Layout ជាមុន (Perceived Performance)។"
 codeTitle: "Tailwind Skeleton Loader"
 ---
 
 # Loading UI
 
-Skeletons prevent content layout shifts (CLS) by mirroring the exact shape of incoming data before it finishes loading.
+Skeleton loaders ជួយកាត់បន្ថយបាតុភូត Cumulative Layout Shift (CLS) ដោយការបង្ហាញគ្រោង layout ដែលមានទម្រង់ និងទំហំប្រហាក់ប្រហែលនឹងទិន្នន័យពិត ខណៈពេលដែល network request កំពុងដំណើរការ។
 
 ### Key Concepts & Rules:
 
-- Use Tailwind's `animate-pulse` utility for skeleton placeholders.
+- ប្រើប្រាស់ utility class ដូចជា `animate-pulse` របស់ Tailwind CSS ដើម្បីបង្កើត effect ភ្លឺផ្លេកៗសម្រាប់ skeleton placeholders។
+- រៀបចំ skeleton ឱ្យត្រូវគ្នានឹង card, list item, ឬ page structure ដែលនឹងត្រូវបង្ហាញ។
+- ជួយបង្កើន perceived performance ធ្វើឱ្យអ្នកប្រើប្រាស់មានអារម្មណ៍ថាកម្មវិធីដំណើរការរហ័ស និងឆ្លើយតបទាន់ចិត្ត។
 
 ### Code Example: Tailwind Skeleton Loader
 

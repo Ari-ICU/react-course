@@ -5,17 +5,20 @@ title: "Empty States"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Designing engaging fallbacks when arrays or datasets are empty."
+summary: "ការរចនាទម្រង់ Empty State ប្រកបដោយភាពទាក់ទាញ នៅពេលដែលបញ្ជីទិន្នន័យទទេស្អាត។"
+proTip: "Empty State ដ៏ល្អមិនត្រឹមតែប្រាប់ថា 'គ្មានទិន្នន័យ' ប៉ុណ្ណោះទេ តែត្រូវតែណែនាំអ្នកប្រើប្រាស់ពីសកម្មភាពបន្ទាប់ (Next Action) តាមរយៈ Call-to-Action (CTA) button។"
 codeTitle: "Engaging Empty State Component"
 ---
 
 # Empty States
 
-Always provide clear guidance when search queries yield zero results or task lists have no items.
+Empty States គឺជាផ្ទាំង UI ដែលត្រូវបង្ហាញនៅពេលដែលបណ្តុំទិន្នន័យគ្មានធាតុ (empty array) ដូចជាលទ្ធផលស្វែងរកមិនឃើញ ឬមិនទាន់មានទិន្នន័យបង្កើតថ្មី។ ការរចនា Empty State ច្បាស់លាស់ជួយណែនាំអ្នកប្រើប្រាស់ និងលើកកម្ពស់ UX ឱ្យកាន់តែប្រសើរ។
 
 ### Key Concepts & Rules:
 
-- Include an icon, explanatory heading, and call to action (e.g. 'Create your first item').
+- ពិនិត្យប្រវែង array មុនពេលបង្ហាញ (`data.length === 0`) ដើម្បីប្តូរទៅ render Empty State។
+- គួររួមបញ្ចូលនូវ Icon តំណាង, ចំណងជើងពន្យល់ច្បាស់លាស់, និង Call-to-Action (CTA) button ដើម្បីជំរុញឱ្យអ្នកប្រើប្រាស់បង្កើតទិន្នន័យដំបូង។
+- ជៀសវាងការទុកឱ្យទំព័រនៅសល់តែចន្លោះទទេស្អាត ដែលអាចធ្វើឱ្យអ្នកប្រើប្រាស់គិតថាកម្មវិធីខូច ឬគាំង។
 
 ### Code Example: Engaging Empty State Component
 

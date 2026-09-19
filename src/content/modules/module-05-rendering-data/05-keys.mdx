@@ -5,20 +5,20 @@ title: "Keys"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Why React requires keys and how reconciliation uses them."
-pitfall: "Using array index as key when deleting or sorting items causes state from one input item to persist in a different item after re-ordering!"
+summary: "សារៈសំខាន់នៃ key prop និងរបៀបដែល React reconciliation ប្រើវាដើម្បីតាមដានធាតុនីមួយៗ។"
+pitfall: "ការប្រើប្រាស់ array index ជា key នៅពេលដែលមានការលុប បន្ថែម ឬ sort ទិន្នន័យ នឹងបណ្តាលឱ្យ component state ច្រឡំធាតុគ្នា និងបង្កើត bugs ធ្ងន់ធ្ងរនៅលើ UI!"
 codeTitle: "Correct Key Usage in React"
 ---
 
 # Keys
 
-Keys give elements a stable identity across renders. When array items change order, get added, or are deleted, React compares keys to determine which DOM nodes to reuse or recreate without re-rendering the entire list.
+Keys ផ្តល់នូវអត្តសញ្ញាណស្ថិតស្ថេរ (stable identity) ដល់ elements ឆ្លងកាត់ការ render នីមួយៗ។ នៅពេលដែលធាតុក្នុង array ផ្លាស់ប្តូរលំដាប់ ត្រូវបានបន្ថែម ឬលុបចេញ React នឹងប្រៀបធៀប keys ទាំងនេះដើម្បីដឹងថាតើ DOM nodes ណាខ្លះត្រូវរក្សាទុកប្រើឡើងវិញ (reuse) ឬត្រូវបង្កើតជាថ្មី ដោយមិនចាំបាច់ render បញ្ជីទាំងមូលឡើងវិញឡើយ។
 
 ### Key Concepts & Rules:
 
-- Keys must be unique among siblings.
-- Never use `Math.random()` as a key; it destroys DOM nodes on every render.
-- Avoid array index as key when list order can change.
+- Keys ត្រូវតែមានតម្លៃ unique (មិនជាន់គ្នា) ក្នុងចំណោមធាតុបងប្អូន (siblings) ជាមួយគ្នា។
+- ដាច់ខាតកុំប្រើ `Math.random()` ជា key ព្រោះវានឹងផ្លាស់ប្តូរតម្លៃគ្រប់ពេល render ដែលធ្វើឱ្យ React បង្កើត DOM node ថ្មីរាល់ពេល។
+- ចៀសវាងការប្រើ array index ជា key ប្រសិនបើតារាងទិន្នន័យអាចមានការ sort, filter, ឬបន្ថែម/លុបធាតុ។
 
 ### Code Example: Correct Key Usage in React
 

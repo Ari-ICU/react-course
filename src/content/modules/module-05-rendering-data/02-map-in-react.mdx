@@ -5,18 +5,20 @@ title: "map() in React"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "The standard declarative array transformation method for JSX."
+summary: "ការប្រើប្រាស់ declarative array method ស្តង់ដារដើម្បីបំប្លែងទិន្នន័យទៅជា JSX elements។"
+proTip: "ជៀសវាងការប្រើ `.forEach()` ក្នុង JSX ព្រោះវា return `undefined`។ ប្រើ `.map()` ជានិច្ច ព្រោះវាបង្កើត និង return នូវ new array នៃ JSX elements។"
 codeTitle: "Mapping Objects to JSX Elements"
 ---
 
 # map() in React
 
-JavaScript's `.map()` method transforms an array of data into an array of JSX elements. Because `.map()` returns a new array, it embeds cleanly into JSX curly braces.
+Method `.map()` របស់ JavaScript គឺជាវិធីសាស្ត្រស្តង់ដារដ៏ពេញនិយមបំផុតសម្រាប់បំប្លែង (transform) array នៃទិន្នន័យទៅជា array នៃ JSX elements។ ដោយសារតែ `.map()` return ត្រឡប់មកវិញនូវ new array នោះយើងអាចបង្កប់វាដោយផ្ទាល់នៅក្នុងរង្វង់ក្រចកទោល `{}` នៃ JSX បានយ៉ាងងាយស្រួល។
 
 ### Key Concepts & Rules:
 
-- Use `.map()` rather than `forEach` because `.map()` returns a transformed array.
-- Keep mapping functions pure and concise.
+- ប្រើ `.map()` ជំនួសឱ្យ `forEach` ឬ `for` loop ធម្មតា ព្រោះ `.map()` return នូវ array ថ្មីដែល React អាចយកទៅ render បានភ្លាមៗ។
+- រក្សា mapping callback function ឱ្យនៅជា pure function និងសរសេរឱ្យខ្លី ងាយយល់។
+- ត្រូវប្រាកដថាបានដាក់ `key` prop នៅលើ outer element បំផុតដែលបាន return ចេញពី `.map()`។
 
 ### Code Example: Mapping Objects to JSX Elements
 

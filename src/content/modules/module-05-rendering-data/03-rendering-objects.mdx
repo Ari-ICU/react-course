@@ -5,18 +5,20 @@ title: "Rendering Objects"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Accessing and formatting object properties inside templates."
+summary: "របៀបទាញយក និងបង្ហាញ properties របស់ object នៅខាងក្នុង JSX templates ឱ្យបានត្រឹមត្រូវ។"
+proTip: "ប្រសិនបើអ្នកចង់ inspect មើលរចនាសម្ព័ន្ធ object ទាំងមូលលើ UI សម្រាប់ debugging អ្នកអាចប្រើ `<pre>{JSON.stringify(user, null, 2)}</pre>` បាន។"
 codeTitle: "Rendering Object Properties Correctly"
 ---
 
 # Rendering Objects
 
-You cannot render a raw JavaScript object directly inside JSX (`<div>{user}</div>` throws an error). You must render individual primitive properties (`user.name`) or serialize with `JSON.stringify`.
+នៅក្នុង React អ្នកមិនអាច render JavaScript object ទាំងមូលដោយផ្ទាល់នៅខាងក្នុង JSX បានទេ (ឧទាហរណ៍៖ `<div>{user}</div>` នឹងបណ្តាលឱ្យមាន runtime error)។ អ្នកត្រូវតែទាញយក properties នីមួយៗដែលជា primitive values (`user.name`) មកបង្ហាញ ឬបំប្លែងវាទៅជា string ដោយប្រើ `JSON.stringify`។
 
 ### Key Concepts & Rules:
 
-- Objects are not valid React children.
-- Render specific properties or map over `Object.entries(obj)`.
+- Plain JavaScript objects មិនមែនជា valid React children នោះឡើយ។
+- ត្រូវចូលទៅកាន់ property ជាក់លាក់ (ឧ. `object.property`) ឬប្រើ `Object.entries(obj)` រួចធ្វើការ map ដើម្បីបង្ហាញទិន្នន័យ។
+- ប្រើប្រាស់ optional chaining (`user?.address?.city`) ដើម្បីការពារបញ្ហា crash នៅពេលដែល nested object មានតម្លៃ null ឬ undefined។
 
 ### Code Example: Rendering Object Properties Correctly
 

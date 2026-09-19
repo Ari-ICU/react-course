@@ -5,17 +5,20 @@ title: "Error UI"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Displaying informative error recovery states."
+summary: "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និងប៊ូតុង retry ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។"
+proTip: "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយដំណោះស្រាយ ដូចជាប៊ូតុង 'Retry' ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមម្តងទៀតបាន។"
 codeTitle: "Error Recovery Component"
 ---
 
 # Error UI
 
-When network requests fail, show actionable error messages with retry buttons.
+នៅពេលដែល network requests ឬ data fetching ជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI ដែលច្បាស់លាស់ ផ្តល់ព័ត៌មានមានប្រយោជន៍ និងភ្ជាប់មកជាមួយប៊ូតុង retry ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចទាញយកទិន្នន័យឡើងវិញបាន។
 
 ### Key Concepts & Rules:
 
-- Include error message and retry callback.
+- បង្ហាញ error message ដែលងាយស្រួលយល់ និងមិនស្មុគស្មាញពេកសម្រាប់អ្នកប្រើប្រាស់ទូទៅ។
+- ភ្ជាប់មកជាមួយ retry callback function ជានិច្ច ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមទាញយកទិន្នន័យម្តងទៀតដោយមិនចាំបាច់ reload ទំព័រទាំងមូល។
+- ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ជាមួយនឹង icon សមរម្យដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ។
 
 ### Code Example: Error Recovery Component
 

@@ -5,17 +5,20 @@ title: "Rendering Lists"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Building scalable dynamic lists and cards from data feeds."
+summary: "ការកសាង dynamic lists និង card grids ដែលមានទំហំធំ និងអាច scale បានយ៉ាងងាយស្រួល។"
+proTip: "នៅពេលដែលកូដខាងក្នុង loop មានភាពស្មុគស្មាញ ចូរទាញវាចេញទៅជា reusable subcomponent (ដូចជា `<ModuleCard />`) ដើម្បីឱ្យកូដមានរបៀប និងងាយស្រួល optimize performance។"
 codeTitle: "Rendering List of Grid Cards"
 ---
 
 # Rendering Lists
 
-Combining `.map()` with reusable card components enables dynamic rendering of products, blog posts, or comments.
+ការរួមបញ្ចូលគ្នារវាង `.map()` ជាមួយនឹង reusable components អនុញ្ញាតឱ្យយើងបង្កើត dynamic lists, product feeds, ឬ comment sections បានយ៉ាងរលូន និងមានរចនាសម្ព័ន្ធច្បាស់លាស់។
 
 ### Key Concepts & Rules:
 
-- Extract list items into dedicated subcomponents for clarity and memoization.
+- បំបែក list item នីមួយៗឱ្យទៅជា dedicated component ដាច់ដោយឡែក ដើម្បីបង្កើនភាពច្បាស់លាស់នៃកូដ និងងាយស្រួលធ្វើ memoization។
+- បញ្ជូន data ទៅកាន់ child component តាមរយៈ props ឬ object prop (`module={mod}`)។
+- ដាក់ `key` prop នៅលើ custom component ផ្ទាល់នៅកម្រិត loop (`<ModuleCard key={mod.id} ... />`) មិនមែននៅខាងក្នុង root tag របស់ component នោះទេ។
 
 ### Code Example: Rendering List of Grid Cards
 

@@ -5,17 +5,20 @@ title: "Dynamic Components"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Selecting components at runtime using lookup dictionaries."
+summary: "ការជ្រើសរើស component មកបង្ហាញដោយស្វ័យប្រវត្តិតាម runtime ដោយប្រើ lookup dictionaries/maps។"
+proTip: "បង្កើត lookup object នៅខាងក្រៅ component function ដើម្បីជៀសវាងការបង្កើត object ឡើងវិញរាល់ពេល component ធ្វើការ render។"
 codeTitle: "Dynamic Component Lookup Map"
 ---
 
 # Dynamic Components
 
-Map string identifiers or status keys to specific component constructors dynamically.
+Dynamic Components គឺជាបច្ចេកទេសផ្គូផ្គង string identifier ឬ status key ទៅកាន់ React component constructor ជាក់លាក់ណាមួយនៅពេល runtime។ វិធីសាស្ត្រនេះជួយកាត់បន្ថយការសរសេរ `if/else` ឬ `switch` វែងអន្លាយ និងធ្វើឱ្យកូដងាយស្រួលពង្រីក (scalable)។
 
 ### Key Concepts & Rules:
 
-- Store components in a dictionary object and index with dynamic key.
+- រក្សាទុក components នៅក្នុង dictionary/lookup object ហើយហៅប្រើវាដោយប្រើ dynamic key (ឧ. `iconMap[type]`)។
+- ត្រូវប្រាកដថាតម្លៃ component ដែលទាញចេញមកត្រូវបានចាត់ទុកជា identifier ដែលចាប់ផ្តើមដោយអក្សរធំ (Capitalized variable name ដូចជា `IconComponent`) មុនពេលយកទៅ render ជា JSX tag (`<IconComponent />`)។
+- កំណត់ fallback component សម្រាប់ករណីដែល key មិនត្រូវគ្នានឹងទិន្នន័យក្នុង dictionary។
 
 ### Code Example: Dynamic Component Lookup Map
 

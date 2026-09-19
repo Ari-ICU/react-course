@@ -5,17 +5,20 @@ title: "Ternary Rendering"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Compact inline if/else expression."
+summary: "ការប្រើប្រាស់ Ternary Operator (? :) សម្រាប់ inline if/else logic យ៉ាងខ្លីស្អាត។"
+proTip: "កុំសរសេរ ternary តត្រួតគ្នា (nested ternaries) នៅក្នុង JSX ព្រោះវាពិបាកអាន និងងាយបង្កើតកំហុស។ ប្រសិនបើមានលើសពី ២ លក្ខខណ្ឌ ចូរប្រើ early return ឬ helper function ជំនួសវិញ។"
 codeTitle: "Inline Ternary Operator"
 ---
 
 # Ternary Rendering
 
-The ternary operator `condition ? <A /> : <B />` is ideal for toggling between two mutually exclusive UI elements inside JSX markup.
+Ternary operator តាមទម្រង់ `condition ? <ComponentA /> : <ComponentB />` គឺជាដំណោះស្រាយដ៏ស័ក្តិសមបំផុតសម្រាប់ប្តូររវាង UI ពីរផ្សេងគ្នា (mutually exclusive) នៅខាងក្នុង JSX markup ដោយផ្ទាល់។
 
 ### Key Concepts & Rules:
 
-- Great for binary switches: Dark/Light theme, Active/Inactive tab.
+- ល្អបំផុតសម្រាប់ binary switches ដូចជា Dark/Light theme, Active/Inactive state, ឬ Login/Logout buttons។
+- ជួយឱ្យកូដ JSX មានភាពខ្លី និងមានភាព declarative ខ្ពស់។
+- អាចប្រើសម្រាប់កំណត់ dynamic CSS class names ផ្អែកលើ state ផងដែរ។
 
 ### Code Example: Inline Ternary Operator
 

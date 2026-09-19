@@ -5,18 +5,20 @@ title: "Rendering Arrays"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Displaying collections of primitives or objects on screen."
+summary: "ការបង្ហាញទិន្នន័យជាបណ្តុំ (Arrays) នៃ primitives ឬ objects នៅលើអេក្រង់។"
+proTip: "React អាច render array នៃ JSX elements បានដោយស្វ័យប្រវត្តិ ប៉ុន្តែរាល់ element នីមួយៗត្រូវតែមាន `key` prop តែមួយគត់ (unique key)។"
 codeTitle: "Rendering Simple Arrays"
 ---
 
 # Rendering Arrays
 
-React allows rendering arrays of elements directly. When an array of JSX elements is passed, React iterates and mounts each element in sequence.
+React អនុញ្ញាតឱ្យយើង render arrays នៃ elements ដោយផ្ទាល់នៅលើ UI។ នៅពេលដែល array នៃ JSX elements ត្រូវបានបញ្ជូនចូល React នឹងធ្វើការ iterate និង mount រាល់ element នីមួយៗតាមលំដាប់លំដោយ។
 
 ### Key Concepts & Rules:
 
-- Arrays are rendered in order.
-- Each top-level element in the array requires a unique `key` prop.
+- Arrays ត្រូវបាន render ទៅលើ screen តាមលំដាប់លំដោយនៃធាតុនៅក្នុង array។
+- រាល់ top-level element ទាំងអស់នៅក្នុង array ចាំបាច់ត្រូវតែមាន `key` prop មួយដែលមានតម្លៃ unique (មិនជាន់គ្នា)។
+- ជៀសវាងការ render array ដែលផ្ទុក plain objects ដោយផ្ទាល់ ព្រោះ React មិនអនុញ្ញាតឱ្យ render object ជា child element ឡើយ។
 
 ### Code Example: Rendering Simple Arrays
 

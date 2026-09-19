@@ -5,17 +5,20 @@ title: "Logical AND Rendering"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "Rendering an element only when a condition is truthy."
+summary: "ការប្រើប្រាស់ Logical AND (&&) ដើម្បី render UI នៅពេលដែលលក្ខខណ្ឌពិត (truthy)។"
+pitfall: "ប្រយ័ត្នបញ្ហាលេខ `0`៖ ការសរសេរ `items.length && <List />` នឹងបង្ហាញលេខ `0` លើអេក្រង់នៅពេលដែល array ទទេ! ត្រូវសរសេរ `items.length > 0 && <List />` ជានិច្ច។"
 codeTitle: "Logical AND Guard"
 ---
 
 # Logical AND Rendering
 
-Using `condition && <Element />` renders `<Element />` if `condition` is truthy, and ignores it if `false` or `null`.
+ការប្រើប្រាស់ syntax `condition && <Element />` នឹងធ្វើការ render `<Element />` ប្រសិនបើ `condition` មានតម្លៃ truthy ហើយវានឹងរំលងមិន render អ្វីទាំងអស់ប្រសិនបើតម្លៃជា `false` ឬ `null`។
 
 ### Key Concepts & Rules:
 
-- Always ensure the left operand is a strict boolean: `Boolean(val)` or `val > 0`.
+- ប្រើប្រាស់នៅពេលដែលអ្នកចង់បង្ហាញ UI តែមួយជម្រើស (render ពេលពិត ឬមិន render ទាល់តែសោះ)។
+- ត្រូវប្រាកដថា operand ខាងឆ្វេងមានតម្លៃជា boolean ពិតប្រាកដ (ឧ. `Boolean(val)`, `val > 0`, ឬ `!!val`) ដើម្បីជៀសវាងការ render ចេញលេខ `0` ឬ `NaN` ដោយអចេតនា។
+- ស័ក្តិសមបំផុតសម្រាប់ badge alerts, discount banners, ឬ error indicators។
 
 ### Code Example: Logical AND Guard
 
