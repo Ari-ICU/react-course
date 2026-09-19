@@ -5,25 +5,33 @@ title: "Protecting Sensitive Environment Variables"
 moduleId: "module-25"
 moduleNumber: "25"
 category: "Enterprise & Production"
-summary: "Server-only secrets vs public client variables."
+summary: "ការបែងចែកឱ្យដាច់រវាង Server-only Secrets និង Public Client Variables ក្នុង Environment Variables (.env)។"
+pitfall: "រាល់អថេរណាដែលមាន Prefix `NEXT_PUBLIC_` ឬ `VITE_` នឹងត្រូវបានបញ្ចូលទៅក្នុង Client JavaScript Bundle ដែលមានន័យថានរណាក៏អាចមើលឃើញតម្លៃនោះបានដែរ! ហាមដាច់ខាតកុំដាក់ Stripe Secret Keys, Database Passwords ឬ Private API Keys ក្នុងអថេរ Client!"
 codeTitle: "Securing Environment Variables"
 ---
 
 # Protecting Sensitive Environment Variables
 
-Variables with `NEXT_PUBLIC_` or `VITE_` are embedded into the client bundle and are 100% visible to anyone inspecting browser network tabs. Never put database passwords, Stripe secret keys, or private certificates in client env variables!
+កំហុសឆ្គងផ្នែកសុវត្ថិភាពទូទៅបំផុតមួយក្នុងការអភិវឌ្ឍ Frontend គឺការធ្វេសប្រហែសបែកធ្លាយលេខសម្ងាត់ (API Secrets) ទៅកាន់ Client Browser។ នៅក្នុង Next.js ឬ Vite អថេរដែលមាន Prefix `NEXT_PUBLIC_` ឬ `VITE_` នឹងត្រូវបញ្ចូលដោយផ្ទាល់ទៅក្នុង Client JavaScript Files។ អ្នកត្រូវតែបែងចែកឱ្យច្បាស់រវាង **Public Configuration** និង **Server-Only Secrets**។
 
 ### Key Concepts & Rules:
 
-- Public env vars: API URLs, public analytics IDs.
-- Secret env vars: Database keys, payment secret keys.
+- **Public Variables (`NEXT_PUBLIC_`)**: សម្រាប់ទិន្នន័យសាធារណៈ (Base API URL, Google Analytics ID)។
+- **Server Secrets (គ្មាន prefix)**: សម្រាប់ទិន្នន័យសម្ងាត់ (Database Passwords, Stripe Secret Key, JWT Secret) ដែលអាចហៅប្រើបានតែក្នុង API Routes / Server Components។
+- បន្ថែម `.env*.local` ទៅក្នុង `.gitignore` ជានិច្ច ដើម្បីកុំឱ្យច្រឡំ Commit ឡើង GitHub។
 
 ### Code Example: Securing Environment Variables
 
-```jsx
-// ❌ DANGEROUS: Leaked to browser client!
-// NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_12345
+```bash
+# ❌ គ្រោះថ្នាក់បំផុត៖ បែកធ្លាយទៅកាន់ Browser របស់ Client ទាំងអស់!
+NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_51M0SecretKey12345
+NEXT_PUBLIC_DATABASE_PASSWORD=super_secret_db_pass
 
-// ✅ Safe: Only accessible in server environments / API routes:
-// STRIPE_SECRET_KEY=sk_live_12345
+# ✅ សុវត្ថិភាព 100%៖ អាចអានបានតែនៅលើ Server (Node.js/Next.js Route Handlers)
+STRIPE_SECRET_KEY=sk_live_51M0SecretKey12345
+DATABASE_URL=postgresql://user:pass@localhost:5432/mydb
+
+# ✅ សុវត្ថិភាពសម្រាប់ Client (ទិន្នន័យសាធារណៈ)
+NEXT_PUBLIC_API_URL=https://api.reactcourse.dev/v1
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_51M0PublicKey12345
 ```

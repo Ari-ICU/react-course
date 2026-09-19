@@ -5,26 +5,41 @@ title: "dangerouslySetInnerHTML"
 moduleId: "module-25"
 moduleNumber: "25"
 category: "Enterprise & Production"
-summary: "The hazards of raw HTML injection and sanitization with DOMPurify."
-pitfall: "Passing raw strings to dangerouslySetInnerHTML allows attackers to execute arbitrary JavaScript in your users' browser sessions."
+summary: "ហានិភ័យនៃការបញ្ចូលកូដ HTML ផ្ទាល់ (Raw HTML Injection) និងដំណោះស្រាយសម្អាតមេរោគតាមរយៈ DOMPurify។"
+pitfall: "ការបញ្ជូន Raw HTML Strings ដែលមិនបានឆ្លងកាត់ការសម្អាត (Sanitization) ទៅកាន់ `dangerouslySetInnerHTML` អនុញ្ញាតឱ្យ Hacker អាចដំណើរការកូដ JavaScript បំពាន (XSS) ក្នុង Browser របស់ User និងអាចលួចយក Session/Credentials បាន!"
 codeTitle: "Safe HTML Sanitization with DOMPurify"
 ---
 
 # dangerouslySetInnerHTML
 
-If you must render rich HTML from CMS feeds, ALWAYS sanitize it with `DOMPurify` before passing to `dangerouslySetInnerHTML`.
+ឈ្មោះរបស់ Prop `dangerouslySetInnerHTML` ត្រូវបានក្រុមការងារ React ដាក់ពាក្យថា **"dangerously"** ដោយចេតនា ដើម្បីដាស់តឿន Developer ពីហានិភ័យសុវត្ថិភាពធ្ងន់ធ្ងរ។ ប្រសិនបើអ្នកត្រូវតែ Render Rich Text HTML ដែលបានមកពី CMS ឬអ្នកប្រើប្រាស់ អ្នកត្រូវតែធ្វើការសម្អាត (Sanitize) មេរោគ និង Script បំពានចោលជាមុនសិនតាមរយៈបណ្ណាល័យ **`DOMPurify`**។
 
 ### Key Concepts & Rules:
 
-- Never pass un-sanitized user input to `dangerouslySetInnerHTML`.
+- ហាមដាច់ខាតកុំបញ្ជូន Raw HTML ដែលមិនទាន់ Sanitize ចូលទៅក្នុង `dangerouslySetInnerHTML`។
+- ប្រើប្រាស់ `DOMPurify.sanitize()` ដើម្បីដកស្លាក `<script>`, `onerror=`, `javascript:` ចេញ។
+- ពិចារណាប្រើប្រាស់ Markdown Parser (ដូចជា `react-markdown`) ជំនួសឱ្យ Raw HTML។
 
 ### Code Example: Safe HTML Sanitization with DOMPurify
 
 ```jsx
 import DOMPurify from 'dompurify';
 
-export function SafeHtml({ rawContent }: { rawContent: string }) {
-  const cleanHtml = DOMPurify.sanitize(rawContent);
-  return <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />;
+interface SafeHtmlProps {
+  rawHtmlContent: string;
+}
+
+export function SafeHtmlRenderer({ rawHtmlContent }: SafeHtmlProps) {
+  // សម្អាតរាល់កូដគ្រោះថ្នាក់ទាំងអស់មុនពេល Render
+  const cleanHtml = DOMPurify.sanitize(rawHtmlContent, {
+    USE_PROFILES: { html: true }, // អនុញ្ញាតតែ HTML សុវត្ថិភាព
+  });
+
+  return (
+    <div 
+      className="prose prose-invert"
+      dangerouslySetInnerHTML={{ __html: cleanHtml }} 
+    />
+  );
 }
 ```

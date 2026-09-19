@@ -5,17 +5,20 @@ title: "Mocking API Requests (MSW)"
 moduleId: "module-24"
 moduleNumber: "24"
 category: "Enterprise & Production"
-summary: "Mock Service Worker for realistic network mocking."
+summary: "ការប្រើប្រាស់ Mock Service Worker (MSW) ដើម្បីស្ទាក់ចាប់ និងក្លែងបន្លំ Network Requests យ៉ាងជាក់ស្តែងបំផុត។"
+proTip: "MSW ស្ទាក់ចាប់ Network Requests នៅកម្រិត Service Worker (Network Layer) ដោយមិនចាំបាច់កែប្រែកូដ Component ឬ Axios instance ឡើយ។ វាអនុញ្ញាតឱ្យអ្នកធ្វើតេស្តលើ Loading, Error 500, និង Success States យ៉ាងមានទំនុកចិត្តខ្ពស់បំផុត។"
 codeTitle: "Mock Service Worker Server Handler"
 ---
 
 # Mocking API Requests (MSW)
 
-MSW intercepts HTTP requests at the network level, returning mock JSON without modifying component code.
+**Mock Service Worker (MSW)** គឺជាបណ្ណាល័យស្តង់ដារមាសសម្រាប់ការក្លែងបន្លំ API (API Mocking) ក្នុងប្រព័ន្ធ Ecosystem នៃ JavaScript។ ជំនួសឱ្យការ Mock អនុគមន៍ `fetch` ឬ `axios` ដោយប្រើ `vi.fn()` ដែលងាយប្រឈមនឹងកំហុស MSW ធ្វើការស្ទាក់ចាប់ HTTP Requests នៅកម្រិត Network Layer ដោយផ្ទាល់ ដែលធ្វើឱ្យកូដតេស្តដំណើរការដូចទៅនឹង Server ពិតប្រាកដ។
 
 ### Key Concepts & Rules:
 
-- Provides highest confidence testing for loading, error, and data states.
+- ស្ទាក់ចាប់ Network Calls ដោយមិនចាំបាច់កែប្រែកូដ Application Code ឡើយ។
+- ងាយស្រួលសរសេរតេស្តសាកល្បងករណីជួប Error 500, 404, ឬ Network Timeout។
+- ចែករំលែក Mock Handlers ដូចគ្នារវាងការធ្វើ Unit Tests (Node.js) និងការ Develop ក្នុង Browser។
 
 ### Code Example: Mock Service Worker Server Handler
 
@@ -23,9 +26,18 @@ MSW intercepts HTTP requests at the network level, returning mock JSON without m
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 
+// កំណត់ API Handlers សម្រាប់ស្ទាក់ចាប់ Endpoint:
 export const server = setupServer(
   http.get('/api/students', () => {
-    return HttpResponse.json([{ id: '1', name: 'Alice', gpa: 3.9 }]);
+    return HttpResponse.json([
+      { id: '1', name: 'សោភា', gpa: 3.9 },
+      { id: '2', name: 'រដ្ឋា', gpa: 3.7 },
+    ]);
   })
 );
+
+// ក្នុង setupTests.ts:
+// beforeAll(() => server.listen());
+// afterEach(() => server.resetHandlers());
+// afterAll(() => server.close());
 ```

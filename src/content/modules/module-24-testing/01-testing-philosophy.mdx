@@ -5,20 +5,24 @@ title: "Testing Philosophy"
 moduleId: "module-24"
 moduleNumber: "24"
 category: "Enterprise & Production"
-summary: "The testing pyramid: unit tests, component tests, and E2E tests."
+summary: "ពីរ៉ាមីតនៃការធ្វើតេស្ត (Testing Pyramid)៖ Unit Tests, Component Integration Tests, និង End-to-End (E2E) Tests។"
+proTip: "កុំធ្វើតេស្តលើ Implementation Details (ដូចជាការឆែកតម្លៃ state ខាងក្នុង component) ឱ្យសោះ! ចូរធ្វើតេស្តលើឥរិយាបថដែល User មើលឃើញ និងប្រាស្រ័យទាក់ទងផ្ទាល់ (ដូចជា ការចុចប៊ូតុង និងការឃើញអត្ថបទលើអេក្រង់)។ 'The more your tests resemble the way your software is used, the more confidence they can give you.'"
 codeTitle: "Installing Testing Stack"
 ---
 
 # Testing Philosophy
 
-Test your application the way real users interact with it! Rather than testing internal component state or implementation details, test rendered text and user events.
+គោលការណ៍ស្នូលនៃការធ្វើតេស្តកម្មវិធី React ទំនើប គឺការធ្វើតេស្តលើកម្មវិធីរបស់អ្នកតាមរបៀបដែលអ្នកប្រើប្រាស់ពិតប្រាកដប្រាស្រ័យទាក់ទងជាមួយវា។ ជំនួសឱ្យការធ្វើតេស្តលម្អិតលើ Implementation Details (ដូចជា ឈ្មោះ State ឬឈ្មោះ Internal Methods ដែលងាយនឹងខូចពេល Refactor) យើងផ្តោតលើអ្វីដែលបង្ហាញនៅលើអេក្រង់ (DOM Output) និងប្រតិកម្មចំពោះសកម្មភាពចុច ឬវាយអក្សររបស់ User។
 
 ### Key Concepts & Rules:
 
-- 'The more your tests resemble the way your software is used, the more confidence they can give you.' — Kent C. Dodds
+- **Unit Tests**: ធ្វើតេស្តលើ Pure Functions, Math Calculations, និង Helper Utilities (លឿនបំផុត)។
+- **Component Tests (RTL)**: ធ្វើតេស្តលើការ Render នៃ Component និង User Events ជាមួយ React Testing Library។
+- **E2E Tests (Playwright / Cypress)**: ធ្វើតេស្តលើ User Flows ពេញលេញតាំងពីដើមដល់ចប់នៅលើ Real Browser។
 
 ### Code Example: Installing Testing Stack
 
-```jsx
+```bash
+# ដំឡើង Vitest, React Testing Library, User Event, និង JSDOM
 npm install -D vitest @testing-library/react @testing-library/user-event jsdom
 ```

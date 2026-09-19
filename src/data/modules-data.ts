@@ -4225,48 +4225,56 @@ export const modulesData: ModuleItem[] = [
     "number": "24",
     "title": "Testing",
     "category": "Enterprise & Production",
-    "summary": "Testing philosophy, Vitest, React Testing Library, user interactions, form testing, mocking API requests with MSW, and test organization.",
+    "summary": "ទស្សនវិជ្ជានៃការធ្វើតេស្ត (Testing Philosophy), ការប្រើប្រាស់ Vitest, React Testing Library (RTL), ការធ្វើតេស្តលើ User Interactions, ការ Mocking API Requests តាមរយៈ MSW, និងការរៀបចំរចនាសម្ព័ន្ធ Tests។",
     "iconName": "TestTube2",
     "topics": [
       {
         "id": "m24-01",
         "number": "01",
         "title": "Testing Philosophy",
-        "summary": "The testing pyramid: unit tests, component tests, and E2E tests.",
-        "explanation": "Test your application the way real users interact with it! Rather than testing internal component state or implementation details, test rendered text and user events.",
+        "summary": "ពីរ៉ាមីតនៃការធ្វើតេស្ត (Testing Pyramid)៖ Unit Tests, Component Integration Tests, និង End-to-End (E2E) Tests។",
+        "explanation": "គោលការណ៍ស្នូលនៃការធ្វើតេស្តកម្មវិធី React ទំនើប គឺការធ្វើតេស្តលើកម្មវិធីរបស់អ្នកតាមរបៀបដែលអ្នកប្រើប្រាស់ពិតប្រាកដប្រាស្រ័យទាក់ទងជាមួយវា។ ជំនួសឱ្យការធ្វើតេស្តលម្អិតលើ Implementation Details (ដូចជា ឈ្មោះ State ឬឈ្មោះ Internal Methods ដែលងាយនឹងខូចពេល Refactor) យើងផ្តោតលើអ្វីដែលបង្ហាញនៅលើអេក្រង់ (DOM Output) និងប្រតិកម្មចំពោះសកម្មភាពចុច ឬវាយអក្សររបស់ User។",
         "keyPoints": [
-          "'The more your tests resemble the way your software is used, the more confidence they can give you.' — Kent C. Dodds"
+          "**Unit Tests**: ធ្វើតេស្តលើ Pure Functions, Math Calculations, និង Helper Utilities (លឿនបំផុត)។",
+          "**Component Tests (RTL)**: ធ្វើតេស្តលើការ Render នៃ Component និង User Events ជាមួយ React Testing Library។",
+          "**E2E Tests (Playwright / Cypress)**: ធ្វើតេស្តលើ User Flows ពេញលេញតាំងពីដើមដល់ចប់នៅលើ Real Browser។"
         ],
-        "codeSnippet": "npm install -D vitest @testing-library/react @testing-library/user-event jsdom",
-        "codeLanguage": "jsx",
-        "codeTitle": "Installing Testing Stack"
+        "codeSnippet": "# ដំឡើង Vitest, React Testing Library, User Event, និង JSDOM\nnpm install -D vitest @testing-library/react @testing-library/user-event jsdom",
+        "codeLanguage": "bash",
+        "codeTitle": "Installing Testing Stack",
+        "proTip": "កុំធ្វើតេស្តលើ Implementation Details (ដូចជាការឆែកតម្លៃ state ខាងក្នុង component) ឱ្យសោះ! ចូរធ្វើតេស្តលើឥរិយាបថដែល User មើលឃើញ និងប្រាស្រ័យទាក់ទងផ្ទាល់ (ដូចជា ការចុចប៊ូតុង និងការឃើញអត្ថបទលើអេក្រង់)។ 'The more your tests resemble the way your software is used, the more confidence they can give you.'"
       },
       {
         "id": "m24-02",
         "number": "02",
         "title": "React Testing Library",
-        "summary": "Querying elements by role, label, and text.",
-        "explanation": "RTL prioritizes accessible queries: `getByRole('button', { name: /submit/i })`, `getByLabelText`, `getByText`.",
+        "summary": "ការស្វែងរក Elements តាមរយៈ Role, Label, និង Text ស្របតាមស្តង់ដារ Accessibility និងការសាកល្បង User Events។",
+        "explanation": "**React Testing Library (RTL)** ត្រូវបានបង្កើតឡើងដើម្បីលើកកម្ពស់ការធ្វើតេស្តដែលស្របតាមស្តង់ដារ Accessibility។ វាមិនផ្តល់នូវ API សម្រាប់ចូលមើល State ឬ Props របស់ Component ឡើយ ប៉ុន្តែវាផ្តល់នូវ Query Selectors ដូចជា `getByRole`, `getByLabelText`, និង `getByText` ដើម្បីស្វែងរក Elements ដូចដែលមនុស្ស និង Screen Readers មើលឃើញ។",
         "keyPoints": [
-          "Avoid `getByTestId` unless no accessible role exists.",
-          "Tests break only when user experience breaks, not when refactoring implementation."
+          "លំដាប់អាទិភាពនៃ Queries៖ `getByRole` > `getByLabelText` > `getByPlaceholderText` > `getByText` > `getByTestId`។",
+          "ប្រើ `@testing-library/user-event` ជំនួសឱ្យ `fireEvent` ដើម្បីក្លែងបន្លំព្រឹត្តិការណ៍ចុច និងវាយអក្សរបានដូចមនុស្សពិតប្រាកដ។",
+          "ធ្វើតេស្តមិនខូចឡើយ (Resilient to Refactoring) ដរាបណា User Experience នៅដដែល។"
         ],
-        "codeSnippet": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { Counter } from './Counter';\n\ntest('increments counter on button click', async () => {\n  const user = userEvent.setup();\n  render(<Counter />);\n\n  const button = screen.getByRole('button', { name: /clicks: 0/i });\n  await user.click(button);\n\n  expect(screen.getByRole('button', { name: /clicks: 1/i })).toBeInTheDocument();\n});",
+        "codeSnippet": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { Counter } from './Counter';\n\ntest('បង្កើនចំនួនលេខកើនឡើង ១ នៅពេលចុចប៊ូតុង', async () => {\n  const user = userEvent.setup();\n  render(<Counter />);\n\n  // 1. ស្វែងរកប៊ូតុងដែលមានឈ្មោះបង្ហាញថា \"ចុច: 0\"\n  const button = screen.getByRole('button', { name: /ចុច: 0/i });\n  \n  // 2. ក្លែងបន្លំសកម្មភាព User ចុចលើប៊ូតុង\n  await user.click(button);\n\n  // 3. ផ្ទៀងផ្ទាត់ថាតើប៊ូតុងប្តូរមក \"ចុច: 1\" ដែរឬទេ\n  expect(screen.getByRole('button', { name: /ចុច: 1/i })).toBeInTheDocument();\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "RTL User Interaction Test"
+        "codeTitle": "RTL User Interaction Test",
+        "proTip": "តែងតែផ្តល់អាទិភាពដល់ `getByRole('button', { name: /.../ })` ឬ `getByLabelText` ជានិច្ច! ចៀសវាងការប្រើ `getByTestId` លុះត្រាតែ Element នោះគ្មាន Accessible Role ពិតប្រាកដ។ វិធីនេះជួយធានាថា App របស់អ្នកទាំងមានតេស្តល្អ និងទាំងគាំទ្រ Accessibility (A11y)។"
       },
       {
         "id": "m24-03",
         "number": "04",
         "title": "Mocking API Requests (MSW)",
-        "summary": "Mock Service Worker for realistic network mocking.",
-        "explanation": "MSW intercepts HTTP requests at the network level, returning mock JSON without modifying component code.",
+        "summary": "ការប្រើប្រាស់ Mock Service Worker (MSW) ដើម្បីស្ទាក់ចាប់ និងក្លែងបន្លំ Network Requests យ៉ាងជាក់ស្តែងបំផុត។",
+        "explanation": "**Mock Service Worker (MSW)** គឺជាបណ្ណាល័យស្តង់ដារមាសសម្រាប់ការក្លែងបន្លំ API (API Mocking) ក្នុងប្រព័ន្ធ Ecosystem នៃ JavaScript។ ជំនួសឱ្យការ Mock អនុគមន៍ `fetch` ឬ `axios` ដោយប្រើ `vi.fn()` ដែលងាយប្រឈមនឹងកំហុស MSW ធ្វើការស្ទាក់ចាប់ HTTP Requests នៅកម្រិត Network Layer ដោយផ្ទាល់ ដែលធ្វើឱ្យកូដតេស្តដំណើរការដូចទៅនឹង Server ពិតប្រាកដ។",
         "keyPoints": [
-          "Provides highest confidence testing for loading, error, and data states."
+          "ស្ទាក់ចាប់ Network Calls ដោយមិនចាំបាច់កែប្រែកូដ Application Code ឡើយ។",
+          "ងាយស្រួលសរសេរតេស្តសាកល្បងករណីជួប Error 500, 404, ឬ Network Timeout។",
+          "ចែករំលែក Mock Handlers ដូចគ្នារវាងការធ្វើ Unit Tests (Node.js) និងការ Develop ក្នុង Browser។"
         ],
-        "codeSnippet": "import { http, HttpResponse } from 'msw';\nimport { setupServer } from 'msw/node';\n\nexport const server = setupServer(\n  http.get('/api/students', () => {\n    return HttpResponse.json([{ id: '1', name: 'Alice', gpa: 3.9 }]);\n  })\n);",
+        "codeSnippet": "import { http, HttpResponse } from 'msw';\nimport { setupServer } from 'msw/node';\n\n// កំណត់ API Handlers សម្រាប់ស្ទាក់ចាប់ Endpoint:\nexport const server = setupServer(\n  http.get('/api/students', () => {\n    return HttpResponse.json([\n      { id: '1', name: 'សោភា', gpa: 3.9 },\n      { id: '2', name: 'រដ្ឋា', gpa: 3.7 },\n    ]);\n  })\n);\n\n// ក្នុង setupTests.ts:\n// beforeAll(() => server.listen());\n// afterEach(() => server.resetHandlers());\n// afterAll(() => server.close());",
         "codeLanguage": "jsx",
-        "codeTitle": "Mock Service Worker Server Handler"
+        "codeTitle": "Mock Service Worker Server Handler",
+        "proTip": "MSW ស្ទាក់ចាប់ Network Requests នៅកម្រិត Service Worker (Network Layer) ដោយមិនចាំបាច់កែប្រែកូដ Component ឬ Axios instance ឡើយ។ វាអនុញ្ញាតឱ្យអ្នកធ្វើតេស្តលើ Loading, Error 500, និង Success States យ៉ាងមានទំនុកចិត្តខ្ពស់បំផុត។"
       }
     ]
   },
@@ -4275,49 +4283,56 @@ export const modulesData: ModuleItem[] = [
     "number": "25",
     "title": "Security",
     "category": "Enterprise & Production",
-    "summary": "XSS prevention, dangerouslySetInnerHTML risks, token storage security, CORS, sensitive environment variables, and secure API integration.",
+    "summary": "ការការពារការវាយប្រហារ Cross-Site Scripting (XSS), ហានិភ័យនៃ dangerouslySetInnerHTML, សុវត្ថិភាពនៃការរក្សាទុក Tokens, CORS, ការការពារ Environment Variables សម្ងាត់, និងការតភ្ជាប់ API ប្រកបដោយសុវត្ថិភាព។",
     "iconName": "Lock",
     "topics": [
       {
         "id": "m25-01",
         "number": "01",
         "title": "React Security Basics",
-        "summary": "Built-in auto-escaping against Cross-Site Scripting (XSS).",
-        "explanation": "By default, React escapes all strings rendered inside JSX before inserting them into the DOM, neutralizing basic `<script>` injection attacks.",
+        "summary": "យន្តការ Auto-Escaping របស់ React ប្រឆាំងនឹងការវាយប្រហារ Cross-Site Scripting (XSS)។",
+        "explanation": "ការវាយប្រហារ **Cross-Site Scripting (XSS)** កើតឡើងនៅពេលដែលជនអនាមិកអាចបញ្ចូលកូដ JavaScript បំពានចូលទៅក្នុងគេហទំព័រ ដើម្បីលួច Session Cookies, Tokens ឬក្លែងបន្លំជា User។ React ត្រូវបានរចនាឡើងជាមួយនឹងប្រព័ន្ធសុវត្ថិភាពដ៏រឹងមាំតាំងពីគ្រឹះ ដោយវាធ្វើការ **Auto-escaping** រាល់ String ទាំងអស់ដែលត្រូវបាន Render ក្នុង JSX មុនពេលបញ្ចូលទៅក្នុង Real DOM។",
         "keyPoints": [
-          "Automatic string escaping prevents HTML injection."
+          "React បំប្លែងតួអក្សរគ្រោះថ្នាក់ (ដូចជា `<`, `>`, `&`, `\"`) ទៅជា HTML Entities ដោយស្វ័យប្រវត្តិ។",
+          "ទប់ស្កាត់ការដំណើរការកូដ `<script>alert('hack')</script>` ដែល User បញ្ចូលតាមរយៈ Form។",
+          "មិនត្រូវប្រើ `eval()` ឬបង្កើត HTML តាមរយៈ String Concatenation ឡើយ។"
         ],
-        "codeSnippet": "// If userInput is \"<script>alert('hack')</script>\",\n// React renders it as safe plain text: &lt;script&gt;...",
+        "codeSnippet": "export function UserComment({ commentText }: { commentText: string }) {\n  // ប្រសិនបើ commentText គឺជា៖ \"<script>stealTokens()</script>\"\n  // React នឹង Render វាជាអត្ថបទធម្មតាសុវត្ថិភាព 100%៖\n  // &lt;script&gt;stealTokens()&lt;/script&gt;\n  return <div className=\"comment-box\">{commentText}</div>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Automatic XSS Escaping"
+        "codeTitle": "Automatic XSS Escaping",
+        "proTip": "តាមលំនាំដើម JSX នឹងបំប្លែងរាល់ Strings ទាំងអស់ទៅជា Escaped Plain Text មុនពេលបញ្ចូលទៅក្នុង DOM (ដូចជា `<` ទៅជា `&lt;`) ដូច្នេះការវាយប្រហារតាមរយៈ `<script>` injection ត្រូវបានទប់ស្កាត់ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m25-02",
         "number": "02",
         "title": "dangerouslySetInnerHTML",
-        "summary": "The hazards of raw HTML injection and sanitization with DOMPurify.",
-        "explanation": "If you must render rich HTML from CMS feeds, ALWAYS sanitize it with `DOMPurify` before passing to `dangerouslySetInnerHTML`.",
+        "summary": "ហានិភ័យនៃការបញ្ចូលកូដ HTML ផ្ទាល់ (Raw HTML Injection) និងដំណោះស្រាយសម្អាតមេរោគតាមរយៈ DOMPurify។",
+        "explanation": "ឈ្មោះរបស់ Prop `dangerouslySetInnerHTML` ត្រូវបានក្រុមការងារ React ដាក់ពាក្យថា **\"dangerously\"** ដោយចេតនា ដើម្បីដាស់តឿន Developer ពីហានិភ័យសុវត្ថិភាពធ្ងន់ធ្ងរ។ ប្រសិនបើអ្នកត្រូវតែ Render Rich Text HTML ដែលបានមកពី CMS ឬអ្នកប្រើប្រាស់ អ្នកត្រូវតែធ្វើការសម្អាត (Sanitize) មេរោគ និង Script បំពានចោលជាមុនសិនតាមរយៈបណ្ណាល័យ **`DOMPurify`**។",
         "keyPoints": [
-          "Never pass un-sanitized user input to `dangerouslySetInnerHTML`."
+          "ហាមដាច់ខាតកុំបញ្ជូន Raw HTML ដែលមិនទាន់ Sanitize ចូលទៅក្នុង `dangerouslySetInnerHTML`។",
+          "ប្រើប្រាស់ `DOMPurify.sanitize()` ដើម្បីដកស្លាក `<script>`, `onerror=`, `javascript:` ចេញ។",
+          "ពិចារណាប្រើប្រាស់ Markdown Parser (ដូចជា `react-markdown`) ជំនួសឱ្យ Raw HTML។"
         ],
-        "codeSnippet": "import DOMPurify from 'dompurify';\n\nexport function SafeHtml({ rawContent }: { rawContent: string }) {\n  const cleanHtml = DOMPurify.sanitize(rawContent);\n  return <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />;\n}",
+        "codeSnippet": "import DOMPurify from 'dompurify';\n\ninterface SafeHtmlProps {\n  rawHtmlContent: string;\n}\n\nexport function SafeHtmlRenderer({ rawHtmlContent }: SafeHtmlProps) {\n  // សម្អាតរាល់កូដគ្រោះថ្នាក់ទាំងអស់មុនពេល Render\n  const cleanHtml = DOMPurify.sanitize(rawHtmlContent, {\n    USE_PROFILES: { html: true }, // អនុញ្ញាតតែ HTML សុវត្ថិភាព\n  });\n\n  return (\n    <div \n      className=\"prose prose-invert\"\n      dangerouslySetInnerHTML={{ __html: cleanHtml }} \n    />\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Safe HTML Sanitization with DOMPurify",
-        "pitfall": "Passing raw strings to dangerouslySetInnerHTML allows attackers to execute arbitrary JavaScript in your users' browser sessions."
+        "pitfall": "ការបញ្ជូន Raw HTML Strings ដែលមិនបានឆ្លងកាត់ការសម្អាត (Sanitization) ទៅកាន់ `dangerouslySetInnerHTML` អនុញ្ញាតឱ្យ Hacker អាចដំណើរការកូដ JavaScript បំពាន (XSS) ក្នុង Browser របស់ User និងអាចលួចយក Session/Credentials បាន!"
       },
       {
         "id": "m25-03",
         "number": "03",
         "title": "Protecting Sensitive Environment Variables",
-        "summary": "Server-only secrets vs public client variables.",
-        "explanation": "Variables with `NEXT_PUBLIC_` or `VITE_` are embedded into the client bundle and are 100% visible to anyone inspecting browser network tabs. Never put database passwords, Stripe secret keys, or private certificates in client env variables!",
+        "summary": "ការបែងចែកឱ្យដាច់រវាង Server-only Secrets និង Public Client Variables ក្នុង Environment Variables (.env)។",
+        "explanation": "កំហុសឆ្គងផ្នែកសុវត្ថិភាពទូទៅបំផុតមួយក្នុងការអភិវឌ្ឍ Frontend គឺការធ្វេសប្រហែសបែកធ្លាយលេខសម្ងាត់ (API Secrets) ទៅកាន់ Client Browser។ នៅក្នុង Next.js ឬ Vite អថេរដែលមាន Prefix `NEXT_PUBLIC_` ឬ `VITE_` នឹងត្រូវបញ្ចូលដោយផ្ទាល់ទៅក្នុង Client JavaScript Files។ អ្នកត្រូវតែបែងចែកឱ្យច្បាស់រវាង **Public Configuration** និង **Server-Only Secrets**។",
         "keyPoints": [
-          "Public env vars: API URLs, public analytics IDs.",
-          "Secret env vars: Database keys, payment secret keys."
+          "**Public Variables (`NEXT_PUBLIC_`)**: សម្រាប់ទិន្នន័យសាធារណៈ (Base API URL, Google Analytics ID)។",
+          "**Server Secrets (គ្មាន prefix)**: សម្រាប់ទិន្នន័យសម្ងាត់ (Database Passwords, Stripe Secret Key, JWT Secret) ដែលអាចហៅប្រើបានតែក្នុង API Routes / Server Components។",
+          "បន្ថែម `.env*.local` ទៅក្នុង `.gitignore` ជានិច្ច ដើម្បីកុំឱ្យច្រឡំ Commit ឡើង GitHub។"
         ],
-        "codeSnippet": "// ❌ DANGEROUS: Leaked to browser client!\n// NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_12345\n\n// ✅ Safe: Only accessible in server environments / API routes:\n// STRIPE_SECRET_KEY=sk_live_12345",
-        "codeLanguage": "jsx",
-        "codeTitle": "Securing Environment Variables"
+        "codeSnippet": "# ❌ គ្រោះថ្នាក់បំផុត៖ បែកធ្លាយទៅកាន់ Browser របស់ Client ទាំងអស់!\nNEXT_PUBLIC_STRIPE_SECRET_KEY=sk_live_51M0SecretKey12345\nNEXT_PUBLIC_DATABASE_PASSWORD=super_secret_db_pass\n\n# ✅ សុវត្ថិភាព 100%៖ អាចអានបានតែនៅលើ Server (Node.js/Next.js Route Handlers)\nSTRIPE_SECRET_KEY=sk_live_51M0SecretKey12345\nDATABASE_URL=postgresql://user:pass@localhost:5432/mydb\n\n# ✅ សុវត្ថិភាពសម្រាប់ Client (ទិន្នន័យសាធារណៈ)\nNEXT_PUBLIC_API_URL=https://api.reactcourse.dev/v1\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_51M0PublicKey12345",
+        "codeLanguage": "bash",
+        "codeTitle": "Securing Environment Variables",
+        "pitfall": "រាល់អថេរណាដែលមាន Prefix `NEXT_PUBLIC_` ឬ `VITE_` នឹងត្រូវបានបញ្ចូលទៅក្នុង Client JavaScript Bundle ដែលមានន័យថានរណាក៏អាចមើលឃើញតម្លៃនោះបានដែរ! ហាមដាច់ខាតកុំដាក់ Stripe Secret Keys, Database Passwords ឬ Private API Keys ក្នុងអថេរ Client!"
       }
     ]
   },

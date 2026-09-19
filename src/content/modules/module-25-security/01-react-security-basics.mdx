@@ -5,21 +5,28 @@ title: "React Security Basics"
 moduleId: "module-25"
 moduleNumber: "25"
 category: "Enterprise & Production"
-summary: "Built-in auto-escaping against Cross-Site Scripting (XSS)."
+summary: "យន្តការ Auto-Escaping របស់ React ប្រឆាំងនឹងការវាយប្រហារ Cross-Site Scripting (XSS)។"
+proTip: "តាមលំនាំដើម JSX នឹងបំប្លែងរាល់ Strings ទាំងអស់ទៅជា Escaped Plain Text មុនពេលបញ្ចូលទៅក្នុង DOM (ដូចជា `<` ទៅជា `&lt;`) ដូច្នេះការវាយប្រហារតាមរយៈ `<script>` injection ត្រូវបានទប់ស្កាត់ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Automatic XSS Escaping"
 ---
 
 # React Security Basics
 
-By default, React escapes all strings rendered inside JSX before inserting them into the DOM, neutralizing basic `<script>` injection attacks.
+ការវាយប្រហារ **Cross-Site Scripting (XSS)** កើតឡើងនៅពេលដែលជនអនាមិកអាចបញ្ចូលកូដ JavaScript បំពានចូលទៅក្នុងគេហទំព័រ ដើម្បីលួច Session Cookies, Tokens ឬក្លែងបន្លំជា User។ React ត្រូវបានរចនាឡើងជាមួយនឹងប្រព័ន្ធសុវត្ថិភាពដ៏រឹងមាំតាំងពីគ្រឹះ ដោយវាធ្វើការ **Auto-escaping** រាល់ String ទាំងអស់ដែលត្រូវបាន Render ក្នុង JSX មុនពេលបញ្ចូលទៅក្នុង Real DOM។
 
 ### Key Concepts & Rules:
 
-- Automatic string escaping prevents HTML injection.
+- React បំប្លែងតួអក្សរគ្រោះថ្នាក់ (ដូចជា `<`, `>`, `&`, `"`) ទៅជា HTML Entities ដោយស្វ័យប្រវត្តិ។
+- ទប់ស្កាត់ការដំណើរការកូដ `<script>alert('hack')</script>` ដែល User បញ្ចូលតាមរយៈ Form។
+- មិនត្រូវប្រើ `eval()` ឬបង្កើត HTML តាមរយៈ String Concatenation ឡើយ។
 
 ### Code Example: Automatic XSS Escaping
 
 ```jsx
-// If userInput is "<script>alert('hack')</script>",
-// React renders it as safe plain text: &lt;script&gt;...
+export function UserComment({ commentText }: { commentText: string }) {
+  // ប្រសិនបើ commentText គឺជា៖ "<script>stealTokens()</script>"
+  // React នឹង Render វាជាអត្ថបទធម្មតាសុវត្ថិភាព 100%៖
+  // &lt;script&gt;stealTokens()&lt;/script&gt;
+  return <div className="comment-box">{commentText}</div>;
+}
 ```

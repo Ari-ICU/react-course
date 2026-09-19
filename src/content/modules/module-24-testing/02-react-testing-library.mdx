@@ -5,18 +5,20 @@ title: "React Testing Library"
 moduleId: "module-24"
 moduleNumber: "24"
 category: "Enterprise & Production"
-summary: "Querying elements by role, label, and text."
+summary: "ការស្វែងរក Elements តាមរយៈ Role, Label, និង Text ស្របតាមស្តង់ដារ Accessibility និងការសាកល្បង User Events។"
+proTip: "តែងតែផ្តល់អាទិភាពដល់ `getByRole('button', { name: /.../ })` ឬ `getByLabelText` ជានិច្ច! ចៀសវាងការប្រើ `getByTestId` លុះត្រាតែ Element នោះគ្មាន Accessible Role ពិតប្រាកដ។ វិធីនេះជួយធានាថា App របស់អ្នកទាំងមានតេស្តល្អ និងទាំងគាំទ្រ Accessibility (A11y)។"
 codeTitle: "RTL User Interaction Test"
 ---
 
 # React Testing Library
 
-RTL prioritizes accessible queries: `getByRole('button', { name: /submit/i })`, `getByLabelText`, `getByText`.
+**React Testing Library (RTL)** ត្រូវបានបង្កើតឡើងដើម្បីលើកកម្ពស់ការធ្វើតេស្តដែលស្របតាមស្តង់ដារ Accessibility។ វាមិនផ្តល់នូវ API សម្រាប់ចូលមើល State ឬ Props របស់ Component ឡើយ ប៉ុន្តែវាផ្តល់នូវ Query Selectors ដូចជា `getByRole`, `getByLabelText`, និង `getByText` ដើម្បីស្វែងរក Elements ដូចដែលមនុស្ស និង Screen Readers មើលឃើញ។
 
 ### Key Concepts & Rules:
 
-- Avoid `getByTestId` unless no accessible role exists.
-- Tests break only when user experience breaks, not when refactoring implementation.
+- លំដាប់អាទិភាពនៃ Queries៖ `getByRole` > `getByLabelText` > `getByPlaceholderText` > `getByText` > `getByTestId`។
+- ប្រើ `@testing-library/user-event` ជំនួសឱ្យ `fireEvent` ដើម្បីក្លែងបន្លំព្រឹត្តិការណ៍ចុច និងវាយអក្សរបានដូចមនុស្សពិតប្រាកដ។
+- ធ្វើតេស្តមិនខូចឡើយ (Resilient to Refactoring) ដរាបណា User Experience នៅដដែល។
 
 ### Code Example: RTL User Interaction Test
 
@@ -25,13 +27,17 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Counter } from './Counter';
 
-test('increments counter on button click', async () => {
+test('បង្កើនចំនួនលេខកើនឡើង ១ នៅពេលចុចប៊ូតុង', async () => {
   const user = userEvent.setup();
   render(<Counter />);
 
-  const button = screen.getByRole('button', { name: /clicks: 0/i });
+  // 1. ស្វែងរកប៊ូតុងដែលមានឈ្មោះបង្ហាញថា "ចុច: 0"
+  const button = screen.getByRole('button', { name: /ចុច: 0/i });
+  
+  // 2. ក្លែងបន្លំសកម្មភាព User ចុចលើប៊ូតុង
   await user.click(button);
 
-  expect(screen.getByRole('button', { name: /clicks: 1/i })).toBeInTheDocument();
+  // 3. ផ្ទៀងផ្ទាត់ថាតើប៊ូតុងប្តូរមក "ចុច: 1" ដែរឬទេ
+  expect(screen.getByRole('button', { name: /ចុច: 1/i })).toBeInTheDocument();
 });
 ```
