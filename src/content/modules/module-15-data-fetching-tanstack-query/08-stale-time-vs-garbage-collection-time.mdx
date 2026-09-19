@@ -5,26 +5,27 @@ title: "Stale Time vs Garbage Collection Time"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Fine-tuning cache lifetime with staleTime and gcTime."
+summary: "ការកំណត់ និងគ្រប់គ្រងអាយុកាល Cache តាមរយៈ staleTime និង gcTime។"
+proTip: "`staleTime` កំណត់ថាតើទិន្នន័យនៅស្រស់ (Fresh) រយៈពេលប៉ុន្មានមុនពេលត្រូវ Refetch ម្តងទៀត រីឯ `gcTime` កំណត់ថាតើទិន្នន័យដែលលែងប្រើ (Inactive) ត្រូវរក្សាទុកក្នុង Memory រយៈពេលប៉ុន្មានមុនពេលត្រូវលុបចោល។"
 codeTitle: "staleTime and gcTime Configuration"
 ---
 
 # Stale Time vs Garbage Collection Time
 
-`staleTime` determines how long data is considered fresh before needing a background refresh. `gcTime` determines how long inactive data stays in memory before being evicted.
+ការគ្រប់គ្រង Memory និង Cache នៅក្នុង TanStack Query ពឹងផ្អែកលើគំនិតស្នូលពីរគឺ `staleTime` និង `gcTime` (Garbage Collection Time - កាលពីមុនហៅថា `cacheTime`)។ ការកំណត់តម្លៃទាំងពីរនេះឱ្យបានត្រឹមត្រូវជួយកាត់បន្ថយ Network Requests ឥតប្រយោជន៍។
 
 ### Key Concepts & Rules:
 
-- Default `staleTime` is 0 (data immediately considered stale).
-- Set `staleTime: 60_000` for data that changes infrequently.
+- **`staleTime`**: រយៈពេល (គិតជា milliseconds) ដែលទិន្នន័យត្រូវបានចាត់ទុកថា "នៅថ្មីស្រស់ (Fresh)"។ ដរាបណាទិន្នន័យនៅ Fresh នោះ TanStack Query នឹងមិនធ្វើការស្នើសុំ Network Request ឡើយ។ តម្លៃលំនាំដើមគឺ `0`។
+- **`gcTime`**: រយៈពេលដែលទិន្នន័យដែលគ្មាន Component ណាមួយកំពុងប្រើប្រាស់ (Inactive) អាចបន្តស្ថិតនៅក្នុង RAM មុនពេលត្រូវលុបចោល។ តម្លៃលំនាំដើមគឺ 5 នាទី (`300_000` ms)។
 
 ### Code Example: staleTime and gcTime Configuration
 
 ```jsx
 const { data } = useQuery({
   queryKey: ['systemConfig'],
-  queryFn: fetchConfig,
-  staleTime: 1000 * 60 * 30, // 30 minutes
-  gcTime: 1000 * 60 * 60,    // 1 hour
+  queryFn: fetchSystemConfig,
+  staleTime: 1000 * 60 * 10, // ទិន្នន័យនៅ Fresh រយៈពេល 10 នាទី (មិនបាច់ fetch ឡើងវិញទេ)
+  gcTime: 1000 * 60 * 60,    // រក្សាទុកក្នុង Cache RAM រយៈពេល 1 ម៉ោងមុននឹងលុបចោល
 });
 ```

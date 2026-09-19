@@ -5,25 +5,53 @@ title: "Infinite Queries (useInfiniteQuery)"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Building 'Load More' buttons and infinite scroll feeds."
+summary: "ការបង្កើតមុខងារ 'Load More' និងប្រព័ន្ធរំកិលទំព័រគ្មានដែនកំណត់ (Infinite Scroll) ជាមួយ useInfiniteQuery។"
+proTip: "ប្រើប្រាស់ `useInfiniteQuery` រួមគ្នាជាមួយ `IntersectionObserver` ដើម្បីចាប់សញ្ញានៅពេលដែល User រំកិលដល់បាតទំព័រ រួចហៅ `fetchNextPage()` ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "useInfiniteQuery Hook"
 ---
 
 # Infinite Queries (useInfiniteQuery)
 
-Manages paginated data as an array of pages, providing `fetchNextPage` and `hasNextPage` flags.
+សម្រាប់ទំព័រដែលត្រូវការបង្ហាញ Feed ដូចជា Facebook, Twitter ឬ E-commerce Products ការប្រើប្រាស់ `useInfiniteQuery` អនុញ្ញាតឱ្យអ្នកទាញយកទិន្នន័យបន្ថែមជាទំព័រៗ (Pages) ដោយរក្សាទុកទិន្នន័យចាស់ទាំងអស់នៅក្នុង Array តែមួយ។
 
 ### Key Concepts & Rules:
 
-- Pairs with intersection observer for infinite scroll.
+- ផ្តល់នូវ `fetchNextPage()`, `hasNextPage`, និង `isFetchingNextPage`។
+- កំណត់ `getNextPageParam: (lastPage) => lastPage.nextCursor` ដើម្បីគណនាទំព័របន្ទាប់។
+- ត្រូវកំណត់ `initialPageParam: 1` នៅក្នុង TanStack Query v5។
 
 ### Code Example: useInfiniteQuery Hook
 
 ```jsx
-const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-  queryKey: ['feed'],
-  queryFn: ({ pageParam = 1 }) => fetchFeed(pageParam),
-  getNextPageParam: (lastPage) => lastPage.nextPage,
-  initialPageParam: 1,
-});
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+export function InfinitePostFeed() {
+  const { 
+    data, 
+    fetchNextPage, 
+    hasNextPage, 
+    isFetchingNextPage 
+  } = useInfiniteQuery({
+    queryKey: ['postsFeed'],
+    queryFn: ({ pageParam }) => postService.getFeed(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+  });
+
+  return (
+    <div>
+      {data?.pages.map((page, i) => (
+        <div key={i}>
+          {page.items.map(post => <PostCard key={post.id} post={post} />)}
+        </div>
+      ))}
+      <button 
+        disabled={!hasNextPage || isFetchingNextPage}
+        onClick={() => fetchNextPage()}
+      >
+        {isFetchingNextPage ? 'កំពុងផ្ទុកបន្ថែម...' : hasNextPage ? 'ទាញយកបន្ថែម' : 'អស់ទិន្នន័យហើយ'}
+      </button>
+    </div>
+  );
+}
 ```

@@ -5,25 +5,32 @@ title: "createContext"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Instantiating a context object with fallback defaults."
+summary: "ការបង្កើត Context Object ជាមួយនឹងតម្លៃលំនាំដើម (Default Fallback Value)។"
+proTip: "តម្លៃ `defaultValue` ដែលកំណត់ក្នុង `createContext(defaultValue)` នឹងត្រូវប្រើប្រាស់តែក្នុងករណីដែល Component ហៅ `useContext` នៅខាងក្រៅ Provider ប៉ុណ្ណោះ។ ប្រសិនបើមាន Provider វានឹងយកតម្លៃក្នុង `value` prop ជានិច្ច។"
 codeTitle: "Declaring Context with TypeScript"
 ---
 
 # createContext
 
-`const MyContext = createContext(defaultValue)` creates the context container.
+ដើម្បីបង្កើត Context ថ្មីមួយ យើងត្រូវប្រើប្រាស់អនុគមន៍ `createContext(defaultValue)`។ អនុគមន៍នេះនឹង return នូវ Context Object មួយដែលមានផ្ទុកទាំង Provider Component និង Consumer សម្រាប់ប្រើប្រាស់នៅក្នុង Component Tree។
 
 ### Key Concepts & Rules:
 
-- The default value is only used if a component consumes context outside a Provider.
+- កំណត់ TypeScript Interface សម្រាប់ទម្រង់នៃ Context Data ដើម្បីទទួលបាន Type Safety។
+- តម្លៃ Default Value ដើរតួជា Fallback នៅពេលដែល Component ត្រូវបាន Render នៅក្រៅ Context Provider (មានប្រយោជន៍ខ្លាំងសម្រាប់ការធ្វើ Unit Test)។
+- ដាក់ឈ្មោះ Context ដោយសរសេរអក្សរធំនៅខាងដើម ដូចជា `ThemeContext`, `AuthContext`។
 
 ### Code Example: Declaring Context with TypeScript
 
 ```jsx
-interface ThemeContextType {
+import { createContext } from 'react';
+
+// 1. កំណត់រចនាសម្ព័ន្ធ Interface នៃ Context
+export interface ThemeContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
 
+// 2. បង្កើត Context ដោយកំណត់ defaultValue ឬ undefined
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 ```

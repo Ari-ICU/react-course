@@ -5,22 +5,27 @@ title: "useMutation Hook"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Creating, updating, and deleting server data with side effects."
+summary: "ការបង្កើត កែប្រែ និងលុបទិន្នន័យនៅលើ Server ជាមួយ Side Effects តាមរយៈ useMutation។"
+proTip: "ប្រើប្រាស់ callback `onSuccess` របស់ `useMutation` ដើម្បីហៅ `queryClient.invalidateQueries()` ជួយឱ្យ UI ធ្វើបច្ចុប្បន្នភាពទិន្នន័យថ្មីភ្លាមៗដោយស្វ័យប្រវត្តិបន្ទាប់ពី Save ឬ Delete រួច។"
 codeTitle: "useMutation with Cache Invalidation"
 ---
 
 # useMutation Hook
 
-Unlike queries (which run automatically), mutations are triggered on-demand by user actions (like clicking Submit or Delete).
+ខុសប្លែកពី Query ដែលដំណើរការដោយស្វ័យប្រវត្តិតាម Lifecycle, Mutation ត្រូវបានបញ្ឆេះឡើងតាមរយៈសកម្មភាពផ្ទាល់របស់អ្នកប្រើប្រាស់ (User Action) ដូចជាការចុចប៊ូតុង Submit Form (POST), កែសម្រួលព័ត៌មាន (PUT/PATCH), ឬលុបទិន្នន័យ (DELETE)។
 
 ### Key Concepts & Rules:
 
-- Use `onSuccess` to invalidate cached queries and trigger refetches.
+- ប្រើប្រាស់ `useMutation({ mutationFn: ... })`។
+- ដំណើរការ Mutation តាមរយៈអនុគមន៍ `mutation.mutate(payload)`។
+- ប្រើប្រាស់ Lifecycle Callbacks: `onSuccess`, `onError`, `onSettled`។
+- ហៅ `queryClient.invalidateQueries` ក្នុង `onSuccess` ដើម្បីធ្វើបច្ចុប្បន្នភាពទិន្នន័យតារាង។
 
 ### Code Example: useMutation with Cache Invalidation
 
 ```jsx
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { studentService } from '@/services/studentService';
 
 export function AddStudentButton() {
   const queryClient = useQueryClient();
@@ -28,15 +33,21 @@ export function AddStudentButton() {
   const mutation = useMutation({
     mutationFn: studentService.create,
     onSuccess: () => {
-      // Invalidate and refetch student list automatically!
+      // បង្ខំឱ្យបញ្ជីសិស្ស Fetch ឡើងវិញដោយស្វ័យប្រវត្តិ!
       queryClient.invalidateQueries({ queryKey: ['students'] });
-      toast.success('Student added!');
+      alert('បានបន្ថែមសិស្សដោយជោគជ័យ!');
+    },
+    onError: (error: any) => {
+      alert(`បរាជ័យ៖ ${error.message}`);
     },
   });
 
   return (
-    <button onClick={() => mutation.mutate({ name: 'Sophea', gpa: 3.8 })}>
-      {mutation.isPending ? 'Saving...' : 'Add Student'}
+    <button 
+      disabled={mutation.isPending}
+      onClick={() => mutation.mutate({ name: 'សុភា', gpa: 3.8 })}
+    >
+      {mutation.isPending ? 'កំពុងរក្សាទុក...' : 'បន្ថែមសិស្ស'}
     </button>
   );
 }

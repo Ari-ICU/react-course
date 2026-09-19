@@ -5,26 +5,34 @@ title: "useContext"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Consuming context in functional components."
+summary: "ការទាញយកទិន្នន័យពី Context មកប្រើប្រាស់នៅក្នុង Functional Components យ៉ាងងាយស្រួល។"
+proTip: "ត្រូវបង្កើត Custom Hook ជានិច្ច (ឧទាហរណ៍ `useTheme()`) ដើម្បីរុំព័ទ្ធ `useContext(ThemeContext)` និងបន្ថែមការឆែក `if (!context) throw new Error(...)` ដើម្បីដាស់តឿន Developer ភ្លាមៗប្រសិនបើភ្លេចដាក់ Provider!"
 codeTitle: "Safe Custom Context Hook"
 ---
 
 # useContext
 
-The `useContext(MyContext)` hook returns the current value passed to the nearest matching Provider above in the tree.
+Hook `useContext` អនុញ្ញាតឱ្យ Functional Component អាចអានតម្លៃបច្ចុប្បន្នពី Context Provider ដែលនៅជិតបំផុតខាងលើវា។ ជំនួសឱ្យការហៅ `useContext(ThemeContext)` ដោយផ្ទាល់នៅគ្រប់ Component វិធីសាស្ត្រល្អបំផុតគឺការបង្កើត Custom Hook ដូចជា `useTheme()` ដើម្បីផ្តល់ភាពងាយស្រួល និងសុវត្ថិភាព។
 
 ### Key Concepts & Rules:
 
-- Always create a custom hook wrapper (e.g. `useTheme()`) with safety checks.
+- `useContext` ទទួលយក Context Object ជា Argument (`useContext(MyContext)`)។
+- ត្រួតពិនិត្យ និង throw Error ប្រសិនបើ Component ត្រូវបានហៅនៅក្រៅ Provider ដែលត្រូវគ្នា។
+- ផ្តល់នូវ TypeScript Types ត្រឹមត្រូវ 100% ដោយមិនបាច់ type check ដោយផ្ទាល់ដៃ។
 
 ### Code Example: Safe Custom Context Hook
 
 ```jsx
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+  
+  if (context === undefined) {
+    throw new Error('useTheme ត្រូវតែប្រើប្រាស់នៅខាងក្នុង <ThemeProvider> ប៉ុណ្ណោះ!');
   }
+  
   return context;
 }
 ```

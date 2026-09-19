@@ -5,21 +5,25 @@ title: "What is Context?"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "React's native mechanism for broadcasting data across the component tree."
+summary: "យន្តការស្នូលរបស់ React សម្រាប់បញ្ជូនទិន្នន័យទៅកាន់គ្រប់ Components ទាំងអស់នៅក្នុង Tree ដោយមិនចាំបាច់ឆ្លងកាត់ Props។"
+proTip: "Context API ត្រូវបានបង្កើតឡើងសម្រាប់ទិន្នន័យសកល (Global Data) ដែលកម្រមានការផ្លាស់ប្តូរញឹកញាប់ (Low-frequency updates) ដូចជា Current User Auth, Theme (Light/Dark), ឬ Preferred Language (Locale)។"
 codeTitle: "Context Imports"
 ---
 
 # What is Context?
 
-Context provides a way to pass data through the component tree without having to pass props down manually at every single level.
+នៅក្នុង React ជាទូទៅទិន្នន័យត្រូវបានបញ្ជូនពីលើចុះក្រោម (Top-down) ពី Parent ទៅកាន់ Child តាមរយៈ Props។ ប៉ុន្តែនៅពេលដែលកម្មវិធីកាន់តែធំ មានទិន្នន័យមួយចំនួនដែលត្រូវការប្រើប្រាស់នៅស្ទើរតែគ្រប់ទីកន្លែង (ដូចជា ព័ត៌មានអ្នកប្រើប្រាស់ដែលបាន Login, ការកំណត់ Theme ងងឹត/ភ្លឺ)។ **Context API** ផ្តល់នូវវិធីសាស្ត្រក្នុងការបញ្ជូនទិន្នន័យចូលទៅកាន់ Component Tree ទាំងមូលដោយផ្ទាល់ ដោយមិនចាំបាច់ឆ្លងកាត់ Props នៅគ្រប់ជាន់ថ្នាក់ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Built directly into React; requires no external dependencies.
-- Designed for low-frequency global data: themes, authenticated user, locale.
+- ភ្ជាប់មកជាមួយ React រួចជាស្រេច (Built-in) ដោយមិនចាំបាច់ដំឡើងបណ្ណាល័យខាងក្រៅឡើយ។
+- ស័ក្តិសមបំផុតសម្រាប់ទិន្នន័យសកលដែលមានការផ្លាស់ប្តូរតិចតួច (Low-frequency updates)។
+- ជួយដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាព។
 
 ### Code Example: Context Imports
 
 ```jsx
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
+
+// Context គឺជាយន្តការដើមរបស់ React មិនត្រូវការ npm package បន្ថែមឡើយ
 ```

@@ -5,20 +5,38 @@ title: "Query Invalidation"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Targeted cache busting after mutations."
+summary: "ការលុប Cache ចាស់ចោល និងបង្ខំឱ្យ Refetch ទិន្នន័យថ្មីចំគោលដៅបន្ទាប់ពី Mutation។"
+proTip: "ការហៅ `queryClient.invalidateQueries({ queryKey: ['students'] })` នឹងសម្គាល់រាល់ Query ទាំងអស់ដែលផ្ដើមដោយ `['students']` ថា Stale ហើយនឹង Refetch ដោយស្វ័យប្រវត្តិនូវ Query ណាដែលកំពុងបង្ហាញនៅលើអេក្រង់ (Active)។"
 codeTitle: "Invalidating Query Cache"
 ---
 
 # Query Invalidation
 
-Marking queries as invalid causes them to refetch if they are currently active on screen.
+បន្ទាប់ពីអ្នកប្រើប្រាស់បានផ្លាស់ប្តូរទិន្នន័យនៅលើ Server (តាមរយៈ Mutation) ទិន្នន័យដែលរក្សាទុកក្នុង Cache ក្នុង Browser អាចនឹងលែងត្រឹមត្រូវទៀតហើយ។ ការប្រើប្រាស់ `invalidateQueries` ជួយកំណត់ឱ្យ Queries ទាំងនោះក្លាយជា Stale ហើយបង្ខំឱ្យ Refetch ឡើងវិញជាបន្ទាន់។
 
 ### Key Concepts & Rules:
 
-- Use exact or prefix matching.
+- សម្គាល់ Query ថា Stale និងបង្ខំឱ្យ Active Queries ទាញយកទិន្នន័យថ្មីភ្លាមៗ។
+- គាំទ្រ Prefix Matching (ឧទាហរណ៍៖ `['students']` នឹង invalidate ទាំង `['students']`, `['students', 1]`, និង `['students', { page: 2 }]`)។
+- អាចប្រើ `exact: true` ប្រសិនបើចង់ invalidate តែ Key ជាក់លាក់មួយគត់។
 
 ### Code Example: Invalidating Query Cache
 
 ```jsx
-queryClient.invalidateQueries({ queryKey: ['todos'] });
+import { useQueryClient } from '@tanstack/react-query';
+
+export function useDeleteStudent() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: studentService.delete,
+    onSuccess: () => {
+      // បង្ខំឱ្យ refetch បញ្ជីសិស្សទាំងអស់ឡើងវិញ
+      queryClient.invalidateQueries({ 
+        queryKey: ['students'],
+        exact: false, // Invalidate រាល់ keys ទាំងអស់ដែលផ្តើមដោយ 'students'
+      });
+    },
+  });
+}
 ```

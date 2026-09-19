@@ -5,29 +5,41 @@ title: "Memoizing Context Values"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Preventing unnecessary consumer re-renders with useMemo."
+summary: "ការការពារកុំឱ្យ Consumer Re-render ដោយឥតប្រយោជន៍តាមរយៈ useMemo និង useCallback។"
+proTip: "ត្រូវរុំព័ទ្ធ Object Value នៅក្នុង `useMemo` ជានិច្ច ព្រោះរាល់ពេល Provider component re-render វាបង្កើត Object reference ថ្មី ដែលនឹងបង្ខំឱ្យរាល់ Child Consumers ទាំងអស់ re-render តាមដែរ!"
 codeTitle: "Memoizing Provider Value"
 ---
 
 # Memoizing Context Values
 
-Wrap the context value object in `useMemo` so its object reference remains stable unless dependencies change.
+នៅពេលដែល Component ដែលជា Provider ត្រូវ Re-render (ឧទាហរណ៍ដោយសារ Parent របស់វា re-render) តម្លៃ `value={{ user, login }}` នឹងបង្កើត Object ថ្មីក្នុង Memory ជានិច្ច (`{}` !== `{}`)។ នេះធ្វើឱ្យ React គិតថាតម្លៃ Context បានផ្លាស់ប្តូរ និងបង្ខំឱ្យ Child Consumers Re-render។ ការប្រើប្រាស់ `useMemo` ជួយរក្សា Object Reference ឱ្យនៅដដែល។
 
 ### Key Concepts & Rules:
 
-- Prevents re-renders caused by parent re-renders.
+- ប្រើប្រាស់ `useMemo` សម្រាប់រុំព័ទ្ធ Value Object នៃ Provider។
+- ប្រើប្រាស់ `useCallback` សម្រាប់អនុគមន៍ដែលបញ្ជូនទៅក្នុង Context។
+- កំណត់ Dependency Array ឱ្យបានត្រឹមត្រូវ។
 
 ### Code Example: Memoizing Provider Value
 
 ```jsx
+import React, { useState, useMemo, useCallback } from 'react';
+import { AuthContext } from './AuthContext';
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  // Memoize value to stabilize object reference:
+  const logout = useCallback(() => {
+    setUser(null);
+    localStorage.removeItem('token');
+  }, []);
+
+  // ប្រើ useMemo ដើម្បីរក្សា Object Reference កុំឱ្យបង្កើតថ្មីឥតប្រយោជន៍
   const value = useMemo(() => ({
     user,
     isAuthenticated: !!user,
-  }), [user]);
+    logout,
+  }), [user, logout]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

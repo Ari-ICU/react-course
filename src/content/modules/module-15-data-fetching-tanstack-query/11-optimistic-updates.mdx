@@ -5,40 +5,52 @@ title: "Optimistic Updates"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Instantly updating the UI before server confirmation."
+summary: "ការធ្វើបច្ចុប្បន្នភាព UI ភ្លាមៗមុនពេល Server ឆ្លើយតបបញ្ជាក់ និងការ Rollback ត្រឡប់មកវិញប្រសិនបើមានកំហុស។"
+proTip: "ការធ្វើ Optimistic Update ធ្វើឱ្យ UI មានអារម្មណ៍ថាឆ្លើយតបរហ័សទាន់ចិត្ត (Zero-latency)! កុំភ្លេចរក្សាទុក Snapshot ចាស់នៅក្នុង `onMutate` ដើម្បីអាច Rollback ត្រឡប់មកវិញក្នុង `onError` ប្រសិនបើ Server បរាជ័យ។"
 codeTitle: "Complete Optimistic Update Pattern"
 ---
 
 # Optimistic Updates
 
-Update the local query cache immediately when the user clicks an action (e.g. toggling a like or checking a todo). If the server request fails, rollback to the snapshot!
+Optimistic Update គឺជាបច្ចេកទេសកម្រិតខ្ពស់ដែលធ្វើការ Update UI ភ្លាមៗបន្ទាប់ពី User ចុចប៊ូតុង (ដូចជាចុច Like បេះដូង ឬគូសធីក Task បញ្ចប់) ដោយសន្មតជាមុនថា Server នឹងដំណើរការជោគជ័យ។ ប្រសិនបើ Server បរាជ័យដោយសារដាច់ Network វានឹងធ្វើការ Rollback ទិន្នន័យចាស់ត្រឡប់មកវិញភ្លាម។
 
 ### Key Concepts & Rules:
 
-- Creates instantaneous, zero-latency user experience.
-- Always save previous cache snapshot in `onMutate` for rollback.
+- បោះបង់ Outgoing Queries ចោលជាមួយ `cancelQueries` ក្នុង `onMutate` ដើម្បីកុំឱ្យទិន្នន័យចាស់ជាន់គ្នា។
+- រក្សាទុក Snapshot នៃទិន្នន័យចាស់ (`previousData`) មុនពេល update cache។
+- ប្រើ `setQueryData` ដើម្បីកែប្រែ Cache ភ្លាមៗ។
+- ក្នុងករណី `onError` ត្រូវ Rollback Cache ដោយប្រើ Snapshot ចាស់។
+- ក្នុង `onSettled` ត្រូវ `invalidateQueries` ដើម្បីឱ្យទិន្នន័យត្រឹមត្រូវ 100% ជាមួយ Database។
 
 ### Code Example: Complete Optimistic Update Pattern
 
 ```jsx
-const toggleMutation = useMutation({
-  mutationFn: todoService.toggle,
-  onMutate: async (todoId) => {
-    await queryClient.cancelQueries({ queryKey: ['todos'] });
-    const previousTodos = queryClient.getQueryData(['todos']);
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-    // Optimistically update cache:
-    queryClient.setQueryData(['todos'], (old: Todo[] = []) =>
+const toggleTodoMutation = useMutation({
+  mutationFn: todoService.toggleComplete,
+  onMutate: async (todoId: string) => {
+    // 1. បោះបង់ Queries ដែលកំពុងរត់
+    await queryClient.cancelQueries({ queryKey: ['todos'] });
+
+    // 2. រក្សាទុក Snapshot ចាស់សម្រាប់ Rollback
+    const previousTodos = queryClient.getQueryData<Todo[]>(['todos']);
+
+    // 3. Update Cache ក្នុងមូលដ្ឋានភ្លាមៗ (Optimistic Update)
+    queryClient.setQueryData<Todo[]>(['todos'], (old = []) =>
       old.map(t => t.id === todoId ? { ...t, completed: !t.completed } : t)
     );
 
-    return { previousTodos }; // Context for rollback
+    return { previousTodos }; // ផ្ញើទៅ onError តាមរយៈ Context
   },
-  onError: (err, newTodo, context) => {
-    // Rollback to previous state on error!
-    queryClient.setQueryData(['todos'], context?.previousTodos);
+  onError: (err, todoId, context) => {
+    // 4. Rollback ត្រឡប់មកទិន្នន័យដើមវិញពេល Server បរាជ័យ
+    if (context?.previousTodos) {
+      queryClient.setQueryData(['todos'], context.previousTodos);
+    }
   },
   onSettled: () => {
+    // 5. Sync ទិន្នន័យចុងក្រោយជាមួយ Server
     queryClient.invalidateQueries({ queryKey: ['todos'] });
   },
 });

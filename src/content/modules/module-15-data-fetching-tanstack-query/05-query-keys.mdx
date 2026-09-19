@@ -5,25 +5,34 @@ title: "Query Keys"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Hierarchical arrays that uniquely identify and cache queries."
+summary: "ការប្រើប្រាស់ Hierarchical Arrays ជាសោរសម្គាល់ (Keys) សម្រាប់ Caching និង Refetching ទិន្នន័យ។"
+pitfall: "រាល់អថេរ (Variables) ទាំងអស់ដែលត្រូវបានប្រើនៅក្នុង `queryFn` (ដូចជា `id`, `page`, `filter`) ត្រូវតែដាក់បញ្ចូលទៅក្នុង `queryKey` array ជានិច្ច បើពុំនោះទេ Query នឹងមិនធ្វើការ Refetch ឡើងវិញឡើយនៅពេលអថេរទាំងនោះផ្លាស់ប្តូរ!"
 codeTitle: "Hierarchical Query Keys"
 ---
 
 # Query Keys
 
-Query keys are arrays: `['students']`, `['students', studentId]`, `['products', { category, page }]`. When any item in the query key array changes, TanStack Query automatically refetches the data.
+នៅក្នុង TanStack Query រាល់ Query ទាំងអស់ត្រូវតែមាន `queryKey` ដែលជា Array នៃតម្លៃផ្សេងៗ ដូចជា Strings, Numbers, ឬ Objects (ឧទាហរណ៍៖ `['students']`, `['students', studentId]`, `['products', { category, page }]`)។ នៅពេលធាតុណាមួយក្នុង Array ផ្លាស់ប្តូរ TanStack Query នឹងដឹងថាទិន្នន័យបានប្រែប្រួល រួចទាញយកទិន្នន័យថ្មីដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- Include all variables used in the `queryFn` inside the `queryKey`.
-- Hierarchical invalidation allows invalidating all `['students']` queries at once.
+- Query Keys ត្រូវតែជា Array ជានិច្ច (Array-based keys)។
+- ដាក់បញ្ចូលគ្រប់ Dependency Variables ចូលទៅក្នុង `queryKey`។
+- រចនាសម្ព័ន្ធបែបឋានានុក្រម (Hierarchical structure) ជួយឱ្យងាយស្រួលក្នុងការធ្វើ Invalidation ទាំងមូល (ឧ. លុប cache គ្រប់ `['students', ...]` ទាំងអស់)។
 
 ### Code Example: Hierarchical Query Keys
 
 ```jsx
-// Parameterized query key:
-const { data } = useQuery({
-  queryKey: ['products', { category, sort, page }],
-  queryFn: () => productService.getList({ category, sort, page }),
-});
+import { useQuery } from '@tanstack/react-query';
+
+// Query Key ដែលមាន Parameters៖
+export function ProductList({ category, page, sort }: FilterProps) {
+  const { data } = useQuery({
+    // នៅពេល category, page, ឬ sort ផ្លាស់ប្តូរ វានឹង Fetch ថ្មីដោយស្វ័យប្រវត្តិ
+    queryKey: ['products', { category, page, sort }],
+    queryFn: () => productService.getList({ category, page, sort }),
+  });
+
+  return <div>{/* បង្ហាញបញ្ជីទំនិញ */}</div>;
+}
 ```

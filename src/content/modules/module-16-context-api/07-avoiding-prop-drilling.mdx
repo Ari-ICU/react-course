@@ -5,28 +5,38 @@ title: "Avoiding Prop Drilling"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Comparing prop drilling vs context solutions."
+summary: "ការប្រៀបធៀបរវាងបញ្ហា Prop Drilling និងដំណោះស្រាយតាមរយៈ Context API។"
+proTip: "Prop Drilling ធ្វើឱ្យ Component កណ្តាលដែលមិនត្រូវការប្រើប្រាស់ទិន្នន័យ ត្រូវបង្ខំចិត្តទទួលនិងបញ្ជូន Props បន្ត។ Context ជួយឱ្យ Leaf Component អាចទាញយកទិន្នន័យដោយផ្ទាល់ពី Parent ជាន់ខ្ពស់បំផុត។"
 codeTitle: "Eliminating Prop Drilling with Context"
 ---
 
 # Avoiding Prop Drilling
 
-Context completely eliminates passing props through intermediary components that don't need them.
+បញ្ហា **Prop Drilling** កើតឡើងនៅពេលដែលអ្នកត្រូវបញ្ជូន Prop ឆ្លងកាត់ Components កណ្តាលជាច្រើនជាន់ (ឧទាហរណ៍៖ `App` -> `Layout` -> `Sidebar` -> `UserMenu` -> `Avatar`) ទោះបីជា Components កណ្តាលទាំងនោះមិនត្រូវការប្រើប្រាស់ Prop នោះទាល់តែសោះក៏ដោយ។ Context API ជួយលុបបំបាត់បញ្ហានេះចោលទាំងស្រុង។
 
 ### Key Concepts & Rules:
 
-- Leaf nodes access context directly.
+- Component កណ្តាលមិនចាំបាច់ដឹងអំពី Props ដែលខ្លួនមិនប្រើឡើយ។
+- សន្សំសំចៃពេលវេលាក្នុងការ Refactor នៅពេល Component hierarchy ផ្លាស់ប្តូរ។
+- Component ចុងក្រោយ (Leaf Component) អាចទាញយក Context ដោយផ្ទាល់។
 
 ### Code Example: Eliminating Prop Drilling with Context
 
 ```jsx
-// Intermediary components don't touch auth props!
-<AuthProvider>
-  <AppLayout>
-    <Sidebar />
-    <MainContent>
-      <UserAvatar /> {/* Consumes useAuth() directly */}
-    </MainContent>
-  </AppLayout>
-</AuthProvider>
+// ❌ បែប Prop Drilling (ពិបាកថែទាំ):
+// <App user={user}> -> <Layout user={user}> -> <Header user={user}> -> <Avatar user={user} />
+
+// ✅ បែប Context API (ស្អាត និងមានរបៀប):
+export function AppLayout() {
+  return (
+    <AuthProvider>
+      <Header />
+      <Sidebar />
+      <MainContent>
+        {/* UserAvatar ហៅ useAuth() ដោយផ្ទាល់ មិនបាច់ pass props ឆ្លងកាត់ Header/Sidebar ឡើយ */}
+        <UserAvatar />
+      </MainContent>
+    </AuthProvider>
+  );
+}
 ```

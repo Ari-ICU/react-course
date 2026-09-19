@@ -5,21 +5,24 @@ title: "TanStack Query Introduction"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "The asynchronous state management powerhouse for React (formerly React Query)."
+summary: "ស្វែងយល់ពីបណ្ណាល័យគ្រប់គ្រង Asynchronous Server State ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ React (ពីមុនហៅថា React Query)។"
+proTip: "TanStack Query លុបបំបាត់ការសរសេរ boilerplate code ក្នុង `useEffect` រហូតដល់ទៅ 90% ដោយវាជួយគ្រប់គ្រង Caching, Background Refetching, Deduplication, និង Network Retries ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Installing TanStack Query v5"
 ---
 
 # TanStack Query Introduction
 
-TanStack Query handles caching, background synchronization, deduping identical requests, retries on failure, and window focus refetching out of the box.
+TanStack Query (ពីមុនហៅថា React Query) គឺជាបណ្ណាល័យស្តង់ដារឧស្សាហកម្មសម្រាប់ការទាញយក (Fetching), Caching, ធ្វើសមកាលកម្ម (Synchronizing), និងធ្វើបច្ចុប្បន្នភាព Server State នៅក្នុងកម្មវិធី React។ វាជួយដោះស្រាយបញ្ហាស្មុគស្មាញជាច្រើនដូចជា Window Focus Refetching, Network Reconnect Refetching, និង Query Deduplication។
 
 ### Key Concepts & Rules:
 
-- Eliminates 90% of boilerplate `useEffect` fetching code.
-- Automatic caching and garbage collection.
+- លុបបំបាត់ការសរសេរ `useEffect` + `useState` ដ៏ដដែលៗសម្រាប់ Data Fetching។
+- មានប្រព័ន្ធ Caching ដ៏ឆ្លាតវៃ និង Garbage Collection ដោយស្វ័យប្រវត្តិ។
+- គាំទ្រការ Refresh ទិន្នន័យដោយស្វ័យប្រវត្តិនៅពេល User ត្រឡប់មកកាន់ផ្ទាំង Browser វិញ (Window Focus)។
 
 ### Code Example: Installing TanStack Query v5
 
-```jsx
+```bash
+# ដំឡើង TanStack Query v5 និង DevTools សម្រាប់ React
 npm install @tanstack/react-query @tanstack/react-query-devtools
 ```

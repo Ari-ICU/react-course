@@ -5,21 +5,34 @@ title: "Context Best Practices"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Rules for safe context consumption and clean provider architectures."
+summary: "គោលការណ៍ល្អបំផុតសម្រាប់ការរចនា Provider ឱ្យមានរបៀប និងការបែងចែក Context តាមមុខងារ។"
+proTip: "គោលការណ៍មាស៖ ប្រសិនបើ State ត្រូវបានប្រើប្រាស់តែនៅក្នុងផ្នែកមួយនៃ Page (ដូចជា Sidebar ឬ Form Step) ចូរដាក់ Provider នៅត្រឹម Parent នៃផ្នែកនោះ កុំដាក់នៅ Root App ទាំងមូល!"
 codeTitle: "Localized Provider Placement"
 ---
 
 # Context Best Practices
 
-1) Keep providers close to where they are needed; 2) Wrap with safety custom hooks; 3) Split distinct concerns.
+ដើម្បីកុំឱ្យកម្មវិធីរបស់អ្នកជួបបញ្ហា Performance ឬពិបាកថែទាំ អ្នកគួរតែអនុវត្តតាមគោលការណ៍ណែនាំស្តង់ដារនៅពេលប្រើប្រាស់ Context API៖
 
 ### Key Concepts & Rules:
 
-- Never use context for state that belongs locally.
+1. **Colocate Providers**: កុំដាក់ Provider ទាំងអស់នៅ Root App ឡើយ។ ប្រសិនបើ State ប្រើតែក្នុង Modal ឬ Dashboard សូមដាក់ Provider នៅត្រឹម Component នោះ។
+2. **Custom Hook Wrapping**: បង្កើត Custom Hook ជានិច្ច (ដូចជា `useAuth()`) ដើម្បីផ្តល់ការ Error Checking ពេលភ្លេចរុំ Provider។
+3. **Split Contexts**: បំបែក Context តាម Domain មុខងារ កុំច្របាច់បញ្ចូលគ្នា។
+4. **Local State First**: បើទិន្នន័យប្រើតែក្នុង Component តែមួយ ចូរប្រើ `useState` កុំប្រើ Context ដោយមិនចាំបាច់។
 
 ### Code Example: Localized Provider Placement
 
 ```jsx
-// Golden Rule: If state is only used in one branch of the tree,
-// mount the Provider at that branch, NOT at the application root!
+// ឧទាហរណ៍៖ MultiStepFormProvider ត្រូវការតែក្នុងទំព័រ Checkout ប៉ុណ្ណោះ
+export function CheckoutPage() {
+  return (
+    <CheckoutFormProvider>
+      <StepIndicator />
+      <StepContent />
+      <StepNavigation />
+    </CheckoutFormProvider>
+  );
+}
+// មិនចាំបាច់ដាក់ CheckoutFormProvider នៅ Root App ឡើយ!
 ```

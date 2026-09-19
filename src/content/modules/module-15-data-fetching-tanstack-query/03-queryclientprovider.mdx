@@ -5,28 +5,34 @@ title: "QueryClientProvider"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Setting up the query client at application root."
+summary: "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ QueryClient នៅ Root នៃកម្មវិធី React។"
+proTip: "ត្រូវបង្កើត `queryClient` instance នៅខាងក្រៅ Component ឬប្រើ `useState(() => new QueryClient())` ដើម្បីការពារកុំឱ្យ Query Cache ត្រូវ Reset រាល់ពេល App re-render។"
 codeTitle: "QueryClientProvider Setup"
 ---
 
 # QueryClientProvider
 
-Wraps your component tree and provides the cache engine to all child hooks.
+`QueryClientProvider` ដើរតួជា Context Provider ដែលរុំព័ទ្ធ Component Tree ទាំងមូលនៃកម្មវិធីរបស់អ្នក។ វាធ្វើការចែករំលែក `QueryClient` instance ដែលជាកន្លែងរក្សាទុក Cache និងគ្រប់គ្រងរាល់ Query ទាំងអស់ទៅកាន់ Hooks ទាំងឡាយក្នុង App។
 
 ### Key Concepts & Rules:
 
-- Configure default `staleTime` and retry policies.
+- បង្កើត `QueryClient` តែមួយគត់សម្រាប់កម្មវិធី។
+- កំណត់លំនាំដើម `defaultOptions` ដូចជា `staleTime`, `retry`, និង `refetchOnWindowFocus`។
+- រុំព័ទ្ធ Component Tree នៅចំណុចកំពូល (Root Layout ឬ App Component)។
 
 ### Code Example: QueryClientProvider Setup
 
 ```jsx
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider } from 'react-router-dom';
 
+// បង្កើត Client Instance តែមួយគត់
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // Data fresh for 5 minutes
-      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5, // ទិន្នន័យនៅ Fresh រយៈពេល ៥ នាទី
+      refetchOnWindowFocus: false, // មិនបាច់ refetch ពេល focus window ឡើងវិញ
+      retry: 2, // សាកល្បងហៅឡើងវិញ ២ ដងប្រសិនបើបរាជ័យ
     },
   },
 });

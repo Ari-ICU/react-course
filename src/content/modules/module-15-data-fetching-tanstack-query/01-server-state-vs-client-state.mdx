@@ -5,21 +5,32 @@ title: "Server State vs Client State"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Why server data must be treated differently than UI state."
+summary: "មូលហេតុដែលទិន្នន័យ Server State ត្រូវតែគ្រប់គ្រងខុសប្លែកទាំងស្រុងពី UI Client State។"
+proTip: "ចូរកុំច្រឡំ Client State (ដូចជាការបើក/បិទ Modal, Active Tab) ជាមួយ Server State (ដូចជាបញ្ជីទំនិញ, User Profile)។ ការព្យាយាមគ្រប់គ្រង Server State ដោយប្រើតែ `useState` + `useEffect` នឹងនាំឱ្យកើតមានបញ្ហា Cache Bugs, Duplicate Requests, និងទិន្នន័យចាស់ហួសសម័យ (Stale Data)។"
 codeTitle: "Client vs Server State Separation"
 ---
 
 # Server State vs Client State
 
-Client state is synchronous, owned completely by the browser (e.g. modal open/closed, current tab). Server state is asynchronous, owned remotely, and can become stale at any moment without the client knowing. Managing server state with plain `useState` + `useEffect` leads to cache bugs.
+នៅក្នុងការអភិវឌ្ឍកម្មវិធី React ទំនើប យើងត្រូវបែងចែក State ជាពីរប្រភេទដាច់ពីគ្នា៖ **Client State** គឺជាទិន្នន័យក្នុង Browser (Synchronous) ដែលគ្រប់គ្រងដោយផ្ទាល់ដោយ UI (ដូចជា ការបើកផ្ទាំង Modal, Theme ងងឹត/ភ្លឺ, Form Input)។ ចំណែកឯ **Server State** គឺជាទិន្នន័យ Asynchronous ដែលត្រូវបានរក្សាទុកនៅលើ Database ពីចម្ងាយ (Remote) និងអាចត្រូវបានកែប្រែដោយអ្នកប្រើប្រាស់ផ្សេងទៀតនៅពេលណាក៏បាន។
 
 ### Key Concepts & Rules:
 
-- Server state requires caching, background refetching, deduplication, and stale-time policies.
+- **Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer`, ឬបណ្ណាល័យដូចជា Zustand។
+- **Server State**: ត្រូវការ Caching, ការទាញយកទិន្នន័យជាប្រចាំនៅ Background (Background Refetching), ការបំបាត់ Request ជាន់គ្នា (Deduplication), និងគោលការណ៍ Stale-time។
+- ការគ្រប់គ្រង Server State ដោយផ្ទាល់តាមរយៈ `useState` + `useEffect` បង្កឱ្យមានកូដស្មុគស្មាញ និងងាយកើត Bugs បំផុត។
 
 ### Code Example: Client vs Server State Separation
 
 ```jsx
-// Client State: Modal isOpen, active tab, form inputs -> Zustand or useState
-// Server State: Products list, user profile, orders -> TanStack Query
+// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (Zustand ឬ useState)
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const [currentTab, setCurrentTab] = useState<'posts' | 'settings'>('posts');
+
+// 2. Server State: ទិន្នន័យពី Database ពីចម្ងាយ (TanStack Query)
+// ត្រូវការ Caching, Stale Invalidation, និង Background Refetching
+const { data: userProfile } = useQuery({
+  queryKey: ['profile', userId],
+  queryFn: () => userService.getProfile(userId),
+});
 ```

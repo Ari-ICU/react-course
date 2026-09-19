@@ -5,25 +5,36 @@ title: "TanStack DevTools"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Visualizing query cache, stale states, and mutations."
+summary: "ការប្រើប្រាស់ផ្ទាំង TanStack DevTools ដើម្បីពិនិត្យមើល Cache State, Stale Queries, និង Mutations។"
+proTip: "DevTools ដំណើរការតែនៅក្នុងបរិស្ថាន Development ប៉ុណ្ណោះ ហើយនឹងត្រូវបានដកចេញដោយស្វ័យប្រវត្តិនៅពេល Build ទៅកាន់ Production ដូច្នេះគ្មានផលប៉ះពាល់ដល់ Bundle size ឡើយ។"
 codeTitle: "Integrating ReactQueryDevtools"
 ---
 
 # TanStack DevTools
 
-The TanStack Query Devtools floating panel displays all cached queries, their data, fetch state, and provides buttons to trigger manual refetch or cache clearing.
+TanStack Query Devtools គឺជាផ្ទាំងជំនួយដ៏អស្ចារ្យដែលបង្ហាញអំពីដំណើរការខាងក្នុងទាំងអស់នៃ Cache៖ រាល់ Query Key នីមួយៗ, ស្ថានភាព Fresh/Stale/Fetching/Inactive, រួមទាំងប៊ូតុងសម្រាប់ចុច Refetch, Reset ឬ Invalidate Cache ដោយផ្ទាល់ដៃសម្រាប់ Debugging។
 
 ### Key Concepts & Rules:
 
-- Included in dev builds only; stripped in production.
+- ផ្តល់នូវរូបភាពច្បាស់លាស់អំពីស្ថានភាព Cache និង Network requests ក្នុងពេលជាក់ស្តែង (Real-time)។
+- មិនត្រូវបានបញ្ចូលក្នុង Production Bundle ឡើយ (Zero-overhead in production)។
+- ដាក់បញ្ចូល `<ReactQueryDevtools />` នៅខាងក្នុង `<QueryClientProvider>`។
 
 ### Code Example: Integrating ReactQueryDevtools
 
 ```jsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-<QueryClientProvider client={queryClient}>
-  <App />
-  <ReactQueryDevtools initialIsOpen={false} />
-</QueryClientProvider>
+const queryClient = new QueryClient();
+
+export function RootApp() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <App />
+      {/* បើកផ្ទាំង DevTools នៅជ្រុងខាងក្រោមសម្រាប់ Debug */}
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+    </QueryClientProvider>
+  );
+}
 ```

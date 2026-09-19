@@ -5,26 +5,44 @@ title: "Pagination with keepPreviousData"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Seamless table pagination without page flickering."
+summary: "ការធ្វើ Pagination នៅលើតារាងទិន្នន័យដោយរលូន គ្មានការព្រិចភ្នែក (Flickering) ដោយប្រើ keepPreviousData។"
+proTip: "ការប្រើ `placeholderData: keepPreviousData` ជួយរក្សាទិន្នន័យនៃទំព័រចាស់ឱ្យនៅបង្ហាញលើអេក្រង់រហូតទាល់តែទំព័រថ្មីទាញយកចប់ ជៀសវាងការលោត Layout Jump ឬការបង្ហាញ Loading ពេញអេក្រង់។"
 codeTitle: "Smooth Pagination with keepPreviousData"
 ---
 
 # Pagination with keepPreviousData
 
-Using `placeholderData: keepPreviousData` keeps the old page visible while the next page fetches in the background, preventing layout jumps.
+នៅពេលធ្វើ Pagination តាមរបៀបធម្មតា រាល់ពេល User ចុចប្តូរទំព័រ (`page` state ផ្លាស់ប្តូរ) តារាងទិន្នន័យអាចនឹងបាត់ភ្លាមៗ រួចបង្ហាញ Loading Spinner ជំនួសវិញ ដែលធ្វើឱ្យ UI ព្រិចភ្នែក (Flicker)។ ការប្រើប្រាស់ `keepPreviousData` ជួយដោះស្រាយបញ្ហានេះយ៉ាងមានប្រសិទ្ធភាព។
 
 ### Key Concepts & Rules:
 
-- Eliminates jarring layout shifts during table pagination.
+- នាំចូល `keepPreviousData` ពី `@tanstack/react-query`។
+- កំណត់ `placeholderData: keepPreviousData` នៅក្នុង `useQuery` options។
+- ប្រើប្រាស់ `isPlaceholderData` ដើម្បីបង្ហាញ Opacity ឬ Disable ប៊ូតុង Next/Prev ពេលកំពុងផ្ទុកទំព័រថ្មី។
 
 ### Code Example: Smooth Pagination with keepPreviousData
 
 ```jsx
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { studentService } from '@/services/studentService';
 
-const { data: pageData, isPlaceholderData } = useQuery({
-  queryKey: ['students', page],
-  queryFn: () => studentService.getPage(page),
-  placeholderData: keepPreviousData,
-});
+export function PaginatedStudents() {
+  const [page, setPage] = useState(1);
+
+  const { data, isPlaceholderData } = useQuery({
+    queryKey: ['students', page],
+    queryFn: () => studentService.getPage(page),
+    placeholderData: keepPreviousData, // រក្សាទិន្នន័យទំព័រចាស់រហូតដល់ទំព័រថ្មី Fetch ចប់
+  });
+
+  return (
+    <div className={isPlaceholderData ? 'opacity-50' : 'opacity-100'}>
+      <table>{/* បង្ហាញតារាងទិន្នន័យ */}</table>
+      <button onClick={() => setPage(p => p - 1)} disabled={page === 1}>ថយក្រោយ</button>
+      <span>ទំព័រទី {page}</span>
+      <button onClick={() => setPage(p => p + 1)} disabled={isPlaceholderData || !data?.hasMore}>បន្ទាប់</button>
+    </div>
+  );
+}
 ```

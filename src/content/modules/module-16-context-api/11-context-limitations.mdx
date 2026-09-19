@@ -5,23 +5,32 @@ title: "Context Limitations"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Why large apps transition from Context to Zustand or Redux."
+summary: "ហេតុផលដែលកម្មវិធីខ្នាតធំជ្រើសរើសប្តូរពី Context ទៅកាន់ State Management Libraries ដូចជា Zustand ឬ Redux។"
+proTip: "Context API គឺជាឧបករណ៍ Dependency Injection (ការបញ្ជូនទិន្នន័យពីលើចុះក្រោម) មិនមែនជា Full-fledged State Manager នោះទេ។ សម្រាប់កម្មវិធីធំៗដែលមាន State ស្មុគស្មាញ និងត្រូវការ Selectors ចូរប្រើ Zustand ជំនួសវិញ។"
 codeTitle: "Context vs External State Library"
 ---
 
 # Context Limitations
 
-Context lacks fine-grained selectors and middleware. When state updates frequently, external libraries with selector subscriptions provide vastly superior performance.
+ទោះបីជា Context API ងាយស្រួលប្រើប្រាស់ព្រោះជា Built-in Feature របស់ React ក៏ដោយ វានៅតែមានកម្រិតបច្ចេកទេសមួយចំនួនចំពោះកម្មវិធីខ្នាតធំ (Large-scale Applications)។
 
 ### Key Concepts & Rules:
 
-- Context = Dependency Injection tool; Zustand = State Management tool.
+- **គ្មាន Selectors**: មិនអាច Subscribe យកតែ property មួយដែលចង់បាន (ប្រសិនបើតម្លៃមួយផ្លាស់ប្តូរ Consumer ទាំងអស់ Re-render)។
+- **គ្មាន Middleware / DevTools**: គ្មានប្រព័ន្ធ Time-travel Debugging ឬ Middleware ស៊ីជម្រៅដូច Redux/Zustand ឡើយ។
+- **Provider Hell**: កម្មវិធីធំៗអាចនឹងមាន Provider ជង់គ្នាជាច្រើនជាន់ (`<Auth><Theme><Cart><Chat><Modal>...`)។
 
 ### Code Example: Context vs External State Library
 
 ```jsx
 /*
-Use Context for: Low-frequency, broad data (Theme, Auth, Language).
-Use Zustand for: High-frequency, complex, or modular state (Cart, Filters, Media Player).
+📌 ពេលណាត្រូវប្រើ Context API៖
+- ទិន្នន័យកម្រផ្លាស់ប្តូរ (Low frequency) ដូចជា Theme, Auth, Language/Locale។
+- ការកំណត់សកល ឬទំហំគម្រោងតូចទៅមធ្យម។
+
+📌 ពេលណាត្រូវប្តូរទៅប្រើ Zustand ឬ Redux Toolkit៖
+- ទិន្នន័យមានការផ្លាស់ប្តូរញឹកញាប់ (High frequency) ដូចជា Shopping Cart, Filters, Canvas/Audio Player។
+- ត្រូវការ Fine-grained Selectors ដើម្បីកុំឱ្យ Re-render ផ្ដេសផ្ដាស។
+- ចង់បាន State Store នៅក្រៅ React Component Tree (ងាយស្រួល access ក្នុង helper files)។
 */
 ```

@@ -5,28 +5,39 @@ title: "Context Provider"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Supplying values to the subtree using <Context.Provider value={...}>."
+summary: "ការផ្គត់ផ្គង់ទិន្នន័យទៅកាន់ Child Components តាមរយៈ <Context.Provider value={...}>។"
+proTip: "ការរៀបចំ Custom Provider Component (ដូចជា `ThemeProvider`) ជួយវេចខ្ចប់ State Logic ឱ្យមានរបៀបរៀបរយ និងធ្វើឱ្យ Root Component មើលទៅស្អាត មិនច្របូកច្របល់។"
 codeTitle: "Custom Context Provider Component"
 ---
 
 # Context Provider
 
-Every Context object comes with a Provider React component that accepts a `value` prop to be consumed by descendant components.
+រាល់ Context Object នីមួយៗតែងតែភ្ជាប់មកជាមួយនូវ Component មួយឈ្មោះថា `<Context.Provider>`។ Provider នេះទទួលយក prop មួយឈ្មោះថា `value` ដែលជាទិន្នន័យ ឬអនុគមន៍ដែលអ្នកចង់ចែករំលែកទៅកាន់ Child Components ទាំងអស់ដែលស្ថិតនៅខាងក្នុងវា។
 
 ### Key Concepts & Rules:
 
-- All consumers re-render whenever the Provider's `value` prop changes.
+- រាល់ Child Component ទាំងអស់ដែលនៅក្រោម Provider អាចទាញយកទិន្នន័យ `value` បានគ្រប់ពេលវេលា។
+- នៅពេលដែលតម្លៃ `value` ផ្លាស់ប្តូរ រាល់ Consumer Components ទាំងអស់ដែលកំពុងប្រើប្រាស់ Context នោះនឹង Re-render ដោយស្វ័យប្រវត្តិ។
+- គួរតែបង្កើត Wrapper Component ដូចជា `ThemeProvider` ដើម្បីគ្រប់គ្រង State ផ្ទៃក្នុង។
 
 ### Code Example: Custom Context Provider Component
 
 ```jsx
+import React, { useState } from 'react';
+import { ThemeContext } from './ThemeContext';
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={theme}>{children}</div>
+      <div className={`app-container ${theme}`}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 }

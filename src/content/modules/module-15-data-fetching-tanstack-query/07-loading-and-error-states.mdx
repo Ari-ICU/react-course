@@ -5,22 +5,40 @@ title: "Loading and Error States"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Granular status flags: isPending, isFetching, isError, isSuccess."
+summary: "ការស្វែងយល់ពីភាពខុសគ្នារវាង Status Flags: isPending, isFetching, isError, និង isSuccess។"
+proTip: "`isPending` មានតម្លៃ true តែនៅពេលដំបូងដែលពុំទាន់មាន Cache ទិន្នន័យប៉ុណ្ណោះ (ស័ក្តិសមសម្រាប់ Skeleton UI) រីឯ `isFetching` មានតម្លៃ true រាល់ពេលមាន Network Request កំពុងដំណើរការ (រួមទាំង Background Revalidation)។"
 codeTitle: "isPending vs isFetching"
 ---
 
 # Loading and Error States
 
-`isPending` indicates initial load with no cached data; `isFetching` indicates background revalidation even if cached data is already visible.
+នៅក្នុង TanStack Query v5 ស្ថានភាពនៃការទាញយកទិន្នន័យត្រូវបានបែងចែកយ៉ាងលម្អិត។ ការយល់ដឹងពីភាពខុសគ្នារវាង `isPending` និង `isFetching` ជួយឱ្យអ្នកអាចបង្កើត UI ដែលមានភាពរលូន និងមិនរំខានដល់អ្នកប្រើប្រាស់។
 
 ### Key Concepts & Rules:
 
-- Display subtle background fetching spinners while showing cached data.
+- `isPending`: `true` នៅពេល Query ពុំទាន់មានទិន្នន័យក្នុង Cache នៅឡើយ (កំពុងផ្ទុកដំបូង - បង្ហាញ Skeleton UI)។
+- `isFetching`: `true` រាល់ពេលដែលមាន Network Request កំពុងដំណើរការ ទោះបីជាមានទិន្នន័យចាស់បង្ហាញនៅលើអេក្រង់រួចហើយក៏ដោយ (ស័ក្តិសមសម្រាប់របារ Spinner តូចនៅខាងលើ)។
+- `isError` & `error`: មានតម្លៃនៅពេលដែល Promise ជួបបរាជ័យ (Reject)។
 
 ### Code Example: isPending vs isFetching
 
 ```jsx
-const { data, isPending, isFetching } = useQuery(...);
-// isPending: True on first fetch (show skeleton)
-// isFetching: True during background refresh (show subtle top indicator)
+const { data, isPending, isFetching, isError } = useQuery({
+  queryKey: ['dashboardStats'],
+  queryFn: fetchStats,
+});
+
+// 1. Initial Load: ពុំទាន់មានទិន្នន័យបង្ហាញឡើយ
+if (isPending) return <DashboardSkeleton />;
+
+// 2. Error: មានបញ្ហាបណ្តាញ
+if (isError) return <ErrorBanner />;
+
+return (
+  <div>
+    {/* 3. បង្ហាញសញ្ញាសម្គាល់តូចមួយនៅពេល Background Fetching កំពុងដំណើរការ */}
+    {isFetching && <span className="text-xs text-blue-500">កំពុងធ្វើសមកាលកម្ម...</span>}
+    <StatsGrid stats={data} />
+  </div>
+);
 ```

@@ -2779,181 +2779,218 @@ export const modulesData: ModuleItem[] = [
     "number": "15",
     "title": "Data Fetching (TanStack Query)",
     "category": "Routing & Network",
-    "summary": "Server state vs client state, TanStack Query v5, queries, mutations, query keys, caching, pagination, and optimistic updates.",
+    "summary": "ការប្រៀបធៀប Server State និង Client State, TanStack Query v5, Queries, Mutations, Query Keys, ប្រព័ន្ធ Caching, Pagination, និង Optimistic Updates។",
     "iconName": "Database",
     "topics": [
       {
         "id": "m15-01",
         "number": "01",
         "title": "Server State vs Client State",
-        "summary": "Why server data must be treated differently than UI state.",
-        "explanation": "Client state is synchronous, owned completely by the browser (e.g. modal open/closed, current tab). Server state is asynchronous, owned remotely, and can become stale at any moment without the client knowing. Managing server state with plain `useState` + `useEffect` leads to cache bugs.",
+        "summary": "មូលហេតុដែលទិន្នន័យ Server State ត្រូវតែគ្រប់គ្រងខុសប្លែកទាំងស្រុងពី UI Client State។",
+        "explanation": "នៅក្នុងការអភិវឌ្ឍកម្មវិធី React ទំនើប យើងត្រូវបែងចែក State ជាពីរប្រភេទដាច់ពីគ្នា៖ **Client State** គឺជាទិន្នន័យក្នុង Browser (Synchronous) ដែលគ្រប់គ្រងដោយផ្ទាល់ដោយ UI (ដូចជា ការបើកផ្ទាំង Modal, Theme ងងឹត/ភ្លឺ, Form Input)។ ចំណែកឯ **Server State** គឺជាទិន្នន័យ Asynchronous ដែលត្រូវបានរក្សាទុកនៅលើ Database ពីចម្ងាយ (Remote) និងអាចត្រូវបានកែប្រែដោយអ្នកប្រើប្រាស់ផ្សេងទៀតនៅពេលណាក៏បាន។",
         "keyPoints": [
-          "Server state requires caching, background refetching, deduplication, and stale-time policies."
+          "**Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer`, ឬបណ្ណាល័យដូចជា Zustand។",
+          "**Server State**: ត្រូវការ Caching, ការទាញយកទិន្នន័យជាប្រចាំនៅ Background (Background Refetching), ការបំបាត់ Request ជាន់គ្នា (Deduplication), និងគោលការណ៍ Stale-time។",
+          "ការគ្រប់គ្រង Server State ដោយផ្ទាល់តាមរយៈ `useState` + `useEffect` បង្កឱ្យមានកូដស្មុគស្មាញ និងងាយកើត Bugs បំផុត។"
         ],
-        "codeSnippet": "// Client State: Modal isOpen, active tab, form inputs -> Zustand or useState\n// Server State: Products list, user profile, orders -> TanStack Query",
+        "codeSnippet": "// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (Zustand ឬ useState)\nconst [isSidebarOpen, setIsSidebarOpen] = useState(false);\nconst [currentTab, setCurrentTab] = useState<'posts' | 'settings'>('posts');\n\n// 2. Server State: ទិន្នន័យពី Database ពីចម្ងាយ (TanStack Query)\n// ត្រូវការ Caching, Stale Invalidation, និង Background Refetching\nconst { data: userProfile } = useQuery({\n  queryKey: ['profile', userId],\n  queryFn: () => userService.getProfile(userId),\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Client vs Server State Separation"
+        "codeTitle": "Client vs Server State Separation",
+        "proTip": "ចូរកុំច្រឡំ Client State (ដូចជាការបើក/បិទ Modal, Active Tab) ជាមួយ Server State (ដូចជាបញ្ជីទំនិញ, User Profile)។ ការព្យាយាមគ្រប់គ្រង Server State ដោយប្រើតែ `useState` + `useEffect` នឹងនាំឱ្យកើតមានបញ្ហា Cache Bugs, Duplicate Requests, និងទិន្នន័យចាស់ហួសសម័យ (Stale Data)។"
       },
       {
         "id": "m15-02",
         "number": "02",
         "title": "TanStack Query Introduction",
-        "summary": "The asynchronous state management powerhouse for React (formerly React Query).",
-        "explanation": "TanStack Query handles caching, background synchronization, deduping identical requests, retries on failure, and window focus refetching out of the box.",
+        "summary": "ស្វែងយល់ពីបណ្ណាល័យគ្រប់គ្រង Asynchronous Server State ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ React (ពីមុនហៅថា React Query)។",
+        "explanation": "TanStack Query (ពីមុនហៅថា React Query) គឺជាបណ្ណាល័យស្តង់ដារឧស្សាហកម្មសម្រាប់ការទាញយក (Fetching), Caching, ធ្វើសមកាលកម្ម (Synchronizing), និងធ្វើបច្ចុប្បន្នភាព Server State នៅក្នុងកម្មវិធី React។ វាជួយដោះស្រាយបញ្ហាស្មុគស្មាញជាច្រើនដូចជា Window Focus Refetching, Network Reconnect Refetching, និង Query Deduplication។",
         "keyPoints": [
-          "Eliminates 90% of boilerplate `useEffect` fetching code.",
-          "Automatic caching and garbage collection."
+          "លុបបំបាត់ការសរសេរ `useEffect` + `useState` ដ៏ដដែលៗសម្រាប់ Data Fetching។",
+          "មានប្រព័ន្ធ Caching ដ៏ឆ្លាតវៃ និង Garbage Collection ដោយស្វ័យប្រវត្តិ។",
+          "គាំទ្រការ Refresh ទិន្នន័យដោយស្វ័យប្រវត្តិនៅពេល User ត្រឡប់មកកាន់ផ្ទាំង Browser វិញ (Window Focus)។"
         ],
-        "codeSnippet": "npm install @tanstack/react-query @tanstack/react-query-devtools",
-        "codeLanguage": "jsx",
-        "codeTitle": "Installing TanStack Query v5"
+        "codeSnippet": "# ដំឡើង TanStack Query v5 និង DevTools សម្រាប់ React\nnpm install @tanstack/react-query @tanstack/react-query-devtools",
+        "codeLanguage": "bash",
+        "codeTitle": "Installing TanStack Query v5",
+        "proTip": "TanStack Query លុបបំបាត់ការសរសេរ boilerplate code ក្នុង `useEffect` រហូតដល់ទៅ 90% ដោយវាជួយគ្រប់គ្រង Caching, Background Refetching, Deduplication, និង Network Retries ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m15-03",
         "number": "03",
         "title": "QueryClientProvider",
-        "summary": "Setting up the query client at application root.",
-        "explanation": "Wraps your component tree and provides the cache engine to all child hooks.",
+        "summary": "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ QueryClient នៅ Root នៃកម្មវិធី React។",
+        "explanation": "`QueryClientProvider` ដើរតួជា Context Provider ដែលរុំព័ទ្ធ Component Tree ទាំងមូលនៃកម្មវិធីរបស់អ្នក។ វាធ្វើការចែករំលែក `QueryClient` instance ដែលជាកន្លែងរក្សាទុក Cache និងគ្រប់គ្រងរាល់ Query ទាំងអស់ទៅកាន់ Hooks ទាំងឡាយក្នុង App។",
         "keyPoints": [
-          "Configure default `staleTime` and retry policies."
+          "បង្កើត `QueryClient` តែមួយគត់សម្រាប់កម្មវិធី។",
+          "កំណត់លំនាំដើម `defaultOptions` ដូចជា `staleTime`, `retry`, និង `refetchOnWindowFocus`។",
+          "រុំព័ទ្ធ Component Tree នៅចំណុចកំពូល (Root Layout ឬ App Component)។"
         ],
-        "codeSnippet": "import { QueryClient, QueryClientProvider } from '@tanstack/react-query';\n\nconst queryClient = new QueryClient({\n  defaultOptions: {\n    queries: {\n      staleTime: 1000 * 60 * 5, // Data fresh for 5 minutes\n      refetchOnWindowFocus: false,\n    },\n  },\n});\n\nexport function App() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <RouterProvider router={router} />\n    </QueryClientProvider>\n  );\n}",
+        "codeSnippet": "import { QueryClient, QueryClientProvider } from '@tanstack/react-query';\nimport { RouterProvider } from 'react-router-dom';\n\n// បង្កើត Client Instance តែមួយគត់\nconst queryClient = new QueryClient({\n  defaultOptions: {\n    queries: {\n      staleTime: 1000 * 60 * 5, // ទិន្នន័យនៅ Fresh រយៈពេល ៥ នាទី\n      refetchOnWindowFocus: false, // មិនបាច់ refetch ពេល focus window ឡើងវិញ\n      retry: 2, // សាកល្បងហៅឡើងវិញ ២ ដងប្រសិនបើបរាជ័យ\n    },\n  },\n});\n\nexport function App() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <RouterProvider router={router} />\n    </QueryClientProvider>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "QueryClientProvider Setup"
+        "codeTitle": "QueryClientProvider Setup",
+        "proTip": "ត្រូវបង្កើត `queryClient` instance នៅខាងក្រៅ Component ឬប្រើ `useState(() => new QueryClient())` ដើម្បីការពារកុំឱ្យ Query Cache ត្រូវ Reset រាល់ពេល App re-render។"
       },
       {
         "id": "m15-04",
         "number": "04",
         "title": "useQuery Hook",
-        "summary": "Fetching and subscribing to server state.",
-        "explanation": "The `useQuery` hook accepts a `queryKey` and a `queryFn` returning a Promise.",
+        "summary": "ការទាញយក និង Subscribe ទៅកាន់ Server State តាមរយៈ Hook useQuery។",
+        "explanation": "Hook `useQuery` គឺជាឧបករណ៍ស្នូលនៃ TanStack Query ដែលប្រើប្រាស់សម្រាប់ទាញយកទិន្នន័យ (Fetch Data)។ វាត្រូវការ options ចម្បងពីរគឺ `queryKey` (កូនសោសម្គាល់ cache នៃទិន្នន័យ) និង `queryFn` (អនុគមន៍ដែល return Promise ដូចជា axios call)។",
         "keyPoints": [
-          "Returns `{ data, isLoading, isError, error, refetch }`."
+          "ផ្តល់នូវ State ពេញលេញរួមមាន `{ data, isLoading, isError, error, refetch }`។",
+          "ធ្វើការ Caching ទិន្នន័យដោយស្វ័យប្រវត្តិតាមរយៈ `queryKey`។",
+          "ប្រសិនបើមាន component ច្រើនហៅ `useQuery` ជាមួយ key ដូចគ្នាក្នុងពេលតែមួយ វានឹងធ្វើ network request តែម្តងគត់ (Automatic Deduplication)។"
         ],
-        "codeSnippet": "import { useQuery } from '@tanstack/react-query';\nimport { studentService } from '@/services/studentService';\n\nexport function StudentList() {\n  const { data: students, isLoading, isError } = useQuery({\n    queryKey: ['students'],\n    queryFn: studentService.getAll,\n  });\n\n  if (isLoading) return <LoadingSpinner />;\n  if (isError) return <ErrorMessage />;\n\n  return <ul>{students?.map(s => <li key={s.id}>{s.name}</li>)}</ul>;\n}",
+        "codeSnippet": "import { useQuery } from '@tanstack/react-query';\nimport { studentService } from '@/services/studentService';\n\nexport function StudentList() {\n  const { \n    data: students, \n    isLoading, \n    isError, \n    error \n  } = useQuery({\n    queryKey: ['students'],\n    queryFn: studentService.getAll,\n  });\n\n  if (isLoading) return <p>កំពុងទាញយកទិន្នន័យ...</p>;\n  if (isError) return <p className=\"text-red-500\">{error.message}</p>;\n\n  return (\n    <ul>\n      {students?.map((student) => (\n        <li key={student.id}>{student.name} - GPA: {student.gpa}</li>\n      ))}\n    </ul>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Basic useQuery Hook"
+        "codeTitle": "Basic useQuery Hook",
+        "proTip": "Hook `useQuery` ផ្តល់ជូន State ស្រាប់ៗដូចជា `data`, `isLoading`, `isError`, និង `refetch` ដោយអ្នកមិនចាំបាច់បង្កើត `useState` និង `useEffect` ដើម្បីតាមដាន Status ដោយផ្ទាល់ដៃទៀតឡើយ។"
       },
       {
         "id": "m15-05",
         "number": "05",
         "title": "Query Keys",
-        "summary": "Hierarchical arrays that uniquely identify and cache queries.",
-        "explanation": "Query keys are arrays: `['students']`, `['students', studentId]`, `['products', { category, page }]`. When any item in the query key array changes, TanStack Query automatically refetches the data.",
+        "summary": "ការប្រើប្រាស់ Hierarchical Arrays ជាសោរសម្គាល់ (Keys) សម្រាប់ Caching និង Refetching ទិន្នន័យ។",
+        "explanation": "នៅក្នុង TanStack Query រាល់ Query ទាំងអស់ត្រូវតែមាន `queryKey` ដែលជា Array នៃតម្លៃផ្សេងៗ ដូចជា Strings, Numbers, ឬ Objects (ឧទាហរណ៍៖ `['students']`, `['students', studentId]`, `['products', { category, page }]`)។ នៅពេលធាតុណាមួយក្នុង Array ផ្លាស់ប្តូរ TanStack Query នឹងដឹងថាទិន្នន័យបានប្រែប្រួល រួចទាញយកទិន្នន័យថ្មីដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Include all variables used in the `queryFn` inside the `queryKey`.",
-          "Hierarchical invalidation allows invalidating all `['students']` queries at once."
+          "Query Keys ត្រូវតែជា Array ជានិច្ច (Array-based keys)។",
+          "ដាក់បញ្ចូលគ្រប់ Dependency Variables ចូលទៅក្នុង `queryKey`។",
+          "រចនាសម្ព័ន្ធបែបឋានានុក្រម (Hierarchical structure) ជួយឱ្យងាយស្រួលក្នុងការធ្វើ Invalidation ទាំងមូល (ឧ. លុប cache គ្រប់ `['students', ...]` ទាំងអស់)។"
         ],
-        "codeSnippet": "// Parameterized query key:\nconst { data } = useQuery({\n  queryKey: ['products', { category, sort, page }],\n  queryFn: () => productService.getList({ category, sort, page }),\n});",
+        "codeSnippet": "import { useQuery } from '@tanstack/react-query';\n\n// Query Key ដែលមាន Parameters៖\nexport function ProductList({ category, page, sort }: FilterProps) {\n  const { data } = useQuery({\n    // នៅពេល category, page, ឬ sort ផ្លាស់ប្តូរ វានឹង Fetch ថ្មីដោយស្វ័យប្រវត្តិ\n    queryKey: ['products', { category, page, sort }],\n    queryFn: () => productService.getList({ category, page, sort }),\n  });\n\n  return <div>{/* បង្ហាញបញ្ជីទំនិញ */}</div>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Hierarchical Query Keys"
+        "codeTitle": "Hierarchical Query Keys",
+        "pitfall": "រាល់អថេរ (Variables) ទាំងអស់ដែលត្រូវបានប្រើនៅក្នុង `queryFn` (ដូចជា `id`, `page`, `filter`) ត្រូវតែដាក់បញ្ចូលទៅក្នុង `queryKey` array ជានិច្ច បើពុំនោះទេ Query នឹងមិនធ្វើការ Refetch ឡើងវិញឡើយនៅពេលអថេរទាំងនោះផ្លាស់ប្តូរ!"
       },
       {
         "id": "m15-06",
         "number": "06",
         "title": "useMutation Hook",
-        "summary": "Creating, updating, and deleting server data with side effects.",
-        "explanation": "Unlike queries (which run automatically), mutations are triggered on-demand by user actions (like clicking Submit or Delete).",
+        "summary": "ការបង្កើត កែប្រែ និងលុបទិន្នន័យនៅលើ Server ជាមួយ Side Effects តាមរយៈ useMutation។",
+        "explanation": "ខុសប្លែកពី Query ដែលដំណើរការដោយស្វ័យប្រវត្តិតាម Lifecycle, Mutation ត្រូវបានបញ្ឆេះឡើងតាមរយៈសកម្មភាពផ្ទាល់របស់អ្នកប្រើប្រាស់ (User Action) ដូចជាការចុចប៊ូតុង Submit Form (POST), កែសម្រួលព័ត៌មាន (PUT/PATCH), ឬលុបទិន្នន័យ (DELETE)។",
         "keyPoints": [
-          "Use `onSuccess` to invalidate cached queries and trigger refetches."
+          "ប្រើប្រាស់ `useMutation({ mutationFn: ... })`។",
+          "ដំណើរការ Mutation តាមរយៈអនុគមន៍ `mutation.mutate(payload)`។",
+          "ប្រើប្រាស់ Lifecycle Callbacks: `onSuccess`, `onError`, `onSettled`។",
+          "ហៅ `queryClient.invalidateQueries` ក្នុង `onSuccess` ដើម្បីធ្វើបច្ចុប្បន្នភាពទិន្នន័យតារាង។"
         ],
-        "codeSnippet": "import { useMutation, useQueryClient } from '@tanstack/react-query';\n\nexport function AddStudentButton() {\n  const queryClient = useQueryClient();\n\n  const mutation = useMutation({\n    mutationFn: studentService.create,\n    onSuccess: () => {\n      // Invalidate and refetch student list automatically!\n      queryClient.invalidateQueries({ queryKey: ['students'] });\n      toast.success('Student added!');\n    },\n  });\n\n  return (\n    <button onClick={() => mutation.mutate({ name: 'Sophea', gpa: 3.8 })}>\n      {mutation.isPending ? 'Saving...' : 'Add Student'}\n    </button>\n  );\n}",
+        "codeSnippet": "import { useMutation, useQueryClient } from '@tanstack/react-query';\nimport { studentService } from '@/services/studentService';\n\nexport function AddStudentButton() {\n  const queryClient = useQueryClient();\n\n  const mutation = useMutation({\n    mutationFn: studentService.create,\n    onSuccess: () => {\n      // បង្ខំឱ្យបញ្ជីសិស្ស Fetch ឡើងវិញដោយស្វ័យប្រវត្តិ!\n      queryClient.invalidateQueries({ queryKey: ['students'] });\n      alert('បានបន្ថែមសិស្សដោយជោគជ័យ!');\n    },\n    onError: (error: any) => {\n      alert(`បរាជ័យ៖ ${error.message}`);\n    },\n  });\n\n  return (\n    <button \n      disabled={mutation.isPending}\n      onClick={() => mutation.mutate({ name: 'សុភា', gpa: 3.8 })}\n    >\n      {mutation.isPending ? 'កំពុងរក្សាទុក...' : 'បន្ថែមសិស្ស'}\n    </button>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useMutation with Cache Invalidation"
+        "codeTitle": "useMutation with Cache Invalidation",
+        "proTip": "ប្រើប្រាស់ callback `onSuccess` របស់ `useMutation` ដើម្បីហៅ `queryClient.invalidateQueries()` ជួយឱ្យ UI ធ្វើបច្ចុប្បន្នភាពទិន្នន័យថ្មីភ្លាមៗដោយស្វ័យប្រវត្តិបន្ទាប់ពី Save ឬ Delete រួច។"
       },
       {
         "id": "m15-07",
         "number": "07",
         "title": "Loading and Error States",
-        "summary": "Granular status flags: isPending, isFetching, isError, isSuccess.",
-        "explanation": "`isPending` indicates initial load with no cached data; `isFetching` indicates background revalidation even if cached data is already visible.",
+        "summary": "ការស្វែងយល់ពីភាពខុសគ្នារវាង Status Flags: isPending, isFetching, isError, និង isSuccess។",
+        "explanation": "នៅក្នុង TanStack Query v5 ស្ថានភាពនៃការទាញយកទិន្នន័យត្រូវបានបែងចែកយ៉ាងលម្អិត។ ការយល់ដឹងពីភាពខុសគ្នារវាង `isPending` និង `isFetching` ជួយឱ្យអ្នកអាចបង្កើត UI ដែលមានភាពរលូន និងមិនរំខានដល់អ្នកប្រើប្រាស់។",
         "keyPoints": [
-          "Display subtle background fetching spinners while showing cached data."
+          "`isPending`: `true` នៅពេល Query ពុំទាន់មានទិន្នន័យក្នុង Cache នៅឡើយ (កំពុងផ្ទុកដំបូង - បង្ហាញ Skeleton UI)។",
+          "`isFetching`: `true` រាល់ពេលដែលមាន Network Request កំពុងដំណើរការ ទោះបីជាមានទិន្នន័យចាស់បង្ហាញនៅលើអេក្រង់រួចហើយក៏ដោយ (ស័ក្តិសមសម្រាប់របារ Spinner តូចនៅខាងលើ)។",
+          "`isError` & `error`: មានតម្លៃនៅពេលដែល Promise ជួបបរាជ័យ (Reject)។"
         ],
-        "codeSnippet": "const { data, isPending, isFetching } = useQuery(...);\n// isPending: True on first fetch (show skeleton)\n// isFetching: True during background refresh (show subtle top indicator)",
+        "codeSnippet": "const { data, isPending, isFetching, isError } = useQuery({\n  queryKey: ['dashboardStats'],\n  queryFn: fetchStats,\n});\n\n// 1. Initial Load: ពុំទាន់មានទិន្នន័យបង្ហាញឡើយ\nif (isPending) return <DashboardSkeleton />;\n\n// 2. Error: មានបញ្ហាបណ្តាញ\nif (isError) return <ErrorBanner />;\n\nreturn (\n  <div>\n    {/* 3. បង្ហាញសញ្ញាសម្គាល់តូចមួយនៅពេល Background Fetching កំពុងដំណើរការ */}\n    {isFetching && <span className=\"text-xs text-blue-500\">កំពុងធ្វើសមកាលកម្ម...</span>}\n    <StatsGrid stats={data} />\n  </div>\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "isPending vs isFetching"
+        "codeTitle": "isPending vs isFetching",
+        "proTip": "`isPending` មានតម្លៃ true តែនៅពេលដំបូងដែលពុំទាន់មាន Cache ទិន្នន័យប៉ុណ្ណោះ (ស័ក្តិសមសម្រាប់ Skeleton UI) រីឯ `isFetching` មានតម្លៃ true រាល់ពេលមាន Network Request កំពុងដំណើរការ (រួមទាំង Background Revalidation)។"
       },
       {
         "id": "m15-08",
         "number": "08",
         "title": "Stale Time vs Garbage Collection Time",
-        "summary": "Fine-tuning cache lifetime with staleTime and gcTime.",
-        "explanation": "`staleTime` determines how long data is considered fresh before needing a background refresh. `gcTime` determines how long inactive data stays in memory before being evicted.",
+        "summary": "ការកំណត់ និងគ្រប់គ្រងអាយុកាល Cache តាមរយៈ staleTime និង gcTime។",
+        "explanation": "ការគ្រប់គ្រង Memory និង Cache នៅក្នុង TanStack Query ពឹងផ្អែកលើគំនិតស្នូលពីរគឺ `staleTime` និង `gcTime` (Garbage Collection Time - កាលពីមុនហៅថា `cacheTime`)។ ការកំណត់តម្លៃទាំងពីរនេះឱ្យបានត្រឹមត្រូវជួយកាត់បន្ថយ Network Requests ឥតប្រយោជន៍។",
         "keyPoints": [
-          "Default `staleTime` is 0 (data immediately considered stale).",
-          "Set `staleTime: 60_000` for data that changes infrequently."
+          "**`staleTime`**: រយៈពេល (គិតជា milliseconds) ដែលទិន្នន័យត្រូវបានចាត់ទុកថា \"នៅថ្មីស្រស់ (Fresh)\"។ ដរាបណាទិន្នន័យនៅ Fresh នោះ TanStack Query នឹងមិនធ្វើការស្នើសុំ Network Request ឡើយ។ តម្លៃលំនាំដើមគឺ `0`។",
+          "**`gcTime`**: រយៈពេលដែលទិន្នន័យដែលគ្មាន Component ណាមួយកំពុងប្រើប្រាស់ (Inactive) អាចបន្តស្ថិតនៅក្នុង RAM មុនពេលត្រូវលុបចោល។ តម្លៃលំនាំដើមគឺ 5 នាទី (`300_000` ms)។"
         ],
-        "codeSnippet": "const { data } = useQuery({\n  queryKey: ['systemConfig'],\n  queryFn: fetchConfig,\n  staleTime: 1000 * 60 * 30, // 30 minutes\n  gcTime: 1000 * 60 * 60,    // 1 hour\n});",
+        "codeSnippet": "const { data } = useQuery({\n  queryKey: ['systemConfig'],\n  queryFn: fetchSystemConfig,\n  staleTime: 1000 * 60 * 10, // ទិន្នន័យនៅ Fresh រយៈពេល 10 នាទី (មិនបាច់ fetch ឡើងវិញទេ)\n  gcTime: 1000 * 60 * 60,    // រក្សាទុកក្នុង Cache RAM រយៈពេល 1 ម៉ោងមុននឹងលុបចោល\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "staleTime and gcTime Configuration"
+        "codeTitle": "staleTime and gcTime Configuration",
+        "proTip": "`staleTime` កំណត់ថាតើទិន្នន័យនៅស្រស់ (Fresh) រយៈពេលប៉ុន្មានមុនពេលត្រូវ Refetch ម្តងទៀត រីឯ `gcTime` កំណត់ថាតើទិន្នន័យដែលលែងប្រើ (Inactive) ត្រូវរក្សាទុកក្នុង Memory រយៈពេលប៉ុន្មានមុនពេលត្រូវលុបចោល។"
       },
       {
         "id": "m15-09",
         "number": "09",
         "title": "Pagination with keepPreviousData",
-        "summary": "Seamless table pagination without page flickering.",
-        "explanation": "Using `placeholderData: keepPreviousData` keeps the old page visible while the next page fetches in the background, preventing layout jumps.",
+        "summary": "ការធ្វើ Pagination នៅលើតារាងទិន្នន័យដោយរលូន គ្មានការព្រិចភ្នែក (Flickering) ដោយប្រើ keepPreviousData។",
+        "explanation": "នៅពេលធ្វើ Pagination តាមរបៀបធម្មតា រាល់ពេល User ចុចប្តូរទំព័រ (`page` state ផ្លាស់ប្តូរ) តារាងទិន្នន័យអាចនឹងបាត់ភ្លាមៗ រួចបង្ហាញ Loading Spinner ជំនួសវិញ ដែលធ្វើឱ្យ UI ព្រិចភ្នែក (Flicker)។ ការប្រើប្រាស់ `keepPreviousData` ជួយដោះស្រាយបញ្ហានេះយ៉ាងមានប្រសិទ្ធភាព។",
         "keyPoints": [
-          "Eliminates jarring layout shifts during table pagination."
+          "នាំចូល `keepPreviousData` ពី `@tanstack/react-query`។",
+          "កំណត់ `placeholderData: keepPreviousData` នៅក្នុង `useQuery` options។",
+          "ប្រើប្រាស់ `isPlaceholderData` ដើម្បីបង្ហាញ Opacity ឬ Disable ប៊ូតុង Next/Prev ពេលកំពុងផ្ទុកទំព័រថ្មី។"
         ],
-        "codeSnippet": "import { keepPreviousData, useQuery } from '@tanstack/react-query';\n\nconst { data: pageData, isPlaceholderData } = useQuery({\n  queryKey: ['students', page],\n  queryFn: () => studentService.getPage(page),\n  placeholderData: keepPreviousData,\n});",
+        "codeSnippet": "import { useState } from 'react';\nimport { useQuery, keepPreviousData } from '@tanstack/react-query';\nimport { studentService } from '@/services/studentService';\n\nexport function PaginatedStudents() {\n  const [page, setPage] = useState(1);\n\n  const { data, isPlaceholderData } = useQuery({\n    queryKey: ['students', page],\n    queryFn: () => studentService.getPage(page),\n    placeholderData: keepPreviousData, // រក្សាទិន្នន័យទំព័រចាស់រហូតដល់ទំព័រថ្មី Fetch ចប់\n  });\n\n  return (\n    <div className={isPlaceholderData ? 'opacity-50' : 'opacity-100'}>\n      <table>{/* បង្ហាញតារាងទិន្នន័យ */}</table>\n      <button onClick={() => setPage(p => p - 1)} disabled={page === 1}>ថយក្រោយ</button>\n      <span>ទំព័រទី {page}</span>\n      <button onClick={() => setPage(p => p + 1)} disabled={isPlaceholderData || !data?.hasMore}>បន្ទាប់</button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Smooth Pagination with keepPreviousData"
+        "codeTitle": "Smooth Pagination with keepPreviousData",
+        "proTip": "ការប្រើ `placeholderData: keepPreviousData` ជួយរក្សាទិន្នន័យនៃទំព័រចាស់ឱ្យនៅបង្ហាញលើអេក្រង់រហូតទាល់តែទំព័រថ្មីទាញយកចប់ ជៀសវាងការលោត Layout Jump ឬការបង្ហាញ Loading ពេញអេក្រង់។"
       },
       {
         "id": "m15-10",
         "number": "10",
         "title": "Infinite Queries (useInfiniteQuery)",
-        "summary": "Building 'Load More' buttons and infinite scroll feeds.",
-        "explanation": "Manages paginated data as an array of pages, providing `fetchNextPage` and `hasNextPage` flags.",
+        "summary": "ការបង្កើតមុខងារ 'Load More' និងប្រព័ន្ធរំកិលទំព័រគ្មានដែនកំណត់ (Infinite Scroll) ជាមួយ useInfiniteQuery។",
+        "explanation": "សម្រាប់ទំព័រដែលត្រូវការបង្ហាញ Feed ដូចជា Facebook, Twitter ឬ E-commerce Products ការប្រើប្រាស់ `useInfiniteQuery` អនុញ្ញាតឱ្យអ្នកទាញយកទិន្នន័យបន្ថែមជាទំព័រៗ (Pages) ដោយរក្សាទុកទិន្នន័យចាស់ទាំងអស់នៅក្នុង Array តែមួយ។",
         "keyPoints": [
-          "Pairs with intersection observer for infinite scroll."
+          "ផ្តល់នូវ `fetchNextPage()`, `hasNextPage`, និង `isFetchingNextPage`។",
+          "កំណត់ `getNextPageParam: (lastPage) => lastPage.nextCursor` ដើម្បីគណនាទំព័របន្ទាប់។",
+          "ត្រូវកំណត់ `initialPageParam: 1` នៅក្នុង TanStack Query v5។"
         ],
-        "codeSnippet": "const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({\n  queryKey: ['feed'],\n  queryFn: ({ pageParam = 1 }) => fetchFeed(pageParam),\n  getNextPageParam: (lastPage) => lastPage.nextPage,\n  initialPageParam: 1,\n});",
+        "codeSnippet": "import { useInfiniteQuery } from '@tanstack/react-query';\n\nexport function InfinitePostFeed() {\n  const { \n    data, \n    fetchNextPage, \n    hasNextPage, \n    isFetchingNextPage \n  } = useInfiniteQuery({\n    queryKey: ['postsFeed'],\n    queryFn: ({ pageParam }) => postService.getFeed(pageParam),\n    initialPageParam: 1,\n    getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,\n  });\n\n  return (\n    <div>\n      {data?.pages.map((page, i) => (\n        <div key={i}>\n          {page.items.map(post => <PostCard key={post.id} post={post} />)}\n        </div>\n      ))}\n      <button \n        disabled={!hasNextPage || isFetchingNextPage}\n        onClick={() => fetchNextPage()}\n      >\n        {isFetchingNextPage ? 'កំពុងផ្ទុកបន្ថែម...' : hasNextPage ? 'ទាញយកបន្ថែម' : 'អស់ទិន្នន័យហើយ'}\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useInfiniteQuery Hook"
+        "codeTitle": "useInfiniteQuery Hook",
+        "proTip": "ប្រើប្រាស់ `useInfiniteQuery` រួមគ្នាជាមួយ `IntersectionObserver` ដើម្បីចាប់សញ្ញានៅពេលដែល User រំកិលដល់បាតទំព័រ រួចហៅ `fetchNextPage()` ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m15-11",
         "number": "11",
         "title": "Optimistic Updates",
-        "summary": "Instantly updating the UI before server confirmation.",
-        "explanation": "Update the local query cache immediately when the user clicks an action (e.g. toggling a like or checking a todo). If the server request fails, rollback to the snapshot!",
+        "summary": "ការធ្វើបច្ចុប្បន្នភាព UI ភ្លាមៗមុនពេល Server ឆ្លើយតបបញ្ជាក់ និងការ Rollback ត្រឡប់មកវិញប្រសិនបើមានកំហុស។",
+        "explanation": "Optimistic Update គឺជាបច្ចេកទេសកម្រិតខ្ពស់ដែលធ្វើការ Update UI ភ្លាមៗបន្ទាប់ពី User ចុចប៊ូតុង (ដូចជាចុច Like បេះដូង ឬគូសធីក Task បញ្ចប់) ដោយសន្មតជាមុនថា Server នឹងដំណើរការជោគជ័យ។ ប្រសិនបើ Server បរាជ័យដោយសារដាច់ Network វានឹងធ្វើការ Rollback ទិន្នន័យចាស់ត្រឡប់មកវិញភ្លាម។",
         "keyPoints": [
-          "Creates instantaneous, zero-latency user experience.",
-          "Always save previous cache snapshot in `onMutate` for rollback."
+          "បោះបង់ Outgoing Queries ចោលជាមួយ `cancelQueries` ក្នុង `onMutate` ដើម្បីកុំឱ្យទិន្នន័យចាស់ជាន់គ្នា។",
+          "រក្សាទុក Snapshot នៃទិន្នន័យចាស់ (`previousData`) មុនពេល update cache។",
+          "ប្រើ `setQueryData` ដើម្បីកែប្រែ Cache ភ្លាមៗ។",
+          "ក្នុងករណី `onError` ត្រូវ Rollback Cache ដោយប្រើ Snapshot ចាស់។",
+          "ក្នុង `onSettled` ត្រូវ `invalidateQueries` ដើម្បីឱ្យទិន្នន័យត្រឹមត្រូវ 100% ជាមួយ Database។"
         ],
-        "codeSnippet": "const toggleMutation = useMutation({\n  mutationFn: todoService.toggle,\n  onMutate: async (todoId) => {\n    await queryClient.cancelQueries({ queryKey: ['todos'] });\n    const previousTodos = queryClient.getQueryData(['todos']);\n\n    // Optimistically update cache:\n    queryClient.setQueryData(['todos'], (old: Todo[] = []) =>\n      old.map(t => t.id === todoId ? { ...t, completed: !t.completed } : t)\n    );\n\n    return { previousTodos }; // Context for rollback\n  },\n  onError: (err, newTodo, context) => {\n    // Rollback to previous state on error!\n    queryClient.setQueryData(['todos'], context?.previousTodos);\n  },\n  onSettled: () => {\n    queryClient.invalidateQueries({ queryKey: ['todos'] });\n  },\n});",
+        "codeSnippet": "import { useMutation, useQueryClient } from '@tanstack/react-query';\n\nconst toggleTodoMutation = useMutation({\n  mutationFn: todoService.toggleComplete,\n  onMutate: async (todoId: string) => {\n    // 1. បោះបង់ Queries ដែលកំពុងរត់\n    await queryClient.cancelQueries({ queryKey: ['todos'] });\n\n    // 2. រក្សាទុក Snapshot ចាស់សម្រាប់ Rollback\n    const previousTodos = queryClient.getQueryData<Todo[]>(['todos']);\n\n    // 3. Update Cache ក្នុងមូលដ្ឋានភ្លាមៗ (Optimistic Update)\n    queryClient.setQueryData<Todo[]>(['todos'], (old = []) =>\n      old.map(t => t.id === todoId ? { ...t, completed: !t.completed } : t)\n    );\n\n    return { previousTodos }; // ផ្ញើទៅ onError តាមរយៈ Context\n  },\n  onError: (err, todoId, context) => {\n    // 4. Rollback ត្រឡប់មកទិន្នន័យដើមវិញពេល Server បរាជ័យ\n    if (context?.previousTodos) {\n      queryClient.setQueryData(['todos'], context.previousTodos);\n    }\n  },\n  onSettled: () => {\n    // 5. Sync ទិន្នន័យចុងក្រោយជាមួយ Server\n    queryClient.invalidateQueries({ queryKey: ['todos'] });\n  },\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Complete Optimistic Update Pattern"
+        "codeTitle": "Complete Optimistic Update Pattern",
+        "proTip": "ការធ្វើ Optimistic Update ធ្វើឱ្យ UI មានអារម្មណ៍ថាឆ្លើយតបរហ័សទាន់ចិត្ត (Zero-latency)! កុំភ្លេចរក្សាទុក Snapshot ចាស់នៅក្នុង `onMutate` ដើម្បីអាច Rollback ត្រឡប់មកវិញក្នុង `onError` ប្រសិនបើ Server បរាជ័យ។"
       },
       {
         "id": "m15-12",
         "number": "12",
         "title": "Query Invalidation",
-        "summary": "Targeted cache busting after mutations.",
-        "explanation": "Marking queries as invalid causes them to refetch if they are currently active on screen.",
+        "summary": "ការលុប Cache ចាស់ចោល និងបង្ខំឱ្យ Refetch ទិន្នន័យថ្មីចំគោលដៅបន្ទាប់ពី Mutation។",
+        "explanation": "បន្ទាប់ពីអ្នកប្រើប្រាស់បានផ្លាស់ប្តូរទិន្នន័យនៅលើ Server (តាមរយៈ Mutation) ទិន្នន័យដែលរក្សាទុកក្នុង Cache ក្នុង Browser អាចនឹងលែងត្រឹមត្រូវទៀតហើយ។ ការប្រើប្រាស់ `invalidateQueries` ជួយកំណត់ឱ្យ Queries ទាំងនោះក្លាយជា Stale ហើយបង្ខំឱ្យ Refetch ឡើងវិញជាបន្ទាន់។",
         "keyPoints": [
-          "Use exact or prefix matching."
+          "សម្គាល់ Query ថា Stale និងបង្ខំឱ្យ Active Queries ទាញយកទិន្នន័យថ្មីភ្លាមៗ។",
+          "គាំទ្រ Prefix Matching (ឧទាហរណ៍៖ `['students']` នឹង invalidate ទាំង `['students']`, `['students', 1]`, និង `['students', { page: 2 }]`)។",
+          "អាចប្រើ `exact: true` ប្រសិនបើចង់ invalidate តែ Key ជាក់លាក់មួយគត់។"
         ],
-        "codeSnippet": "queryClient.invalidateQueries({ queryKey: ['todos'] });",
+        "codeSnippet": "import { useQueryClient } from '@tanstack/react-query';\n\nexport function useDeleteStudent() {\n  const queryClient = useQueryClient();\n\n  return useMutation({\n    mutationFn: studentService.delete,\n    onSuccess: () => {\n      // បង្ខំឱ្យ refetch បញ្ជីសិស្សទាំងអស់ឡើងវិញ\n      queryClient.invalidateQueries({ \n        queryKey: ['students'],\n        exact: false, // Invalidate រាល់ keys ទាំងអស់ដែលផ្តើមដោយ 'students'\n      });\n    },\n  });\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Invalidating Query Cache"
+        "codeTitle": "Invalidating Query Cache",
+        "proTip": "ការហៅ `queryClient.invalidateQueries({ queryKey: ['students'] })` នឹងសម្គាល់រាល់ Query ទាំងអស់ដែលផ្ដើមដោយ `['students']` ថា Stale ហើយនឹង Refetch ដោយស្វ័យប្រវត្តិនូវ Query ណាដែលកំពុងបង្ហាញនៅលើអេក្រង់ (Active)។"
       },
       {
         "id": "m15-13",
         "number": "13",
         "title": "TanStack DevTools",
-        "summary": "Visualizing query cache, stale states, and mutations.",
-        "explanation": "The TanStack Query Devtools floating panel displays all cached queries, their data, fetch state, and provides buttons to trigger manual refetch or cache clearing.",
+        "summary": "ការប្រើប្រាស់ផ្ទាំង TanStack DevTools ដើម្បីពិនិត្យមើល Cache State, Stale Queries, និង Mutations។",
+        "explanation": "TanStack Query Devtools គឺជាផ្ទាំងជំនួយដ៏អស្ចារ្យដែលបង្ហាញអំពីដំណើរការខាងក្នុងទាំងអស់នៃ Cache៖ រាល់ Query Key នីមួយៗ, ស្ថានភាព Fresh/Stale/Fetching/Inactive, រួមទាំងប៊ូតុងសម្រាប់ចុច Refetch, Reset ឬ Invalidate Cache ដោយផ្ទាល់ដៃសម្រាប់ Debugging។",
         "keyPoints": [
-          "Included in dev builds only; stripped in production."
+          "ផ្តល់នូវរូបភាពច្បាស់លាស់អំពីស្ថានភាព Cache និង Network requests ក្នុងពេលជាក់ស្តែង (Real-time)។",
+          "មិនត្រូវបានបញ្ចូលក្នុង Production Bundle ឡើយ (Zero-overhead in production)។",
+          "ដាក់បញ្ចូល `<ReactQueryDevtools />` នៅខាងក្នុង `<QueryClientProvider>`។"
         ],
-        "codeSnippet": "import { ReactQueryDevtools } from '@tanstack/react-query-devtools';\n\n<QueryClientProvider client={queryClient}>\n  <App />\n  <ReactQueryDevtools initialIsOpen={false} />\n</QueryClientProvider>",
+        "codeSnippet": "import { QueryClient, QueryClientProvider } from '@tanstack/react-query';\nimport { ReactQueryDevtools } from '@tanstack/react-query-devtools';\n\nconst queryClient = new QueryClient();\n\nexport function RootApp() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <App />\n      {/* បើកផ្ទាំង DevTools នៅជ្រុងខាងក្រោមសម្រាប់ Debug */}\n      <ReactQueryDevtools initialIsOpen={false} buttonPosition=\"bottom-right\" />\n    </QueryClientProvider>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Integrating ReactQueryDevtools"
+        "codeTitle": "Integrating ReactQueryDevtools",
+        "proTip": "DevTools ដំណើរការតែនៅក្នុងបរិស្ថាន Development ប៉ុណ្ណោះ ហើយនឹងត្រូវបានដកចេញដោយស្វ័យប្រវត្តិនៅពេល Build ទៅកាន់ Production ដូច្នេះគ្មានផលប៉ះពាល់ដល់ Bundle size ឡើយ។"
       }
     ]
   },
@@ -2962,154 +2999,180 @@ export const modulesData: ModuleItem[] = [
     "number": "16",
     "title": "Context API",
     "category": "State & Architecture",
-    "summary": "Context API mechanics, createContext, Provider, useContext, avoiding prop drilling, authentication context, theme context, and limitations.",
+    "summary": "ស្វែងយល់ពីយន្តការ Context API របស់ React, ការប្រើប្រាស់ createContext, Provider, useContext, ការលុបបំបាត់ Prop Drilling, Authentication Context, Theme Context, និងចំណុចកម្រិតនៃការប្រើប្រាស់ (Limitations)។",
     "iconName": "Share2",
     "topics": [
       {
         "id": "m16-01",
         "number": "01",
         "title": "What is Context?",
-        "summary": "React's native mechanism for broadcasting data across the component tree.",
-        "explanation": "Context provides a way to pass data through the component tree without having to pass props down manually at every single level.",
+        "summary": "យន្តការស្នូលរបស់ React សម្រាប់បញ្ជូនទិន្នន័យទៅកាន់គ្រប់ Components ទាំងអស់នៅក្នុង Tree ដោយមិនចាំបាច់ឆ្លងកាត់ Props។",
+        "explanation": "នៅក្នុង React ជាទូទៅទិន្នន័យត្រូវបានបញ្ជូនពីលើចុះក្រោម (Top-down) ពី Parent ទៅកាន់ Child តាមរយៈ Props។ ប៉ុន្តែនៅពេលដែលកម្មវិធីកាន់តែធំ មានទិន្នន័យមួយចំនួនដែលត្រូវការប្រើប្រាស់នៅស្ទើរតែគ្រប់ទីកន្លែង (ដូចជា ព័ត៌មានអ្នកប្រើប្រាស់ដែលបាន Login, ការកំណត់ Theme ងងឹត/ភ្លឺ)។ **Context API** ផ្តល់នូវវិធីសាស្ត្រក្នុងការបញ្ជូនទិន្នន័យចូលទៅកាន់ Component Tree ទាំងមូលដោយផ្ទាល់ ដោយមិនចាំបាច់ឆ្លងកាត់ Props នៅគ្រប់ជាន់ថ្នាក់ឡើយ។",
         "keyPoints": [
-          "Built directly into React; requires no external dependencies.",
-          "Designed for low-frequency global data: themes, authenticated user, locale."
+          "ភ្ជាប់មកជាមួយ React រួចជាស្រេច (Built-in) ដោយមិនចាំបាច់ដំឡើងបណ្ណាល័យខាងក្រៅឡើយ។",
+          "ស័ក្តិសមបំផុតសម្រាប់ទិន្នន័យសកលដែលមានការផ្លាស់ប្តូរតិចតួច (Low-frequency updates)។",
+          "ជួយដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាព។"
         ],
-        "codeSnippet": "import { createContext, useContext } from 'react';",
+        "codeSnippet": "import { createContext, useContext, useState } from 'react';\n\n// Context គឺជាយន្តការដើមរបស់ React មិនត្រូវការ npm package បន្ថែមឡើយ",
         "codeLanguage": "jsx",
-        "codeTitle": "Context Imports"
+        "codeTitle": "Context Imports",
+        "proTip": "Context API ត្រូវបានបង្កើតឡើងសម្រាប់ទិន្នន័យសកល (Global Data) ដែលកម្រមានការផ្លាស់ប្តូរញឹកញាប់ (Low-frequency updates) ដូចជា Current User Auth, Theme (Light/Dark), ឬ Preferred Language (Locale)។"
       },
       {
         "id": "m16-02",
         "number": "02",
         "title": "createContext",
-        "summary": "Instantiating a context object with fallback defaults.",
-        "explanation": "`const MyContext = createContext(defaultValue)` creates the context container.",
+        "summary": "ការបង្កើត Context Object ជាមួយនឹងតម្លៃលំនាំដើម (Default Fallback Value)។",
+        "explanation": "ដើម្បីបង្កើត Context ថ្មីមួយ យើងត្រូវប្រើប្រាស់អនុគមន៍ `createContext(defaultValue)`។ អនុគមន៍នេះនឹង return នូវ Context Object មួយដែលមានផ្ទុកទាំង Provider Component និង Consumer សម្រាប់ប្រើប្រាស់នៅក្នុង Component Tree។",
         "keyPoints": [
-          "The default value is only used if a component consumes context outside a Provider."
+          "កំណត់ TypeScript Interface សម្រាប់ទម្រង់នៃ Context Data ដើម្បីទទួលបាន Type Safety។",
+          "តម្លៃ Default Value ដើរតួជា Fallback នៅពេលដែល Component ត្រូវបាន Render នៅក្រៅ Context Provider (មានប្រយោជន៍ខ្លាំងសម្រាប់ការធ្វើ Unit Test)។",
+          "ដាក់ឈ្មោះ Context ដោយសរសេរអក្សរធំនៅខាងដើម ដូចជា `ThemeContext`, `AuthContext`។"
         ],
-        "codeSnippet": "interface ThemeContextType {\n  theme: 'light' | 'dark';\n  toggleTheme: () => void;\n}\n\nexport const ThemeContext = createContext<ThemeContextType | undefined>(undefined);",
+        "codeSnippet": "import { createContext } from 'react';\n\n// 1. កំណត់រចនាសម្ព័ន្ធ Interface នៃ Context\nexport interface ThemeContextType {\n  theme: 'light' | 'dark';\n  toggleTheme: () => void;\n}\n\n// 2. បង្កើត Context ដោយកំណត់ defaultValue ឬ undefined\nexport const ThemeContext = createContext<ThemeContextType | undefined>(undefined);",
         "codeLanguage": "jsx",
-        "codeTitle": "Declaring Context with TypeScript"
+        "codeTitle": "Declaring Context with TypeScript",
+        "proTip": "តម្លៃ `defaultValue` ដែលកំណត់ក្នុង `createContext(defaultValue)` នឹងត្រូវប្រើប្រាស់តែក្នុងករណីដែល Component ហៅ `useContext` នៅខាងក្រៅ Provider ប៉ុណ្ណោះ។ ប្រសិនបើមាន Provider វានឹងយកតម្លៃក្នុង `value` prop ជានិច្ច។"
       },
       {
         "id": "m16-03",
         "number": "03",
         "title": "Context Provider",
-        "summary": "Supplying values to the subtree using <Context.Provider value={...}>.",
-        "explanation": "Every Context object comes with a Provider React component that accepts a `value` prop to be consumed by descendant components.",
+        "summary": "ការផ្គត់ផ្គង់ទិន្នន័យទៅកាន់ Child Components តាមរយៈ <Context.Provider value={...}>។",
+        "explanation": "រាល់ Context Object នីមួយៗតែងតែភ្ជាប់មកជាមួយនូវ Component មួយឈ្មោះថា `<Context.Provider>`។ Provider នេះទទួលយក prop មួយឈ្មោះថា `value` ដែលជាទិន្នន័យ ឬអនុគមន៍ដែលអ្នកចង់ចែករំលែកទៅកាន់ Child Components ទាំងអស់ដែលស្ថិតនៅខាងក្នុងវា។",
         "keyPoints": [
-          "All consumers re-render whenever the Provider's `value` prop changes."
+          "រាល់ Child Component ទាំងអស់ដែលនៅក្រោម Provider អាចទាញយកទិន្នន័យ `value` បានគ្រប់ពេលវេលា។",
+          "នៅពេលដែលតម្លៃ `value` ផ្លាស់ប្តូរ រាល់ Consumer Components ទាំងអស់ដែលកំពុងប្រើប្រាស់ Context នោះនឹង Re-render ដោយស្វ័យប្រវត្តិ។",
+          "គួរតែបង្កើត Wrapper Component ដូចជា `ThemeProvider` ដើម្បីគ្រប់គ្រង State ផ្ទៃក្នុង។"
         ],
-        "codeSnippet": "export function ThemeProvider({ children }: { children: React.ReactNode }) {\n  const [theme, setTheme] = useState<'light' | 'dark'>('dark');\n  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      <div className={theme}>{children}</div>\n    </ThemeContext.Provider>\n  );\n}",
+        "codeSnippet": "import React, { useState } from 'react';\nimport { ThemeContext } from './ThemeContext';\n\nexport function ThemeProvider({ children }: { children: React.ReactNode }) {\n  const [theme, setTheme] = useState<'light' | 'dark'>('dark');\n\n  const toggleTheme = () => {\n    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));\n  };\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      <div className={`app-container ${theme}`}>\n        {children}\n      </div>\n    </ThemeContext.Provider>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Custom Context Provider Component"
+        "codeTitle": "Custom Context Provider Component",
+        "proTip": "ការរៀបចំ Custom Provider Component (ដូចជា `ThemeProvider`) ជួយវេចខ្ចប់ State Logic ឱ្យមានរបៀបរៀបរយ និងធ្វើឱ្យ Root Component មើលទៅស្អាត មិនច្របូកច្របល់។"
       },
       {
         "id": "m16-04",
         "number": "04",
         "title": "useContext",
-        "summary": "Consuming context in functional components.",
-        "explanation": "The `useContext(MyContext)` hook returns the current value passed to the nearest matching Provider above in the tree.",
+        "summary": "ការទាញយកទិន្នន័យពី Context មកប្រើប្រាស់នៅក្នុង Functional Components យ៉ាងងាយស្រួល។",
+        "explanation": "Hook `useContext` អនុញ្ញាតឱ្យ Functional Component អាចអានតម្លៃបច្ចុប្បន្នពី Context Provider ដែលនៅជិតបំផុតខាងលើវា។ ជំនួសឱ្យការហៅ `useContext(ThemeContext)` ដោយផ្ទាល់នៅគ្រប់ Component វិធីសាស្ត្រល្អបំផុតគឺការបង្កើត Custom Hook ដូចជា `useTheme()` ដើម្បីផ្តល់ភាពងាយស្រួល និងសុវត្ថិភាព។",
         "keyPoints": [
-          "Always create a custom hook wrapper (e.g. `useTheme()`) with safety checks."
+          "`useContext` ទទួលយក Context Object ជា Argument (`useContext(MyContext)`)។",
+          "ត្រួតពិនិត្យ និង throw Error ប្រសិនបើ Component ត្រូវបានហៅនៅក្រៅ Provider ដែលត្រូវគ្នា។",
+          "ផ្តល់នូវ TypeScript Types ត្រឹមត្រូវ 100% ដោយមិនបាច់ type check ដោយផ្ទាល់ដៃ។"
         ],
-        "codeSnippet": "export function useTheme() {\n  const context = useContext(ThemeContext);\n  if (!context) {\n    throw new Error('useTheme must be used within a ThemeProvider');\n  }\n  return context;\n}",
+        "codeSnippet": "import { useContext } from 'react';\nimport { ThemeContext } from './ThemeContext';\n\nexport function useTheme() {\n  const context = useContext(ThemeContext);\n  \n  if (context === undefined) {\n    throw new Error('useTheme ត្រូវតែប្រើប្រាស់នៅខាងក្នុង <ThemeProvider> ប៉ុណ្ណោះ!');\n  }\n  \n  return context;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Safe Custom Context Hook"
+        "codeTitle": "Safe Custom Context Hook",
+        "proTip": "ត្រូវបង្កើត Custom Hook ជានិច្ច (ឧទាហរណ៍ `useTheme()`) ដើម្បីរុំព័ទ្ធ `useContext(ThemeContext)` និងបន្ថែមការឆែក `if (!context) throw new Error(...)` ដើម្បីដាស់តឿន Developer ភ្លាមៗប្រសិនបើភ្លេចដាក់ Provider!"
       },
       {
         "id": "m16-05",
         "number": "05",
         "title": "Sharing Global Data",
-        "summary": "Broadcasting settings, preferences, and configurations.",
-        "explanation": "Allows distant child components to read and update shared state.",
+        "summary": "ការចែករំលែកការកំណត់ (Settings), Preferences, និង Configurations ទៅកាន់គ្រប់ផ្នែកទាំងអស់នៃកម្មវិធី។",
+        "explanation": "អត្ថប្រយោជន៍ដ៏ធំបំផុតនៃ Context គឺសមត្ថភាពក្នុងការចែករំលែកទិន្នន័យសកល (Global Data) ទៅកាន់គ្រប់ Components កូនចៅដែលនៅឆ្ងាយៗ ក្នុងដើមឈើ Component Tree ដោយមិនចាំបាច់មានការផ្សារភ្ជាប់ Props ពីមួយទៅមួយឡើយ។",
         "keyPoints": [
-          "Ideal for app-wide settings that rarely change."
+          "Component ណាក៏ដោយនៅក្រោម Provider អាចអាន និងកែប្រែ Global State បាន។",
+          "ស័ក្តិសមបំផុតសម្រាប់ Theme, Localization (ភាសា), និង UI Configuration។",
+          "ការផ្លាស់ប្តូរ State ក្នុង Context នឹងជំរុញឱ្យ UI Update ឡើងវិញភ្លាមៗ។"
         ],
-        "codeSnippet": "export function ThemeToggle() {\n  const { theme, toggleTheme } = useTheme();\n  return <button onClick={toggleTheme}>Active Theme: {theme}</button>;\n}",
+        "codeSnippet": "import { useTheme } from './useTheme';\n\nexport function ThemeToggle() {\n  const { theme, toggleTheme } = useTheme();\n\n  return (\n    <button \n      onClick={toggleTheme}\n      className=\"p-2 rounded border transition-colors\"\n    >\n      ប្តូរ Theme (បច្ចុប្បន្ន៖ {theme === 'dark' ? 'ងងឹត 🌙' : 'ភ្លឺ ☀️'})\n    </button>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Consuming Context in Child"
+        "codeTitle": "Consuming Context in Child",
+        "proTip": "ការប្រើប្រាស់ Context ជាមួយ Theme (Dark/Light Mode) អនុញ្ញាតឱ្យ Button តូចមួយនៅជ្រុង Navbar អាចផ្លាស់ប្តូរ Styling នៃកម្មវិធីទាំងមូលបានភ្លាមៗ។"
       },
       {
         "id": "m16-06",
         "number": "06",
         "title": "Authentication Context",
-        "summary": "Full authentication session context pattern.",
-        "explanation": "Managing current user profile, token status, login, and logout handlers in a global AuthProvider.",
+        "summary": "ការរៀបចំប្រព័ន្ធគ្រប់គ្រង Session ការពារ Login/Logout និង User Profile សកលជាមួយ AuthContext។",
+        "explanation": "គំរូដ៏ពេញនិយមបំផុតនៃការប្រើប្រាស់ Context API នៅក្នុង Real-world Projects គឺការគ្រប់គ្រង **Authentication State**។ វាអនុញ្ញាតឱ្យ Navbar ដឹងថា User ចូលប្រើប្រាស់ហើយឬនៅ, អនុញ្ញាតឱ្យ Router ការពារទំព័រ Private, និងអនុញ្ញាតឱ្យ Profile Page បង្ហាញព័ត៌មានអ្នកប្រើប្រាស់។",
         "keyPoints": [
-          "Widely used in production SPA applications."
+          "រក្សាទុកព័ត៌មាន User បច្ចុប្បន្ន (`user: User | null`)។",
+          "ផ្តល់នូវអនុគមន៍ `login(credentials)` និង `logout()`។",
+          "ផ្តល់នូវ Flag `isAuthenticated` និង `isLoading` សម្រាប់តាមដានស្ថានភាព Session។"
         ],
-        "codeSnippet": "interface AuthContextType {\n  user: User | null;\n  isAuthenticated: boolean;\n  login: (credentials: Credentials) => Promise<void>;\n  logout: () => void;\n}\n\nexport const AuthContext = createContext<AuthContextType | undefined>(undefined);",
+        "codeSnippet": "import React, { createContext, useContext, useState } from 'react';\n\ninterface User {\n  id: string;\n  name: string;\n  email: string;\n}\n\ninterface AuthContextType {\n  user: User | null;\n  isAuthenticated: boolean;\n  login: (email: string, pass: string) => Promise<void>;\n  logout: () => void;\n}\n\nexport const AuthContext = createContext<AuthContextType | undefined>(undefined);",
         "codeLanguage": "jsx",
-        "codeTitle": "Authentication Context Interface"
+        "codeTitle": "Authentication Context Interface",
+        "proTip": "AuthProvider គួរបញ្ចូលទាំង User Object, Login handler, Logout handler, និង `isLoadingAuth` flag ដើម្បីងាយស្រួលគ្រប់គ្រង Protected Routes និង Navigation Header។"
       },
       {
         "id": "m16-07",
         "number": "07",
         "title": "Avoiding Prop Drilling",
-        "summary": "Comparing prop drilling vs context solutions.",
-        "explanation": "Context completely eliminates passing props through intermediary components that don't need them.",
+        "summary": "ការប្រៀបធៀបរវាងបញ្ហា Prop Drilling និងដំណោះស្រាយតាមរយៈ Context API។",
+        "explanation": "បញ្ហា **Prop Drilling** កើតឡើងនៅពេលដែលអ្នកត្រូវបញ្ជូន Prop ឆ្លងកាត់ Components កណ្តាលជាច្រើនជាន់ (ឧទាហរណ៍៖ `App` -> `Layout` -> `Sidebar` -> `UserMenu` -> `Avatar`) ទោះបីជា Components កណ្តាលទាំងនោះមិនត្រូវការប្រើប្រាស់ Prop នោះទាល់តែសោះក៏ដោយ។ Context API ជួយលុបបំបាត់បញ្ហានេះចោលទាំងស្រុង។",
         "keyPoints": [
-          "Leaf nodes access context directly."
+          "Component កណ្តាលមិនចាំបាច់ដឹងអំពី Props ដែលខ្លួនមិនប្រើឡើយ។",
+          "សន្សំសំចៃពេលវេលាក្នុងការ Refactor នៅពេល Component hierarchy ផ្លាស់ប្តូរ។",
+          "Component ចុងក្រោយ (Leaf Component) អាចទាញយក Context ដោយផ្ទាល់។"
         ],
-        "codeSnippet": "// Intermediary components don't touch auth props!\n<AuthProvider>\n  <AppLayout>\n    <Sidebar />\n    <MainContent>\n      <UserAvatar /> {/* Consumes useAuth() directly */}\n    </MainContent>\n  </AppLayout>\n</AuthProvider>",
+        "codeSnippet": "// ❌ បែប Prop Drilling (ពិបាកថែទាំ):\n// <App user={user}> -> <Layout user={user}> -> <Header user={user}> -> <Avatar user={user} />\n\n// ✅ បែប Context API (ស្អាត និងមានរបៀប):\nexport function AppLayout() {\n  return (\n    <AuthProvider>\n      <Header />\n      <Sidebar />\n      <MainContent>\n        {/* UserAvatar ហៅ useAuth() ដោយផ្ទាល់ មិនបាច់ pass props ឆ្លងកាត់ Header/Sidebar ឡើយ */}\n        <UserAvatar />\n      </MainContent>\n    </AuthProvider>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Eliminating Prop Drilling with Context"
+        "codeTitle": "Eliminating Prop Drilling with Context",
+        "proTip": "Prop Drilling ធ្វើឱ្យ Component កណ្តាលដែលមិនត្រូវការប្រើប្រាស់ទិន្នន័យ ត្រូវបង្ខំចិត្តទទួលនិងបញ្ជូន Props បន្ត។ Context ជួយឱ្យ Leaf Component អាចទាញយកទិន្នន័យដោយផ្ទាល់ពី Parent ជាន់ខ្ពស់បំផុត។"
       },
       {
         "id": "m16-08",
         "number": "08",
         "title": "Context Performance Pitfall",
-        "summary": "Every consumer re-renders on any value update.",
-        "explanation": "If you put an object with 10 properties in context and update just 1 property, EVERY component calling `useContext` re-renders, even if it only uses an unchanged property!",
+        "summary": "បញ្ហា Re-render នៃគ្រប់ Consumers ទាំងអស់នៅពេលដែលតម្លៃ Context ណាមួយផ្លាស់ប្តូរ។",
+        "explanation": "ចំណុចខ្សោយដ៏ធំបំផុតរបស់ React Context API គឺបញ្ហា **Unnecessary Re-renders**។ ប្រសិនបើអ្នកដាក់ Object មួយដែលមាន 10 properties ទៅក្នុង Context ហើយមាន property តែ 1 ផ្លាស់ប្តូរ នោះរាល់ Component ទាំងអស់ដែលហៅ `useContext` នឹងត្រូវ Re-render ទាំងអស់ ទោះបីជា Component នោះប្រើតែ property ដែលមិនផ្លាស់ប្តូរក៏ដោយ!",
         "keyPoints": [
-          "Split unrelated state into separate contexts (e.g. `ThemeContext` vs `AuthContext`).",
-          "For high-frequency updates, use Zustand selectors instead."
+          "Context គ្មាន Selector Mechanism ដូច Zustand ឬ Redux ឡើយ (គ្មាន fine-grained reactivity)។",
+          "ដំណោះស្រាយ៖ បំបែក Context ទៅតាមមុខងារ (Context Splitting) ដូចជា `ThemeContext` ដាច់ដោយឡែកពី `AuthContext`។",
+          "មិនត្រូវប្រើ Context សម្រាប់ទិន្នន័យដែលមានការកែប្រែរៀងរាល់ Millisecond (High frequency) ឡើយ។"
         ],
-        "codeSnippet": "// ⚠️ Bad: Bundling high-frequency state with low-frequency state:\n// <BigContext.Provider value={{ user, timerSeconds, theme, searchResults }}>\n\n// ✅ Good: Split contexts by concern:\n// <AuthProvider><ThemeProvider><App /></ThemeProvider></AuthProvider>",
+        "codeSnippet": "// ❌ មិនល្អ៖ បូកច្របាច់បញ្ចូលគ្នាក្នុង Context តែមួយ\n// <GlobalContext.Provider value={{ user, theme, timer, searchQuery, cart }}>\n\n// ✅ ល្អ៖ បំបែក Context តាមមុខងារ និងភាពញឹកញាប់នៃការប្រែប្រួល\nexport function AppProviders({ children }: { children: React.ReactNode }) {\n  return (\n    <AuthProvider>\n      <ThemeProvider>\n        <CartProvider>\n          {children}\n        </CartProvider>\n      </ThemeProvider>\n    </AuthProvider>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Context Splitting Strategy",
-        "pitfall": "Using Context for high-frequency state (like an animation frame, mouse position, or rapidly typing text) will cause massive re-renders across the entire tree."
+        "pitfall": "កុំដាក់ទិន្នន័យដែលមានការប្រែប្រួលញឹកញាប់ (High-frequency updates ដូចជា Mouse Coordinates, Animation Frame, ឬ Input Text) ចូលទៅក្នុង Context ឱ្យសោះ ព្រោះរាល់ Consumer ទាំងអស់នឹង Re-render ឥតឈប់ឈរ បង្កឱ្យ UI គាំងយឺត!"
       },
       {
         "id": "m16-09",
         "number": "09",
         "title": "Memoizing Context Values",
-        "summary": "Preventing unnecessary consumer re-renders with useMemo.",
-        "explanation": "Wrap the context value object in `useMemo` so its object reference remains stable unless dependencies change.",
+        "summary": "ការការពារកុំឱ្យ Consumer Re-render ដោយឥតប្រយោជន៍តាមរយៈ useMemo និង useCallback។",
+        "explanation": "នៅពេលដែល Component ដែលជា Provider ត្រូវ Re-render (ឧទាហរណ៍ដោយសារ Parent របស់វា re-render) តម្លៃ `value={{ user, login }}` នឹងបង្កើត Object ថ្មីក្នុង Memory ជានិច្ច (`{}` !== `{}`)។ នេះធ្វើឱ្យ React គិតថាតម្លៃ Context បានផ្លាស់ប្តូរ និងបង្ខំឱ្យ Child Consumers Re-render។ ការប្រើប្រាស់ `useMemo` ជួយរក្សា Object Reference ឱ្យនៅដដែល។",
         "keyPoints": [
-          "Prevents re-renders caused by parent re-renders."
+          "ប្រើប្រាស់ `useMemo` សម្រាប់រុំព័ទ្ធ Value Object នៃ Provider។",
+          "ប្រើប្រាស់ `useCallback` សម្រាប់អនុគមន៍ដែលបញ្ជូនទៅក្នុង Context។",
+          "កំណត់ Dependency Array ឱ្យបានត្រឹមត្រូវ។"
         ],
-        "codeSnippet": "export function AuthProvider({ children }: { children: React.ReactNode }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  // Memoize value to stabilize object reference:\n  const value = useMemo(() => ({\n    user,\n    isAuthenticated: !!user,\n  }), [user]);\n\n  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;\n}",
+        "codeSnippet": "import React, { useState, useMemo, useCallback } from 'react';\nimport { AuthContext } from './AuthContext';\n\nexport function AuthProvider({ children }: { children: React.ReactNode }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  const logout = useCallback(() => {\n    setUser(null);\n    localStorage.removeItem('token');\n  }, []);\n\n  // ប្រើ useMemo ដើម្បីរក្សា Object Reference កុំឱ្យបង្កើតថ្មីឥតប្រយោជន៍\n  const value = useMemo(() => ({\n    user,\n    isAuthenticated: !!user,\n    logout,\n  }), [user, logout]);\n\n  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Memoizing Provider Value"
+        "codeTitle": "Memoizing Provider Value",
+        "proTip": "ត្រូវរុំព័ទ្ធ Object Value នៅក្នុង `useMemo` ជានិច្ច ព្រោះរាល់ពេល Provider component re-render វាបង្កើត Object reference ថ្មី ដែលនឹងបង្ខំឱ្យរាល់ Child Consumers ទាំងអស់ re-render តាមដែរ!"
       },
       {
         "id": "m16-10",
         "number": "10",
         "title": "Context Best Practices",
-        "summary": "Rules for safe context consumption and clean provider architectures.",
-        "explanation": "1) Keep providers close to where they are needed; 2) Wrap with safety custom hooks; 3) Split distinct concerns.",
-        "keyPoints": [
-          "Never use context for state that belongs locally."
-        ],
-        "codeSnippet": "// Golden Rule: If state is only used in one branch of the tree,\n// mount the Provider at that branch, NOT at the application root!",
+        "summary": "គោលការណ៍ល្អបំផុតសម្រាប់ការរចនា Provider ឱ្យមានរបៀប និងការបែងចែក Context តាមមុខងារ។",
+        "explanation": "ដើម្បីកុំឱ្យកម្មវិធីរបស់អ្នកជួបបញ្ហា Performance ឬពិបាកថែទាំ អ្នកគួរតែអនុវត្តតាមគោលការណ៍ណែនាំស្តង់ដារនៅពេលប្រើប្រាស់ Context API៖",
+        "keyPoints": [],
+        "codeSnippet": "// ឧទាហរណ៍៖ MultiStepFormProvider ត្រូវការតែក្នុងទំព័រ Checkout ប៉ុណ្ណោះ\nexport function CheckoutPage() {\n  return (\n    <CheckoutFormProvider>\n      <StepIndicator />\n      <StepContent />\n      <StepNavigation />\n    </CheckoutFormProvider>\n  );\n}\n// មិនចាំបាច់ដាក់ CheckoutFormProvider នៅ Root App ឡើយ!",
         "codeLanguage": "jsx",
-        "codeTitle": "Localized Provider Placement"
+        "codeTitle": "Localized Provider Placement",
+        "proTip": "គោលការណ៍មាស៖ ប្រសិនបើ State ត្រូវបានប្រើប្រាស់តែនៅក្នុងផ្នែកមួយនៃ Page (ដូចជា Sidebar ឬ Form Step) ចូរដាក់ Provider នៅត្រឹម Parent នៃផ្នែកនោះ កុំដាក់នៅ Root App ទាំងមូល!"
       },
       {
         "id": "m16-11",
         "number": "11",
         "title": "Context Limitations",
-        "summary": "Why large apps transition from Context to Zustand or Redux.",
-        "explanation": "Context lacks fine-grained selectors and middleware. When state updates frequently, external libraries with selector subscriptions provide vastly superior performance.",
+        "summary": "ហេតុផលដែលកម្មវិធីខ្នាតធំជ្រើសរើសប្តូរពី Context ទៅកាន់ State Management Libraries ដូចជា Zustand ឬ Redux។",
+        "explanation": "ទោះបីជា Context API ងាយស្រួលប្រើប្រាស់ព្រោះជា Built-in Feature របស់ React ក៏ដោយ វានៅតែមានកម្រិតបច្ចេកទេសមួយចំនួនចំពោះកម្មវិធីខ្នាតធំ (Large-scale Applications)។",
         "keyPoints": [
-          "Context = Dependency Injection tool; Zustand = State Management tool."
+          "**គ្មាន Selectors**: មិនអាច Subscribe យកតែ property មួយដែលចង់បាន (ប្រសិនបើតម្លៃមួយផ្លាស់ប្តូរ Consumer ទាំងអស់ Re-render)។",
+          "**គ្មាន Middleware / DevTools**: គ្មានប្រព័ន្ធ Time-travel Debugging ឬ Middleware ស៊ីជម្រៅដូច Redux/Zustand ឡើយ។",
+          "**Provider Hell**: កម្មវិធីធំៗអាចនឹងមាន Provider ជង់គ្នាជាច្រើនជាន់ (`<Auth><Theme><Cart><Chat><Modal>...`)។"
         ],
-        "codeSnippet": "/*\nUse Context for: Low-frequency, broad data (Theme, Auth, Language).\nUse Zustand for: High-frequency, complex, or modular state (Cart, Filters, Media Player).\n*/",
+        "codeSnippet": "/*\n📌 ពេលណាត្រូវប្រើ Context API៖\n- ទិន្នន័យកម្រផ្លាស់ប្តូរ (Low frequency) ដូចជា Theme, Auth, Language/Locale។\n- ការកំណត់សកល ឬទំហំគម្រោងតូចទៅមធ្យម។\n\n📌 ពេលណាត្រូវប្តូរទៅប្រើ Zustand ឬ Redux Toolkit៖\n- ទិន្នន័យមានការផ្លាស់ប្តូរញឹកញាប់ (High frequency) ដូចជា Shopping Cart, Filters, Canvas/Audio Player។\n- ត្រូវការ Fine-grained Selectors ដើម្បីកុំឱ្យ Re-render ផ្ដេសផ្ដាស។\n- ចង់បាន State Store នៅក្រៅ React Component Tree (ងាយស្រួល access ក្នុង helper files)។\n*/",
         "codeLanguage": "jsx",
-        "codeTitle": "Context vs External State Library"
+        "codeTitle": "Context vs External State Library",
+        "proTip": "Context API គឺជាឧបករណ៍ Dependency Injection (ការបញ្ជូនទិន្នន័យពីលើចុះក្រោម) មិនមែនជា Full-fledged State Manager នោះទេ។ សម្រាប់កម្មវិធីធំៗដែលមាន State ស្មុគស្មាញ និងត្រូវការ Selectors ចូរប្រើ Zustand ជំនួសវិញ។"
       }
     ]
   },

@@ -5,26 +5,37 @@ title: "Context Performance Pitfall"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Every consumer re-renders on any value update."
-pitfall: "Using Context for high-frequency state (like an animation frame, mouse position, or rapidly typing text) will cause massive re-renders across the entire tree."
+summary: "បញ្ហា Re-render នៃគ្រប់ Consumers ទាំងអស់នៅពេលដែលតម្លៃ Context ណាមួយផ្លាស់ប្តូរ។"
+pitfall: "កុំដាក់ទិន្នន័យដែលមានការប្រែប្រួលញឹកញាប់ (High-frequency updates ដូចជា Mouse Coordinates, Animation Frame, ឬ Input Text) ចូលទៅក្នុង Context ឱ្យសោះ ព្រោះរាល់ Consumer ទាំងអស់នឹង Re-render ឥតឈប់ឈរ បង្កឱ្យ UI គាំងយឺត!"
 codeTitle: "Context Splitting Strategy"
 ---
 
 # Context Performance Pitfall
 
-If you put an object with 10 properties in context and update just 1 property, EVERY component calling `useContext` re-renders, even if it only uses an unchanged property!
+ចំណុចខ្សោយដ៏ធំបំផុតរបស់ React Context API គឺបញ្ហា **Unnecessary Re-renders**។ ប្រសិនបើអ្នកដាក់ Object មួយដែលមាន 10 properties ទៅក្នុង Context ហើយមាន property តែ 1 ផ្លាស់ប្តូរ នោះរាល់ Component ទាំងអស់ដែលហៅ `useContext` នឹងត្រូវ Re-render ទាំងអស់ ទោះបីជា Component នោះប្រើតែ property ដែលមិនផ្លាស់ប្តូរក៏ដោយ!
 
 ### Key Concepts & Rules:
 
-- Split unrelated state into separate contexts (e.g. `ThemeContext` vs `AuthContext`).
-- For high-frequency updates, use Zustand selectors instead.
+- Context គ្មាន Selector Mechanism ដូច Zustand ឬ Redux ឡើយ (គ្មាន fine-grained reactivity)។
+- ដំណោះស្រាយ៖ បំបែក Context ទៅតាមមុខងារ (Context Splitting) ដូចជា `ThemeContext` ដាច់ដោយឡែកពី `AuthContext`។
+- មិនត្រូវប្រើ Context សម្រាប់ទិន្នន័យដែលមានការកែប្រែរៀងរាល់ Millisecond (High frequency) ឡើយ។
 
 ### Code Example: Context Splitting Strategy
 
 ```jsx
-// ⚠️ Bad: Bundling high-frequency state with low-frequency state:
-// <BigContext.Provider value={{ user, timerSeconds, theme, searchResults }}>
+// ❌ មិនល្អ៖ បូកច្របាច់បញ្ចូលគ្នាក្នុង Context តែមួយ
+// <GlobalContext.Provider value={{ user, theme, timer, searchQuery, cart }}>
 
-// ✅ Good: Split contexts by concern:
-// <AuthProvider><ThemeProvider><App /></ThemeProvider></AuthProvider>
+// ✅ ល្អ៖ បំបែក Context តាមមុខងារ និងភាពញឹកញាប់នៃការប្រែប្រួល
+export function AppProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  );
+}
 ```

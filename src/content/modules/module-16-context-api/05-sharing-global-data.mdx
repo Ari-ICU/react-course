@@ -5,23 +5,36 @@ title: "Sharing Global Data"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Broadcasting settings, preferences, and configurations."
+summary: "ការចែករំលែកការកំណត់ (Settings), Preferences, និង Configurations ទៅកាន់គ្រប់ផ្នែកទាំងអស់នៃកម្មវិធី។"
+proTip: "ការប្រើប្រាស់ Context ជាមួយ Theme (Dark/Light Mode) អនុញ្ញាតឱ្យ Button តូចមួយនៅជ្រុង Navbar អាចផ្លាស់ប្តូរ Styling នៃកម្មវិធីទាំងមូលបានភ្លាមៗ។"
 codeTitle: "Consuming Context in Child"
 ---
 
 # Sharing Global Data
 
-Allows distant child components to read and update shared state.
+អត្ថប្រយោជន៍ដ៏ធំបំផុតនៃ Context គឺសមត្ថភាពក្នុងការចែករំលែកទិន្នន័យសកល (Global Data) ទៅកាន់គ្រប់ Components កូនចៅដែលនៅឆ្ងាយៗ ក្នុងដើមឈើ Component Tree ដោយមិនចាំបាច់មានការផ្សារភ្ជាប់ Props ពីមួយទៅមួយឡើយ។
 
 ### Key Concepts & Rules:
 
-- Ideal for app-wide settings that rarely change.
+- Component ណាក៏ដោយនៅក្រោម Provider អាចអាន និងកែប្រែ Global State បាន។
+- ស័ក្តិសមបំផុតសម្រាប់ Theme, Localization (ភាសា), និង UI Configuration។
+- ការផ្លាស់ប្តូរ State ក្នុង Context នឹងជំរុញឱ្យ UI Update ឡើងវិញភ្លាមៗ។
 
 ### Code Example: Consuming Context in Child
 
 ```jsx
+import { useTheme } from './useTheme';
+
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
-  return <button onClick={toggleTheme}>Active Theme: {theme}</button>;
+
+  return (
+    <button 
+      onClick={toggleTheme}
+      className="p-2 rounded border transition-colors"
+    >
+      ប្តូរ Theme (បច្ចុប្បន្ន៖ {theme === 'dark' ? 'ងងឹត 🌙' : 'ភ្លឺ ☀️'})
+    </button>
+  );
 }
 ```

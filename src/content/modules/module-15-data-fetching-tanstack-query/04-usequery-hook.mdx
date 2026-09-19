@@ -5,17 +5,20 @@ title: "useQuery Hook"
 moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
-summary: "Fetching and subscribing to server state."
+summary: "ការទាញយក និង Subscribe ទៅកាន់ Server State តាមរយៈ Hook useQuery។"
+proTip: "Hook `useQuery` ផ្តល់ជូន State ស្រាប់ៗដូចជា `data`, `isLoading`, `isError`, និង `refetch` ដោយអ្នកមិនចាំបាច់បង្កើត `useState` និង `useEffect` ដើម្បីតាមដាន Status ដោយផ្ទាល់ដៃទៀតឡើយ។"
 codeTitle: "Basic useQuery Hook"
 ---
 
 # useQuery Hook
 
-The `useQuery` hook accepts a `queryKey` and a `queryFn` returning a Promise.
+Hook `useQuery` គឺជាឧបករណ៍ស្នូលនៃ TanStack Query ដែលប្រើប្រាស់សម្រាប់ទាញយកទិន្នន័យ (Fetch Data)។ វាត្រូវការ options ចម្បងពីរគឺ `queryKey` (កូនសោសម្គាល់ cache នៃទិន្នន័យ) និង `queryFn` (អនុគមន៍ដែល return Promise ដូចជា axios call)។
 
 ### Key Concepts & Rules:
 
-- Returns `{ data, isLoading, isError, error, refetch }`.
+- ផ្តល់នូវ State ពេញលេញរួមមាន `{ data, isLoading, isError, error, refetch }`។
+- ធ្វើការ Caching ទិន្នន័យដោយស្វ័យប្រវត្តិតាមរយៈ `queryKey`។
+- ប្រសិនបើមាន component ច្រើនហៅ `useQuery` ជាមួយ key ដូចគ្នាក្នុងពេលតែមួយ វានឹងធ្វើ network request តែម្តងគត់ (Automatic Deduplication)។
 
 ### Code Example: Basic useQuery Hook
 
@@ -24,14 +27,25 @@ import { useQuery } from '@tanstack/react-query';
 import { studentService } from '@/services/studentService';
 
 export function StudentList() {
-  const { data: students, isLoading, isError } = useQuery({
+  const { 
+    data: students, 
+    isLoading, 
+    isError, 
+    error 
+  } = useQuery({
     queryKey: ['students'],
     queryFn: studentService.getAll,
   });
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorMessage />;
+  if (isLoading) return <p>កំពុងទាញយកទិន្នន័យ...</p>;
+  if (isError) return <p className="text-red-500">{error.message}</p>;
 
-  return <ul>{students?.map(s => <li key={s.id}>{s.name}</li>)}</ul>;
+  return (
+    <ul>
+      {students?.map((student) => (
+        <li key={student.id}>{student.name} - GPA: {student.gpa}</li>
+      ))}
+    </ul>
+  );
 }
 ```

@@ -5,25 +5,36 @@ title: "Authentication Context"
 moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
-summary: "Full authentication session context pattern."
+summary: "ការរៀបចំប្រព័ន្ធគ្រប់គ្រង Session ការពារ Login/Logout និង User Profile សកលជាមួយ AuthContext។"
+proTip: "AuthProvider គួរបញ្ចូលទាំង User Object, Login handler, Logout handler, និង `isLoadingAuth` flag ដើម្បីងាយស្រួលគ្រប់គ្រង Protected Routes និង Navigation Header។"
 codeTitle: "Authentication Context Interface"
 ---
 
 # Authentication Context
 
-Managing current user profile, token status, login, and logout handlers in a global AuthProvider.
+គំរូដ៏ពេញនិយមបំផុតនៃការប្រើប្រាស់ Context API នៅក្នុង Real-world Projects គឺការគ្រប់គ្រង **Authentication State**។ វាអនុញ្ញាតឱ្យ Navbar ដឹងថា User ចូលប្រើប្រាស់ហើយឬនៅ, អនុញ្ញាតឱ្យ Router ការពារទំព័រ Private, និងអនុញ្ញាតឱ្យ Profile Page បង្ហាញព័ត៌មានអ្នកប្រើប្រាស់។
 
 ### Key Concepts & Rules:
 
-- Widely used in production SPA applications.
+- រក្សាទុកព័ត៌មាន User បច្ចុប្បន្ន (`user: User | null`)។
+- ផ្តល់នូវអនុគមន៍ `login(credentials)` និង `logout()`។
+- ផ្តល់នូវ Flag `isAuthenticated` និង `isLoading` សម្រាប់តាមដានស្ថានភាព Session។
 
 ### Code Example: Authentication Context Interface
 
 ```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (credentials: Credentials) => Promise<void>;
+  login: (email: string, pass: string) => Promise<void>;
   logout: () => void;
 }
 
