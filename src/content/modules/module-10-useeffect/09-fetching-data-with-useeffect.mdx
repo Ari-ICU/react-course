@@ -5,17 +5,20 @@ title: "Fetching Data with useEffect"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Network requests and race condition handling with AbortController."
+summary: "ការហៅ API និងការដោះស្រាយបញ្ហា Race Conditions ដោយប្រើ AbortController។"
+pitfall: "បញ្ហា Race Condition៖ ប្រសិនបើ user ចុចប្តូរពី Topic A ទៅ Topic B យ៉ាងលឿន request របស់ Topic A ដែលមកដល់ក្រោយ អាចនឹង overwrite ទិន្នន័យរបស់ Topic B! ត្រូវប្រើ `AbortController` ដើម្បី cancel request ចាស់ជានិច្ច។"
 codeTitle: "Safe Data Fetching with AbortController"
 ---
 
 # Fetching Data with useEffect
 
-When fetching data inside `useEffect`, fast user clicks can create race conditions where an older slow response overwrites a newer fast response. Use `AbortController` to cancel stale requests.
+ការទាញយកទិន្នន័យពី API គឺជាការប្រើប្រាស់ដ៏ពេញនិយមមួយរបស់ `useEffect`។ ទោះជាយ៉ាងណាក៏ដោយ នៅពេលដែលអ្នកប្រើប្រាស់ចុចផ្លាស់ប្តូរលឿនពេក វាអាចបណ្តាលឱ្យកើតមានបញ្ហា **Race Conditions** (ស្ថានភាពដែល request ចាស់ឆ្លើយតបយឺតជាង request ថ្មី ហើយមក overwrite ទិន្នន័យលើអេក្រង់)។ ដើម្បីការពារបញ្ហានេះ យើងត្រូវប្រើប្រាស់ browser API `AbortController`។
 
 ### Key Concepts & Rules:
 
-- Use `AbortController` to abort ongoing HTTP requests on unmount or dependency change.
+- បង្កើត `new AbortController()` ហើយបញ្ជូន `controller.signal` ទៅកាន់ `fetch` request។
+- Return cleanup function `() => controller.abort()` ដើម្បី cancel request ដែលកំពុងដំណើរការ ប្រសិនបើ dependencies ផ្លាស់ប្តូរ ឬ component unmount។
+- ចាប់យក error និងពិនិត្យ `err.name !== 'AbortError'` ដើម្បីកុំឱ្យបង្ហាញ error មិនពិតលើ UI។
 
 ### Code Example: Safe Data Fetching with AbortController
 

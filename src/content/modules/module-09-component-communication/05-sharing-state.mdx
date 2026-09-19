@@ -5,17 +5,20 @@ title: "Sharing State"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Synchronizing sibling views through hoisted state."
+summary: "ការធ្វើសមកាលកម្មទិន្នន័យរវាង Sibling Components តាមរយៈ Hoisted State។"
+proTip: "ឧទាហរណ៍ជាក់ស្តែង៖ SearchBar (Sibling 1) វាយបញ្ចូលពាក្យស្វែងរក ហើយបញ្ជូនទៅ update ក្នុង Parent រួច ProductList (Sibling 2) ទទួលបានពាក្យស្វែងរកនោះមកធ្វើការ filter ទិន្នន័យបង្ហាញលើ UI។"
 codeTitle: "Sibling State Sharing"
 ---
 
 # Sharing State
 
-Both siblings receive shared data as props and update it via parent callbacks.
+ការចែករំលែក State រវាង Sibling Components ត្រូវបានសម្រេចឡើងដោយការ hoisted state ទៅកាន់ Parent។ Sibling ទាំងពីរនឹងទទួលបានទិន្នន័យរួមនោះជា props ហើយរាល់ការកែប្រែតម្លៃដែលកើតចេញពី sibling ណាមួយ នឹងឆ្លុះបញ្ចាំងទៅកាន់ sibling ផ្សេងទៀតភ្លាមៗ។
 
 ### Key Concepts & Rules:
 
-- Maintains consistency across disparate panels on screen.
+- ធានានូវភាពស៊ីសង្វាក់គ្នានៃទិន្នន័យរវាងផ្ទាំង UI ផ្សេងៗនៅលើអេក្រង់តែមួយ។
+- Sibling ទីមួយដើរតួជា Controller (អ្នកផ្លាស់ប្តូរទិន្នន័យ) រីឯ Sibling ទីពីរដើរតួជា Consumer (អ្នកបង្ហាញលទ្ធផល)។
+- រក្សាស្ថាបត្យកម្មកូដឱ្យមានលក្ខណៈ Predictable និងងាយស្រួល Debug។
 
 ### Code Example: Sibling State Sharing
 

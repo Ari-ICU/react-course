@@ -5,17 +5,20 @@ title: "Designing Component APIs"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Crafting ergonomic, intuitive props for long-term maintainability."
+summary: "ការរចនា Props ឱ្យមាន ergonomics, intuitive និង type-safe សម្រាប់រយៈពេលវែង។"
+proTip: "ប្រើ TypeScript Discriminated Unions សម្រាប់ mutually exclusive props ដើម្បីការពារកុំឱ្យ developer ផ្សេងទៀតច្រឡំបញ្ជូន props ដែលផ្ទុយគ្នា។"
 codeTitle: "Discriminated Union Props"
 ---
 
 # Designing Component APIs
 
-Design props like a public library API: keep them minimal, provide sensible defaults, and use TypeScript union types for predictable variants.
+ការរចនា Props របស់ Component ប្រៀបដូចជាការបង្កើត Public Library API មួយអ៊ីចឹង៖ អ្នកគួរតែរក្សាវាឱ្យសាមញ្ញបំផុត ផ្តល់តម្លៃ default សមរម្យ និងប្រើប្រាស់ TypeScript Type Definitions ឱ្យបានច្បាស់លាស់ដើម្បីឱ្យអ្នកដទៃងាយស្រួលហៅប្រើប្រាស់ និងការពារកំហុស។
 
 ### Key Concepts & Rules:
 
-- Use discriminating unions for mutually exclusive states.
+- ប្រើប្រាស់ **Discriminated Unions** ក្នុង TypeScript សម្រាប់លក្ខខណ្ឌដែលមិនអាចកើតមានទន្ទឹមគ្នា (Mutually Exclusive States)។
+- កំណត់ឈ្មោះ Props ឱ្យច្បាស់លាស់ និងមានលក្ខណៈ Intuitive ស្របតាមក្បួន React conventions។
+- ជៀសវាងការបង្កើត props ច្រើនហួសហេតុ (Boolean flag explosion) ដែលធ្វើឱ្យ component ពិបាកថែទាំ។
 
 ### Code Example: Discriminated Union Props
 

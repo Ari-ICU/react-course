@@ -5,18 +5,20 @@ title: "What is useRef?"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "A hook that stores a mutable value that survives across renders without causing re-renders."
+summary: "Hook សម្រាប់ផ្ទុកតម្លៃដែលអាចកែប្រែបាន (Mutable Value) ដោយមិន trigger ឱ្យមានការ re-render UI ឡើយ។"
+proTip: "គិតពី `useRef` ដូចជាប្រអប់សម្ងាត់មួយដែលអ្នកអាចផ្លាស់ប្តូររបស់ខាងក្នុងបានគ្រប់ពេល ដោយមិនឱ្យ React ដឹង ឬចាប់បង្ខំឱ្យ Component ត្រូវគូរ UI ឡើងវិញឡើយ។"
 codeTitle: "useRef Declaration"
 ---
 
 # What is useRef?
 
-`useRef` returns a plain JavaScript object `{ current: initialValue }`. Mutating `.current` does NOT trigger a re-render. It is commonly used for direct DOM references and storing timer IDs.
+Hook `useRef` ផ្តល់ត្រឡប់មកវិញនូវ JavaScript Object ធម្មតាមួយដែលមាន property តែមួយគត់គឺ `{ current: initialValue }`។ ចំណុចពិសេសនៃ `useRef` គឺថារាល់ការកែប្រែតម្លៃលើ `.current` **នឹងមិន trigger ឱ្យមានការ re-render UI ឡើយ**។ វាត្រូវបានប្រើប្រាស់ជាទូទៅបំផុតសម្រាប់ភ្ជាប់ទៅកាន់ DOM Elements ដោយផ្ទាល់ និងរក្សាទុក Timer IDs។
 
 ### Key Concepts & Rules:
 
-- Survives across renders like state, but changing it does NOT re-render the UI.
-- Primary tool for DOM manipulation in React.
+- រក្សាតម្លៃទុកឆ្លងកាត់ការ re-render ទាំងអស់ដូច State ដែរ ប៉ុន្តែការកែប្រែវាមិនបង្កឱ្យ UI ធ្វើការ re-render នោះទេ។
+- ជាឧបករណ៍ចម្បងក្នុងការធ្វើ DOM Manipulation នៅក្នុង React។
+- តម្លៃក្នុង `.current` អាចផ្លាស់ប្តូរបានដោយសេរី (Mutable)។
 
 ### Code Example: useRef Declaration
 

@@ -1639,126 +1639,150 @@ export const modulesData: ModuleItem[] = [
     "number": "09",
     "title": "Component Communication",
     "category": "Core Concepts",
-    "summary": "Parent-child data passing, child-to-parent callbacks, lifting state up, sibling communication, and avoiding prop drilling.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពីលំហូរទិន្នន័យពី Parent ទៅ Child, ការបញ្ជូន Callback Functions ពី Child ទៅ Parent, បច្ចេកទេស Lifting State Up, ការទំនាក់ទំនងរវាង Sibling Components, បញ្ហា Prop Drilling និងដំណោះស្រាយតាមរយៈ Component Composition។",
     "iconName": "Network",
     "topics": [
       {
         "id": "m09-01",
         "number": "01",
         "title": "Parent to Child",
-        "summary": "Downwards data flow via props.",
-        "explanation": "Parents pass state and configuration down to children as props.",
+        "summary": "លំហូរទិន្នន័យចុះក្រោមតាមរយៈ Props ក្នុងប្រព័ន្ធ Unidirectional Data Flow។",
+        "explanation": "នៅក្នុង React មធ្យោបាយចម្បងក្នុងការបញ្ជូនទិន្នន័យគឺការហូរចុះក្រោមពី Parent Component ទៅកាន់ Child Component តាមរយៈ **Props**។ Parent អាចបញ្ជូនទាំង primitive values, objects, arrays, ឬសូម្បីតែ JSX elements ទៅឱ្យ Child បានយ៉ាងងាយស្រួល។",
         "keyPoints": [
-          "Standard unidirectional data flow in React."
+          "ជាទម្រង់ស្តង់ដារនៃ **Unidirectional Data Flow** (លំហូរទិន្នន័យមួយទិស) ក្នុង React។",
+          "Child Component ទទួលបាន Props ក្នុងលក្ខណៈ Read-only (មិនអាចកែប្រែតម្លៃដើមបានឡើយ)។",
+          "នៅពេលដែលទិន្នន័យនៅក្នុង Parent ផ្លាស់ប្តូរ Child Component នឹងធ្វើការ re-render ដោយស្វ័យប្រវត្តិតាមតម្លៃថ្មីនោះ។"
         ],
         "codeSnippet": "<ChildComponent message=\"Hello from parent!\" count={42} />",
         "codeLanguage": "jsx",
-        "codeTitle": "Parent to Child Data Flow"
+        "codeTitle": "Parent to Child Data Flow",
+        "proTip": "ចងចាំជានិច្ចថា Props ហូរតាមទិសដៅតែមួយគត់ (Top-Down)៖ Parent គឺជាអ្នកផ្គត់ផ្គង់ទិន្នន័យ ចំណែក Child គឺជាអ្នកទទួលទិន្នន័យយកទៅបង្ហាញ។"
       },
       {
         "id": "m09-02",
         "number": "02",
         "title": "Child to Parent",
-        "summary": "Upwards event notification via callback functions.",
-        "explanation": "Children notify parents of actions by calling function props supplied by the parent.",
+        "summary": "ការជូនដំណឹងពីសកម្មភាពឡើងលើទៅកាន់ Parent តាមរយៈ Callback Functions។",
+        "explanation": "ដោយសារតែ React មិនអនុញ្ញាតឱ្យបញ្ជូន Props ត្រឡប់ឡើងលើវិញ ដើម្បីឱ្យ Child អាចប្រាប់ Parent អំពីព្រឹត្តិការណ៍ ឬសកម្មភាពណាមួយ (User Action) Parent ត្រូវតែបញ្ជូន **Callback Function** មួយចុះក្រោមជា Prop។ នៅពេលដែលសកម្មភាពកើតឡើង Child នឹងធ្វើការ invoke (ហៅ) function នោះជាមួយនឹង arguments ជាក់លាក់។",
         "keyPoints": [
-          "Children invoke callbacks with arguments."
+          "Parent បញ្ជូន handler function តាមរយៈ prop (ឧទាហរណ៍៖ `onSelect={(id) => setSelected(id)}`)។",
+          "Child ធ្វើការហៅ function នោះនៅពេលមាន interaction៖ `props.onSelect(itemId)`។",
+          "Parent ទទួល parameters ពី Child រួចធ្វើការ update លើ state របស់ខ្លួន។"
         ],
         "codeSnippet": "// Parent:\n<ChildComponent onSelect={(itemId) => setSelected(itemId)} />\n\n// Child:\n<button onClick={() => onSelect('item-1')}>Select Item</button>",
         "codeLanguage": "jsx",
-        "codeTitle": "Child to Parent Notification"
+        "codeTitle": "Child to Parent Notification",
+        "proTip": "កុំព្យាយាមផ្លាស់ប្តូរ State របស់ Parent ដោយផ្ទាល់ពីក្នុង Child! ត្រូវតែបញ្ជូន function ចុះក្រោម ហើយឱ្យ Child ហៅ function នោះវិញ។"
       },
       {
         "id": "m09-03",
         "number": "03",
         "title": "Passing Functions",
-        "summary": "Using callbacks for modular event delegation.",
-        "explanation": "Decouples child rendering from state management logic in the parent.",
+        "summary": "ការប្រើប្រាស់ Event Callbacks ដើម្បីបំបែក UI rendering និង State logic ឱ្យដាច់ពីគ្នា។",
+        "explanation": "ការបញ្ជូន Functions តាមរយៈ Props (Callback Delegation) ជួយផ្តាច់ UI Rendering របស់ Child ចេញពី State Management Logic របស់ Parent។ បច្ចេកទេសនេះធ្វើឱ្យ Child Components មានភាពឯករាជ្យ និងអាចយកទៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែង (Highly Reusable) ជាមួយឥរិយាបថខុសៗគ្នា។",
         "keyPoints": [
-          "Allows reusing child components across different features."
+          "Child Component គ្រាន់តែទទួលរ៉ាប់រងលើ visual presentation និងការ trigger callbacks ប៉ុណ្ណោះ។",
+          "បង្កើនភាពងាយស្រួលក្នុងការ reuse Child Component ឆ្លងកាត់ features ផ្សេងៗក្នុង app។",
+          "ជួយឱ្យការធ្វើ Unit Test លើ UI Component មានភាពសាមញ្ញ ព្រោះគ្រាន់តែ mock callback functions។"
         ],
         "codeSnippet": "export function ActionToolbar({ onSave, onCancel }: ToolbarProps) {\n  return (\n    <div className=\"flex gap-2\">\n      <button onClick={onSave} className=\"bg-emerald-600 px-3 py-1 text-white rounded\">Save</button>\n      <button onClick={onCancel} className=\"bg-slate-700 px-3 py-1 text-white rounded\">Cancel</button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Callback Action Delegation"
+        "codeTitle": "Callback Action Delegation",
+        "proTip": "ការបញ្ជូន callback functions ជួយឱ្យ Child Component ក្លាយជា 'Dumb/Presentational Component' ដែលមិនចាំបាច់ខ្វល់ខ្វាយពីរបៀបរក្សាទុកទិន្នន័យ ឬការហៅ API ឡើយ។"
       },
       {
         "id": "m09-04",
         "number": "04",
         "title": "Lifting State Up",
-        "summary": "Moving state to the closest common ancestor of communicating siblings.",
-        "explanation": "When two sibling components need to share or synchronize data, move the state out of both and into their closest common parent.",
+        "summary": "ការលើក State ទៅកាន់ Ancestor Component រួមដែលនៅជិតបំផុតសម្រាប់ Sibling Components។",
+        "explanation": "នៅពេលដែល Components ពីរបងប្អូន (Siblings) ត្រូវការចែករំលែកទិន្នន័យ ឬធ្វើសមកាលកម្ម (synchronize) ជាមួយគ្នា អ្នកមិនអាចបញ្ជូនទិន្នន័យពីបងប្អូនមួយទៅមួយទៀតដោយផ្ទាល់បានទេ។ អ្នកត្រូវតែ **លើក State ឡើង (Lift State Up)** ចេញពី components ទាំងពីរនោះ ទៅដាក់ក្នុង Parent រួមដែលនៅជិតពួកវាបំផុត។",
         "keyPoints": [
-          "Eliminates out-of-sync duplicate state.",
-          "Parent becomes single source of truth."
+          "លុបបំបាត់បញ្ហាទិន្នន័យស្ទួន និងមិនស៊ីសង្វាក់គ្នា (Out-of-sync bugs)។",
+          "Parent រួមដើរតួជា **Single Source of Truth** សម្រាប់ siblings ទាំងអស់។",
+          "Parent បញ្ជូន state ចុះក្រោមជា props និងបញ្ជូន updater functions សម្រាប់ឱ្យ siblings ធ្វើការកែប្រែតម្លៃ។"
         ],
         "codeSnippet": "export function CommonParent() {\n  const [activeTab, setActiveTab] = useState('summary');\n\n  return (\n    <div>\n      <TabList activeTab={activeTab} onTabChange={setActiveTab} />\n      <TabContent activeTab={activeTab} />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Lifting State Up Pattern"
+        "codeTitle": "Lifting State Up Pattern",
+        "proTip": "នៅពេលណាដែល Components ពីរ ឬច្រើនត្រូវការបង្ហាញទិន្នន័យដូចគ្នា ឬធ្វើសមកាលកម្មគ្នា ចូរលើក State នោះឡើងទៅកាន់ Parent រួមដែលនៅជិតបំផុត (Closest Common Ancestor)។"
       },
       {
         "id": "m09-05",
         "number": "05",
         "title": "Sharing State",
-        "summary": "Synchronizing sibling views through hoisted state.",
-        "explanation": "Both siblings receive shared data as props and update it via parent callbacks.",
+        "summary": "ការធ្វើសមកាលកម្មទិន្នន័យរវាង Sibling Components តាមរយៈ Hoisted State។",
+        "explanation": "ការចែករំលែក State រវាង Sibling Components ត្រូវបានសម្រេចឡើងដោយការ hoisted state ទៅកាន់ Parent។ Sibling ទាំងពីរនឹងទទួលបានទិន្នន័យរួមនោះជា props ហើយរាល់ការកែប្រែតម្លៃដែលកើតចេញពី sibling ណាមួយ នឹងឆ្លុះបញ្ចាំងទៅកាន់ sibling ផ្សេងទៀតភ្លាមៗ។",
         "keyPoints": [
-          "Maintains consistency across disparate panels on screen."
+          "ធានានូវភាពស៊ីសង្វាក់គ្នានៃទិន្នន័យរវាងផ្ទាំង UI ផ្សេងៗនៅលើអេក្រង់តែមួយ។",
+          "Sibling ទីមួយដើរតួជា Controller (អ្នកផ្លាស់ប្តូរទិន្នន័យ) រីឯ Sibling ទីពីរដើរតួជា Consumer (អ្នកបង្ហាញលទ្ធផល)។",
+          "រក្សាស្ថាបត្យកម្មកូដឱ្យមានលក្ខណៈ Predictable និងងាយស្រួល Debug។"
         ],
         "codeSnippet": "// Sibling 1 (Filter input) -> updates query in Parent -> Sibling 2 (Results list) receives filtered query",
         "codeLanguage": "jsx",
-        "codeTitle": "Sibling State Sharing"
+        "codeTitle": "Sibling State Sharing",
+        "proTip": "ឧទាហរណ៍ជាក់ស្តែង៖ SearchBar (Sibling 1) វាយបញ្ចូលពាក្យស្វែងរក ហើយបញ្ជូនទៅ update ក្នុង Parent រួច ProductList (Sibling 2) ទទួលបានពាក្យស្វែងរកនោះមកធ្វើការ filter ទិន្នន័យបង្ហាញលើ UI។"
       },
       {
         "id": "m09-06",
         "number": "06",
         "title": "Sibling Communication",
-        "summary": "Why siblings cannot directly talk to each other in React.",
-        "explanation": "React components are isolated. Sibling A cannot call functions or access state in Sibling B. They must communicate through their shared parent or a global store.",
+        "summary": "ហេតុផលដែល Sibling Components មិនអាចទំនាក់ទំនងគ្នាដោយផ្ទាល់ និងស្ថាបត្យកម្មដំណោះស្រាយ។",
+        "explanation": "នៅក្នុង React រាល់ Component ទាំងអស់ត្រូវបានបង្កើតឡើងក្នុងលក្ខណៈឯករាជ្យដាច់ដោយឡែកពីគ្នា (Isolated)។ Sibling A គ្មានសិទ្ធិ ឬមធ្យោបាយណាមួយដើម្បីចូលទៅកាន់ State ឬហៅ Functions នៅខាងក្នុង Sibling B ដោយផ្ទាល់ឡើយ (No Peer-to-Peer coupling)។",
         "keyPoints": [
-          "No direct peer-to-peer coupling."
+          "**គ្មានការតភ្ជាប់ផ្ទាល់ (No Direct Coupling)**៖ ការពារកុំឱ្យ components ជាប់ជំពាក់គ្នាខ្លាំង (tight coupling) ដែលនាំឱ្យពិបាកកែប្រែ។",
+          "**ដំណោះស្រាយ**៖"
         ],
         "codeSnippet": "/*\n             [Common Parent]  <── Holds state\n             /             \\\n      [Sibling A]       [Sibling B]\n     (Triggers update)   (Reflects update)\n*/",
         "codeLanguage": "jsx",
-        "codeTitle": "Sibling Communication Architecture"
+        "codeTitle": "Sibling Communication Architecture",
+        "pitfall": "កុំព្យាយាមប្រើ DOM manipulation ឬ global event emitters ដើម្បីឱ្យ siblings និយាយគ្នាដោយផ្ទាល់! គោរពតាម React Data Flow ជានិច្ច តាមរយៈ Shared Parent ឬ Global Store (Zustand/Context)។"
       },
       {
         "id": "m09-07",
         "number": "07",
         "title": "Prop Drilling",
-        "summary": "The problem of passing props through intermediary components that don't need them.",
-        "explanation": "Prop drilling occurs when you pass data through 4 or 5 levels of components just so a deep leaf component can access it. It clutters component APIs and makes refactoring tedious.",
+        "summary": "ស្វែងយល់អំពីបញ្ហា Prop Drilling និងផលប៉ះពាល់ដល់ការថែទាំកូដក្នុងកម្មវិធីធំៗ។",
+        "explanation": "Prop Drilling (ឬ Threading) គឺជាស្ថានភាពដែលអ្នកត្រូវបញ្ជូន Props ឆ្លងកាត់ components ជាច្រើនជាន់ចុះក្រោម គ្រាន់តែដើម្បីឱ្យ component កូនចៅនៅជ្រៅបំផុត (Leaf Component) អាចចូលទៅកាន់ទិន្នន័យនោះបាន។ បញ្ហានេះធ្វើឱ្យ components នៅកណ្តាលពោរពេញដោយ props ដែលមិនចាំបាច់ និងធ្វើឱ្យការ refactor កូដមានភាពស្មុគស្មាញ។",
         "keyPoints": [
-          "Solutions: Component composition (`children`), React Context, or Zustand store."
+          "ធ្វើឱ្យ Component APIs មានភាពរញ៉េរញ៉ៃ (Pollutes component interfaces)។",
+          "ដំណោះស្រាយមាន ៣ សំខាន់ៗ៖"
         ],
         "codeSnippet": "// Prop Drilling Anti-pattern:\n// <Page user={user}> -> <Dashboard user={user}> -> <Sidebar user={user}> -> <Avatar user={user}>",
         "codeLanguage": "jsx",
-        "codeTitle": "Prop Drilling Demonstration"
+        "codeTitle": "Prop Drilling Demonstration",
+        "pitfall": "Prop Drilling កើតឡើងនៅពេលដែលអ្នកត្រូវបញ្ជូន Props កាត់ components ៤ ទៅ ៥ ជាន់ ដែល components នៅកណ្តាលមិនត្រូវការប្រើទិន្នន័យនោះទាល់តែសោះ គ្រាន់តែជួយហុចបន្តប៉ុណ្ណោះ!"
       },
       {
         "id": "m09-08",
         "number": "08",
         "title": "Component Composition as Solution",
-        "summary": "Passing slotted elements down rather than raw props.",
-        "explanation": "Often you can solve prop drilling simply by passing the leaf component directly via `children` or named slots.",
+        "summary": "ការដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាពតាមរយៈ children prop និង Slotted Elements។",
+        "explanation": "ជាញឹកញាប់ អ្នកអាចលុបបំបាត់បញ្ហា Prop Drilling បានយ៉ាងងាយស្រួលដោយមិនចាំបាច់ប្រើប្រាស់ Context API ឬ State Management Library ឡើយ។ ដំណោះស្រាយនោះគឺ **Component Composition** ដោយគ្រាន់តែបញ្ជូន leaf component ចូលទៅជា `children` ឬ slots ផ្ទាល់តែម្តង។",
         "keyPoints": [
-          "Intermediary components only render `{children}`, unaware of specific props."
+          "Components នៅកណ្តាល (ដូចជា `<Sidebar>`) គ្រាន់តែ render `{children}` ដោយមិនបាច់ដឹងពី props របស់ child ឡើយ។",
+          "Leaf Component (ដូចជា `<Avatar user={user} />`) ត្រូវបានបង្កើតឡើងនៅ Parent កំពូលផ្ទាល់ ដែលមាន access ទៅកាន់ `user` រួចជាស្រេច។",
+          "ជួយកាត់បន្ថយ coupling និងធ្វើឱ្យ components នៅកណ្តាលមានភាព generic ខ្ពស់។"
         ],
         "codeSnippet": "// Instead of passing user through Sidebar:\n// <Sidebar><Avatar user={user} /></Sidebar>",
         "codeLanguage": "jsx",
-        "codeTitle": "Composition Solving Prop Drilling"
+        "codeTitle": "Composition Solving Prop Drilling",
+        "proTip": "មុននឹងប្រញាប់យក Context ឬ Zustand មកដោះស្រាយ Prop Drilling ចូរពិនិត្យមើលថាតើអ្នកអាចប្រើ Component Composition (`children`) បានដែរឬទេ ព្រោះវាជាដំណោះស្រាយដ៏សាមញ្ញ និងមានប្រសិទ្ធភាពខ្ពស់បំផុត!"
       },
       {
         "id": "m09-09",
         "number": "09",
         "title": "Designing Component APIs",
-        "summary": "Crafting ergonomic, intuitive props for long-term maintainability.",
-        "explanation": "Design props like a public library API: keep them minimal, provide sensible defaults, and use TypeScript union types for predictable variants.",
+        "summary": "ការរចនា Props ឱ្យមាន ergonomics, intuitive និង type-safe សម្រាប់រយៈពេលវែង។",
+        "explanation": "ការរចនា Props របស់ Component ប្រៀបដូចជាការបង្កើត Public Library API មួយអ៊ីចឹង៖ អ្នកគួរតែរក្សាវាឱ្យសាមញ្ញបំផុត ផ្តល់តម្លៃ default សមរម្យ និងប្រើប្រាស់ TypeScript Type Definitions ឱ្យបានច្បាស់លាស់ដើម្បីឱ្យអ្នកដទៃងាយស្រួលហៅប្រើប្រាស់ និងការពារកំហុស។",
         "keyPoints": [
-          "Use discriminating unions for mutually exclusive states."
+          "ប្រើប្រាស់ **Discriminated Unions** ក្នុង TypeScript សម្រាប់លក្ខខណ្ឌដែលមិនអាចកើតមានទន្ទឹមគ្នា (Mutually Exclusive States)។",
+          "កំណត់ឈ្មោះ Props ឱ្យច្បាស់លាស់ និងមានលក្ខណៈ Intuitive ស្របតាមក្បួន React conventions។",
+          "ជៀសវាងការបង្កើត props ច្រើនហួសហេតុ (Boolean flag explosion) ដែលធ្វើឱ្យ component ពិបាកថែទាំ។"
         ],
         "codeSnippet": "type AlertProps = \n  | { variant: 'simple'; message: string }\n  | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };",
         "codeLanguage": "jsx",
-        "codeTitle": "Discriminated Union Props"
+        "codeTitle": "Discriminated Union Props",
+        "proTip": "ប្រើ TypeScript Discriminated Unions សម្រាប់ mutually exclusive props ដើម្បីការពារកុំឱ្យ developer ផ្សេងទៀតច្រឡំបញ្ជូន props ដែលផ្ទុយគ្នា។"
       }
     ]
   },
@@ -1767,155 +1791,178 @@ export const modulesData: ModuleItem[] = [
     "number": "10",
     "title": "useEffect",
     "category": "Hooks & Lifecycle",
-    "summary": "Side effects, dependency array rules, cleanup functions, data fetching, race conditions, and when NOT to use useEffect.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី useEffect Hook, Side Effects, ច្បាប់នៃ Dependency Array, Cleanup Functions, ការទាញយកទិន្នន័យ (Data Fetching), Race Conditions ជាមួយ AbortController, កំហុសទូទៅ និងពេលណាដែលមិនគួរប្រើ useEffect។",
     "iconName": "Clock",
     "topics": [
       {
         "id": "m10-01",
         "number": "01",
         "title": "What is useEffect?",
-        "summary": "Hook for synchronizing components with external systems.",
-        "explanation": "The `useEffect` hook lets you run code after rendering to synchronize with external systems: browser DOM APIs, network requests, timers, or web sockets.",
+        "summary": "Hook សម្រាប់ធ្វើសមកាលកម្ម Component ទៅកាន់ External Systems ខាងក្រៅ។",
+        "explanation": "Hook `useEffect` អនុញ្ញាតឱ្យអ្នកដំណើរការកូដបន្ទាប់ពី Component បាន Render និង Paint លើអេក្រង់រួចរាល់ ដើម្បីធ្វើសមកាលកម្ម (synchronize) ជាមួយប្រព័ន្ធខាងក្រៅ (External Systems) ដូចជា Browser DOM APIs, Network Requests, Timers, ឬ WebSocket Connections។",
         "keyPoints": [
-          "Runs asynchronously after the render has painted to the screen.",
-          "Replaces componentDidMount, componentDidUpdate, and componentWillUnmount."
+          "ដំណើរការដោយអសមកាលកម្ម (asynchronously) បន្ទាប់ពី browser បាន render និង paint UI រួចរាល់ ដែលធ្វើឱ្យ UI មិនគាំង (non-blocking)។",
+          "ជំនួស lifecycle methods ចាស់ៗក្នុង Class Components ដូចជា `componentDidMount`, `componentDidUpdate`, និង `componentWillUnmount`។",
+          "ជួយឱ្យ Component មានប្រតិកម្មឆ្លើយតបទៅនឹងការផ្លាស់ប្តូរទិន្នន័យពីខាងក្រៅ។"
         ],
         "codeSnippet": "import { useEffect } from 'react';\n\nuseEffect(() => {\n  document.title = `React Course - ${topicTitle}`;\n}, [topicTitle]);",
         "codeLanguage": "jsx",
-        "codeTitle": "Synchronizing Document Title"
+        "codeTitle": "Synchronizing Document Title",
+        "proTip": "គិតពី `useEffect` ដូចជាស្ពានតភ្ជាប់រវាង React Component និងពិភពខាងក្រៅ (ដូចជា DOM APIs, Timers, ឬ Server APIs)។"
       },
       {
         "id": "m010-02",
         "number": "02",
         "title": "Side Effects",
-        "summary": "What qualifies as a side effect in React.",
-        "explanation": "A side effect is any operation that affects something outside the scope of the currently executing function (e.g. timers, network requests, reading localStorage, setting window listeners).",
+        "summary": "អ្វីទៅដែលត្រូវបានចាត់ទុកជា Side Effect នៅក្នុងកម្មវិធី React។",
+        "explanation": "នៅក្នុងវិទ្យាសាស្ត្រកុំព្យូទ័រ **Side Effect** សំដៅលើរាល់ប្រតិបត្តិការណាដែលធ្វើការកែប្រែ ឬជះឥទ្ធិពលទៅលើអ្វីមួយដែលនៅក្រៅ scope នៃ function ដែលកំពុងដំណើរការ (ដូចជាការសរសេរចូល `localStorage`, ការហៅ API request, ការកំណត់ timers, ឬការកែប្រែ DOM ផ្ទាល់)។",
         "keyPoints": [
-          "Pure render functions must not execute side effects directly during render."
+          "React Render functions ត្រូវតែជា **Pure Functions** (ទទួល props/state រួច return JSX តែប៉ុណ្ណោះ គ្មាន side effects ឡើយ)។",
+          "Side effects ត្រូវតែស្ថិតនៅក្នុងកន្លែងពីរគត់៖ **Event Handlers** (ឆ្លើយតបនឹងការចុចរបស់ user) ឬ **useEffect** (ដំណើរការពេល render រួច)។",
+          "ការដាក់ side effects ក្នុង render body អាចបណ្តាលឱ្យកើត bugs ធ្ងន់ធ្ងរ និង re-render គ្មានទីបញ្ចប់។"
         ],
         "codeSnippet": "// Side effects belong in useEffect or event handlers, NOT in render body!",
         "codeLanguage": "jsx",
-        "codeTitle": "Side Effect Placement"
+        "codeTitle": "Side Effect Placement",
+        "pitfall": "ដាច់ខាតកុំដំណើរការ Side Effects ដោយផ្ទាល់នៅក្នុង Render Body របស់ Component ព្រោះ Render Phase ត្រូវតែជា Pure Function ជានិច្ច!"
       },
       {
         "id": "m10-03",
         "number": "03",
         "title": "useEffect Syntax",
-        "summary": "The effect callback and dependency array parameters.",
-        "explanation": "`useEffect(effectFunction, dependencyArray)`.",
+        "summary": "រចនាសម្ព័ន្ធ Syntax នៃ Effect Callback និងប៉ារ៉ាម៉ែត្រ Dependency Array។",
+        "explanation": "រចនាសម្ព័ន្ធនៃ `useEffect` ទទួលប៉ារ៉ាម៉ែត្រចំនួនពីរ៖ ប៉ារ៉ាម៉ែត្រទីមួយគឺជា **Effect Callback Function** (កូដដែលត្រូវដំណើរការ និង optional cleanup function) ហើយប៉ារ៉ាម៉ែត្រទីពីរគឺជា **Dependency Array** (បញ្ជីនៃអថេរដែលកំណត់ថាតើពេលណា Effect ត្រូវដំណើរការឡើងវិញ)។",
         "keyPoints": [
-          "Dependency array controls when the effect re-runs."
+          "**Setup logic**៖ ដំណើរការនៅពេល component mount ឬនៅពេលដែល dependencies ណាមួយផ្លាស់ប្តូរតម្លៃ។",
+          "**Cleanup function (Optional)**៖ Return ជា function នៅចុងបញ្ចប់ ដើម្បីសម្អាតធនធានចាស់ៗមុនពេល effect រត់ម្តងទៀត ឬពេល component unmount។",
+          "**Dependency array**៖ កំណត់លក្ខខណ្ឌនៃការ re-run របស់ effect។"
         ],
         "codeSnippet": "useEffect(() => {\n  // Setup logic runs here\n  return () => {\n    // Optional cleanup logic runs here\n  };\n}, [/* dependencies */]);",
         "codeLanguage": "jsx",
-        "codeTitle": "useEffect Anatomy"
+        "codeTitle": "useEffect Anatomy",
+        "proTip": "រចនាសម្ព័ន្ធ Syntax ងាយចាំ៖ `useEffect(() => { /* setup */ return () => { /* cleanup */ } }, [dependencies])`។"
       },
       {
         "id": "m10-04",
         "number": "04",
         "title": "Dependency Array",
-        "summary": "No array vs empty array vs populated dependencies.",
-        "explanation": "1) No dependency array: runs on EVERY render. 2) Empty array `[]`: runs ONCE on mount. 3) `[a, b]`: runs on mount and whenever `a` or `b` changes.",
-        "keyPoints": [
-          "Never lie to the dependency array; include every reactive variable used inside."
-        ],
+        "summary": "ការប្រៀបធៀប No Array, Empty Array [], និង Populated Dependencies [a, b]។",
+        "explanation": "Dependency Array គឺជាកត្តាកំណត់ថាតើ `useEffect` របស់អ្នកត្រូវដំណើរការនៅពេលណាខ្លះ។ មានជម្រើស ៣ សំខាន់ៗក្នុងការកំណត់ Dependency Array៖",
+        "keyPoints": [],
         "codeSnippet": "// 1. Runs after every single render (rarely desired):\nuseEffect(() => { console.log('Rendered'); });\n\n// 2. Runs once on initial mount:\nuseEffect(() => { console.log('Mounted'); }, []);\n\n// 3. Runs when count changes:\nuseEffect(() => { console.log('Count is', count); }, [count]);",
         "codeLanguage": "jsx",
-        "codeTitle": "Dependency Array Options"
+        "codeTitle": "Dependency Array Options",
+        "pitfall": "ដាច់ខាតកុំកុហក Dependency Array! ប្រសិនបើអ្នកប្រើប្រាស់អថេរ state ឬ prop ណាមួយនៅខាងក្នុង Effect អ្នកត្រូវតែបញ្ជាក់វានៅក្នុង Dependency Array ជានិច្ច ដើម្បីជៀសវាងបញ្ហា Stale Closure។"
       },
       {
         "id": "m10-05",
         "number": "05",
         "title": "Running Effects",
-        "summary": "The execution timeline: render, DOM paint, then effect execution.",
-        "explanation": "React renders JSX, paints pixels to the screen, and only then executes your `useEffect`. This ensures effects do not block visible rendering.",
+        "summary": "បន្ទាត់ពេលវេលានៃការដំណើរការ៖ Render, DOM Paint រួចទើប Effect Execution។",
+        "explanation": "React ដំណើរការទៅតាមលំដាប់លំដោយយ៉ាងច្បាស់លាស់៖ ដំបូង React នឹងគណនា JSX (Render Phase), បន្ទាប់មក browser នឹងគូរ pixels លើអេក្រង់ (Paint UI), ហើយបន្ទាប់មកទៀតទើប React ចាប់ផ្តើមដំណើរការកូដនៅខាងក្នុង `useEffect`។",
         "keyPoints": [
-          "Effects are non-blocking by default."
+          "Effects មានលក្ខណៈ **Non-blocking** តាមលំនាំដើម ដូច្នេះអ្នកប្រើប្រាស់អាចមើលឃើញ UI ភ្លាមៗដោយមិនចាំបាច់រង់ចាំ effect បញ្ចប់។",
+          "ជួយបង្កើន Perceived Performance នៃកម្មវិធី web ឱ្យមានអារម្មណ៍ថារលូន និងឆ្លើយតបរហ័ស។"
         ],
         "codeSnippet": "// Timeline:\n// 1. Render JSX -> 2. Browser Paints UI -> 3. useEffect Runs",
         "codeLanguage": "jsx",
-        "codeTitle": "Effect Execution Timeline"
+        "codeTitle": "Effect Execution Timeline",
+        "proTip": "ដោយសារតែ `useEffect` ដំណើរការក្រោយពេល Paint លើ Screen រួច វាមិនធ្វើឱ្យ UI កកស្ទះឡើយ។ ប្រសិនបើអ្នកត្រូវការវាស់ទំហំ DOM មុនពេល Paint អ្នកអាចប្រើ `useLayoutEffect` ជំនួសវិញ។"
       },
       {
         "id": "m10-06",
         "number": "06",
         "title": "Effects with State",
-        "summary": "Reacting to state transitions.",
-        "explanation": "Run effects whenever specific state variables transition.",
+        "summary": "ការដំណើរការ Effect ឆ្លើយតបទៅនឹងការប្រែប្រួលនៃ State។",
+        "explanation": "នៅពេលដែលអ្នកដាក់អថេរ State ទៅក្នុង Dependency Array នោះ Effect នឹងដំណើរការឡើងវិញរាល់ពេលដែលតម្លៃនៃ State នោះផ្លាស់ប្តូរ។ វិធីសាស្ត្រនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើតមុខងារដូចជា Auto-save, LocalStorage Synchronization ឬការវិភាគទិន្នន័យ (Analytics tracking)។",
         "keyPoints": [
-          "Triggers actions like auto-saving drafts when content changes."
+          "Trigger សកម្មភាពខាងក្រៅដោយស្វ័យប្រវត្តិ នៅពេលដែល internal state ប្រែប្រួល។",
+          "ប្រើរួមជាមួយ Cleanup function ដើម្បី clear timers ចាស់ៗ (Debounce pattern)។",
+          "ប្រយ័ត្ន៖ កុំ update state ដដែលនោះនៅខាងក្នុង effect ដោយគ្មានលក្ខខណ្ឌបញ្ឈប់ ព្រោះវានឹងបង្កជា infinite loop!"
         ],
         "codeSnippet": "useEffect(() => {\n  if (draftText) {\n    const timer = setTimeout(() => saveDraft(draftText), 1000);\n    return () => clearTimeout(timer);\n  }\n}, [draftText]);",
         "codeLanguage": "jsx",
-        "codeTitle": "Auto-save on State Change"
+        "codeTitle": "Auto-save on State Change",
+        "proTip": "ការប្រើ Debounce រួមជាមួយ `useEffect` គឺជាបច្ចេកទេសដ៏ល្អឥតខ្ចោះសម្រាប់ការធ្វើ Auto-save សេចក្តីព្រាង (Drafts) នៅពេលដែលអ្នកប្រើប្រាស់ផ្អាកវាយអក្សរ។"
       },
       {
         "id": "m10-07",
         "number": "07",
         "title": "Effects with Props",
-        "summary": "Synchronizing when parent attributes update.",
-        "explanation": "Update local state or external subscriptions when prop IDs change.",
+        "summary": "ការធ្វើសមកាលកម្មទិន្នន័យនៅពេលដែល Props ពី Parent ផ្លាស់ប្តូរ។",
+        "explanation": "នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ Route Parameter ឬ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។",
         "keyPoints": [
-          "Use prop values as dependencies to react to route parameter changes."
+          "ប្រើប្រាស់តម្លៃ Prop ជា dependency ដើម្បីឆ្លើយតបទៅនឹងការផ្លាស់ប្តូរពី Parent។",
+          "រៀបចំកូដឱ្យត្រៀមខ្លួនជានិច្ចចំពោះករណីដែល Prop អាចផ្លាស់ប្តូរតម្លៃញឹកញាប់។",
+          "សម្អាតទិន្នន័យចាស់ ឬ cancel requests មុនពេលទាញយកទិន្នន័យសម្រាប់ Prop ថ្មី។"
         ],
         "codeSnippet": "useEffect(() => {\n  fetchModuleDetails(moduleId);\n}, [moduleId]);",
         "codeLanguage": "jsx",
-        "codeTitle": "Reacting to Prop Changes"
+        "codeTitle": "Reacting to Prop Changes",
+        "proTip": "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId`, `moduleId`, ឬ route params) ដើម្បីទាញយកទិន្នន័យថ្មីពេល user ប្តូរទំព័រ។"
       },
       {
         "id": "m10-08",
         "number": "08",
         "title": "Cleanup Functions",
-        "summary": "Preventing memory leaks, clearing timers, and removing event listeners.",
-        "explanation": "Return a cleanup function from your effect. React runs this cleanup function before re-running the effect and when the component unmounts.",
+        "summary": "ការការពារ Memory Leaks, ការសម្អាត Timers និងការដោះចេញនូវ Event Listeners។",
+        "explanation": "ប្រសិនបើ Effect របស់អ្នកបង្កើត subscription, interval, ឬ DOM event listener អ្នកត្រូវតែ return **Cleanup Function** មួយចេញពី Effect នោះ។ React នឹងដំណើរការ cleanup function នេះមុនពេល effect រត់ម្តងទៀត និងនៅពេលដែល Component ត្រូវបាន unmount ចេញពី DOM។",
         "keyPoints": [
-          "Crucial for `addEventListener`, `setInterval`, WebSocket connections, and aborting fetch requests."
+          "សំខាន់បំផុតក្នុងការការពារ **Memory Leaks** នៅក្នុងកម្មវិធី web។",
+          "ចាំបាច់ត្រូវប្រើសម្រាប់ `clearInterval`, `clearTimeout`, `removeEventListener`, និងការ disconnect WebSocket connections។",
+          "ជួយធានាថាកម្មវិធីដំណើរការបានស្អាតបាត និងមិនស៊ីធនធាន RAM របស់ browser ដោយឥតប្រយោជន៍។"
         ],
         "codeSnippet": "useEffect(() => {\n  const interval = setInterval(() => {\n    setSeconds(s => s + 1);\n  }, 1000);\n\n  // Cleanup: Clears interval when unmounted\n  return () => clearInterval(interval);\n}, []);",
         "codeLanguage": "jsx",
-        "codeTitle": "Timer Cleanup Function"
+        "codeTitle": "Timer Cleanup Function",
+        "proTip": "ច្បាប់មាសនៃ Cleanup Function៖ រាល់ពេលដែលអ្នកបង្កើត `setInterval`, `addEventListener`, ឬ WebSocket នៅក្នុង Effect អ្នកត្រូវតែ return function ដើម្បី `clearInterval`, `removeEventListener`, ឬ `close()` ជានិច្ច!"
       },
       {
         "id": "m10-09",
         "number": "09",
         "title": "Fetching Data with useEffect",
-        "summary": "Network requests and race condition handling with AbortController.",
-        "explanation": "When fetching data inside `useEffect`, fast user clicks can create race conditions where an older slow response overwrites a newer fast response. Use `AbortController` to cancel stale requests.",
+        "summary": "ការហៅ API និងការដោះស្រាយបញ្ហា Race Conditions ដោយប្រើ AbortController។",
+        "explanation": "ការទាញយកទិន្នន័យពី API គឺជាការប្រើប្រាស់ដ៏ពេញនិយមមួយរបស់ `useEffect`។ ទោះជាយ៉ាងណាក៏ដោយ នៅពេលដែលអ្នកប្រើប្រាស់ចុចផ្លាស់ប្តូរលឿនពេក វាអាចបណ្តាលឱ្យកើតមានបញ្ហា **Race Conditions** (ស្ថានភាពដែល request ចាស់ឆ្លើយតបយឺតជាង request ថ្មី ហើយមក overwrite ទិន្នន័យលើអេក្រង់)។ ដើម្បីការពារបញ្ហានេះ យើងត្រូវប្រើប្រាស់ browser API `AbortController`។",
         "keyPoints": [
-          "Use `AbortController` to abort ongoing HTTP requests on unmount or dependency change."
+          "បង្កើត `new AbortController()` ហើយបញ្ជូន `controller.signal` ទៅកាន់ `fetch` request។",
+          "Return cleanup function `() => controller.abort()` ដើម្បី cancel request ដែលកំពុងដំណើរការ ប្រសិនបើ dependencies ផ្លាស់ប្តូរ ឬ component unmount។",
+          "ចាប់យក error និងពិនិត្យ `err.name !== 'AbortError'` ដើម្បីកុំឱ្យបង្ហាញ error មិនពិតលើ UI។"
         ],
         "codeSnippet": "useEffect(() => {\n  const controller = new AbortController();\n  setIsLoading(true);\n\n  fetch(`/api/topics/${topicId}`, { signal: controller.signal })\n    .then(res => res.json())\n    .then(data => {\n      setTopic(data);\n      setIsLoading(false);\n    })\n    .catch(err => {\n      if (err.name !== 'AbortError') setError(err.message);\n    });\n\n  return () => controller.abort(); // Cancel if topicId changes!\n}, [topicId]);",
         "codeLanguage": "jsx",
-        "codeTitle": "Safe Data Fetching with AbortController"
+        "codeTitle": "Safe Data Fetching with AbortController",
+        "pitfall": "បញ្ហា Race Condition៖ ប្រសិនបើ user ចុចប្តូរពី Topic A ទៅ Topic B យ៉ាងលឿន request របស់ Topic A ដែលមកដល់ក្រោយ អាចនឹង overwrite ទិន្នន័យរបស់ Topic B! ត្រូវប្រើ `AbortController` ដើម្បី cancel request ចាស់ជានិច្ច។"
       },
       {
         "id": "m10-10",
         "number": "10",
         "title": "Common useEffect Mistakes",
-        "summary": "Infinite loops, missing dependencies, and object reference traps.",
-        "explanation": "Creating an object or function inside your component body and putting it in the dependency array causes an infinite loop because new memory references are generated every render!",
+        "summary": "កំហុសទូទៅដូចជា Infinite Loops, Missing Dependencies និង Object Reference Traps។",
+        "explanation": "ការប្រើប្រាស់ `useEffect` មិនបានត្រឹមត្រូវ គឺជាប្រភពដ៏ធំមួយនៃ bugs នៅក្នុងកម្មវិធី React។ កំហុសដែលកើតឡើងញឹកញាប់បំផុតរួមមានការបង្កើត Infinite Loops, ការបាត់បង់ dependencies, និងអន្ទាក់នៃ Object References។",
         "keyPoints": [
-          "Infinite loop trigger: Updating state inside effect without proper dependencies.",
-          "Object dependency trap: Pass primitive values or memoize with `useCallback`/`useMemo`."
+          "**Infinite Loop Trap**៖ ការហៅ `setState` នៅខាងក្នុង effect ដោយមិនបានកំណត់ dependency array ឱ្យបានត្រឹមត្រូវ ឬដាក់ state នោះក្នុង dependency ខ្លួនឯង។",
+          "**Object/Function Reference Trap**៖ ជៀសវាងការដាក់ objects ឬ functions ដែលមិនទាន់ memoized ទៅក្នុង dependencies។ ចូរប្រើ primitive values (strings, numbers, booleans) ឬប្រើ `useCallback` / `useMemo`។",
+          "គោរពតាម ESLint rule `react-hooks/exhaustive-deps` ជានិច្ច។"
         ],
         "codeSnippet": "// ❌ Infinite Loop Bug:\n/*\nuseEffect(() => {\n  setCount(count + 1); // Triggers re-render -> runs effect -> triggers re-render...\n}, [count]);\n*/",
         "codeLanguage": "jsx",
         "codeTitle": "Infinite Loop Example",
-        "pitfall": "Passing un-memoized functions or objects into the dependency array triggers the effect on EVERY render because their reference changes every time."
+        "pitfall": "ការបង្កើត Object ឬ Function នៅខាងក្នុង component body ហើយយកវាទៅដាក់ក្នុង dependency array នឹងបណ្តាលឱ្យ Effect រត់រាល់ពេល render ដោយសារតែ Object/Function Reference ថ្មីត្រូវបានបង្កើតឡើងរាល់ដង!"
       },
       {
         "id": "m10-11",
         "number": "11",
         "title": "When NOT to use useEffect",
-        "summary": "Modern React guidelines: avoid effects for derived data and user events.",
-        "explanation": "The React core team advises against using `useEffect` for: 1) Calculating derived state (compute it during render); 2) Handling user interactions (handle them directly in `onClick`/`onSubmit`); 3) Resetting state on prop change (use key prop).",
+        "summary": "គោលការណ៍ណែនាំ React ទំនើប៖ ជៀសវាងការប្រើ Effect សម្រាប់ Derived State និង User Events។",
+        "explanation": "នៅក្នុង React សម័យទំនើប ក្រុមការងារស្នូលរបស់ React (React Core Team) បានផ្តល់ការណែនាំយ៉ាងច្បាស់លាស់អំពីករណីដែល **មិនគួរប្រើប្រាស់** `useEffect`៖\n1. **កុំប្រើសម្រាប់គណនា Derived Data**៖ គណនាតម្លៃនោះដោយផ្ទាល់នៅពេល render។\n2. **កុំប្រើសម្រាប់គ្រប់គ្រង User Events**៖ ចាត់ចែង logic នោះដោយផ្ទាល់នៅខាងក្នុង `onClick` ឬ `onSubmit` handlers។\n3. **កុំប្រើសម្រាប់ Reset State ពេល Prop ប្តូរ**៖ ប្រើប្រាស់ `key` prop លើ component ដើម្បី reset វិញ។",
         "keyPoints": [
-          "Compute during render instead of `setState` in `useEffect`.",
-          "Use TanStack Query for server fetching instead of manual `useEffect` fetching."
+          "ការគណនាដោយផ្ទាល់ពេល render ជួយជៀសវាងការ re-render ពីរបីដង (flashes of content)។",
+          "សម្រាប់ការទាញយកទិន្នន័យពី Server ក្នុងកម្មវិធីធំៗ គួរប្រើ libraries ដូចជា **TanStack Query** (React Query) ឬ Next.js Data Fetching ជំនួសការសរសេរ `useEffect` ដោយដៃ។"
         ],
         "codeSnippet": "// ❌ Bad: Redundant effect for derived data\n/*\nuseEffect(() => {\n  setFullName(`${firstName} ${lastName}`);\n}, [firstName, lastName]);\n*/\n\n// ✅ Good: Compute directly during render!\nconst fullName = `${firstName} ${lastName}`;",
         "codeLanguage": "jsx",
-        "codeTitle": "Avoiding Redundant Effects"
+        "codeTitle": "Avoiding Redundant Effects",
+        "proTip": "React Core Team ណែនាំថា៖ អ្នកមិនត្រូវការ `useEffect` ឡើយដើម្បីផ្លាស់ប្តូរទិន្នន័យសម្រាប់ render! គណនាវាដោយផ្ទាល់អំឡុងពេល render ឬចាត់ចែងក្នុង event handler ផ្ទាល់។"
       }
     ]
   },
@@ -1924,114 +1971,135 @@ export const modulesData: ModuleItem[] = [
     "number": "11",
     "title": "useRef",
     "category": "Hooks & Lifecycle",
-    "summary": "Persistent mutable values without triggering re-renders, DOM element access, focusing inputs, and measuring DOM nodes.",
+    "summary": "ស្វែងយល់ស៊ីជម្រៅអំពី useRef Hook, ការរក្សាទុកតម្លៃ mutable ដោយមិនបង្កឱ្យមានការ re-render, ការចូលទៅកាន់ DOM elements ដោយផ្ទាល់, ការ focus inputs, ការប្រៀបធៀប useRef vs useState និងកំហុសទូទៅ។",
     "iconName": "Crosshair",
     "topics": [
       {
         "id": "m11-01",
         "number": "01",
         "title": "What is useRef?",
-        "summary": "A hook that stores a mutable value that survives across renders without causing re-renders.",
-        "explanation": "`useRef` returns a plain JavaScript object `{ current: initialValue }`. Mutating `.current` does NOT trigger a re-render. It is commonly used for direct DOM references and storing timer IDs.",
+        "summary": "Hook សម្រាប់ផ្ទុកតម្លៃដែលអាចកែប្រែបាន (Mutable Value) ដោយមិន trigger ឱ្យមានការ re-render UI ឡើយ។",
+        "explanation": "Hook `useRef` ផ្តល់ត្រឡប់មកវិញនូវ JavaScript Object ធម្មតាមួយដែលមាន property តែមួយគត់គឺ `{ current: initialValue }`។ ចំណុចពិសេសនៃ `useRef` គឺថារាល់ការកែប្រែតម្លៃលើ `.current` **នឹងមិន trigger ឱ្យមានការ re-render UI ឡើយ**។ វាត្រូវបានប្រើប្រាស់ជាទូទៅបំផុតសម្រាប់ភ្ជាប់ទៅកាន់ DOM Elements ដោយផ្ទាល់ និងរក្សាទុក Timer IDs។",
         "keyPoints": [
-          "Survives across renders like state, but changing it does NOT re-render the UI.",
-          "Primary tool for DOM manipulation in React."
+          "រក្សាតម្លៃទុកឆ្លងកាត់ការ re-render ទាំងអស់ដូច State ដែរ ប៉ុន្តែការកែប្រែវាមិនបង្កឱ្យ UI ធ្វើការ re-render នោះទេ។",
+          "ជាឧបករណ៍ចម្បងក្នុងការធ្វើ DOM Manipulation នៅក្នុង React។",
+          "តម្លៃក្នុង `.current` អាចផ្លាស់ប្តូរបានដោយសេរី (Mutable)។"
         ],
         "codeSnippet": "import { useRef } from 'react';\n\nconst renderCountRef = useRef(0);\nrenderCountRef.current++; // Mutated without causing re-render!",
         "codeLanguage": "jsx",
-        "codeTitle": "useRef Declaration"
+        "codeTitle": "useRef Declaration",
+        "proTip": "គិតពី `useRef` ដូចជាប្រអប់សម្ងាត់មួយដែលអ្នកអាចផ្លាស់ប្តូររបស់ខាងក្នុងបានគ្រប់ពេល ដោយមិនឱ្យ React ដឹង ឬចាប់បង្ខំឱ្យ Component ត្រូវគូរ UI ឡើងវិញឡើយ។"
       },
       {
         "id": "m11-02",
         "number": "02",
         "title": "useRef Syntax",
-        "summary": "Declaring refs with TypeScript types for DOM nodes.",
-        "explanation": "For DOM refs, initialize with `null`: `const inputRef = useRef<HTMLInputElement>(null)`. React automatically populates `.current` with the DOM node once mounted.",
+        "summary": "រចនាសម្ព័ន្ធ Syntax និងការកំណត់ TypeScript Types សម្រាប់ HTML DOM Nodes។",
+        "explanation": "នៅពេលប្រើប្រាស់ `useRef` សម្រាប់ភ្ជាប់ទៅកាន់ DOM Element អ្នកគួរតែ initialize តម្លៃដំបូងជា `null`៖ `const inputRef = useRef<HTMLInputElement>(null)`។ នៅពេលដែល component ត្រូវបាន mount ទៅលើអេក្រង់រួចរាល់ React នឹងបញ្ចូល DOM node ជាក់ស្តែងទៅក្នុង `inputRef.current` ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "Type parameter matches the HTML element: `HTMLInputElement`, `HTMLDivElement`."
+          "នៅក្នុង TypeScript ត្រូវកំណត់ Type Parameter ឱ្យត្រូវគ្នានឹង HTML element ដូចជា `HTMLInputElement`, `HTMLDivElement`, ឬ `HTMLVideoElement`។",
+          "ភ្ជាប់ ref ទៅកាន់ JSX element តាមរយៈ attribute `ref={inputRef}`។",
+          "នៅពេល unmount React នឹង reset `.current` ឱ្យទៅជា `null` វិញ។"
         ],
         "codeSnippet": "const inputRef = useRef<HTMLInputElement>(null);\nreturn <input ref={inputRef} type=\"text\" />;",
         "codeLanguage": "jsx",
-        "codeTitle": "useRef Syntax with TypeScript"
+        "codeTitle": "useRef Syntax with TypeScript",
+        "proTip": "សម្រាប់ DOM refs ត្រូវកំណត់ initial value ជា `null` ជានិច្ច ដូចជា `useRef<HTMLInputElement>(null)` ដើម្បីឱ្យ React ដឹងថាត្រូវចងភ្ជាប់ជាមួយ DOM node ពេល component mount។"
       },
       {
         "id": "m11-03",
         "number": "03",
         "title": "Accessing DOM Elements",
-        "summary": "Interacting directly with native HTML DOM elements.",
-        "explanation": "Allows calling native methods like `.focus()`, `.scrollIntoView()`, or measuring dimensions with `.getBoundingClientRect()`.",
+        "summary": "ការភ្ជាប់ និងធ្វើអន្តរកម្មដោយផ្ទាល់ជាមួយ Native HTML DOM Elements។",
+        "explanation": "តាមរយៈ `useRef` អ្នកអាចហៅប្រើប្រាស់ native browser DOM methods ដោយផ្ទាល់បាន ដូចជា `.focus()`, `.scrollIntoView()`, ឬវាស់ទំហំ dimensions នៃ element តាមរយៈ `.getBoundingClientRect()` ដោយមិនចាំបាច់ប្រើ `document.querySelector` ឡើយ។",
         "keyPoints": [
-          "Always check `if (ref.current)` before accessing properties."
+          "តែងតែពិនិត្យមើលវត្តមានរបស់ DOM node ជាមុន៖ `if (ref.current)` ឬប្រើ `ref.current?.method()`។",
+          "ស័ក្តិសមបំផុតសម្រាប់ auto-scrolling ក្នុង chat windows ឬ container lists។",
+          "ប្រើសម្រាប់តែ imperatively controls ប៉ុណ្ណោះ ជៀសវាងការប្រើ ref ដើម្បីកែប្រែ DOM markup ដោយផ្ទាល់។"
         ],
         "codeSnippet": "export function ScrollToBottom() {\n  const bottomRef = useRef<HTMLDivElement>(null);\n\n  const scrollToBottom = () => {\n    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });\n  };\n\n  return (\n    <div>\n      <button onClick={scrollToBottom}>Scroll Down</button>\n      <div style={{ height: 1000 }} />\n      <div ref={bottomRef} />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "DOM Scroll into View via Ref"
+        "codeTitle": "DOM Scroll into View via Ref",
+        "pitfall": "DOM Node នឹងមានតម្លៃតែបន្ទាប់ពី Component បាន Mount រួចរាល់ប៉ុណ្ណោះ។ ដូច្នេះត្រូវប្រើ Optional Chaining (`ref.current?.focus()`) ឬពិនិត្យ `if (ref.current)` ជានិច្ចមុននឹងហៅ method!"
       },
       {
         "id": "m11-04",
         "number": "04",
         "title": "Focus Input",
-        "summary": "Programmatically focusing an input when modals open or search triggers.",
-        "explanation": "A common use case: when the user presses `Cmd+K`, focus the search input immediately.",
+        "summary": "ការបញ្ជាឱ្យ cursor focus លើ input field ដោយស្វ័យប្រវត្តិតាមរយៈកូដ (Programmatic Focus)។",
+        "explanation": "ករណីប្រើប្រាស់ដ៏ពេញនិយមបំផុតមួយនៃ `useRef` គឺការបញ្ជាឱ្យ cursor ចូលទៅកាន់ Input Field ដោយស្វ័យប្រវត្តិ (Programmatic Focus)។ ឧទាហរណ៍៖ នៅពេលដែល Modal បើកឡើង ឬនៅពេលដែល user ចុចប៊ូតុងស្វែងរក យើងចង់ឱ្យ input ទទួល focus ភ្លាមៗដោយមិនចាំបាច់ឱ្យ user យក mouse ទៅចុច។",
         "keyPoints": [
-          "Call `inputRef.current?.focus()` inside an effect or handler."
+          "ហៅ `inputRef.current?.focus()` នៅខាងក្នុង `useEffect` (ពេល mount) ឬនៅខាងក្នុង event handler។",
+          "ជួយលើកកម្ពស់ Accessibility និងល្បឿននៃការបំពេញទិន្នន័យ។",
+          "អាចប្រើ `.select()` ដើម្បី highlight text ទាំងអស់នៅក្នុង input ផងដែរ។"
         ],
         "codeSnippet": "export function AutoFocusSearch() {\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    inputRef.current?.focus();\n  }, []);\n\n  return <input ref={inputRef} placeholder=\"Search topics...\" className=\"border p-2\" />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Programmatic Input Focus"
+        "codeTitle": "Programmatic Input Focus",
+        "proTip": "ការ auto-focus លើ input ពេលបើក Modal dialog ឬចុច shortcut `Cmd+K` ផ្តល់នូវ UX ដ៏រលូន និងស្រួលប្រើប្រាស់បំផុតសម្រាប់ user។"
       },
       {
         "id": "m11-05",
         "number": "05",
         "title": "Storing Mutable Values",
-        "summary": "Keeping timer IDs and previous state without re-render overhead.",
-        "explanation": "Store interval IDs or previous values that need to be read in event handlers or cleanups.",
+        "summary": "ការរក្សាទុក Timer IDs, Interval Handles និង Previous State ដោយគ្មាន overhead នៃ re-rendering។",
+        "explanation": "ក្រៅពីការភ្ជាប់ទៅកាន់ DOM `useRef` គឺជាឧបករណ៍ដ៏ល្អឥតខ្ចោះសម្រាប់រក្សាទុកទិន្នន័យបច្ចេកទេសផ្ទៃក្នុងដែលត្រូវអាន ឬកែប្រែនៅក្នុង event handlers ឬ cleanup functions ដូចជា Timer IDs (`setInterval`/`setTimeout`) ឬតម្លៃ State ពីមុន (Previous State)។",
         "keyPoints": [
-          "Ideal for storing `setInterval` or `setTimeout` handles."
+          "ល្អបំផុតសម្រាប់រក្សាទុក handles របស់ `setInterval` ឬ `setTimeout`។",
+          "គ្មាន overhead នៃដំណើរការ re-rendering ជួយឱ្យ application ដំណើរការបានរហ័ស។",
+          "អាចចូលទៅអាន និងកែប្រែតម្លៃបានភ្លាមៗដោយមិនបារម្ភពីរឿង Stale Closure។"
         ],
         "codeSnippet": "export function Stopwatch() {\n  const [time, setTime] = useState(0);\n  const timerRef = useRef<NodeJS.Timeout | null>(null);\n\n  const start = () => {\n    if (timerRef.current !== null) return;\n    timerRef.current = setInterval(() => setTime(t => t + 1), 1000);\n  };\n\n  const stop = () => {\n    if (timerRef.current) {\n      clearInterval(timerRef.current);\n      timerRef.current = null;\n    }\n  };\n\n  return <div>Time: {time}s <button onClick={start}>Start</button> <button onClick={stop}>Stop</button></div>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Storing Timer Handle in useRef"
+        "codeTitle": "Storing Timer Handle in useRef",
+        "proTip": "នៅពេលបង្កើត Stopwatch ឬ Timer ចូរទុក Interval ID នៅក្នុង `useRef` មិនមែន `useState` ទេ ព្រោះការផ្លាស់ប្តូរ ID មិនត្រូវការបង្ហាញលើអេក្រង់ឡើយ។"
       },
       {
         "id": "m11-06",
         "number": "06",
         "title": "useRef vs useState",
-        "summary": "When to choose mutable ref vs reactive state.",
-        "explanation": "If changing a value should update the UI visible to the user, use `useState`. If changing the value is internal housekeeping that should NOT trigger a re-render, use `useRef`.",
+        "summary": "ការណែនាំអំពីពេលវេលាដែលត្រូវជ្រើសរើស Mutable Ref ឬ Reactive State។",
+        "explanation": "ការយល់ដឹងអំពីភាពខុសគ្នារវាង `useRef` និង `useState` គឺមានសារៈសំខាន់ខ្លាំងណាស់ក្នុងការរៀបចំ State Architecture៖\n- ប្រសិនបើការផ្លាស់ប្តូរតម្លៃទាមទារឱ្យ UI ធ្វើបច្ចុប្បន្នភាពលើអេក្រង់ -> ប្រើ **`useState`**។\n- ប្រសិនបើការផ្លាស់ប្តូរតម្លៃគ្រាន់តែជាទិន្នន័យផ្ទៃក្នុងដែលមិនត្រូវការ re-render UI -> ប្រើ **`useRef`**។",
         "keyPoints": [
-          "useState -> Affects UI rendering.",
-          "useRef -> Internal data storage / DOM node access."
+          "**useState** -> គ្រប់គ្រង Visual UI Rendering និង Reactivity។",
+          "**useRef** -> គ្រប់គ្រង Internal Data Storage, DOM Element References និង Timers។"
         ],
-        "codeSnippet": "/*\n| Need | Hook |\n|------|------|\n| Re-render UI on change | useState |\n| DOM element reference | useRef |\n| Store timer ID / socket | useRef |\n| Form input value | useState (controlled) |\n*/",
+        "codeSnippet": "/*\n| តម្រូវការ | Hook ដែលត្រូវជ្រើសរើស |\n|-----------------------------------|-----------------------|\n| ត្រូវការ re-render UI ពេលតម្លៃប្តូរ | useState |\n| ចង់ភ្ជាប់ទៅកាន់ DOM Element | useRef |\n| រក្សាទុក Timer ID / Socket | useRef |\n| តម្លៃ Input ក្នុង Form | useState (controlled) |\n*/",
         "codeLanguage": "jsx",
-        "codeTitle": "useRef vs useState Decision Guide"
+        "codeTitle": "useRef vs useState Decision Guide",
+        "proTip": "ច្បាប់ងាយយល់បំផុត៖ ប្រសិនបើទិន្នន័យនោះត្រូវបង្ហាញលើ Screen ឱ្យ user ឃើញ ចូរប្រើ `useState`។ ប្រសិនបើទិន្នន័យនោះប្រើតែក្នុង code ខាងក្រោយខ្នង ចូរប្រើ `useRef`។"
       },
       {
         "id": "m11-07",
         "number": "07",
         "title": "useRef Use Cases",
-        "summary": "Media players, measuring widths, canvas drawing, and tracking previous state.",
-        "explanation": "Used extensively with `<video>`, `<audio>`, HTML5 `<canvas>`, and third-party imperative libraries (e.g. Chart.js, Leaflet).",
+        "summary": "ករណីប្រើប្រាស់ជាក់ស្តែងជាមួយ Media Players, Canvas Drawing និង Third-party DOM Libraries។",
+        "explanation": "`useRef` ត្រូវបានប្រើប្រាស់យ៉ាងទូលំទូលាយនៅក្នុងស្ថានភាពជាក់ស្តែងជាច្រើន ជាពិសេសនៅពេលដែលយើងត្រូវធ្វើការជាមួយ HTML5 Media Elements ដូចជា `<video>` និង `<audio>`, HTML5 `<canvas>`, ឬ Third-party Libraries ណាដែលតម្រូវឱ្យគ្រប់គ្រង DOM ដោយផ្ទាល់ (ដូចជា Chart.js, Leaflet, Mapbox)។",
         "keyPoints": [
-          "Bridges declarative React with imperative external browser APIs."
+          "ដើរតួជាស្ពានតភ្ជាប់រវាង Declarative React និង Imperative Browser APIs។",
+          "ប្រើសម្រាប់បញ្ជា play/pause, volume, ឬ seek ពេលវេលានៅលើ Video player។",
+          "ប្រើដើម្បីទាញយក Canvas 2D/WebGL Context សម្រាប់គូរក្រាហ្វិក។"
         ],
         "codeSnippet": "export function VideoPlayer({ src }: { src: string }) {\n  const videoRef = useRef<HTMLVideoElement>(null);\n\n  return (\n    <div>\n      <video ref={videoRef} src={src} />\n      <button onClick={() => videoRef.current?.play()}>Play</button>\n      <button onClick={() => videoRef.current?.pause()}>Pause</button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Controlling HTML5 Video with useRef"
+        "codeTitle": "Controlling HTML5 Video with useRef",
+        "proTip": "`useRef` គឺជាស្ពានដ៏សំខាន់សម្រាប់ភ្ជាប់ React ជាមួយនឹង Third-party libraries ខាងក្រៅដូចជា Chart.js, D3, Leaflet Maps, ឬ Video.js។"
       },
       {
         "id": "m11-08",
         "number": "08",
         "title": "Common useRef Mistakes",
-        "summary": "Reading or writing ref.current during rendering.",
-        "explanation": "Do NOT read or write `ref.current` during rendering JSX. That violates React's purity rules. Only read and write `ref.current` inside event handlers or `useEffect`.",
+        "summary": "ការជៀសវាងការអាន ឬកែប្រែ ref.current អំឡុងពេល Render Phase។",
+        "explanation": "កំហុសឆ្គងដ៏ធ្ងន់ធ្ងរបំផុតនៅពេលប្រើប្រាស់ `useRef` គឺការអាន ឬកែប្រែតម្លៃ `ref.current` នៅចំពេលដែល Component កំពុងធ្វើការ Render JSX។ សកម្មភាពនេះបំពានលើច្បាប់ Component Purity របស់ React និងអាចបណ្តាលឱ្យ UI បង្ហាញទិន្នន័យខុសប្រក្រតី។",
         "keyPoints": [
-          "Mutating refs during render makes components non-deterministic."
+          "**កុំកែប្រែ Ref ពេល Render**៖ ការសរសេរ `ref.current = 123` ក្នុង component body ធ្វើឱ្យ output នៃ render មិនអាចទស្សន៍ទាយទុកជាមុនបាន (Non-deterministic)។",
+          "ត្រូវអាន ឬកែប្រែ `ref.current` តែនៅខាងក្នុង **Event Handlers** ឬ **`useEffect`** ប៉ុណ្ណោះ។",
+          "ប្រសិនបើអ្នកត្រូវការប្រើប្រាស់តម្លៃនោះសម្រាប់ render JSX ចូរប្រើ `useState` ជំនួសវិញ។"
         ],
         "codeSnippet": "// ❌ Impure: Writing to ref during render\n/*\nfunction Bad() {\n  myRef.current = 123; // Don't do this during render!\n  return <div>{myRef.current}</div>;\n}\n*/",
         "codeLanguage": "jsx",
-        "codeTitle": "Do Not Mutate Refs During Render"
+        "codeTitle": "Do Not Mutate Refs During Render",
+        "pitfall": "ដាច់ខាតកុំអាន ឬកែប្រែ `ref.current` នៅចំកណ្តាល JSX Render Body ព្រោះវានឹងបំពានលើគោលការណ៍ Pure Component របស់ React និងធ្វើឱ្យ UI មានឥរិយាបថមិនប្រក្រតី!"
       }
     ]
   },

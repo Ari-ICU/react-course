@@ -5,17 +5,20 @@ title: "Effects with Props"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Synchronizing when parent attributes update."
+summary: "ការធ្វើសមកាលកម្មទិន្នន័យនៅពេលដែល Props ពី Parent ផ្លាស់ប្តូរ។"
+proTip: "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId`, `moduleId`, ឬ route params) ដើម្បីទាញយកទិន្នន័យថ្មីពេល user ប្តូរទំព័រ។"
 codeTitle: "Reacting to Prop Changes"
 ---
 
 # Effects with Props
 
-Update local state or external subscriptions when prop IDs change.
+នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ Route Parameter ឬ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។
 
 ### Key Concepts & Rules:
 
-- Use prop values as dependencies to react to route parameter changes.
+- ប្រើប្រាស់តម្លៃ Prop ជា dependency ដើម្បីឆ្លើយតបទៅនឹងការផ្លាស់ប្តូរពី Parent។
+- រៀបចំកូដឱ្យត្រៀមខ្លួនជានិច្ចចំពោះករណីដែល Prop អាចផ្លាស់ប្តូរតម្លៃញឹកញាប់។
+- សម្អាតទិន្នន័យចាស់ ឬ cancel requests មុនពេលទាញយកទិន្នន័យសម្រាប់ Prop ថ្មី។
 
 ### Code Example: Reacting to Prop Changes
 

@@ -5,17 +5,20 @@ title: "Component Composition as Solution"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Passing slotted elements down rather than raw props."
+summary: "ការដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាពតាមរយៈ children prop និង Slotted Elements។"
+proTip: "មុននឹងប្រញាប់យក Context ឬ Zustand មកដោះស្រាយ Prop Drilling ចូរពិនិត្យមើលថាតើអ្នកអាចប្រើ Component Composition (`children`) បានដែរឬទេ ព្រោះវាជាដំណោះស្រាយដ៏សាមញ្ញ និងមានប្រសិទ្ធភាពខ្ពស់បំផុត!"
 codeTitle: "Composition Solving Prop Drilling"
 ---
 
 # Component Composition as Solution
 
-Often you can solve prop drilling simply by passing the leaf component directly via `children` or named slots.
+ជាញឹកញាប់ អ្នកអាចលុបបំបាត់បញ្ហា Prop Drilling បានយ៉ាងងាយស្រួលដោយមិនចាំបាច់ប្រើប្រាស់ Context API ឬ State Management Library ឡើយ។ ដំណោះស្រាយនោះគឺ **Component Composition** ដោយគ្រាន់តែបញ្ជូន leaf component ចូលទៅជា `children` ឬ slots ផ្ទាល់តែម្តង។
 
 ### Key Concepts & Rules:
 
-- Intermediary components only render `{children}`, unaware of specific props.
+- Components នៅកណ្តាល (ដូចជា `<Sidebar>`) គ្រាន់តែ render `{children}` ដោយមិនបាច់ដឹងពី props របស់ child ឡើយ។
+- Leaf Component (ដូចជា `<Avatar user={user} />`) ត្រូវបានបង្កើតឡើងនៅ Parent កំពូលផ្ទាល់ ដែលមាន access ទៅកាន់ `user` រួចជាស្រេច។
+- ជួយកាត់បន្ថយ coupling និងធ្វើឱ្យ components នៅកណ្តាលមានភាព generic ខ្ពស់។
 
 ### Code Example: Composition Solving Prop Drilling
 

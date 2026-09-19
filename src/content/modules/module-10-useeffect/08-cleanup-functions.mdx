@@ -5,17 +5,20 @@ title: "Cleanup Functions"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Preventing memory leaks, clearing timers, and removing event listeners."
+summary: "ការការពារ Memory Leaks, ការសម្អាត Timers និងការដោះចេញនូវ Event Listeners។"
+proTip: "ច្បាប់មាសនៃ Cleanup Function៖ រាល់ពេលដែលអ្នកបង្កើត `setInterval`, `addEventListener`, ឬ WebSocket នៅក្នុង Effect អ្នកត្រូវតែ return function ដើម្បី `clearInterval`, `removeEventListener`, ឬ `close()` ជានិច្ច!"
 codeTitle: "Timer Cleanup Function"
 ---
 
 # Cleanup Functions
 
-Return a cleanup function from your effect. React runs this cleanup function before re-running the effect and when the component unmounts.
+ប្រសិនបើ Effect របស់អ្នកបង្កើត subscription, interval, ឬ DOM event listener អ្នកត្រូវតែ return **Cleanup Function** មួយចេញពី Effect នោះ។ React នឹងដំណើរការ cleanup function នេះមុនពេល effect រត់ម្តងទៀត និងនៅពេលដែល Component ត្រូវបាន unmount ចេញពី DOM។
 
 ### Key Concepts & Rules:
 
-- Crucial for `addEventListener`, `setInterval`, WebSocket connections, and aborting fetch requests.
+- សំខាន់បំផុតក្នុងការការពារ **Memory Leaks** នៅក្នុងកម្មវិធី web។
+- ចាំបាច់ត្រូវប្រើសម្រាប់ `clearInterval`, `clearTimeout`, `removeEventListener`, និងការ disconnect WebSocket connections។
+- ជួយធានាថាកម្មវិធីដំណើរការបានស្អាតបាត និងមិនស៊ីធនធាន RAM របស់ browser ដោយឥតប្រយោជន៍។
 
 ### Code Example: Timer Cleanup Function
 

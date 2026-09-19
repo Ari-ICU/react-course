@@ -5,18 +5,20 @@ title: "What is useEffect?"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Hook for synchronizing components with external systems."
+summary: "Hook សម្រាប់ធ្វើសមកាលកម្ម Component ទៅកាន់ External Systems ខាងក្រៅ។"
+proTip: "គិតពី `useEffect` ដូចជាស្ពានតភ្ជាប់រវាង React Component និងពិភពខាងក្រៅ (ដូចជា DOM APIs, Timers, ឬ Server APIs)។"
 codeTitle: "Synchronizing Document Title"
 ---
 
 # What is useEffect?
 
-The `useEffect` hook lets you run code after rendering to synchronize with external systems: browser DOM APIs, network requests, timers, or web sockets.
+Hook `useEffect` អនុញ្ញាតឱ្យអ្នកដំណើរការកូដបន្ទាប់ពី Component បាន Render និង Paint លើអេក្រង់រួចរាល់ ដើម្បីធ្វើសមកាលកម្ម (synchronize) ជាមួយប្រព័ន្ធខាងក្រៅ (External Systems) ដូចជា Browser DOM APIs, Network Requests, Timers, ឬ WebSocket Connections។
 
 ### Key Concepts & Rules:
 
-- Runs asynchronously after the render has painted to the screen.
-- Replaces componentDidMount, componentDidUpdate, and componentWillUnmount.
+- ដំណើរការដោយអសមកាលកម្ម (asynchronously) បន្ទាប់ពី browser បាន render និង paint UI រួចរាល់ ដែលធ្វើឱ្យ UI មិនគាំង (non-blocking)។
+- ជំនួស lifecycle methods ចាស់ៗក្នុង Class Components ដូចជា `componentDidMount`, `componentDidUpdate`, និង `componentWillUnmount`។
+- ជួយឱ្យ Component មានប្រតិកម្មឆ្លើយតបទៅនឹងការផ្លាស់ប្តូរទិន្នន័យពីខាងក្រៅ។
 
 ### Code Example: Synchronizing Document Title
 

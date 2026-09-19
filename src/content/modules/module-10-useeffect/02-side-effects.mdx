@@ -5,17 +5,20 @@ title: "Side Effects"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "What qualifies as a side effect in React."
+summary: "អ្វីទៅដែលត្រូវបានចាត់ទុកជា Side Effect នៅក្នុងកម្មវិធី React។"
+pitfall: "ដាច់ខាតកុំដំណើរការ Side Effects ដោយផ្ទាល់នៅក្នុង Render Body របស់ Component ព្រោះ Render Phase ត្រូវតែជា Pure Function ជានិច្ច!"
 codeTitle: "Side Effect Placement"
 ---
 
 # Side Effects
 
-A side effect is any operation that affects something outside the scope of the currently executing function (e.g. timers, network requests, reading localStorage, setting window listeners).
+នៅក្នុងវិទ្យាសាស្ត្រកុំព្យូទ័រ **Side Effect** សំដៅលើរាល់ប្រតិបត្តិការណាដែលធ្វើការកែប្រែ ឬជះឥទ្ធិពលទៅលើអ្វីមួយដែលនៅក្រៅ scope នៃ function ដែលកំពុងដំណើរការ (ដូចជាការសរសេរចូល `localStorage`, ការហៅ API request, ការកំណត់ timers, ឬការកែប្រែ DOM ផ្ទាល់)។
 
 ### Key Concepts & Rules:
 
-- Pure render functions must not execute side effects directly during render.
+- React Render functions ត្រូវតែជា **Pure Functions** (ទទួល props/state រួច return JSX តែប៉ុណ្ណោះ គ្មាន side effects ឡើយ)។
+- Side effects ត្រូវតែស្ថិតនៅក្នុងកន្លែងពីរគត់៖ **Event Handlers** (ឆ្លើយតបនឹងការចុចរបស់ user) ឬ **useEffect** (ដំណើរការពេល render រួច)។
+- ការដាក់ side effects ក្នុង render body អាចបណ្តាលឱ្យកើត bugs ធ្ងន់ធ្ងរ និង re-render គ្មានទីបញ្ចប់។
 
 ### Code Example: Side Effect Placement
 

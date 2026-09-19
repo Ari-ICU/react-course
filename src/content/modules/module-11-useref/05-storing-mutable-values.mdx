@@ -5,17 +5,20 @@ title: "Storing Mutable Values"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "Keeping timer IDs and previous state without re-render overhead."
+summary: "ការរក្សាទុក Timer IDs, Interval Handles និង Previous State ដោយគ្មាន overhead នៃ re-rendering។"
+proTip: "នៅពេលបង្កើត Stopwatch ឬ Timer ចូរទុក Interval ID នៅក្នុង `useRef` មិនមែន `useState` ទេ ព្រោះការផ្លាស់ប្តូរ ID មិនត្រូវការបង្ហាញលើអេក្រង់ឡើយ។"
 codeTitle: "Storing Timer Handle in useRef"
 ---
 
 # Storing Mutable Values
 
-Store interval IDs or previous values that need to be read in event handlers or cleanups.
+ក្រៅពីការភ្ជាប់ទៅកាន់ DOM `useRef` គឺជាឧបករណ៍ដ៏ល្អឥតខ្ចោះសម្រាប់រក្សាទុកទិន្នន័យបច្ចេកទេសផ្ទៃក្នុងដែលត្រូវអាន ឬកែប្រែនៅក្នុង event handlers ឬ cleanup functions ដូចជា Timer IDs (`setInterval`/`setTimeout`) ឬតម្លៃ State ពីមុន (Previous State)។
 
 ### Key Concepts & Rules:
 
-- Ideal for storing `setInterval` or `setTimeout` handles.
+- ល្អបំផុតសម្រាប់រក្សាទុក handles របស់ `setInterval` ឬ `setTimeout`។
+- គ្មាន overhead នៃដំណើរការ re-rendering ជួយឱ្យ application ដំណើរការបានរហ័ស។
+- អាចចូលទៅអាន និងកែប្រែតម្លៃបានភ្លាមៗដោយមិនបារម្ភពីរឿង Stale Closure។
 
 ### Code Example: Storing Timer Handle in useRef
 

@@ -5,17 +5,22 @@ title: "Prop Drilling"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "The problem of passing props through intermediary components that don't need them."
+summary: "ស្វែងយល់អំពីបញ្ហា Prop Drilling និងផលប៉ះពាល់ដល់ការថែទាំកូដក្នុងកម្មវិធីធំៗ។"
+pitfall: "Prop Drilling កើតឡើងនៅពេលដែលអ្នកត្រូវបញ្ជូន Props កាត់ components ៤ ទៅ ៥ ជាន់ ដែល components នៅកណ្តាលមិនត្រូវការប្រើទិន្នន័យនោះទាល់តែសោះ គ្រាន់តែជួយហុចបន្តប៉ុណ្ណោះ!"
 codeTitle: "Prop Drilling Demonstration"
 ---
 
 # Prop Drilling
 
-Prop drilling occurs when you pass data through 4 or 5 levels of components just so a deep leaf component can access it. It clutters component APIs and makes refactoring tedious.
+Prop Drilling (ឬ Threading) គឺជាស្ថានភាពដែលអ្នកត្រូវបញ្ជូន Props ឆ្លងកាត់ components ជាច្រើនជាន់ចុះក្រោម គ្រាន់តែដើម្បីឱ្យ component កូនចៅនៅជ្រៅបំផុត (Leaf Component) អាចចូលទៅកាន់ទិន្នន័យនោះបាន។ បញ្ហានេះធ្វើឱ្យ components នៅកណ្តាលពោរពេញដោយ props ដែលមិនចាំបាច់ និងធ្វើឱ្យការ refactor កូដមានភាពស្មុគស្មាញ។
 
 ### Key Concepts & Rules:
 
-- Solutions: Component composition (`children`), React Context, or Zustand store.
+- ធ្វើឱ្យ Component APIs មានភាពរញ៉េរញ៉ៃ (Pollutes component interfaces)។
+- ដំណោះស្រាយមាន ៣ សំខាន់ៗ៖
+  1. **Component Composition** (ប្រើប្រាស់ `children` prop)។
+  2. **React Context API** (សម្រាប់ state កម្រិតមធ្យម ដូចជា Theme ឬ Auth)។
+  3. **Global State Management** (ដូចជា Zustand សម្រាប់ complex app data)។
 
 ### Code Example: Prop Drilling Demonstration
 

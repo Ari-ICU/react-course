@@ -5,17 +5,20 @@ title: "Passing Functions"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Using callbacks for modular event delegation."
+summary: "ការប្រើប្រាស់ Event Callbacks ដើម្បីបំបែក UI rendering និង State logic ឱ្យដាច់ពីគ្នា។"
+proTip: "ការបញ្ជូន callback functions ជួយឱ្យ Child Component ក្លាយជា 'Dumb/Presentational Component' ដែលមិនចាំបាច់ខ្វល់ខ្វាយពីរបៀបរក្សាទុកទិន្នន័យ ឬការហៅ API ឡើយ។"
 codeTitle: "Callback Action Delegation"
 ---
 
 # Passing Functions
 
-Decouples child rendering from state management logic in the parent.
+ការបញ្ជូន Functions តាមរយៈ Props (Callback Delegation) ជួយផ្តាច់ UI Rendering របស់ Child ចេញពី State Management Logic របស់ Parent។ បច្ចេកទេសនេះធ្វើឱ្យ Child Components មានភាពឯករាជ្យ និងអាចយកទៅប្រើប្រាស់ឡើងវិញបានច្រើនកន្លែង (Highly Reusable) ជាមួយឥរិយាបថខុសៗគ្នា។
 
 ### Key Concepts & Rules:
 
-- Allows reusing child components across different features.
+- Child Component គ្រាន់តែទទួលរ៉ាប់រងលើ visual presentation និងការ trigger callbacks ប៉ុណ្ណោះ។
+- បង្កើនភាពងាយស្រួលក្នុងការ reuse Child Component ឆ្លងកាត់ features ផ្សេងៗក្នុង app។
+- ជួយឱ្យការធ្វើ Unit Test លើ UI Component មានភាពសាមញ្ញ ព្រោះគ្រាន់តែ mock callback functions។
 
 ### Code Example: Callback Action Delegation
 

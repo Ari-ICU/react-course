@@ -5,17 +5,20 @@ title: "Accessing DOM Elements"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "Interacting directly with native HTML DOM elements."
+summary: "ការភ្ជាប់ និងធ្វើអន្តរកម្មដោយផ្ទាល់ជាមួយ Native HTML DOM Elements។"
+pitfall: "DOM Node នឹងមានតម្លៃតែបន្ទាប់ពី Component បាន Mount រួចរាល់ប៉ុណ្ណោះ។ ដូច្នេះត្រូវប្រើ Optional Chaining (`ref.current?.focus()`) ឬពិនិត្យ `if (ref.current)` ជានិច្ចមុននឹងហៅ method!"
 codeTitle: "DOM Scroll into View via Ref"
 ---
 
 # Accessing DOM Elements
 
-Allows calling native methods like `.focus()`, `.scrollIntoView()`, or measuring dimensions with `.getBoundingClientRect()`.
+តាមរយៈ `useRef` អ្នកអាចហៅប្រើប្រាស់ native browser DOM methods ដោយផ្ទាល់បាន ដូចជា `.focus()`, `.scrollIntoView()`, ឬវាស់ទំហំ dimensions នៃ element តាមរយៈ `.getBoundingClientRect()` ដោយមិនចាំបាច់ប្រើ `document.querySelector` ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Always check `if (ref.current)` before accessing properties.
+- តែងតែពិនិត្យមើលវត្តមានរបស់ DOM node ជាមុន៖ `if (ref.current)` ឬប្រើ `ref.current?.method()`។
+- ស័ក្តិសមបំផុតសម្រាប់ auto-scrolling ក្នុង chat windows ឬ container lists។
+- ប្រើសម្រាប់តែ imperatively controls ប៉ុណ្ណោះ ជៀសវាងការប្រើ ref ដើម្បីកែប្រែ DOM markup ដោយផ្ទាល់។
 
 ### Code Example: DOM Scroll into View via Ref
 

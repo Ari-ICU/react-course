@@ -5,17 +5,20 @@ title: "Child to Parent"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Upwards event notification via callback functions."
+summary: "ការជូនដំណឹងពីសកម្មភាពឡើងលើទៅកាន់ Parent តាមរយៈ Callback Functions។"
+proTip: "កុំព្យាយាមផ្លាស់ប្តូរ State របស់ Parent ដោយផ្ទាល់ពីក្នុង Child! ត្រូវតែបញ្ជូន function ចុះក្រោម ហើយឱ្យ Child ហៅ function នោះវិញ។"
 codeTitle: "Child to Parent Notification"
 ---
 
 # Child to Parent
 
-Children notify parents of actions by calling function props supplied by the parent.
+ដោយសារតែ React មិនអនុញ្ញាតឱ្យបញ្ជូន Props ត្រឡប់ឡើងលើវិញ ដើម្បីឱ្យ Child អាចប្រាប់ Parent អំពីព្រឹត្តិការណ៍ ឬសកម្មភាពណាមួយ (User Action) Parent ត្រូវតែបញ្ជូន **Callback Function** មួយចុះក្រោមជា Prop។ នៅពេលដែលសកម្មភាពកើតឡើង Child នឹងធ្វើការ invoke (ហៅ) function នោះជាមួយនឹង arguments ជាក់លាក់។
 
 ### Key Concepts & Rules:
 
-- Children invoke callbacks with arguments.
+- Parent បញ្ជូន handler function តាមរយៈ prop (ឧទាហរណ៍៖ `onSelect={(id) => setSelected(id)}`)។
+- Child ធ្វើការហៅ function នោះនៅពេលមាន interaction៖ `props.onSelect(itemId)`។
+- Parent ទទួល parameters ពី Child រួចធ្វើការ update លើ state របស់ខ្លួន។
 
 ### Code Example: Child to Parent Notification
 

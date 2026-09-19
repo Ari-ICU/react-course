@@ -5,18 +5,22 @@ title: "When NOT to use useEffect"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Modern React guidelines: avoid effects for derived data and user events."
+summary: "គោលការណ៍ណែនាំ React ទំនើប៖ ជៀសវាងការប្រើ Effect សម្រាប់ Derived State និង User Events។"
+proTip: "React Core Team ណែនាំថា៖ អ្នកមិនត្រូវការ `useEffect` ឡើយដើម្បីផ្លាស់ប្តូរទិន្នន័យសម្រាប់ render! គណនាវាដោយផ្ទាល់អំឡុងពេល render ឬចាត់ចែងក្នុង event handler ផ្ទាល់។"
 codeTitle: "Avoiding Redundant Effects"
 ---
 
 # When NOT to use useEffect
 
-The React core team advises against using `useEffect` for: 1) Calculating derived state (compute it during render); 2) Handling user interactions (handle them directly in `onClick`/`onSubmit`); 3) Resetting state on prop change (use key prop).
+នៅក្នុង React សម័យទំនើប ក្រុមការងារស្នូលរបស់ React (React Core Team) បានផ្តល់ការណែនាំយ៉ាងច្បាស់លាស់អំពីករណីដែល **មិនគួរប្រើប្រាស់** `useEffect`៖
+1. **កុំប្រើសម្រាប់គណនា Derived Data**៖ គណនាតម្លៃនោះដោយផ្ទាល់នៅពេល render។
+2. **កុំប្រើសម្រាប់គ្រប់គ្រង User Events**៖ ចាត់ចែង logic នោះដោយផ្ទាល់នៅខាងក្នុង `onClick` ឬ `onSubmit` handlers។
+3. **កុំប្រើសម្រាប់ Reset State ពេល Prop ប្តូរ**៖ ប្រើប្រាស់ `key` prop លើ component ដើម្បី reset វិញ។
 
 ### Key Concepts & Rules:
 
-- Compute during render instead of `setState` in `useEffect`.
-- Use TanStack Query for server fetching instead of manual `useEffect` fetching.
+- ការគណនាដោយផ្ទាល់ពេល render ជួយជៀសវាងការ re-render ពីរបីដង (flashes of content)។
+- សម្រាប់ការទាញយកទិន្នន័យពី Server ក្នុងកម្មវិធីធំៗ គួរប្រើ libraries ដូចជា **TanStack Query** (React Query) ឬ Next.js Data Fetching ជំនួសការសរសេរ `useEffect` ដោយដៃ។
 
 ### Code Example: Avoiding Redundant Effects
 

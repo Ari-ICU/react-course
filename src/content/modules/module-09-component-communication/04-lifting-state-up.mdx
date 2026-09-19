@@ -5,18 +5,20 @@ title: "Lifting State Up"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Moving state to the closest common ancestor of communicating siblings."
+summary: "ការលើក State ទៅកាន់ Ancestor Component រួមដែលនៅជិតបំផុតសម្រាប់ Sibling Components។"
+proTip: "នៅពេលណាដែល Components ពីរ ឬច្រើនត្រូវការបង្ហាញទិន្នន័យដូចគ្នា ឬធ្វើសមកាលកម្មគ្នា ចូរលើក State នោះឡើងទៅកាន់ Parent រួមដែលនៅជិតបំផុត (Closest Common Ancestor)។"
 codeTitle: "Lifting State Up Pattern"
 ---
 
 # Lifting State Up
 
-When two sibling components need to share or synchronize data, move the state out of both and into their closest common parent.
+នៅពេលដែល Components ពីរបងប្អូន (Siblings) ត្រូវការចែករំលែកទិន្នន័យ ឬធ្វើសមកាលកម្ម (synchronize) ជាមួយគ្នា អ្នកមិនអាចបញ្ជូនទិន្នន័យពីបងប្អូនមួយទៅមួយទៀតដោយផ្ទាល់បានទេ។ អ្នកត្រូវតែ **លើក State ឡើង (Lift State Up)** ចេញពី components ទាំងពីរនោះ ទៅដាក់ក្នុង Parent រួមដែលនៅជិតពួកវាបំផុត។
 
 ### Key Concepts & Rules:
 
-- Eliminates out-of-sync duplicate state.
-- Parent becomes single source of truth.
+- លុបបំបាត់បញ្ហាទិន្នន័យស្ទួន និងមិនស៊ីសង្វាក់គ្នា (Out-of-sync bugs)។
+- Parent រួមដើរតួជា **Single Source of Truth** សម្រាប់ siblings ទាំងអស់។
+- Parent បញ្ជូន state ចុះក្រោមជា props និងបញ្ជូន updater functions សម្រាប់ឱ្យ siblings ធ្វើការកែប្រែតម្លៃ។
 
 ### Code Example: Lifting State Up Pattern
 

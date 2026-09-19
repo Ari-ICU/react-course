@@ -5,19 +5,20 @@ title: "Common useEffect Mistakes"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "Infinite loops, missing dependencies, and object reference traps."
-pitfall: "Passing un-memoized functions or objects into the dependency array triggers the effect on EVERY render because their reference changes every time."
+summary: "កំហុសទូទៅដូចជា Infinite Loops, Missing Dependencies និង Object Reference Traps។"
+pitfall: "ការបង្កើត Object ឬ Function នៅខាងក្នុង component body ហើយយកវាទៅដាក់ក្នុង dependency array នឹងបណ្តាលឱ្យ Effect រត់រាល់ពេល render ដោយសារតែ Object/Function Reference ថ្មីត្រូវបានបង្កើតឡើងរាល់ដង!"
 codeTitle: "Infinite Loop Example"
 ---
 
 # Common useEffect Mistakes
 
-Creating an object or function inside your component body and putting it in the dependency array causes an infinite loop because new memory references are generated every render!
+ការប្រើប្រាស់ `useEffect` មិនបានត្រឹមត្រូវ គឺជាប្រភពដ៏ធំមួយនៃ bugs នៅក្នុងកម្មវិធី React។ កំហុសដែលកើតឡើងញឹកញាប់បំផុតរួមមានការបង្កើត Infinite Loops, ការបាត់បង់ dependencies, និងអន្ទាក់នៃ Object References។
 
 ### Key Concepts & Rules:
 
-- Infinite loop trigger: Updating state inside effect without proper dependencies.
-- Object dependency trap: Pass primitive values or memoize with `useCallback`/`useMemo`.
+- **Infinite Loop Trap**៖ ការហៅ `setState` នៅខាងក្នុង effect ដោយមិនបានកំណត់ dependency array ឱ្យបានត្រឹមត្រូវ ឬដាក់ state នោះក្នុង dependency ខ្លួនឯង។
+- **Object/Function Reference Trap**៖ ជៀសវាងការដាក់ objects ឬ functions ដែលមិនទាន់ memoized ទៅក្នុង dependencies។ ចូរប្រើ primitive values (strings, numbers, booleans) ឬប្រើ `useCallback` / `useMemo`។
+- គោរពតាម ESLint rule `react-hooks/exhaustive-deps` ជានិច្ច។
 
 ### Code Example: Infinite Loop Example
 

@@ -5,17 +5,20 @@ title: "useEffect Syntax"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "The effect callback and dependency array parameters."
+summary: "រចនាសម្ព័ន្ធ Syntax នៃ Effect Callback និងប៉ារ៉ាម៉ែត្រ Dependency Array។"
+proTip: "រចនាសម្ព័ន្ធ Syntax ងាយចាំ៖ `useEffect(() => { /* setup */ return () => { /* cleanup */ } }, [dependencies])`។"
 codeTitle: "useEffect Anatomy"
 ---
 
 # useEffect Syntax
 
-`useEffect(effectFunction, dependencyArray)`.
+រចនាសម្ព័ន្ធនៃ `useEffect` ទទួលប៉ារ៉ាម៉ែត្រចំនួនពីរ៖ ប៉ារ៉ាម៉ែត្រទីមួយគឺជា **Effect Callback Function** (កូដដែលត្រូវដំណើរការ និង optional cleanup function) ហើយប៉ារ៉ាម៉ែត្រទីពីរគឺជា **Dependency Array** (បញ្ជីនៃអថេរដែលកំណត់ថាតើពេលណា Effect ត្រូវដំណើរការឡើងវិញ)។
 
 ### Key Concepts & Rules:
 
-- Dependency array controls when the effect re-runs.
+- **Setup logic**៖ ដំណើរការនៅពេល component mount ឬនៅពេលដែល dependencies ណាមួយផ្លាស់ប្តូរតម្លៃ។
+- **Cleanup function (Optional)**៖ Return ជា function នៅចុងបញ្ចប់ ដើម្បីសម្អាតធនធានចាស់ៗមុនពេល effect រត់ម្តងទៀត ឬពេល component unmount។
+- **Dependency array**៖ កំណត់លក្ខខណ្ឌនៃការ re-run របស់ effect។
 
 ### Code Example: useEffect Anatomy
 

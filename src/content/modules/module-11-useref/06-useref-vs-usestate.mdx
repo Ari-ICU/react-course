@@ -5,28 +5,31 @@ title: "useRef vs useState"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "When to choose mutable ref vs reactive state."
+summary: "ការណែនាំអំពីពេលវេលាដែលត្រូវជ្រើសរើស Mutable Ref ឬ Reactive State។"
+proTip: "ច្បាប់ងាយយល់បំផុត៖ ប្រសិនបើទិន្នន័យនោះត្រូវបង្ហាញលើ Screen ឱ្យ user ឃើញ ចូរប្រើ `useState`។ ប្រសិនបើទិន្នន័យនោះប្រើតែក្នុង code ខាងក្រោយខ្នង ចូរប្រើ `useRef`។"
 codeTitle: "useRef vs useState Decision Guide"
 ---
 
 # useRef vs useState
 
-If changing a value should update the UI visible to the user, use `useState`. If changing the value is internal housekeeping that should NOT trigger a re-render, use `useRef`.
+ការយល់ដឹងអំពីភាពខុសគ្នារវាង `useRef` និង `useState` គឺមានសារៈសំខាន់ខ្លាំងណាស់ក្នុងការរៀបចំ State Architecture៖
+- ប្រសិនបើការផ្លាស់ប្តូរតម្លៃទាមទារឱ្យ UI ធ្វើបច្ចុប្បន្នភាពលើអេក្រង់ -> ប្រើ **`useState`**។
+- ប្រសិនបើការផ្លាស់ប្តូរតម្លៃគ្រាន់តែជាទិន្នន័យផ្ទៃក្នុងដែលមិនត្រូវការ re-render UI -> ប្រើ **`useRef`**។
 
 ### Key Concepts & Rules:
 
-- useState -> Affects UI rendering.
-- useRef -> Internal data storage / DOM node access.
+- **useState** -> គ្រប់គ្រង Visual UI Rendering និង Reactivity។
+- **useRef** -> គ្រប់គ្រង Internal Data Storage, DOM Element References និង Timers។
 
 ### Code Example: useRef vs useState Decision Guide
 
 ```jsx
 /*
-| Need | Hook |
-|------|------|
-| Re-render UI on change | useState |
-| DOM element reference | useRef |
-| Store timer ID / socket | useRef |
-| Form input value | useState (controlled) |
+| តម្រូវការ | Hook ដែលត្រូវជ្រើសរើស |
+|-----------------------------------|-----------------------|
+| ត្រូវការ re-render UI ពេលតម្លៃប្តូរ | useState |
+| ចង់ភ្ជាប់ទៅកាន់ DOM Element | useRef |
+| រក្សាទុក Timer ID / Socket | useRef |
+| តម្លៃ Input ក្នុង Form | useState (controlled) |
 */
 ```

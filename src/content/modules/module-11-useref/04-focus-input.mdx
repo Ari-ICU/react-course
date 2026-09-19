@@ -5,17 +5,20 @@ title: "Focus Input"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "Programmatically focusing an input when modals open or search triggers."
+summary: "ការបញ្ជាឱ្យ cursor focus លើ input field ដោយស្វ័យប្រវត្តិតាមរយៈកូដ (Programmatic Focus)។"
+proTip: "ការ auto-focus លើ input ពេលបើក Modal dialog ឬចុច shortcut `Cmd+K` ផ្តល់នូវ UX ដ៏រលូន និងស្រួលប្រើប្រាស់បំផុតសម្រាប់ user។"
 codeTitle: "Programmatic Input Focus"
 ---
 
 # Focus Input
 
-A common use case: when the user presses `Cmd+K`, focus the search input immediately.
+ករណីប្រើប្រាស់ដ៏ពេញនិយមបំផុតមួយនៃ `useRef` គឺការបញ្ជាឱ្យ cursor ចូលទៅកាន់ Input Field ដោយស្វ័យប្រវត្តិ (Programmatic Focus)។ ឧទាហរណ៍៖ នៅពេលដែល Modal បើកឡើង ឬនៅពេលដែល user ចុចប៊ូតុងស្វែងរក យើងចង់ឱ្យ input ទទួល focus ភ្លាមៗដោយមិនចាំបាច់ឱ្យ user យក mouse ទៅចុច។
 
 ### Key Concepts & Rules:
 
-- Call `inputRef.current?.focus()` inside an effect or handler.
+- ហៅ `inputRef.current?.focus()` នៅខាងក្នុង `useEffect` (ពេល mount) ឬនៅខាងក្នុង event handler។
+- ជួយលើកកម្ពស់ Accessibility និងល្បឿននៃការបំពេញទិន្នន័យ។
+- អាចប្រើ `.select()` ដើម្បី highlight text ទាំងអស់នៅក្នុង input ផងដែរ។
 
 ### Code Example: Programmatic Input Focus
 

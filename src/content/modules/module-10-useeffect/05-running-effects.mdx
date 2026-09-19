@@ -5,17 +5,19 @@ title: "Running Effects"
 moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
-summary: "The execution timeline: render, DOM paint, then effect execution."
+summary: "បន្ទាត់ពេលវេលានៃការដំណើរការ៖ Render, DOM Paint រួចទើប Effect Execution។"
+proTip: "ដោយសារតែ `useEffect` ដំណើរការក្រោយពេល Paint លើ Screen រួច វាមិនធ្វើឱ្យ UI កកស្ទះឡើយ។ ប្រសិនបើអ្នកត្រូវការវាស់ទំហំ DOM មុនពេល Paint អ្នកអាចប្រើ `useLayoutEffect` ជំនួសវិញ។"
 codeTitle: "Effect Execution Timeline"
 ---
 
 # Running Effects
 
-React renders JSX, paints pixels to the screen, and only then executes your `useEffect`. This ensures effects do not block visible rendering.
+React ដំណើរការទៅតាមលំដាប់លំដោយយ៉ាងច្បាស់លាស់៖ ដំបូង React នឹងគណនា JSX (Render Phase), បន្ទាប់មក browser នឹងគូរ pixels លើអេក្រង់ (Paint UI), ហើយបន្ទាប់មកទៀតទើប React ចាប់ផ្តើមដំណើរការកូដនៅខាងក្នុង `useEffect`។
 
 ### Key Concepts & Rules:
 
-- Effects are non-blocking by default.
+- Effects មានលក្ខណៈ **Non-blocking** តាមលំនាំដើម ដូច្នេះអ្នកប្រើប្រាស់អាចមើលឃើញ UI ភ្លាមៗដោយមិនចាំបាច់រង់ចាំ effect បញ្ចប់។
+- ជួយបង្កើន Perceived Performance នៃកម្មវិធី web ឱ្យមានអារម្មណ៍ថារលូន និងឆ្លើយតបរហ័ស។
 
 ### Code Example: Effect Execution Timeline
 

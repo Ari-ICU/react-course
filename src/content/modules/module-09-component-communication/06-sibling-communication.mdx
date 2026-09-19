@@ -5,17 +5,21 @@ title: "Sibling Communication"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Why siblings cannot directly talk to each other in React."
+summary: "ហេតុផលដែល Sibling Components មិនអាចទំនាក់ទំនងគ្នាដោយផ្ទាល់ និងស្ថាបត្យកម្មដំណោះស្រាយ។"
+pitfall: "កុំព្យាយាមប្រើ DOM manipulation ឬ global event emitters ដើម្បីឱ្យ siblings និយាយគ្នាដោយផ្ទាល់! គោរពតាម React Data Flow ជានិច្ច តាមរយៈ Shared Parent ឬ Global Store (Zustand/Context)។"
 codeTitle: "Sibling Communication Architecture"
 ---
 
 # Sibling Communication
 
-React components are isolated. Sibling A cannot call functions or access state in Sibling B. They must communicate through their shared parent or a global store.
+នៅក្នុង React រាល់ Component ទាំងអស់ត្រូវបានបង្កើតឡើងក្នុងលក្ខណៈឯករាជ្យដាច់ដោយឡែកពីគ្នា (Isolated)។ Sibling A គ្មានសិទ្ធិ ឬមធ្យោបាយណាមួយដើម្បីចូលទៅកាន់ State ឬហៅ Functions នៅខាងក្នុង Sibling B ដោយផ្ទាល់ឡើយ (No Peer-to-Peer coupling)។
 
 ### Key Concepts & Rules:
 
-- No direct peer-to-peer coupling.
+- **គ្មានការតភ្ជាប់ផ្ទាល់ (No Direct Coupling)**៖ ការពារកុំឱ្យ components ជាប់ជំពាក់គ្នាខ្លាំង (tight coupling) ដែលនាំឱ្យពិបាកកែប្រែ។
+- **ដំណោះស្រាយ**៖
+  1. ប្រើ **Common Parent** (លើក state ឡើង) ប្រសិនបើ siblings នៅកៀកគ្នា។
+  2. ប្រើ **React Context** ឬ **Zustand** ប្រសិនបើ components នៅឆ្ងាយពីគ្នាខ្លាំងក្នុង component tree។
 
 ### Code Example: Sibling Communication Architecture
 

@@ -5,17 +5,20 @@ title: "Parent to Child"
 moduleId: "module-09"
 moduleNumber: "09"
 category: "Core Concepts"
-summary: "Downwards data flow via props."
+summary: "លំហូរទិន្នន័យចុះក្រោមតាមរយៈ Props ក្នុងប្រព័ន្ធ Unidirectional Data Flow។"
+proTip: "ចងចាំជានិច្ចថា Props ហូរតាមទិសដៅតែមួយគត់ (Top-Down)៖ Parent គឺជាអ្នកផ្គត់ផ្គង់ទិន្នន័យ ចំណែក Child គឺជាអ្នកទទួលទិន្នន័យយកទៅបង្ហាញ។"
 codeTitle: "Parent to Child Data Flow"
 ---
 
 # Parent to Child
 
-Parents pass state and configuration down to children as props.
+នៅក្នុង React មធ្យោបាយចម្បងក្នុងការបញ្ជូនទិន្នន័យគឺការហូរចុះក្រោមពី Parent Component ទៅកាន់ Child Component តាមរយៈ **Props**។ Parent អាចបញ្ជូនទាំង primitive values, objects, arrays, ឬសូម្បីតែ JSX elements ទៅឱ្យ Child បានយ៉ាងងាយស្រួល។
 
 ### Key Concepts & Rules:
 
-- Standard unidirectional data flow in React.
+- ជាទម្រង់ស្តង់ដារនៃ **Unidirectional Data Flow** (លំហូរទិន្នន័យមួយទិស) ក្នុង React។
+- Child Component ទទួលបាន Props ក្នុងលក្ខណៈ Read-only (មិនអាចកែប្រែតម្លៃដើមបានឡើយ)។
+- នៅពេលដែលទិន្នន័យនៅក្នុង Parent ផ្លាស់ប្តូរ Child Component នឹងធ្វើការ re-render ដោយស្វ័យប្រវត្តិតាមតម្លៃថ្មីនោះ។
 
 ### Code Example: Parent to Child Data Flow
 

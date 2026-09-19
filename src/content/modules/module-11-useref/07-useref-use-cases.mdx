@@ -5,17 +5,20 @@ title: "useRef Use Cases"
 moduleId: "module-11"
 moduleNumber: "11"
 category: "Hooks & Lifecycle"
-summary: "Media players, measuring widths, canvas drawing, and tracking previous state."
+summary: "ករណីប្រើប្រាស់ជាក់ស្តែងជាមួយ Media Players, Canvas Drawing និង Third-party DOM Libraries។"
+proTip: "`useRef` គឺជាស្ពានដ៏សំខាន់សម្រាប់ភ្ជាប់ React ជាមួយនឹង Third-party libraries ខាងក្រៅដូចជា Chart.js, D3, Leaflet Maps, ឬ Video.js។"
 codeTitle: "Controlling HTML5 Video with useRef"
 ---
 
 # useRef Use Cases
 
-Used extensively with `<video>`, `<audio>`, HTML5 `<canvas>`, and third-party imperative libraries (e.g. Chart.js, Leaflet).
+`useRef` ត្រូវបានប្រើប្រាស់យ៉ាងទូលំទូលាយនៅក្នុងស្ថានភាពជាក់ស្តែងជាច្រើន ជាពិសេសនៅពេលដែលយើងត្រូវធ្វើការជាមួយ HTML5 Media Elements ដូចជា `<video>` និង `<audio>`, HTML5 `<canvas>`, ឬ Third-party Libraries ណាដែលតម្រូវឱ្យគ្រប់គ្រង DOM ដោយផ្ទាល់ (ដូចជា Chart.js, Leaflet, Mapbox)។
 
 ### Key Concepts & Rules:
 
-- Bridges declarative React with imperative external browser APIs.
+- ដើរតួជាស្ពានតភ្ជាប់រវាង Declarative React និង Imperative Browser APIs។
+- ប្រើសម្រាប់បញ្ជា play/pause, volume, ឬ seek ពេលវេលានៅលើ Video player។
+- ប្រើដើម្បីទាញយក Canvas 2D/WebGL Context សម្រាប់គូរក្រាហ្វិក។
 
 ### Code Example: Controlling HTML5 Video with useRef
 
