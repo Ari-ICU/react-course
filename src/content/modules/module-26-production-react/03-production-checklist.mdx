@@ -5,24 +5,62 @@ title: "Production Checklist"
 moduleId: "module-26"
 moduleNumber: "26"
 category: "Enterprise & Production"
-summary: "Final pre-flight audit before shipping to production."
-codeTitle: "Production Deployment Checklist"
+summary: "បញ្ជីត្រួតពិនិត្យ Pre-flight គ្រប់ជ្រុងជ្រោយ (TypeScript, Linting, SEO, Performance, Caching) មុនពេល Ship ទៅ Production។"
+proTip: "គួររៀបចំ CI/CD Pipeline (ដូចជា GitHub Actions ឬ GitLab CI) ឱ្យដំណើរការ `tsc --noEmit`, `eslint .`, និង `npm run build` ដោយស្វ័យប្រវត្តិនៅរាល់ពេលបើក Pull Request មុននឹងអនុញ្ញាតឱ្យ Merge ចូល Main branch។"
+pitfall: "ការភ្លេចកំណត់ Open Graph (`og:image`, `og:title`) metadata និង `robots.txt` នឹងធ្វើឱ្យ Search Engines មិនអាច Index ទំព័ររបស់អ្នកបានត្រឹមត្រូវ ហើយបាត់បង់ការបង្ហាញ Social Preview Cards នៅពេល Share លើ Telegram ឬ Facebook។"
+codeTitle: "Production Pre-flight CI/CD Pipeline"
 ---
 
 # Production Checklist
 
-1) Clean console logs; 2) Audit bundle size; 3) Verify OpenGraph SEO tags; 4) Check responsive mobile layouts; 5) Configure CDN caching headers.
+មុននឹងធ្វើការ **Deploy** កម្មវិធី React ទៅកាន់ Production Environment (Vercel, AWS, Cloudflare, Netlify) Developer ត្រូវតែអនុវត្តតាម **Pre-flight Production Checklist** ដើម្បីធានាបាននូវគុណភាពកូដ, សុវត្ថិភាពទិន្នន័យ, ល្បឿន Performance, ភាពងាយស្រួលចូលមើល (Accessibility), និងភាពត្រឹមត្រូវនៃ SEO។ ការខកខានត្រួតពិនិត្យចំណុចទាំងនេះអាចបណ្ដាលឱ្យកើតមានកំហុស Runtime Crashes នៅចំពោះមុខអតិថិជនពិតប្រាកដ។
 
 ### Key Concepts & Rules:
 
-- Ensure zero unresolved TypeScript or ESLint warnings.
+- **Type Safety & Linting**: ត្រូវប្រាកដថាគ្មាន TypeScript Error (`tsc --noEmit`) និងគ្មាន ESLint Warning ណាមួយនៅសេសសល់ឡើយ។
+- **Remove Debug Logs**: លុបចោលរាល់ `console.log()` និង Debugging Tools មុនពេល Build។
+- **SEO & Social Metadata**: ពិនិត្យមើល `<title>`, `<meta name="description">`, Canonical URLs, Favicon, និង Open Graph tags (`og:title`, `og:image`)។
+- **Asset Optimization**: បង្រួមរូបភាពឱ្យទៅជាទម្រង់ WebP/AVIF, ប្រើ Lazy Loading សម្រាប់រូបភាពក្រៅអេក្រង់ និងដាក់ `alt` tags គ្រប់រូបភាពទាំងអស់។
+- **Environment Separation**: ពិនិត្យមើលថាតើ `.env.production` ប្រើប្រាស់ Production API URLs និងមិនមានបែកធ្លាយ Private Secret Keys ចូល Client Bundle ឡើយ។
+- **Performance & Lighthouse Audit**: ដំណើរការ Google Lighthouse ដើម្បីទទួលបានពិន្ទុ Performance, Accessibility, Best Practices, និង SEO យ៉ាងហោចណាស់ 90+។
 
-### Code Example: Production Deployment Checklist
+### Code Example: Production Pre-flight CI/CD Pipeline
 
-```jsx
-// Production Pre-Flight:
-// [x] TypeScript build passes without any errors
-// [x] ESLint checks clean
-// [x] All images have alt tags and width/height attributes
-// [x] Error Boundaries installed around core routes
+```yaml
+# .github/workflows/production-check.yml
+name: Production Pre-Flight Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Type Checking
+        run: npx tsc --noEmit
+
+      - name: Code Linting
+        run: npm run lint
+
+      - name: Production Build Test
+        run: npm run build
+
+      - name: Audit Vulnerabilities
+        run: npm audit --audit-level=high
 ```

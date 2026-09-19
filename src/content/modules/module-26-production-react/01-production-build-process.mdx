@@ -5,20 +5,43 @@ title: "Production Build Process"
 moduleId: "module-26"
 moduleNumber: "26"
 category: "Enterprise & Production"
-summary: "Minification, dead-code elimination, and tree-shaking."
-codeTitle: "Production Build Command"
+summary: "ការធ្វើ Minification, Dead-code elimination, Tree-shaking, និងការបង្រួម Bundle សម្រាប់ Production Deployment។"
+proTip: "ពេលដំណើរការ build tool ដូចជា Vite ឬ Webpack វានឹងបង្កើតឯកសារ Bundle ដែលមាន Content Hashing (ឧ. `index.d4f1a2.js`) ក្នុងឈ្មោះឯកសារ ដើម្បីទាញយកអត្ថប្រយោជន៍ពេញលេញពី Immutable Browser Caching។"
+pitfall: "កុំ Deploy ដោយប្រើ Dev Server (`npm run dev`) ទៅលើ Production Server ឱ្យសោះ ព្រោះ Dev Server មិនបានធ្វើ Code Splitting, Tree-shaking ឬ Minification ឡើយ ដែលបណ្តាលឱ្យ Performance ធ្លាក់ចុះ និងចំណាយ Bandwidth ខ្ពស់។"
+codeTitle: "Production Build & Analysis Scripts"
 ---
 
 # Production Build Process
 
-Running `npm run build` generates an optimized static distribution with minified JavaScript, compressed CSS, and stripped development warnings.
+ដំណើរការ **Production Build** (`npm run build`) គឺជាដំណាក់កាលបំប្លែងកូដ React (JSX, TypeScript, CSS modules) ឱ្យទៅជា Static Assets (HTML, CSS, JavaScript) ដែលត្រូវបាន Optimized ខ្ពស់បំផុត។ នៅដំណាក់កាលនេះ Bundler នឹងលុបចោលរាល់ Development Warnings, ធ្វើ **Minification** (បង្រួមឈ្មោះ Variables និងលុប Whitespace), អនុវត្ត **Tree-shaking** (កាត់ចោលកូដណាដែលមិនដែលត្រូវបានហៅប្រើប្រាស់ - Dead Code Elimination), និងបំបែក Chunk ដោយផ្អែកលើ Route (Code Splitting)។
 
 ### Key Concepts & Rules:
 
-- Build bundles are hashed for immutable browser caching.
+- **Minification & Compression**: បង្រួមកូដ JavaScript និង CSS ឱ្យនៅទំហំតូចបំផុត រួមជាមួយការ Enable Gzip/Brotli compression នៅលើ Web Server (Nginx/Cloudflare)។
+- **Dead-Code Elimination (Tree-shaking)**: បំបាត់ចោល Modules ឬ Functions ណាដែល Import មកតែមិនដែលប្រើក្នុងកម្មវិធី។
+- **Content Hashing**: រាល់ Chunk JS/CSS មានបន្ថែម Unique Hash ក្នុង Filename ដើម្បីការពារកុំឱ្យ Browser សន្សំ Cache ចាស់ពេលមានការ Update កូដថ្មី។
+- **Bundle Analyzer**: ប្រើប្រាស់ Tool ដូចជា `rollup-plugin-visualizer` ឬ `@next/bundle-analyzer` ដើម្បីពិនិត្យមើល Dependencies ណាដែលស៊ីទំហំធំខុសប្រក្រតី។
 
-### Code Example: Production Build Command
+### Code Example: Production Build & Analysis Scripts
 
-```jsx
-npm run build && npm run start
+```json
+{
+  "name": "my-enterprise-react-app",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "build:analyze": "vite build --mode analyze"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "rollup-plugin-visualizer": "^5.14.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}
 ```

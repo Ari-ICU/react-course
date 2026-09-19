@@ -5,37 +5,77 @@ title: "Error Boundaries"
 moduleId: "module-26"
 moduleNumber: "26"
 category: "Enterprise & Production"
-summary: "Catching runtime JavaScript errors to prevent white-screen crashes."
-codeTitle: "React Error Boundary Component"
+summary: "ការចាប់ Runtime JavaScript Errors ក្នុង Component Tree ដើម្បីបង្ហាញ Fallback UI និងការពារកុំឱ្យបែកផ្ទាំងពណ៌ស (White Screen of Death)។"
+proTip: "Error Boundary ចាប់បានតែ Errors ក្នុងអំឡុងពេល Rendering, Lifecycle methods, និង Constructors ប៉ុណ្ណោះ។ ចំពោះ Async code (ដូចជា `fetch`) ឬ Event Handlers (ដូចជា `onClick`) អ្នកត្រូវប្រើ `try...catch` ធម្មតា។"
+pitfall: "កុំដាក់ Error Boundary តែមួយគត់នៅកំពូល Root នៃ App ទាំងមូល! គួរដាក់ Error Boundary ដាច់ដោយឡែកជុំវិញ Widget នីមួយៗ (ដូចជា Feed, Sidebar, Comments) ដើម្បីឱ្យផ្នែកផ្សេងទៀតនៅតែបន្តដំណើរការបាន ទោះបីជា Widget មួយជួបបញ្ហាក៏ដោយ។"
+codeTitle: "Production React Error Boundary Component"
 ---
 
 # Error Boundaries
 
-An Error Boundary catches JavaScript errors anywhere in its child component tree, logs the error, and displays a friendly fallback UI instead of crashing the entire screen.
+កាលពីមុន ប្រសិនបើមាន JavaScript Error ណាមួយកើតឡើងក្នុងពេល Render នៃ React Component វានឹងធ្វើឱ្យ React Unmount App ទាំងមូល ហើយបង្ហាញផ្ទាំងពណ៌សទទេរស្អាត (**White Screen of Death**) ដល់ User។ **Error Boundary** គឺជា Class Component ពិសេសមួយដែលដើរតួជា "សំណាញ់សុវត្ថិភាព" សម្រាប់ចាប់រាល់ Runtime Errors ដែលកើតឡើងនៅក្នុង Child Component Tree របស់វា កត់ត្រាកំហុសទៅកាន់ Logging Service (ដូចជា Sentry) និងបង្ហាញ Fallback UI យ៉ាងស្រស់ស្អាតជំនួសឱ្យការ Crash។
 
 ### Key Concepts & Rules:
 
-- Wrap major feature sections in independent Error Boundaries.
-- A failure in a sidebar should never crash the main application view.
+- **`static getDerivedStateFromError(error)`**: ប្រើដើម្បី Update Component State (ឧ. `hasError: true`) ឱ្យ React បង្ហាញ Fallback UI ភ្លាមៗ។
+- **`componentDidCatch(error, info)`**: ប្រើសម្រាប់បញ្ជូនព័ត៌មានលម្អិតនៃ Error និង Component Stack Trace ទៅកាន់ Monitoring Tools (ដូចជា Sentry ឬ Datadog)។
+- **Granular Boundaries**: បំបែក Error Boundaries តាម Feature ឬ Widget នីមួយៗ (Granular isolation) ជៀសវាងឱ្យ Error តូចមួយធ្វើឱ្យបែកផ្ទាំង App ទាំងមូល។
+- **Reset Capability**: ផ្តល់ប៊ូតុង "Try Again" នៅក្នុង Fallback UI ដើម្បីឱ្យ User អាចព្យាយាម Render ម្តងទៀតដោយមិនបាច់ Refresh ទំព័រទាំងមូល។
 
-### Code Example: React Error Boundary Component
+### Code Example: Production React Error Boundary Component
 
 ```jsx
-import { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ReactNode, ErrorInfo } from "react";
 
-export class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {
-  state = { hasError: false };
+interface Props {
+  fallback?: ReactNode;
+  children: ReactNode;
+}
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+interface State {
+  hasError: boolean;
+  errorMessage: string;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  public state: State = {
+    hasError: false,
+    errorMessage: "",
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, errorMessage: error.message };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("Caught in ErrorBoundary:", error, info);
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // បញ្ជូនកំហុសទៅកាន់ Production Monitoring Service (Sentry/LogRocket)
+    console.error("Uncaught runtime error:", error, errorInfo);
   }
 
-  render() {
-    if (this.state.hasError) return this.props.fallback;
+  public handleReset = () => {
+    this.setState({ hasError: false, errorMessage: "" });
+  };
+
+  public render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      return (
+        <div className="p-6 my-4 bg-red-500/10 border border-red-500/30 rounded-xl text-center">
+          <h3 className="text-lg font-semibold text-red-400">ផ្នែកនេះជួបប្រទះបញ្ហាបច្ចេកទេស</h3>
+          <p className="text-sm text-slate-300 mt-2 mb-4">{this.state.errorMessage || "មានបញ្ហាមិនរំពឹងទុកបានកើតឡើង។"}</p>
+          <button
+            onClick={this.handleReset}
+            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-sm transition"
+          >
+            ព្យាយាមម្តងទៀត
+          </button>
+        </div>
+      );
+    }
+
     return this.props.children;
   }
 }

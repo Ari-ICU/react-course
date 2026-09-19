@@ -4341,48 +4341,64 @@ export const modulesData: ModuleItem[] = [
     "number": "26",
     "title": "Production React",
     "category": "Enterprise & Production",
-    "summary": "Production builds, Error Boundaries, SEO, metadata, accessibility audit, performance checklists, and deployment pipelines.",
+    "summary": "ការរៀបចំ Production Build, Error Boundaries ទប់ស្កាត់ White Screen Crash, SEO Metadata, Bundle Optimization, Tree-shaking, និង Pre-flight Production Checklist មុនពេល Deploy។",
     "iconName": "Rocket",
     "topics": [
       {
         "id": "m26-01",
         "number": "01",
         "title": "Production Build Process",
-        "summary": "Minification, dead-code elimination, and tree-shaking.",
-        "explanation": "Running `npm run build` generates an optimized static distribution with minified JavaScript, compressed CSS, and stripped development warnings.",
+        "summary": "ការធ្វើ Minification, Dead-code elimination, Tree-shaking, និងការបង្រួម Bundle សម្រាប់ Production Deployment។",
+        "explanation": "ដំណើរការ **Production Build** (`npm run build`) គឺជាដំណាក់កាលបំប្លែងកូដ React (JSX, TypeScript, CSS modules) ឱ្យទៅជា Static Assets (HTML, CSS, JavaScript) ដែលត្រូវបាន Optimized ខ្ពស់បំផុត។ នៅដំណាក់កាលនេះ Bundler នឹងលុបចោលរាល់ Development Warnings, ធ្វើ **Minification** (បង្រួមឈ្មោះ Variables និងលុប Whitespace), អនុវត្ត **Tree-shaking** (កាត់ចោលកូដណាដែលមិនដែលត្រូវបានហៅប្រើប្រាស់ - Dead Code Elimination), និងបំបែក Chunk ដោយផ្អែកលើ Route (Code Splitting)។",
         "keyPoints": [
-          "Build bundles are hashed for immutable browser caching."
+          "**Minification & Compression**: បង្រួមកូដ JavaScript និង CSS ឱ្យនៅទំហំតូចបំផុត រួមជាមួយការ Enable Gzip/Brotli compression នៅលើ Web Server (Nginx/Cloudflare)។",
+          "**Dead-Code Elimination (Tree-shaking)**: បំបាត់ចោល Modules ឬ Functions ណាដែល Import មកតែមិនដែលប្រើក្នុងកម្មវិធី។",
+          "**Content Hashing**: រាល់ Chunk JS/CSS មានបន្ថែម Unique Hash ក្នុង Filename ដើម្បីការពារកុំឱ្យ Browser សន្សំ Cache ចាស់ពេលមានការ Update កូដថ្មី។",
+          "**Bundle Analyzer**: ប្រើប្រាស់ Tool ដូចជា `rollup-plugin-visualizer` ឬ `@next/bundle-analyzer` ដើម្បីពិនិត្យមើល Dependencies ណាដែលស៊ីទំហំធំខុសប្រក្រតី។"
         ],
-        "codeSnippet": "npm run build && npm run start",
-        "codeLanguage": "jsx",
-        "codeTitle": "Production Build Command"
+        "codeSnippet": "{\n  \"name\": \"my-enterprise-react-app\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"tsc -b && vite build\",\n    \"preview\": \"vite preview\",\n    \"build:analyze\": \"vite build --mode analyze\"\n  },\n  \"dependencies\": {\n    \"react\": \"^19.0.0\",\n    \"react-dom\": \"^19.0.0\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^19.0.0\",\n    \"rollup-plugin-visualizer\": \"^5.14.0\",\n    \"typescript\": \"^5.7.0\",\n    \"vite\": \"^6.0.0\"\n  }\n}",
+        "codeLanguage": "json",
+        "codeTitle": "Production Build & Analysis Scripts",
+        "proTip": "ពេលដំណើរការ build tool ដូចជា Vite ឬ Webpack វានឹងបង្កើតឯកសារ Bundle ដែលមាន Content Hashing (ឧ. `index.d4f1a2.js`) ក្នុងឈ្មោះឯកសារ ដើម្បីទាញយកអត្ថប្រយោជន៍ពេញលេញពី Immutable Browser Caching។",
+        "pitfall": "កុំ Deploy ដោយប្រើ Dev Server (`npm run dev`) ទៅលើ Production Server ឱ្យសោះ ព្រោះ Dev Server មិនបានធ្វើ Code Splitting, Tree-shaking ឬ Minification ឡើយ ដែលបណ្តាលឱ្យ Performance ធ្លាក់ចុះ និងចំណាយ Bandwidth ខ្ពស់។"
       },
       {
         "id": "m26-02",
         "number": "02",
         "title": "Error Boundaries",
-        "summary": "Catching runtime JavaScript errors to prevent white-screen crashes.",
-        "explanation": "An Error Boundary catches JavaScript errors anywhere in its child component tree, logs the error, and displays a friendly fallback UI instead of crashing the entire screen.",
+        "summary": "ការចាប់ Runtime JavaScript Errors ក្នុង Component Tree ដើម្បីបង្ហាញ Fallback UI និងការពារកុំឱ្យបែកផ្ទាំងពណ៌ស (White Screen of Death)។",
+        "explanation": "កាលពីមុន ប្រសិនបើមាន JavaScript Error ណាមួយកើតឡើងក្នុងពេល Render នៃ React Component វានឹងធ្វើឱ្យ React Unmount App ទាំងមូល ហើយបង្ហាញផ្ទាំងពណ៌សទទេរស្អាត (**White Screen of Death**) ដល់ User។ **Error Boundary** គឺជា Class Component ពិសេសមួយដែលដើរតួជា \"សំណាញ់សុវត្ថិភាព\" សម្រាប់ចាប់រាល់ Runtime Errors ដែលកើតឡើងនៅក្នុង Child Component Tree របស់វា កត់ត្រាកំហុសទៅកាន់ Logging Service (ដូចជា Sentry) និងបង្ហាញ Fallback UI យ៉ាងស្រស់ស្អាតជំនួសឱ្យការ Crash។",
         "keyPoints": [
-          "Wrap major feature sections in independent Error Boundaries.",
-          "A failure in a sidebar should never crash the main application view."
+          "**`static getDerivedStateFromError(error)`**: ប្រើដើម្បី Update Component State (ឧ. `hasError: true`) ឱ្យ React បង្ហាញ Fallback UI ភ្លាមៗ។",
+          "**`componentDidCatch(error, info)`**: ប្រើសម្រាប់បញ្ជូនព័ត៌មានលម្អិតនៃ Error និង Component Stack Trace ទៅកាន់ Monitoring Tools (ដូចជា Sentry ឬ Datadog)។",
+          "**Granular Boundaries**: បំបែក Error Boundaries តាម Feature ឬ Widget នីមួយៗ (Granular isolation) ជៀសវាងឱ្យ Error តូចមួយធ្វើឱ្យបែកផ្ទាំង App ទាំងមូល។",
+          "**Reset Capability**: ផ្តល់ប៊ូតុង \"Try Again\" នៅក្នុង Fallback UI ដើម្បីឱ្យ User អាចព្យាយាម Render ម្តងទៀតដោយមិនបាច់ Refresh ទំព័រទាំងមូល។"
         ],
-        "codeSnippet": "import { Component, ErrorInfo, ReactNode } from 'react';\n\nexport class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {\n  state = { hasError: false };\n\n  static getDerivedStateFromError() {\n    return { hasError: true };\n  }\n\n  componentDidCatch(error: Error, info: ErrorInfo) {\n    console.error(\"Caught in ErrorBoundary:\", error, info);\n  }\n\n  render() {\n    if (this.state.hasError) return this.props.fallback;\n    return this.props.children;\n  }\n}",
+        "codeSnippet": "import React, { Component, ReactNode, ErrorInfo } from \"react\";\n\ninterface Props {\n  fallback?: ReactNode;\n  children: ReactNode;\n}\n\ninterface State {\n  hasError: boolean;\n  errorMessage: string;\n}\n\nexport class ErrorBoundary extends Component<Props, State> {\n  public state: State = {\n    hasError: false,\n    errorMessage: \"\",\n  };\n\n  public static getDerivedStateFromError(error: Error): State {\n    return { hasError: true, errorMessage: error.message };\n  }\n\n  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {\n    // បញ្ជូនកំហុសទៅកាន់ Production Monitoring Service (Sentry/LogRocket)\n    console.error(\"Uncaught runtime error:\", error, errorInfo);\n  }\n\n  public handleReset = () => {\n    this.setState({ hasError: false, errorMessage: \"\" });\n  };\n\n  public render() {\n    if (this.state.hasError) {\n      if (this.props.fallback) {\n        return this.props.fallback;\n      }\n\n      return (\n        <div className=\"p-6 my-4 bg-red-500/10 border border-red-500/30 rounded-xl text-center\">\n          <h3 className=\"text-lg font-semibold text-red-400\">ផ្នែកនេះជួបប្រទះបញ្ហាបច្ចេកទេស</h3>\n          <p className=\"text-sm text-slate-300 mt-2 mb-4\">{this.state.errorMessage || \"មានបញ្ហាមិនរំពឹងទុកបានកើតឡើង។\"}</p>\n          <button\n            onClick={this.handleReset}\n            className=\"px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-sm transition\"\n          >\n            ព្យាយាមម្តងទៀត\n          </button>\n        </div>\n      );\n    }\n\n    return this.props.children;\n  }\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "React Error Boundary Component"
+        "codeTitle": "Production React Error Boundary Component",
+        "proTip": "Error Boundary ចាប់បានតែ Errors ក្នុងអំឡុងពេល Rendering, Lifecycle methods, និង Constructors ប៉ុណ្ណោះ។ ចំពោះ Async code (ដូចជា `fetch`) ឬ Event Handlers (ដូចជា `onClick`) អ្នកត្រូវប្រើ `try...catch` ធម្មតា។",
+        "pitfall": "កុំដាក់ Error Boundary តែមួយគត់នៅកំពូល Root នៃ App ទាំងមូល! គួរដាក់ Error Boundary ដាច់ដោយឡែកជុំវិញ Widget នីមួយៗ (ដូចជា Feed, Sidebar, Comments) ដើម្បីឱ្យផ្នែកផ្សេងទៀតនៅតែបន្តដំណើរការបាន ទោះបីជា Widget មួយជួបបញ្ហាក៏ដោយ។"
       },
       {
         "id": "m26-03",
         "number": "03",
         "title": "Production Checklist",
-        "summary": "Final pre-flight audit before shipping to production.",
-        "explanation": "1) Clean console logs; 2) Audit bundle size; 3) Verify OpenGraph SEO tags; 4) Check responsive mobile layouts; 5) Configure CDN caching headers.",
+        "summary": "បញ្ជីត្រួតពិនិត្យ Pre-flight គ្រប់ជ្រុងជ្រោយ (TypeScript, Linting, SEO, Performance, Caching) មុនពេល Ship ទៅ Production។",
+        "explanation": "មុននឹងធ្វើការ **Deploy** កម្មវិធី React ទៅកាន់ Production Environment (Vercel, AWS, Cloudflare, Netlify) Developer ត្រូវតែអនុវត្តតាម **Pre-flight Production Checklist** ដើម្បីធានាបាននូវគុណភាពកូដ, សុវត្ថិភាពទិន្នន័យ, ល្បឿន Performance, ភាពងាយស្រួលចូលមើល (Accessibility), និងភាពត្រឹមត្រូវនៃ SEO។ ការខកខានត្រួតពិនិត្យចំណុចទាំងនេះអាចបណ្ដាលឱ្យកើតមានកំហុស Runtime Crashes នៅចំពោះមុខអតិថិជនពិតប្រាកដ។",
         "keyPoints": [
-          "Ensure zero unresolved TypeScript or ESLint warnings."
+          "**Type Safety & Linting**: ត្រូវប្រាកដថាគ្មាន TypeScript Error (`tsc --noEmit`) និងគ្មាន ESLint Warning ណាមួយនៅសេសសល់ឡើយ។",
+          "**Remove Debug Logs**: លុបចោលរាល់ `console.log()` និង Debugging Tools មុនពេល Build។",
+          "**SEO & Social Metadata**: ពិនិត្យមើល `<title>`, `<meta name=\"description\">`, Canonical URLs, Favicon, និង Open Graph tags (`og:title`, `og:image`)។",
+          "**Asset Optimization**: បង្រួមរូបភាពឱ្យទៅជាទម្រង់ WebP/AVIF, ប្រើ Lazy Loading សម្រាប់រូបភាពក្រៅអេក្រង់ និងដាក់ `alt` tags គ្រប់រូបភាពទាំងអស់។",
+          "**Environment Separation**: ពិនិត្យមើលថាតើ `.env.production` ប្រើប្រាស់ Production API URLs និងមិនមានបែកធ្លាយ Private Secret Keys ចូល Client Bundle ឡើយ។",
+          "**Performance & Lighthouse Audit**: ដំណើរការ Google Lighthouse ដើម្បីទទួលបានពិន្ទុ Performance, Accessibility, Best Practices, និង SEO យ៉ាងហោចណាស់ 90+។"
         ],
-        "codeSnippet": "// Production Pre-Flight:\n// [x] TypeScript build passes without any errors\n// [x] ESLint checks clean\n// [x] All images have alt tags and width/height attributes\n// [x] Error Boundaries installed around core routes",
-        "codeLanguage": "jsx",
-        "codeTitle": "Production Deployment Checklist"
+        "codeSnippet": "# .github/workflows/production-check.yml\nname: Production Pre-Flight Checks\n\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  audit:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout Code\n        uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: \"npm\"\n\n      - name: Install Dependencies\n        run: npm ci\n\n      - name: Type Checking\n        run: npx tsc --noEmit\n\n      - name: Code Linting\n        run: npm run lint\n\n      - name: Production Build Test\n        run: npm run build\n\n      - name: Audit Vulnerabilities\n        run: npm audit --audit-level=high",
+        "codeLanguage": "yaml",
+        "codeTitle": "Production Pre-flight CI/CD Pipeline",
+        "proTip": "គួររៀបចំ CI/CD Pipeline (ដូចជា GitHub Actions ឬ GitLab CI) ឱ្យដំណើរការ `tsc --noEmit`, `eslint .`, និង `npm run build` ដោយស្វ័យប្រវត្តិនៅរាល់ពេលបើក Pull Request មុននឹងអនុញ្ញាតឱ្យ Merge ចូល Main branch។",
+        "pitfall": "ការភ្លេចកំណត់ Open Graph (`og:image`, `og:title`) metadata និង `robots.txt` នឹងធ្វើឱ្យ Search Engines មិនអាច Index ទំព័ររបស់អ្នកបានត្រឹមត្រូវ ហើយបាត់បង់ការបង្ហាញ Social Preview Cards នៅពេល Share លើ Telegram ឬ Facebook។"
       }
     ]
   },
