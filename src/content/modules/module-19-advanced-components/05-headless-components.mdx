@@ -5,31 +5,43 @@ title: "Headless Components"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Unstyled accessible logic components."
+summary: "ការស្វែងយល់ពី Headless UI (Radix UI, Headless UI) ដែលផ្តោតលើ Logic, Accessibility (A11y), និង Keyboard Navigation ដោយគ្មាន CSS។"
+proTip: "កុំបង្កើត Dropdown ឬ Modal ពីសូន្យដោយខ្លួនឯង បើអ្នកមិនចង់ឈឺក្បាលជាមួយបញ្ហា ARIA attributes, Focus Trapping, និង Keyboard Navigation (Tab, Esc, Up/Down Arrows)! ចូរប្រើ Headless Primitives ដូចជា Radix UI រួចតុបតែងវាជាមួយ Tailwind CSS។"
 codeTitle: "Headless Modal Component"
 ---
 
 # Headless Components
 
-Headless UI libraries (Radix UI, Headless UI) provide 100% accessible keyboard navigation, focus trapping, and ARIA attributes with 0% CSS, allowing you to style freely with Tailwind CSS.
+**Headless UI Components** (ដូចជា Radix UI, Headless UI, ឬ React Aria) ផ្តល់នូវ Logic ទាំងស្រុង, State Management, Accessibility Attributes (ARIA), Focus Trapping, និង Keyboard Navigation ប៉ុន្តែគ្មាន Styling (0% CSS) ឡើយ។ នេះផ្តល់ឱ្យ Developer នូវសេរីភាព 100% ក្នុងការតុបតែង Visual Design តាមរយៈ Tailwind CSS ដោយមិនបាច់បារម្ភពីរឿង A11y ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Total styling freedom without reinventing accessibility.
+- ធានាបាននូវភាពងាយស្រួលប្រើប្រាស់ (Accessibility - A11y) កម្រិតខ្ពស់បំផុត។
+- គ្មាន CSS Bundled មកជាមួយឡើយ (Zero default styles) — តុបតែងដោយសេរីជាមួយ Tailwind CSS។
+- គឺជាគ្រឹះស្នូលនៃ UI Libraries ទំនើបៗដូចជា Shadcn UI។
 
 ### Code Example: Headless Modal Component
 
 ```jsx
-// Radix UI Headless Dialog wrapped in Tailwind:
 import * as Dialog from '@radix-ui/react-dialog';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: (open: boolean) => void;
+  title: string;
+  children: React.ReactNode;
+}
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full">
-          <Dialog.Title className="text-xl font-bold text-white">{title}</Dialog.Title>
+        {/* Backdrop ងងឹតព្រិលៗ */}
+        <Dialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50" />
+        
+        {/* ប្រអប់ផ្ទាំង Modal Content */}
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full z-50 shadow-2xl">
+          <Dialog.Title className="text-xl font-bold text-white mb-2">{title}</Dialog.Title>
           {children}
         </Dialog.Content>
       </Dialog.Portal>

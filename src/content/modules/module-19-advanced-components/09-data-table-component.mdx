@@ -5,17 +5,20 @@ title: "Data Table Component"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Reusable data tables with sorting, filtering, and selection."
+summary: "ការរចនា Reusable Data Table Component ជាមួយ TypeScript Generics, Dynamic Columns, Sorting, និង Custom Cell Rendering។"
+proTip: "ប្រើប្រាស់ TypeScript Generics (`<T>`) ក្នុងការរចនា Columns Schema (`accessorKey`, `header`, `render`) ដើម្បីទទួលបាន Auto-completion និង Type-safety ពេញលេញសម្រាប់គ្រប់ Field នៃទិន្នន័យ។"
 codeTitle: "Generic Reusable DataTable Component"
 ---
 
 # Data Table Component
 
-Abstracts table headers, column configurations, sorting state, and row rendering into a reusable component.
+នៅក្នុង Dashboard គ្រប់គ្រងកម្រិត Enterprise តារាងទិន្នន័យ (Data Table) ត្រូវបានប្រើប្រាស់ស្ទើរតែគ្រប់ទីកន្លែង។ ការបង្កើត Generic DataTable Component ជួយកាត់បន្ថយការសរសេរកូដ HTML Table ដដែលៗ ដោយគ្រាន់តែបញ្ជូន Data Array និង Column Configuration Objects មកជាការស្រេច។
 
 ### Key Concepts & Rules:
 
-- Powers enterprise management dashboards.
+- ប្រើប្រាស់ TypeScript Generics (`<T extends { id: string | number }>`) សម្រាប់ទិន្នន័យគ្រប់ប្រភេទ។
+- Column Definition គាំទ្រទាំងការទាញយកតម្លៃផ្ទាល់ (`accessorKey`) និង Custom Cell Renderers (`render: (row) => JSX`)។
+- ងាយស្រួលពង្រីកមុខងារបន្ថែមដូចជា Sorting, Row Selection, និង Pagination។
 
 ### Code Example: Generic Reusable DataTable Component
 
@@ -26,24 +29,35 @@ interface Column<T> {
   render?: (item: T) => React.ReactNode;
 }
 
-export function DataTable<T extends { id: string }>({ data, columns }: { data: T[]; columns: Column<T>[] }) {
+interface DataTableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+}
+
+export function DataTable<T extends { id: string | number }>({ data, columns }: DataTableProps<T>) {
   return (
-    <table className="w-full text-left text-sm text-slate-300">
-      <thead className="bg-slate-900 border-b border-slate-800 text-xs uppercase text-slate-400">
-        <tr>{columns.map(c => <th key={String(c.accessorKey)} className="p-3">{c.header}</th>)}</tr>
-      </thead>
-      <tbody className="divide-y divide-slate-800">
-        {data.map(row => (
-          <tr key={row.id}>
-            {columns.map(c => (
-              <td key={String(c.accessorKey)} className="p-3">
-                {c.render ? c.render(row) : String(row[c.accessorKey])}
-              </td>
+    <div className="overflow-x-auto rounded-xl border border-slate-800">
+      <table className="w-full text-left text-sm text-slate-300">
+        <thead className="bg-slate-900/80 border-b border-slate-800 text-xs uppercase text-slate-400">
+          <tr>
+            {columns.map((col) => (
+              <th key={String(col.accessorKey)} className="p-3 font-semibold">{col.header}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className="divide-y divide-slate-800">
+          {data.map((row) => (
+            <tr key={row.id} className="hover:bg-slate-800/40 transition-colors">
+              {columns.map((col) => (
+                <td key={String(col.accessorKey)} className="p-3">
+                  {col.render ? col.render(row) : String(row[col.accessorKey] ?? '')}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 ```

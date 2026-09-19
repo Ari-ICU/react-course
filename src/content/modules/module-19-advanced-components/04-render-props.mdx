@@ -5,27 +5,44 @@ title: "Render Props"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Sharing rendering logic by passing a function as children."
+summary: "ការចែករំលែក State និង Logic តាមរយៈការបញ្ជូនអនុគមន៍ជា Prop ឬ Children (Function as a Child)។"
+proTip: "ទោះបីជា Custom Hooks ត្រូវបាននិយមប្រើប្រាស់ជំនួស Render Props ភាគច្រើនក៏ដោយ Render Props នៅតែមានតម្លៃខ្ពស់បំផុតសម្រាប់ការធ្វើ UI Template Customization (ដូចជាការអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់កំណត់របៀប Render ជួរនីមួយៗនៃ List)។"
 codeTitle: "Render Props Pattern"
 ---
 
 # Render Props
 
-A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic.
+**Render Prop** គឺជាបច្ចេកទេសមួយដែល Component មួយទទួលយកអនុគមន៍ (Function) មួយតាមរយៈ Prop (ឬជា Children) ដែលអនុគមន៍នោះ return នូវ React Element។ Component នឹងហៅអនុគមន៍នោះដោយបញ្ជូនទិន្នន័យ State ខាងក្នុងទៅឱ្យ ដែលអនុញ្ញាតឱ្យ Consumer មានសិទ្ធិសម្រេចចិត្តលើទម្រង់ UI ដែលត្រូវ Render។
 
 ### Key Concepts & Rules:
 
-- Precursor to custom hooks, still valuable for template customization.
+- Syntax: `<Component render={(data) => <UI data={data} />} />` ឬ `<Component>{(data) => <UI />}</Component>`។
+- អនុញ្ញាតឱ្យបំបែក Data/Behavior Logic ចេញពី Presentation UI។
+- នៅតែពេញនិយមខ្លាំងក្នុង Virtualized Lists និង Form Libraries (ដូចជា Formik/Downshift)។
 
 ### Code Example: Render Props Pattern
 
 ```jsx
-export function MouseTracker({ render }: { render: (pos: { x: number; y: number }) => React.ReactNode }) {
+import React, { useState } from 'react';
+
+interface MouseTrackerProps {
+  render: (pos: { x: number; y: number }) => React.ReactNode;
+}
+
+export function MouseTracker({ render }: MouseTrackerProps) {
   const [pos, setPos] = useState({ x: 0, y: 0 });
+
   return (
-    <div onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}>
+    <div 
+      className="h-64 border border-dashed rounded p-4"
+      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+    >
+      {/* ហៅអនុគមន៍ render ដោយបញ្ជូន State ទៅឱ្យ Consumer */}
       {render(pos)}
     </div>
   );
 }
+
+// ការប្រើប្រាស់៖
+// <MouseTracker render={({ x, y }) => <p>កូអរដោនេកណ្ដុរ៖ X: {x}, Y: {y}</p>} />
 ```

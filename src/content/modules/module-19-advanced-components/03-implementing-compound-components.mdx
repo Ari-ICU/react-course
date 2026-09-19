@@ -5,21 +5,26 @@ title: "Implementing Compound Components"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Building internal context and sub-component exports."
+summary: "ការបង្កើត Internal React Context ដើម្បីភ្ជាប់ទំនាក់ទំនងរវាង Parent Container និង Sub-components។"
+proTip: "បង្កើត Internal Context មួយសម្រាប់តែ Compound Component នោះ ដើម្បីចែករំលែក active state និង setter handler។ អ្នកអាច export sub-components ជា Named Exports ឬចងភ្ជាប់ជា Static Properties (ដូចជា `Tabs.Trigger = TabsTrigger`)។"
 codeTitle: "Compound Component Implementation"
 ---
 
 # Implementing Compound Components
 
-Create an internal context to share the active value and setter between the parent container and child triggers.
+ដើម្បីបង្កើត Compound Component ដោយផ្ទាល់ យើងត្រូវប្រើប្រាស់ **React Context** នៅខាងក្នុង។ Parent Component (`Tabs`) នឹងដើរតួជា Provider គ្រប់គ្រង State (`activeTab`) រីឯ Sub-components (`TabsTrigger`, `TabsContent`) នឹងទាញយក State និង Handler នោះមកប្រើប្រាស់ដោយផ្ទាល់។
 
 ### Key Concepts & Rules:
 
-- Sub-components can be attached as static properties or named exports.
+- បង្កើត Internal Context (`TabsContext`) សម្រាប់ចែករំលែក `active` និង `setActive`។
+- Sub-components អាច Export ជា Named Exports ឬចងភ្ជាប់លើ Parent (`Tabs.Trigger = TabsTrigger`)។
+- `TabsContent` ពិនិត្យលក្ខខណ្ឌ `if (active !== value) return null;` ដើម្បីបង្ហាញតែមាតិកាដែលត្រូវគ្នា។
 
 ### Code Example: Compound Component Implementation
 
 ```jsx
+import React, { createContext, useContext, useState } from 'react';
+
 const TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);
 
 export function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {
@@ -28,15 +33,23 @@ export function Tabs({ defaultValue, children }: { defaultValue: string; childre
 }
 
 export function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {
-  const ctx = useContext(TabsContext)!;
+  const ctx = useContext(TabsContext);
+  if (!ctx) throw new Error('TabsTrigger ត្រូវតែប្រើប្រាស់ក្នុង <Tabs>');
+  
   const isSelected = ctx.active === value;
   return (
     <button 
       onClick={() => ctx.setActive(value)}
-      className={isSelected ? "border-b-2 border-blue-500 font-bold" : "text-slate-400"}
+      className={`px-4 py-2 text-sm font-medium ${isSelected ? 'border-b-2 border-blue-500 text-blue-500 font-bold' : 'text-slate-400'}`}
     >
       {children}
     </button>
   );
+}
+
+export function TabsContent({ value, children }: { value: string; children: React.ReactNode }) {
+  const ctx = useContext(TabsContext);
+  if (!ctx || ctx.active !== value) return null;
+  return <div className="p-4">{children}</div>;
 }
 ```

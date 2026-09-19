@@ -5,29 +5,42 @@ title: "Compound Components"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Flexible multi-part component APIs that share implicit state."
+summary: "ការបង្កើត Component APIs ដែលមានច្រើនផ្នែកតូចៗធ្វើការរួមគ្នា និងចែករំលែក State ដោយស្វ័យប្រវត្តិ (Implicit State)។"
+proTip: "Compound Component Pattern ដូចគ្នានឹង `<select>` និង `<option>` ក្នុង HTML ដើមដែរ — អ្នកប្រើប្រាស់មានសេរីភាពពេញលេញក្នុងការរៀបចំ Layout (ដូចជាដាក់ TabsTrigger ខាងលើ ខាងឆ្វេង ឬខាងក្រោម) ដោយមិនចាំបាច់ pass props រញ៉េរញ៉ៃឡើយ។"
 codeTitle: "Compound Component Pattern Usage"
 ---
 
 # Compound Components
 
-Compound components work together as a cohesive unit (like `<select>` and `<option>`). Examples include `<Tabs>`, `<Tabs.List>`, `<Tabs.Trigger>`, and `<Tabs.Content>`. They communicate via an internal React Context.
+**Compound Components Pattern** គឺជាគំរូរចនាដ៏ពេញនិយមមួយដែលអនុញ្ញាតឱ្យ Components តូចៗជាច្រើនធ្វើការរួមគ្នាជាឯកភាពមួយ (ដូចជា `<select>` និង `<option>` ក្នុង HTML)។ ឧទាហរណ៍ជាក់ស្តែងគឺ `<Tabs>`, `<TabsList>`, `<TabsTrigger>`, និង `<TabsContent>` ដែលអាចចែករំលែក State ខាងក្នុង (Active Tab) ដោយស្វ័យប្រវត្តិតាមរយៈ React Context។
 
 ### Key Concepts & Rules:
 
-- Provides consumers with complete layout flexibility.
-- Eliminates prop-drilling within the widget.
+- ផ្តល់នូវភាពបត់បែនខ្ពស់លើការរៀបចំ Layout និង Markup ដោយមិនកំណត់ទីតាំងស្លាក។
+- លុបបំបាត់ការបញ្ជូន Props (Prop Drilling) ដ៏ស្មុគស្មាញរវាង Parent និង Children។
+- ធ្វើឱ្យ API នៃ Component មានលក្ខណៈ Declarative និងងាយយល់ដូច native HTML។
 
 ### Code Example: Compound Component Pattern Usage
 
 ```jsx
-// Usage of Compound Tabs:
-<Tabs defaultValue="overview">
-  <TabsList>
-    <TabsTrigger value="overview">Overview</TabsTrigger>
-    <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
-  </TabsList>
-  <TabsContent value="overview">Overview Details</TabsContent>
-  <TabsContent value="curriculum">Curriculum List</TabsContent>
-</Tabs>
+// របៀបប្រើប្រាស់ Compound Tabs Component ដ៏ស្រស់ស្អាត និងបត់បែន៖
+export function CourseTabs() {
+  return (
+    <Tabs defaultValue="overview">
+      <TabsList>
+        <TabsTrigger value="overview">សេចក្តីសង្ខេប</TabsTrigger>
+        <TabsTrigger value="curriculum">មាតិកាមេរៀន</TabsTrigger>
+        <TabsTrigger value="reviews">ការវាយតម្លៃ</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="overview">
+        <p>ព័ត៌មានលម្អិតអំពីវគ្គសិក្សា React Masterclass...</p>
+      </TabsContent>
+
+      <TabsContent value="curriculum">
+        <p>បញ្ជីមេរៀនទាំងអស់ចំនួន ២៧ ម៉ូឌុល...</p>
+      </TabsContent>
+    </Tabs>
+  );
+}
 ```

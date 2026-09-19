@@ -5,27 +5,52 @@ title: "Pagination Component"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Page numbers, ellipses, previous/next controls, and page size."
+summary: "ការបង្កើត Component ប្តូរទំព័រ (Pagination) រួមមានលេខទំព័រ សញ្ញាចុចៗ (...) និងប៊ូតុង Prev/Next។"
+proTip: "គណនាចំនួនទំព័រសរុបតាមរយៈ `Math.ceil(totalItems / pageSize)` និងប្រើប្រាស់ Logic បង្ហាញសញ្ញា (...) (Ellipsis) នៅពេលចំនួនទំព័រមានច្រើន ដើម្បីកុំឱ្យប៊ូតុងលេខទំព័រវែងជ្រុលហៀរអេក្រង់។"
 codeTitle: "Pagination Component"
 ---
 
 # Pagination Component
 
-Displays `1, 2, ... 9, 10` pagination links and handles boundary clamping.
+នៅពេលតារាងទិន្នន័យមានកំណត់ត្រារាប់ពាន់ Pagination Component ជួយបែងចែកទិន្នន័យជាទំព័រៗយ៉ាងច្បាស់លាស់។ Pagination ដ៏ល្អគួរតែបង្ហាញប៊ូតុងថយក្រោយ (Prev), ប៊ូតុងបន្ទាប់ (Next), និងលេខទំព័រដែលមានសញ្ញាចុចៗ (`...`) នៅពេលចំនួនទំព័រមានច្រើន។
 
 ### Key Concepts & Rules:
 
-- Calculates total pages from `totalItems` and `pageSize`.
+- គណនាទំព័រសរុប៖ `totalPages = Math.ceil(total / pageSize)`។
+- Disable ប៊ូតុង Previous នៅពេល `currentPage === 1` និងប៊ូតុង Next នៅពេល `currentPage === totalPages`។
+- ផ្តល់នូវ Callback `onPageChange(pageNumber)` ទៅកាន់ Parent Component។
 
 ### Code Example: Pagination Component
 
 ```jsx
+interface PaginationProps {
+  current: number;
+  total: number;
+  onChange: (page: number) => void;
+}
+
 export function Pagination({ current, total, onChange }: PaginationProps) {
   return (
-    <div className="flex items-center gap-2">
-      <button disabled={current <= 1} onClick={() => onChange(current - 1)}>Prev</button>
-      <span>Page {current} of {total}</span>
-      <button disabled={current >= total} onClick={() => onChange(current + 1)}>Next</button>
+    <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
+      <div className="flex items-center gap-2">
+        <button
+          disabled={current <= 1}
+          onClick={() => onChange(current - 1)}
+          className="px-3 py-1.5 text-xs font-medium rounded border border-slate-700 disabled:opacity-40"
+        >
+          ថយក្រោយ
+        </button>
+        <span className="text-xs text-slate-400">
+          ទំព័រទី <strong className="text-white">{current}</strong> នៃ <strong>{total}</strong>
+        </span>
+        <button
+          disabled={current >= total}
+          onClick={() => onChange(current + 1)}
+          className="px-3 py-1.5 text-xs font-medium rounded border border-slate-700 disabled:opacity-40"
+        >
+          បន្ទាប់
+        </button>
+      </div>
     </div>
   );
 }

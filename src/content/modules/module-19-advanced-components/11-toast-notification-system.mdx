@@ -5,20 +5,37 @@ title: "Toast Notification System"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Global toast notifications queue with auto-dismissal."
+summary: "ការបង្កើតប្រព័ន្ធសារជូនដំណឹង (Toast Queue) សកល ដែលអាចបាត់ទៅវិញដោយស្វ័យប្រវត្តិ (Auto-dismiss)។"
+proTip: "ប្រព័ន្ធ Toast គួរតែគាំទ្រការតម្រៀបជង់គ្នា (Stacking), កំណត់ Timer បាត់ទៅវិញដោយស្វ័យប្រវត្តិ (Auto-dismiss 3-5 វិនាទី), និងអាចហៅប្រើប្រាស់បានយ៉ាងងាយស្រួលពីគ្រប់ទីកន្លែងតាមរយៈ `toast.success()`, `toast.error()`។"
 codeTitle: "Triggering Toasts"
 ---
 
 # Toast Notification System
 
-Display non-intrusive feedback toasts (Success, Error, Info) that stack and auto-dismiss after 4 seconds.
+Toast Notifications គឺជាសារជូនដំណឹងតូចៗដែលផុសឡើងនៅជ្រុងនៃអេក្រង់ ដើម្បីផ្តល់ Feedback ភ្លាមៗដល់ User បន្ទាប់ពីធ្វើសកម្មភាពអ្វីមួយ (ដូចជា Save ជោគជ័យ ឬជួបបញ្ហាបណ្តាញ) ដោយមិនរំខានដល់ការងាររបស់ពួកគេឡើយ។
 
 ### Key Concepts & Rules:
 
-- Managed via Zustand store or React Sonner.
+- បង្ហាញនៅជ្រុងខាងលើ ឬខាងក្រោម (Top-Right / Bottom-Right) តាមរយៈ Portal។
+- បាត់ទៅវិញដោយស្វ័យប្រវត្តិបន្ទាប់ពី ៣ ទៅ ៥ វិនាទី (Auto-dismiss) ឬអាចចុចបិទដោយផ្ទាល់។
+- គ្រប់គ្រងតាមរយៈ Zustand Store សកល ឬបណ្ណាល័យស្រាលៗដូចជា `sonner`។
 
 ### Code Example: Triggering Toasts
 
 ```jsx
-toast.success('Project 01 completed successfully!');
+// ឧទាហរណ៍នៃការហៅប្រើ Toast ពីគ្រប់ទីកន្លែងក្នុងកម្មវិធី៖
+import { toast } from 'sonner';
+
+export function SaveProjectButton() {
+  const handleSave = async () => {
+    try {
+      await saveProject();
+      toast.success('គម្រោងត្រូវបានរក្សាទុកដោយជោគជ័យ! 🎉');
+    } catch (err: any) {
+      toast.error('បរាជ័យក្នុងការរក្សាទុកគម្រោង!');
+    }
+  };
+
+  return <button onClick={handleSave}>រក្សាទុក</button>;
+}
 ```

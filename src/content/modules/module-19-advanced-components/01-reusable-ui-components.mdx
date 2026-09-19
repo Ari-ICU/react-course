@@ -5,39 +5,47 @@ title: "Reusable UI Components"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Designing enterprise component libraries inspired by Shadcn UI and Radix."
+summary: "ការរចនា និងបង្កើត Component Library កម្រិត Enterprise ដោយយកលំនាំតាម Shadcn UI និង Radix UI។"
+proTip: "ការប្រើប្រាស់ CVA (`class-variance-authority`) រួមជាមួយ `tailwind-merge` និង `clsx` (តាមរយៈ `cn()` utility) ជួយឱ្យ Component មាន Variants ច្បាស់លាស់ (default, secondary, destructive) និងអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្ដូរ classNames បានយ៉ាងរលូនដោយគ្មានការជាន់គ្នានៃ CSS rules។"
 codeTitle: "Class Variance Authority (CVA) Component Pattern"
 ---
 
 # Reusable UI Components
 
-Modern UI architecture separates visual styling (Tailwind CSS) from accessible primitives. Components expose accessible ARIA roles, keyboard navigation, and customizable slots.
+ស្ថាបត្យកម្ម Component ទំនើប (ដូចជាគំរូរបស់ Shadcn UI) ផ្តោតសំខាន់លើការបំបែករវាង Visual Styling (Tailwind CSS) និង Accessible Logic (Prims/Hooks)។ តាមរយៈការប្រើប្រាស់បណ្ណាល័យ `class-variance-authority` (CVA) យើងអាចបង្កើត UI Components ដែលមាន Variants ច្រើនប្រភេទ (ដូចជា Primary, Outline, Ghost, Destructive) ប្រកបដោយ Type-safety ខ្ពស់។
 
 ### Key Concepts & Rules:
 
-- Follow WAI-ARIA authoring practices.
-- Allow consumers to inject custom classNames via `cn()` utility.
+- គោរពតាមស្តង់ដារ WAI-ARIA Authoring Practices សម្រាប់ការប្រើប្រាស់ Keyboard និង Screen Readers។
+- អនុញ្ញាតឱ្យ Consumer អាច Override styles បានតាមរយៈ Utility Function `cn()` (`clsx` + `tailwind-merge`)។
+- ផ្តល់នូវ Props ដែលអាចបត់បែនបានខ្ពស់ ដូចជា Size, Variant, និង Icon slots។
 
 ### Code Example: Class Variance Authority (CVA) Component Pattern
 
 ```jsx
-// Example Shadcn-inspired Badge:
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 export const badgeVariants = cva(
-  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors",
+  'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors',
   {
     variants: {
       variant: {
-        default: "bg-blue-600 text-white",
-        secondary: "bg-slate-800 text-slate-300",
-        destructive: "bg-rose-600 text-white",
-        outline: "border border-slate-700 text-slate-300",
+        default: 'bg-blue-600 text-white hover:bg-blue-700',
+        secondary: 'bg-slate-800 text-slate-300 hover:bg-slate-700',
+        destructive: 'bg-rose-600 text-white hover:bg-rose-700',
+        outline: 'border border-slate-700 text-slate-300',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
   }
 );
+
+interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
+
+export function Badge({ className, variant, ...props }: BadgeProps) {
+  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
+}
 ```

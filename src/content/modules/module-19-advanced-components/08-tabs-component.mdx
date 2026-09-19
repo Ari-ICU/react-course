@@ -5,24 +5,44 @@ title: "Tabs Component"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Accessible tablist, tab, and tabpanel ARIA semantics."
+summary: "ការបង្កើតផ្ទាំង Tabs ស្របតាមស្តង់ដារ Accessibility ARIA (tablist, tab, tabpanel)។"
+proTip: "ត្រូវប្រាកដថាប្រើ `role='tablist'`, `role='tab'`, `role='tabpanel'`, និង `aria-selected` ដើម្បីឱ្យ Screen Readers អាចអានបានត្រឹមត្រូវ និងគាំទ្រការប្តូរ Tab ដោយចុចសញ្ញាព្រួញឆ្វេង/ស្តាំលើ Keyboard។"
 codeTitle: "Accessible Tab ARIA Attributes"
 ---
 
 # Tabs Component
 
-Complies with accessibility standards: `role="tablist"`, `role="tab"`, `aria-selected`, and arrow key tab switching.
+ការបង្កើត Tabs Component មិនត្រឹមតែជាការផ្លាស់ប្តូរ CSS ប៉ុណ្ណោះទេ ប៉ុន្តែត្រូវគោរពតាមស្តង់ដារ Accessibility (A11y)។ នេះរួមបញ្ចូលទាំងការកំណត់ ARIA Roles ឱ្យបានត្រឹមត្រូវ និងការគាំទ្រការផ្លាស់ប្តូរ Tab តាមរយៈគ្រាប់ចុចសញ្ញាព្រួញនៅលើ Keyboard។
 
 ### Key Concepts & Rules:
 
-- Keyboard left/right arrows switch active tab.
+- **`role="tablist"`**: ដាក់លើ Wrapper នៃប៊ូតុង Tabs ទាំងអស់។
+- **`role="tab"`**: ដាក់លើប៊ូតុង Tab នីមួយៗ រួមជាមួយ `aria-selected={isActive}`។
+- **`role="tabpanel"`**: ដាក់លើផ្ទាំង Content ដែលត្រូវគ្នានឹង Tab នោះ។
 
 ### Code Example: Accessible Tab ARIA Attributes
 
 ```jsx
-<div role="tablist" className="flex border-b border-slate-800">
-  <button role="tab" aria-selected={active === 'code'} onClick={() => setActive('code')}>
-    Code
-  </button>
-</div>
+export function AccessibleTabs({ active, onSelect }: { active: string; onSelect: (id: string) => void }) {
+  return (
+    <div>
+      <div role="tablist" aria-label="ការកំណត់គណនី" className="flex border-b border-slate-800">
+        <button
+          role="tab"
+          id="tab-profile"
+          aria-selected={active === 'profile'}
+          aria-controls="panel-profile"
+          onClick={() => onSelect('profile')}
+          className={`px-4 py-2 text-sm font-semibold ${active === 'profile' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-slate-400'}`}
+        >
+          ប្រវត្តិរូប
+        </button>
+      </div>
+      
+      <div role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" hidden={active !== 'profile'} className="p-4">
+        មាតិកានៃទំព័រប្រវត្តិរូប...
+      </div>
+    </div>
+  );
+}
 ```

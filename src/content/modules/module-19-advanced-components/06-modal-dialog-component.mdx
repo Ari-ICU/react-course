@@ -5,30 +5,54 @@ title: "Modal / Dialog Component"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Portals, backdrop blur, focus trapping, and Esc key dismissal."
+summary: "ការបង្កើតផ្ទាំង Modal Dialog ពេញលេញជាមួយ React Portal, Backdrop Blur, Focus Trapping, និងការចុចបិទដោយគ្រាប់ចុច Esc។"
+proTip: "ត្រូវប្រើ `createPortal(jsx, document.body)` ជានិច្ចនៅពេលបង្កើត Modal ដើម្បីការពារកុំឱ្យ Modal ត្រូវកាត់ផ្តាច់ដោយ CSS `overflow: hidden` ឬបញ្ហា `z-index` stacking context នៃ Parent Components។"
 codeTitle: "React Portal Modal"
 ---
 
 # Modal / Dialog Component
 
-Modals must render via `createPortal` into `document.body` so that parent `overflow: hidden` or `z-index` stacking contexts do not clip the dialog.
+ផ្ទាំង Modal (Dialog) គឺជា Component សំខាន់មួយដែលតម្រូវឱ្យបង្ហាញនៅពីលើគេបង្អស់នៃផ្ទាំងអេក្រង់។ ដើម្បីជៀសវាងបញ្ហា Stacking Context (`z-index`) ឬការកាត់ផ្ទៃដោយ `overflow: hidden` របស់ Parent Component យើងត្រូវតែ Render វាទៅកាន់ `document.body` តាមរយៈ **React Portal** (`createPortal`)។
 
 ### Key Concepts & Rules:
 
-- Always use `createPortal`.
-- Trap keyboard focus inside the modal while open.
-- Restore body scroll when closed.
+- ប្រើប្រាស់ `createPortal(children, document.body)` ដើម្បី Render ទៅក្រៅ DOM Hierarchy ដើម។
+- ដោះស្រាយ Focus Trapping (មិនឱ្យចុច Tab ធ្លាយចេញក្រៅ Modal)។
+- គាំទ្រការចុចលើ Backdrop ឬចុចគ្រាប់ចុច `Escape` ដើម្បីបិទផ្ទាំង។
+- ចាក់សោរមិនឱ្យរំកិល Scroll លើ Background (`overflow: hidden` លើ body) ពេល Modal បើក។
 
 ### Code Example: React Portal Modal
 
 ```jsx
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
 export function PortalModal({ isOpen, onClose, children }: ModalProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden'; // ចាក់សោរបាតទំព័រ
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
+
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
-      <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 max-w-md w-full">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 max-w-md w-full shadow-2xl">
         {children}
       </div>
     </div>,

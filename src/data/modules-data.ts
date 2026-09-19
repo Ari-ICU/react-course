@@ -3581,168 +3581,201 @@ export const modulesData: ModuleItem[] = [
     "number": "19",
     "title": "Advanced Components",
     "category": "Enterprise & Production",
-    "summary": "Reusable UI component architecture, compound components, render props, headless components, modal dialogs, dropdowns, and data tables.",
+    "summary": "ស្ថាបត្យកម្ម Reusable UI Component កម្រិត Enterprise, Compound Components, Render Props, Headless Components, Modals, Dropdowns, Data Tables, និង Polymorphic Components។",
     "iconName": "Boxes",
     "topics": [
       {
         "id": "m19-01",
         "number": "01",
         "title": "Reusable UI Components",
-        "summary": "Designing enterprise component libraries inspired by Shadcn UI and Radix.",
-        "explanation": "Modern UI architecture separates visual styling (Tailwind CSS) from accessible primitives. Components expose accessible ARIA roles, keyboard navigation, and customizable slots.",
+        "summary": "ការរចនា និងបង្កើត Component Library កម្រិត Enterprise ដោយយកលំនាំតាម Shadcn UI និង Radix UI។",
+        "explanation": "ស្ថាបត្យកម្ម Component ទំនើប (ដូចជាគំរូរបស់ Shadcn UI) ផ្តោតសំខាន់លើការបំបែករវាង Visual Styling (Tailwind CSS) និង Accessible Logic (Prims/Hooks)។ តាមរយៈការប្រើប្រាស់បណ្ណាល័យ `class-variance-authority` (CVA) យើងអាចបង្កើត UI Components ដែលមាន Variants ច្រើនប្រភេទ (ដូចជា Primary, Outline, Ghost, Destructive) ប្រកបដោយ Type-safety ខ្ពស់។",
         "keyPoints": [
-          "Follow WAI-ARIA authoring practices.",
-          "Allow consumers to inject custom classNames via `cn()` utility."
+          "គោរពតាមស្តង់ដារ WAI-ARIA Authoring Practices សម្រាប់ការប្រើប្រាស់ Keyboard និង Screen Readers។",
+          "អនុញ្ញាតឱ្យ Consumer អាច Override styles បានតាមរយៈ Utility Function `cn()` (`clsx` + `tailwind-merge`)។",
+          "ផ្តល់នូវ Props ដែលអាចបត់បែនបានខ្ពស់ ដូចជា Size, Variant, និង Icon slots។"
         ],
-        "codeSnippet": "// Example Shadcn-inspired Badge:\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nexport const badgeVariants = cva(\n  \"inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-blue-600 text-white\",\n        secondary: \"bg-slate-800 text-slate-300\",\n        destructive: \"bg-rose-600 text-white\",\n        outline: \"border border-slate-700 text-slate-300\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n);",
+        "codeSnippet": "import { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nexport const badgeVariants = cva(\n  'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors',\n  {\n    variants: {\n      variant: {\n        default: 'bg-blue-600 text-white hover:bg-blue-700',\n        secondary: 'bg-slate-800 text-slate-300 hover:bg-slate-700',\n        destructive: 'bg-rose-600 text-white hover:bg-rose-700',\n        outline: 'border border-slate-700 text-slate-300',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n    },\n  }\n);\n\ninterface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}\n\nexport function Badge({ className, variant, ...props }: BadgeProps) {\n  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Class Variance Authority (CVA) Component Pattern"
+        "codeTitle": "Class Variance Authority (CVA) Component Pattern",
+        "proTip": "ការប្រើប្រាស់ CVA (`class-variance-authority`) រួមជាមួយ `tailwind-merge` និង `clsx` (តាមរយៈ `cn()` utility) ជួយឱ្យ Component មាន Variants ច្បាស់លាស់ (default, secondary, destructive) និងអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្ដូរ classNames បានយ៉ាងរលូនដោយគ្មានការជាន់គ្នានៃ CSS rules។"
       },
       {
         "id": "m19-02",
         "number": "02",
         "title": "Compound Components",
-        "summary": "Flexible multi-part component APIs that share implicit state.",
-        "explanation": "Compound components work together as a cohesive unit (like `<select>` and `<option>`). Examples include `<Tabs>`, `<Tabs.List>`, `<Tabs.Trigger>`, and `<Tabs.Content>`. They communicate via an internal React Context.",
+        "summary": "ការបង្កើត Component APIs ដែលមានច្រើនផ្នែកតូចៗធ្វើការរួមគ្នា និងចែករំលែក State ដោយស្វ័យប្រវត្តិ (Implicit State)។",
+        "explanation": "**Compound Components Pattern** គឺជាគំរូរចនាដ៏ពេញនិយមមួយដែលអនុញ្ញាតឱ្យ Components តូចៗជាច្រើនធ្វើការរួមគ្នាជាឯកភាពមួយ (ដូចជា `<select>` និង `<option>` ក្នុង HTML)។ ឧទាហរណ៍ជាក់ស្តែងគឺ `<Tabs>`, `<TabsList>`, `<TabsTrigger>`, និង `<TabsContent>` ដែលអាចចែករំលែក State ខាងក្នុង (Active Tab) ដោយស្វ័យប្រវត្តិតាមរយៈ React Context។",
         "keyPoints": [
-          "Provides consumers with complete layout flexibility.",
-          "Eliminates prop-drilling within the widget."
+          "ផ្តល់នូវភាពបត់បែនខ្ពស់លើការរៀបចំ Layout និង Markup ដោយមិនកំណត់ទីតាំងស្លាក។",
+          "លុបបំបាត់ការបញ្ជូន Props (Prop Drilling) ដ៏ស្មុគស្មាញរវាង Parent និង Children។",
+          "ធ្វើឱ្យ API នៃ Component មានលក្ខណៈ Declarative និងងាយយល់ដូច native HTML។"
         ],
-        "codeSnippet": "// Usage of Compound Tabs:\n<Tabs defaultValue=\"overview\">\n  <TabsList>\n    <TabsTrigger value=\"overview\">Overview</TabsTrigger>\n    <TabsTrigger value=\"curriculum\">Curriculum</TabsTrigger>\n  </TabsList>\n  <TabsContent value=\"overview\">Overview Details</TabsContent>\n  <TabsContent value=\"curriculum\">Curriculum List</TabsContent>\n</Tabs>",
+        "codeSnippet": "// របៀបប្រើប្រាស់ Compound Tabs Component ដ៏ស្រស់ស្អាត និងបត់បែន៖\nexport function CourseTabs() {\n  return (\n    <Tabs defaultValue=\"overview\">\n      <TabsList>\n        <TabsTrigger value=\"overview\">សេចក្តីសង្ខេប</TabsTrigger>\n        <TabsTrigger value=\"curriculum\">មាតិកាមេរៀន</TabsTrigger>\n        <TabsTrigger value=\"reviews\">ការវាយតម្លៃ</TabsTrigger>\n      </TabsList>\n\n      <TabsContent value=\"overview\">\n        <p>ព័ត៌មានលម្អិតអំពីវគ្គសិក្សា React Masterclass...</p>\n      </TabsContent>\n\n      <TabsContent value=\"curriculum\">\n        <p>បញ្ជីមេរៀនទាំងអស់ចំនួន ២៧ ម៉ូឌុល...</p>\n      </TabsContent>\n    </Tabs>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Compound Component Pattern Usage"
+        "codeTitle": "Compound Component Pattern Usage",
+        "proTip": "Compound Component Pattern ដូចគ្នានឹង `<select>` និង `<option>` ក្នុង HTML ដើមដែរ — អ្នកប្រើប្រាស់មានសេរីភាពពេញលេញក្នុងការរៀបចំ Layout (ដូចជាដាក់ TabsTrigger ខាងលើ ខាងឆ្វេង ឬខាងក្រោម) ដោយមិនចាំបាច់ pass props រញ៉េរញ៉ៃឡើយ។"
       },
       {
         "id": "m19-03",
         "number": "03",
         "title": "Implementing Compound Components",
-        "summary": "Building internal context and sub-component exports.",
-        "explanation": "Create an internal context to share the active value and setter between the parent container and child triggers.",
+        "summary": "ការបង្កើត Internal React Context ដើម្បីភ្ជាប់ទំនាក់ទំនងរវាង Parent Container និង Sub-components។",
+        "explanation": "ដើម្បីបង្កើត Compound Component ដោយផ្ទាល់ យើងត្រូវប្រើប្រាស់ **React Context** នៅខាងក្នុង។ Parent Component (`Tabs`) នឹងដើរតួជា Provider គ្រប់គ្រង State (`activeTab`) រីឯ Sub-components (`TabsTrigger`, `TabsContent`) នឹងទាញយក State និង Handler នោះមកប្រើប្រាស់ដោយផ្ទាល់។",
         "keyPoints": [
-          "Sub-components can be attached as static properties or named exports."
+          "បង្កើត Internal Context (`TabsContext`) សម្រាប់ចែករំលែក `active` និង `setActive`។",
+          "Sub-components អាច Export ជា Named Exports ឬចងភ្ជាប់លើ Parent (`Tabs.Trigger = TabsTrigger`)។",
+          "`TabsContent` ពិនិត្យលក្ខខណ្ឌ `if (active !== value) return null;` ដើម្បីបង្ហាញតែមាតិកាដែលត្រូវគ្នា។"
         ],
-        "codeSnippet": "const TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);\n\nexport function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {\n  const [active, setActive] = useState(defaultValue);\n  return <TabsContext.Provider value={{ active, setActive }}>{children}</TabsContext.Provider>;\n}\n\nexport function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {\n  const ctx = useContext(TabsContext)!;\n  const isSelected = ctx.active === value;\n  return (\n    <button \n      onClick={() => ctx.setActive(value)}\n      className={isSelected ? \"border-b-2 border-blue-500 font-bold\" : \"text-slate-400\"}\n    >\n      {children}\n    </button>\n  );\n}",
+        "codeSnippet": "import React, { createContext, useContext, useState } from 'react';\n\nconst TabsContext = createContext<{ active: string; setActive: (v: string) => void } | null>(null);\n\nexport function Tabs({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) {\n  const [active, setActive] = useState(defaultValue);\n  return <TabsContext.Provider value={{ active, setActive }}>{children}</TabsContext.Provider>;\n}\n\nexport function TabsTrigger({ value, children }: { value: string; children: React.ReactNode }) {\n  const ctx = useContext(TabsContext);\n  if (!ctx) throw new Error('TabsTrigger ត្រូវតែប្រើប្រាស់ក្នុង <Tabs>');\n  \n  const isSelected = ctx.active === value;\n  return (\n    <button \n      onClick={() => ctx.setActive(value)}\n      className={`px-4 py-2 text-sm font-medium ${isSelected ? 'border-b-2 border-blue-500 text-blue-500 font-bold' : 'text-slate-400'}`}\n    >\n      {children}\n    </button>\n  );\n}\n\nexport function TabsContent({ value, children }: { value: string; children: React.ReactNode }) {\n  const ctx = useContext(TabsContext);\n  if (!ctx || ctx.active !== value) return null;\n  return <div className=\"p-4\">{children}</div>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Compound Component Implementation"
+        "codeTitle": "Compound Component Implementation",
+        "proTip": "បង្កើត Internal Context មួយសម្រាប់តែ Compound Component នោះ ដើម្បីចែករំលែក active state និង setter handler។ អ្នកអាច export sub-components ជា Named Exports ឬចងភ្ជាប់ជា Static Properties (ដូចជា `Tabs.Trigger = TabsTrigger`)។"
       },
       {
         "id": "m19-04",
         "number": "04",
         "title": "Render Props",
-        "summary": "Sharing rendering logic by passing a function as children.",
-        "explanation": "A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic.",
+        "summary": "ការចែករំលែក State និង Logic តាមរយៈការបញ្ជូនអនុគមន៍ជា Prop ឬ Children (Function as a Child)។",
+        "explanation": "**Render Prop** គឺជាបច្ចេកទេសមួយដែល Component មួយទទួលយកអនុគមន៍ (Function) មួយតាមរយៈ Prop (ឬជា Children) ដែលអនុគមន៍នោះ return នូវ React Element។ Component នឹងហៅអនុគមន៍នោះដោយបញ្ជូនទិន្នន័យ State ខាងក្នុងទៅឱ្យ ដែលអនុញ្ញាតឱ្យ Consumer មានសិទ្ធិសម្រេចចិត្តលើទម្រង់ UI ដែលត្រូវ Render។",
         "keyPoints": [
-          "Precursor to custom hooks, still valuable for template customization."
+          "Syntax: `<Component render={(data) => <UI data={data} />} />` ឬ `<Component>{(data) => <UI />}</Component>`។",
+          "អនុញ្ញាតឱ្យបំបែក Data/Behavior Logic ចេញពី Presentation UI។",
+          "នៅតែពេញនិយមខ្លាំងក្នុង Virtualized Lists និង Form Libraries (ដូចជា Formik/Downshift)។"
         ],
-        "codeSnippet": "export function MouseTracker({ render }: { render: (pos: { x: number; y: number }) => React.ReactNode }) {\n  const [pos, setPos] = useState({ x: 0, y: 0 });\n  return (\n    <div onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}>\n      {render(pos)}\n    </div>\n  );\n}",
+        "codeSnippet": "import React, { useState } from 'react';\n\ninterface MouseTrackerProps {\n  render: (pos: { x: number; y: number }) => React.ReactNode;\n}\n\nexport function MouseTracker({ render }: MouseTrackerProps) {\n  const [pos, setPos] = useState({ x: 0, y: 0 });\n\n  return (\n    <div \n      className=\"h-64 border border-dashed rounded p-4\"\n      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}\n    >\n      {/* ហៅអនុគមន៍ render ដោយបញ្ជូន State ទៅឱ្យ Consumer */}\n      {render(pos)}\n    </div>\n  );\n}\n\n// ការប្រើប្រាស់៖\n// <MouseTracker render={({ x, y }) => <p>កូអរដោនេកណ្ដុរ៖ X: {x}, Y: {y}</p>} />",
         "codeLanguage": "jsx",
-        "codeTitle": "Render Props Pattern"
+        "codeTitle": "Render Props Pattern",
+        "proTip": "ទោះបីជា Custom Hooks ត្រូវបាននិយមប្រើប្រាស់ជំនួស Render Props ភាគច្រើនក៏ដោយ Render Props នៅតែមានតម្លៃខ្ពស់បំផុតសម្រាប់ការធ្វើ UI Template Customization (ដូចជាការអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់កំណត់របៀប Render ជួរនីមួយៗនៃ List)។"
       },
       {
         "id": "m19-05",
         "number": "05",
         "title": "Headless Components",
-        "summary": "Unstyled accessible logic components.",
-        "explanation": "Headless UI libraries (Radix UI, Headless UI) provide 100% accessible keyboard navigation, focus trapping, and ARIA attributes with 0% CSS, allowing you to style freely with Tailwind CSS.",
+        "summary": "ការស្វែងយល់ពី Headless UI (Radix UI, Headless UI) ដែលផ្តោតលើ Logic, Accessibility (A11y), និង Keyboard Navigation ដោយគ្មាន CSS។",
+        "explanation": "**Headless UI Components** (ដូចជា Radix UI, Headless UI, ឬ React Aria) ផ្តល់នូវ Logic ទាំងស្រុង, State Management, Accessibility Attributes (ARIA), Focus Trapping, និង Keyboard Navigation ប៉ុន្តែគ្មាន Styling (0% CSS) ឡើយ។ នេះផ្តល់ឱ្យ Developer នូវសេរីភាព 100% ក្នុងការតុបតែង Visual Design តាមរយៈ Tailwind CSS ដោយមិនបាច់បារម្ភពីរឿង A11y ឡើយ។",
         "keyPoints": [
-          "Total styling freedom without reinventing accessibility."
+          "ធានាបាននូវភាពងាយស្រួលប្រើប្រាស់ (Accessibility - A11y) កម្រិតខ្ពស់បំផុត។",
+          "គ្មាន CSS Bundled មកជាមួយឡើយ (Zero default styles) — តុបតែងដោយសេរីជាមួយ Tailwind CSS។",
+          "គឺជាគ្រឹះស្នូលនៃ UI Libraries ទំនើបៗដូចជា Shadcn UI។"
         ],
-        "codeSnippet": "// Radix UI Headless Dialog wrapped in Tailwind:\nimport * as Dialog from '@radix-ui/react-dialog';\n\nexport function Modal({ isOpen, onClose, title, children }: ModalProps) {\n  return (\n    <Dialog.Root open={isOpen} onOpenChange={onClose}>\n      <Dialog.Portal>\n        <Dialog.Overlay className=\"fixed inset-0 bg-black/70 backdrop-blur-sm\" />\n        <Dialog.Content className=\"fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full\">\n          <Dialog.Title className=\"text-xl font-bold text-white\">{title}</Dialog.Title>\n          {children}\n        </Dialog.Content>\n      </Dialog.Portal>\n    </Dialog.Root>\n  );\n}",
+        "codeSnippet": "import * as Dialog from '@radix-ui/react-dialog';\n\ninterface ModalProps {\n  isOpen: boolean;\n  onClose: (open: boolean) => void;\n  title: string;\n  children: React.ReactNode;\n}\n\nexport function Modal({ isOpen, onClose, title, children }: ModalProps) {\n  return (\n    <Dialog.Root open={isOpen} onOpenChange={onClose}>\n      <Dialog.Portal>\n        {/* Backdrop ងងឹតព្រិលៗ */}\n        <Dialog.Overlay className=\"fixed inset-0 bg-black/70 backdrop-blur-sm z-50\" />\n        \n        {/* ប្រអប់ផ្ទាំង Modal Content */}\n        <Dialog.Content className=\"fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-lg w-full z-50 shadow-2xl\">\n          <Dialog.Title className=\"text-xl font-bold text-white mb-2\">{title}</Dialog.Title>\n          {children}\n        </Dialog.Content>\n      </Dialog.Portal>\n    </Dialog.Root>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Headless Modal Component"
+        "codeTitle": "Headless Modal Component",
+        "proTip": "កុំបង្កើត Dropdown ឬ Modal ពីសូន្យដោយខ្លួនឯង បើអ្នកមិនចង់ឈឺក្បាលជាមួយបញ្ហា ARIA attributes, Focus Trapping, និង Keyboard Navigation (Tab, Esc, Up/Down Arrows)! ចូរប្រើ Headless Primitives ដូចជា Radix UI រួចតុបតែងវាជាមួយ Tailwind CSS។"
       },
       {
         "id": "m19-06",
         "number": "06",
         "title": "Modal / Dialog Component",
-        "summary": "Portals, backdrop blur, focus trapping, and Esc key dismissal.",
-        "explanation": "Modals must render via `createPortal` into `document.body` so that parent `overflow: hidden` or `z-index` stacking contexts do not clip the dialog.",
+        "summary": "ការបង្កើតផ្ទាំង Modal Dialog ពេញលេញជាមួយ React Portal, Backdrop Blur, Focus Trapping, និងការចុចបិទដោយគ្រាប់ចុច Esc។",
+        "explanation": "ផ្ទាំង Modal (Dialog) គឺជា Component សំខាន់មួយដែលតម្រូវឱ្យបង្ហាញនៅពីលើគេបង្អស់នៃផ្ទាំងអេក្រង់។ ដើម្បីជៀសវាងបញ្ហា Stacking Context (`z-index`) ឬការកាត់ផ្ទៃដោយ `overflow: hidden` របស់ Parent Component យើងត្រូវតែ Render វាទៅកាន់ `document.body` តាមរយៈ **React Portal** (`createPortal`)។",
         "keyPoints": [
-          "Always use `createPortal`.",
-          "Trap keyboard focus inside the modal while open.",
-          "Restore body scroll when closed."
+          "ប្រើប្រាស់ `createPortal(children, document.body)` ដើម្បី Render ទៅក្រៅ DOM Hierarchy ដើម។",
+          "ដោះស្រាយ Focus Trapping (មិនឱ្យចុច Tab ធ្លាយចេញក្រៅ Modal)។",
+          "គាំទ្រការចុចលើ Backdrop ឬចុចគ្រាប់ចុច `Escape` ដើម្បីបិទផ្ទាំង។",
+          "ចាក់សោរមិនឱ្យរំកិល Scroll លើ Background (`overflow: hidden` លើ body) ពេល Modal បើក។"
         ],
-        "codeSnippet": "import { createPortal } from 'react-dom';\n\nexport function PortalModal({ isOpen, onClose, children }: ModalProps) {\n  if (!isOpen) return null;\n  return createPortal(\n    <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80\">\n      <div className=\"bg-slate-900 p-6 rounded-xl border border-slate-800 max-w-md w-full\">\n        {children}\n      </div>\n    </div>,\n    document.body\n  );\n}",
+        "codeSnippet": "import { useEffect } from 'react';\nimport { createPortal } from 'react-dom';\n\ninterface ModalProps {\n  isOpen: boolean;\n  onClose: () => void;\n  children: React.ReactNode;\n}\n\nexport function PortalModal({ isOpen, onClose, children }: ModalProps) {\n  useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === 'Escape') onClose();\n    };\n    if (isOpen) {\n      document.addEventListener('keydown', handleKeyDown);\n      document.body.style.overflow = 'hidden'; // ចាក់សោរបាតទំព័រ\n    }\n    return () => {\n      document.removeEventListener('keydown', handleKeyDown);\n      document.body.style.overflow = 'unset';\n    };\n  }, [isOpen, onClose]);\n\n  if (!isOpen) return null;\n\n  return createPortal(\n    <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm\">\n      <div className=\"bg-slate-900 p-6 rounded-2xl border border-slate-800 max-w-md w-full shadow-2xl\">\n        {children}\n      </div>\n    </div>,\n    document.body\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "React Portal Modal"
+        "codeTitle": "React Portal Modal",
+        "proTip": "ត្រូវប្រើ `createPortal(jsx, document.body)` ជានិច្ចនៅពេលបង្កើត Modal ដើម្បីការពារកុំឱ្យ Modal ត្រូវកាត់ផ្តាច់ដោយ CSS `overflow: hidden` ឬបញ្ហា `z-index` stacking context នៃ Parent Components។"
       },
       {
         "id": "m19-07",
         "number": "07",
         "title": "Dropdown Menu Component",
-        "summary": "Click outside dismissal and keyboard arrow navigation.",
-        "explanation": "Dropdowns toggle on click, listen for outside clicks to auto-close, and support arrow key item selection.",
+        "summary": "ការបង្កើត Menu Dropdown ដែលអាចចុចបិទដោយស្វ័យប្រវត្តិតាមរយៈ Click Outside និងគាំទ្រ Keyboard Navigation។",
+        "explanation": "Dropdown Menu គឺជា Component ដែលលាក់/បង្ហាញជម្រើសផ្សេងៗនៅពេលចុចលើប៊ូតុង Trigger។ លក្ខណៈសម្បត្តិសំខាន់នៃ Dropdown ដែលមានគុណភាពខ្ពស់គឺការបិទដោយស្វ័យប្រវត្តិនៅពេល User ចុចនៅកន្លែងផ្សេងក្រៅ Menu (**Click Outside**) និងការគាំទ្រ Keyboard Navigation (សញ្ញាព្រួញចុះឡើង និង Enter)។",
         "keyPoints": [
-          "Use mousedown listener on `document` to detect clicks outside."
+          "ប្រើប្រាស់ `useRef` ដើម្បីភ្ជាប់ទៅកាន់ Container Element នៃ Dropdown។",
+          "ស្តាប់ Event `mousedown` ឬ `touchstart` លើ `document` ដើម្បីពិនិត្យមើលថាតើ `ref.current.contains(event.target)` ដែរឬទេ។",
+          "ត្រូវតែដក (Cleanup) Event Listener ចេញជានិច្ចនៅពេល Component Unmount។"
         ],
-        "codeSnippet": "export function useClickOutside(ref: React.RefObject<HTMLElement | null>, handler: () => void) {\n  useEffect(() => {\n    const listener = (event: MouseEvent | TouchEvent) => {\n      if (!ref.current || ref.current.contains(event.target as Node)) return;\n      handler();\n    };\n    document.addEventListener('mousedown', listener);\n    return () => document.removeEventListener('mousedown', listener);\n  }, [ref, handler]);\n}",
+        "codeSnippet": "import { useEffect } from 'react';\n\nexport function useClickOutside(\n  ref: React.RefObject<HTMLElement | null>, \n  handler: () => void\n) {\n  useEffect(() => {\n    const listener = (event: MouseEvent | TouchEvent) => {\n      // ប្រសិនបើចុចលើធាតុខាងក្នុង Dropdown មិនបាច់ធ្វើអ្វីឡើយ\n      if (!ref.current || ref.current.contains(event.target as Node)) {\n        return;\n      }\n      // ប្រសិនបើចុចនៅខាងក្រៅ ដំណើរការ handler ដើម្បីបិទ Menu\n      handler();\n    };\n\n    document.addEventListener('mousedown', listener);\n    document.addEventListener('touchstart', listener);\n\n    return () => {\n      document.removeEventListener('mousedown', listener);\n      document.removeEventListener('touchstart', listener);\n    };\n  }, [ref, handler]);\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useClickOutside Custom Hook"
+        "codeTitle": "useClickOutside Custom Hook",
+        "proTip": "ប្រើប្រាស់ Custom Hook `useClickOutside` ដោយស្តាប់ Event `mousedown` លើ `document` ដើម្បីដឹងថាតើការចុចនោះស្ថិតនៅក្រៅ Container នៃ Dropdown ឬអត់ ដើម្បីបិទ Menu ដោយរលូន។"
       },
       {
         "id": "m19-08",
         "number": "08",
         "title": "Tabs Component",
-        "summary": "Accessible tablist, tab, and tabpanel ARIA semantics.",
-        "explanation": "Complies with accessibility standards: `role=\"tablist\"`, `role=\"tab\"`, `aria-selected`, and arrow key tab switching.",
+        "summary": "ការបង្កើតផ្ទាំង Tabs ស្របតាមស្តង់ដារ Accessibility ARIA (tablist, tab, tabpanel)។",
+        "explanation": "ការបង្កើត Tabs Component មិនត្រឹមតែជាការផ្លាស់ប្តូរ CSS ប៉ុណ្ណោះទេ ប៉ុន្តែត្រូវគោរពតាមស្តង់ដារ Accessibility (A11y)។ នេះរួមបញ្ចូលទាំងការកំណត់ ARIA Roles ឱ្យបានត្រឹមត្រូវ និងការគាំទ្រការផ្លាស់ប្តូរ Tab តាមរយៈគ្រាប់ចុចសញ្ញាព្រួញនៅលើ Keyboard។",
         "keyPoints": [
-          "Keyboard left/right arrows switch active tab."
+          "**`role=\"tablist\"`**: ដាក់លើ Wrapper នៃប៊ូតុង Tabs ទាំងអស់។",
+          "**`role=\"tab\"`**: ដាក់លើប៊ូតុង Tab នីមួយៗ រួមជាមួយ `aria-selected={isActive}`។",
+          "**`role=\"tabpanel\"`**: ដាក់លើផ្ទាំង Content ដែលត្រូវគ្នានឹង Tab នោះ។"
         ],
-        "codeSnippet": "<div role=\"tablist\" className=\"flex border-b border-slate-800\">\n  <button role=\"tab\" aria-selected={active === 'code'} onClick={() => setActive('code')}>\n    Code\n  </button>\n</div>",
+        "codeSnippet": "export function AccessibleTabs({ active, onSelect }: { active: string; onSelect: (id: string) => void }) {\n  return (\n    <div>\n      <div role=\"tablist\" aria-label=\"ការកំណត់គណនី\" className=\"flex border-b border-slate-800\">\n        <button\n          role=\"tab\"\n          id=\"tab-profile\"\n          aria-selected={active === 'profile'}\n          aria-controls=\"panel-profile\"\n          onClick={() => onSelect('profile')}\n          className={`px-4 py-2 text-sm font-semibold ${active === 'profile' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-slate-400'}`}\n        >\n          ប្រវត្តិរូប\n        </button>\n      </div>\n      \n      <div role=\"tabpanel\" id=\"panel-profile\" aria-labelledby=\"tab-profile\" hidden={active !== 'profile'} className=\"p-4\">\n        មាតិកានៃទំព័រប្រវត្តិរូប...\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Accessible Tab ARIA Attributes"
+        "codeTitle": "Accessible Tab ARIA Attributes",
+        "proTip": "ត្រូវប្រាកដថាប្រើ `role='tablist'`, `role='tab'`, `role='tabpanel'`, និង `aria-selected` ដើម្បីឱ្យ Screen Readers អាចអានបានត្រឹមត្រូវ និងគាំទ្រការប្តូរ Tab ដោយចុចសញ្ញាព្រួញឆ្វេង/ស្តាំលើ Keyboard។"
       },
       {
         "id": "m19-09",
         "number": "09",
         "title": "Data Table Component",
-        "summary": "Reusable data tables with sorting, filtering, and selection.",
-        "explanation": "Abstracts table headers, column configurations, sorting state, and row rendering into a reusable component.",
+        "summary": "ការរចនា Reusable Data Table Component ជាមួយ TypeScript Generics, Dynamic Columns, Sorting, និង Custom Cell Rendering។",
+        "explanation": "នៅក្នុង Dashboard គ្រប់គ្រងកម្រិត Enterprise តារាងទិន្នន័យ (Data Table) ត្រូវបានប្រើប្រាស់ស្ទើរតែគ្រប់ទីកន្លែង។ ការបង្កើត Generic DataTable Component ជួយកាត់បន្ថយការសរសេរកូដ HTML Table ដដែលៗ ដោយគ្រាន់តែបញ្ជូន Data Array និង Column Configuration Objects មកជាការស្រេច។",
         "keyPoints": [
-          "Powers enterprise management dashboards."
+          "ប្រើប្រាស់ TypeScript Generics (`<T extends { id: string | number }>`) សម្រាប់ទិន្នន័យគ្រប់ប្រភេទ។",
+          "Column Definition គាំទ្រទាំងការទាញយកតម្លៃផ្ទាល់ (`accessorKey`) និង Custom Cell Renderers (`render: (row) => JSX`)។",
+          "ងាយស្រួលពង្រីកមុខងារបន្ថែមដូចជា Sorting, Row Selection, និង Pagination។"
         ],
-        "codeSnippet": "interface Column<T> {\n  header: string;\n  accessorKey: keyof T;\n  render?: (item: T) => React.ReactNode;\n}\n\nexport function DataTable<T extends { id: string }>({ data, columns }: { data: T[]; columns: Column<T>[] }) {\n  return (\n    <table className=\"w-full text-left text-sm text-slate-300\">\n      <thead className=\"bg-slate-900 border-b border-slate-800 text-xs uppercase text-slate-400\">\n        <tr>{columns.map(c => <th key={String(c.accessorKey)} className=\"p-3\">{c.header}</th>)}</tr>\n      </thead>\n      <tbody className=\"divide-y divide-slate-800\">\n        {data.map(row => (\n          <tr key={row.id}>\n            {columns.map(c => (\n              <td key={String(c.accessorKey)} className=\"p-3\">\n                {c.render ? c.render(row) : String(row[c.accessorKey])}\n              </td>\n            ))}\n          </tr>\n        ))}\n      </tbody>\n    </table>\n  );\n}",
+        "codeSnippet": "interface Column<T> {\n  header: string;\n  accessorKey: keyof T;\n  render?: (item: T) => React.ReactNode;\n}\n\ninterface DataTableProps<T> {\n  data: T[];\n  columns: Column<T>[];\n}\n\nexport function DataTable<T extends { id: string | number }>({ data, columns }: DataTableProps<T>) {\n  return (\n    <div className=\"overflow-x-auto rounded-xl border border-slate-800\">\n      <table className=\"w-full text-left text-sm text-slate-300\">\n        <thead className=\"bg-slate-900/80 border-b border-slate-800 text-xs uppercase text-slate-400\">\n          <tr>\n            {columns.map((col) => (\n              <th key={String(col.accessorKey)} className=\"p-3 font-semibold\">{col.header}</th>\n            ))}\n          </tr>\n        </thead>\n        <tbody className=\"divide-y divide-slate-800\">\n          {data.map((row) => (\n            <tr key={row.id} className=\"hover:bg-slate-800/40 transition-colors\">\n              {columns.map((col) => (\n                <td key={String(col.accessorKey)} className=\"p-3\">\n                  {col.render ? col.render(row) : String(row[col.accessorKey] ?? '')}\n                </td>\n              ))}\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Generic Reusable DataTable Component"
+        "codeTitle": "Generic Reusable DataTable Component",
+        "proTip": "ប្រើប្រាស់ TypeScript Generics (`<T>`) ក្នុងការរចនា Columns Schema (`accessorKey`, `header`, `render`) ដើម្បីទទួលបាន Auto-completion និង Type-safety ពេញលេញសម្រាប់គ្រប់ Field នៃទិន្នន័យ។"
       },
       {
         "id": "m19-10",
         "number": "10",
         "title": "Pagination Component",
-        "summary": "Page numbers, ellipses, previous/next controls, and page size.",
-        "explanation": "Displays `1, 2, ... 9, 10` pagination links and handles boundary clamping.",
+        "summary": "ការបង្កើត Component ប្តូរទំព័រ (Pagination) រួមមានលេខទំព័រ សញ្ញាចុចៗ (...) និងប៊ូតុង Prev/Next។",
+        "explanation": "នៅពេលតារាងទិន្នន័យមានកំណត់ត្រារាប់ពាន់ Pagination Component ជួយបែងចែកទិន្នន័យជាទំព័រៗយ៉ាងច្បាស់លាស់។ Pagination ដ៏ល្អគួរតែបង្ហាញប៊ូតុងថយក្រោយ (Prev), ប៊ូតុងបន្ទាប់ (Next), និងលេខទំព័រដែលមានសញ្ញាចុចៗ (`...`) នៅពេលចំនួនទំព័រមានច្រើន។",
         "keyPoints": [
-          "Calculates total pages from `totalItems` and `pageSize`."
+          "គណនាទំព័រសរុប៖ `totalPages = Math.ceil(total / pageSize)`។",
+          "Disable ប៊ូតុង Previous នៅពេល `currentPage === 1` និងប៊ូតុង Next នៅពេល `currentPage === totalPages`។",
+          "ផ្តល់នូវ Callback `onPageChange(pageNumber)` ទៅកាន់ Parent Component។"
         ],
-        "codeSnippet": "export function Pagination({ current, total, onChange }: PaginationProps) {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <button disabled={current <= 1} onClick={() => onChange(current - 1)}>Prev</button>\n      <span>Page {current} of {total}</span>\n      <button disabled={current >= total} onClick={() => onChange(current + 1)}>Next</button>\n    </div>\n  );\n}",
+        "codeSnippet": "interface PaginationProps {\n  current: number;\n  total: number;\n  onChange: (page: number) => void;\n}\n\nexport function Pagination({ current, total, onChange }: PaginationProps) {\n  return (\n    <div className=\"flex items-center justify-between px-4 py-3 border-t border-slate-800\">\n      <div className=\"flex items-center gap-2\">\n        <button\n          disabled={current <= 1}\n          onClick={() => onChange(current - 1)}\n          className=\"px-3 py-1.5 text-xs font-medium rounded border border-slate-700 disabled:opacity-40\"\n        >\n          ថយក្រោយ\n        </button>\n        <span className=\"text-xs text-slate-400\">\n          ទំព័រទី <strong className=\"text-white\">{current}</strong> នៃ <strong>{total}</strong>\n        </span>\n        <button\n          disabled={current >= total}\n          onClick={() => onChange(current + 1)}\n          className=\"px-3 py-1.5 text-xs font-medium rounded border border-slate-700 disabled:opacity-40\"\n        >\n          បន្ទាប់\n        </button>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Pagination Component"
+        "codeTitle": "Pagination Component",
+        "proTip": "គណនាចំនួនទំព័រសរុបតាមរយៈ `Math.ceil(totalItems / pageSize)` និងប្រើប្រាស់ Logic បង្ហាញសញ្ញា (...) (Ellipsis) នៅពេលចំនួនទំព័រមានច្រើន ដើម្បីកុំឱ្យប៊ូតុងលេខទំព័រវែងជ្រុលហៀរអេក្រង់។"
       },
       {
         "id": "m19-11",
         "number": "11",
         "title": "Toast Notification System",
-        "summary": "Global toast notifications queue with auto-dismissal.",
-        "explanation": "Display non-intrusive feedback toasts (Success, Error, Info) that stack and auto-dismiss after 4 seconds.",
+        "summary": "ការបង្កើតប្រព័ន្ធសារជូនដំណឹង (Toast Queue) សកល ដែលអាចបាត់ទៅវិញដោយស្វ័យប្រវត្តិ (Auto-dismiss)។",
+        "explanation": "Toast Notifications គឺជាសារជូនដំណឹងតូចៗដែលផុសឡើងនៅជ្រុងនៃអេក្រង់ ដើម្បីផ្តល់ Feedback ភ្លាមៗដល់ User បន្ទាប់ពីធ្វើសកម្មភាពអ្វីមួយ (ដូចជា Save ជោគជ័យ ឬជួបបញ្ហាបណ្តាញ) ដោយមិនរំខានដល់ការងាររបស់ពួកគេឡើយ។",
         "keyPoints": [
-          "Managed via Zustand store or React Sonner."
+          "បង្ហាញនៅជ្រុងខាងលើ ឬខាងក្រោម (Top-Right / Bottom-Right) តាមរយៈ Portal។",
+          "បាត់ទៅវិញដោយស្វ័យប្រវត្តិបន្ទាប់ពី ៣ ទៅ ៥ វិនាទី (Auto-dismiss) ឬអាចចុចបិទដោយផ្ទាល់។",
+          "គ្រប់គ្រងតាមរយៈ Zustand Store សកល ឬបណ្ណាល័យស្រាលៗដូចជា `sonner`។"
         ],
-        "codeSnippet": "toast.success('Project 01 completed successfully!');",
+        "codeSnippet": "// ឧទាហរណ៍នៃការហៅប្រើ Toast ពីគ្រប់ទីកន្លែងក្នុងកម្មវិធី៖\nimport { toast } from 'sonner';\n\nexport function SaveProjectButton() {\n  const handleSave = async () => {\n    try {\n      await saveProject();\n      toast.success('គម្រោងត្រូវបានរក្សាទុកដោយជោគជ័យ! 🎉');\n    } catch (err: any) {\n      toast.error('បរាជ័យក្នុងការរក្សាទុកគម្រោង!');\n    }\n  };\n\n  return <button onClick={handleSave}>រក្សាទុក</button>;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Triggering Toasts"
+        "codeTitle": "Triggering Toasts",
+        "proTip": "ប្រព័ន្ធ Toast គួរតែគាំទ្រការតម្រៀបជង់គ្នា (Stacking), កំណត់ Timer បាត់ទៅវិញដោយស្វ័យប្រវត្តិ (Auto-dismiss 3-5 វិនាទី), និងអាចហៅប្រើប្រាស់បានយ៉ាងងាយស្រួលពីគ្រប់ទីកន្លែងតាមរយៈ `toast.success()`, `toast.error()`។"
       },
       {
         "id": "m19-12",
         "number": "12",
         "title": "Advanced Component Patterns",
-        "summary": "Polymorphic components with the `as` prop.",
-        "explanation": "Allows a component to render as a `<button>`, an `<a>` link, or a Next.js `<Link>` while preserving unified styling and TypeScript prop types.",
+        "summary": "ការស្វែងយល់ពី Polymorphic Components (as prop) និង asChild Pattern ដ៏ពេញនិយមក្នុង Radix UI។",
+        "explanation": "**Polymorphic Components** អនុញ្ញាតឱ្យ Component មួយអាច Render ខ្លួនឯងទៅជា HTML Elements ខុសៗគ្នា (ដូចជា Render ជា `<button>`, `<a>`, ឬ Next.js `<Link>`) ដោយប្រើប្រាស់ prop ឈ្មោះ `as` ឬ `asChild` (ពី Radix UI Slot) ខណៈពេលដែលរក្សានូវ Styling, Variants, និង Type Safety ទាំងអស់ដូចគ្នា។",
         "keyPoints": [
-          "The `asChild` pattern popularized by Radix UI."
+          "**`as` prop**: អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្តូរ Tag ដូចជា `<Button as=\"a\" href=\"...\">`។",
+          "**`asChild` pattern (Slot)**: បញ្ចូល Props និង ClassNames ចូលទៅក្នុង Child Element ផ្ទាល់ដោយមិនបង្កើត DOM Node បន្ថែម។",
+          "ជួយជៀសវាងបញ្ហា Nested Interactive Elements (ដូចជាការដាក់ `<a>` នៅខាងក្នុង `<button>` ដែលជាកំហុស Invalid HTML)។"
         ],
-        "codeSnippet": "// Polymorphic button can render as an <a> link or <button>\n<Button as=\"a\" href=\"/curriculum\">Go to Curriculum</Button>",
+        "codeSnippet": "// 1. បង្ហាញជា Button ធម្មតា\n<Button onClick={handleClick}>ចុចទីនេះ</Button>\n\n// 2. បង្ហាញជា Tag <a> (Link) ប៉ុន្តែមាន Style ដូច Button បេះបិទ\n<Button as=\"a\" href=\"/curriculum\">ទៅកាន់ទំព័រមេរៀន</Button>\n\n// 3. គំរូ asChild ជាមួយ Radix UI Slot និង Next.js Link:\n// <Button asChild>\n//   <Link href=\"/projects\">មើលគម្រោងទាំងអស់</Link>\n// </Button>",
         "codeLanguage": "jsx",
-        "codeTitle": "Polymorphic Component Concept"
+        "codeTitle": "Polymorphic Component Concept",
+        "proTip": "គំរូ Polymorphic Component (ដូចជា `<Button as='a' href='...'>` ឬ `asChild`) អនុញ្ញាតឱ្យ Component មួយអាចបំប្លែងខ្លួនទៅជា HTML Tag ផ្សេងទៀត (ដូចជា Button ក្លាយជា Link) ដោយរក្សានូវ Styles, Variants, និង Accessibility ដដែល។"
       }
     ]
   },

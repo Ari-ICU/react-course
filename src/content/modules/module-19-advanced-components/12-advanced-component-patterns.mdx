@@ -5,21 +5,32 @@ title: "Advanced Component Patterns"
 moduleId: "module-19"
 moduleNumber: "19"
 category: "Enterprise & Production"
-summary: "Polymorphic components with the `as` prop."
+summary: "ការស្វែងយល់ពី Polymorphic Components (as prop) និង asChild Pattern ដ៏ពេញនិយមក្នុង Radix UI។"
+proTip: "គំរូ Polymorphic Component (ដូចជា `<Button as='a' href='...'>` ឬ `asChild`) អនុញ្ញាតឱ្យ Component មួយអាចបំប្លែងខ្លួនទៅជា HTML Tag ផ្សេងទៀត (ដូចជា Button ក្លាយជា Link) ដោយរក្សានូវ Styles, Variants, និង Accessibility ដដែល។"
 codeTitle: "Polymorphic Component Concept"
 ---
 
 # Advanced Component Patterns
 
-Allows a component to render as a `<button>`, an `<a>` link, or a Next.js `<Link>` while preserving unified styling and TypeScript prop types.
+**Polymorphic Components** អនុញ្ញាតឱ្យ Component មួយអាច Render ខ្លួនឯងទៅជា HTML Elements ខុសៗគ្នា (ដូចជា Render ជា `<button>`, `<a>`, ឬ Next.js `<Link>`) ដោយប្រើប្រាស់ prop ឈ្មោះ `as` ឬ `asChild` (ពី Radix UI Slot) ខណៈពេលដែលរក្សានូវ Styling, Variants, និង Type Safety ទាំងអស់ដូចគ្នា។
 
 ### Key Concepts & Rules:
 
-- The `asChild` pattern popularized by Radix UI.
+- **`as` prop**: អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្តូរ Tag ដូចជា `<Button as="a" href="...">`។
+- **`asChild` pattern (Slot)**: បញ្ចូល Props និង ClassNames ចូលទៅក្នុង Child Element ផ្ទាល់ដោយមិនបង្កើត DOM Node បន្ថែម។
+- ជួយជៀសវាងបញ្ហា Nested Interactive Elements (ដូចជាការដាក់ `<a>` នៅខាងក្នុង `<button>` ដែលជាកំហុស Invalid HTML)។
 
 ### Code Example: Polymorphic Component Concept
 
 ```jsx
-// Polymorphic button can render as an <a> link or <button>
-<Button as="a" href="/curriculum">Go to Curriculum</Button>
+// 1. បង្ហាញជា Button ធម្មតា
+<Button onClick={handleClick}>ចុចទីនេះ</Button>
+
+// 2. បង្ហាញជា Tag <a> (Link) ប៉ុន្តែមាន Style ដូច Button បេះបិទ
+<Button as="a" href="/curriculum">ទៅកាន់ទំព័រមេរៀន</Button>
+
+// 3. គំរូ asChild ជាមួយ Radix UI Slot និង Next.js Link:
+// <Button asChild>
+//   <Link href="/projects">មើលគម្រោងទាំងអស់</Link>
+// </Button>
 ```
