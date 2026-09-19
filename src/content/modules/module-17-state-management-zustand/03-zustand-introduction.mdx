@@ -5,20 +5,21 @@ title: "Zustand Introduction"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Small, fast, scalable bearbones state management."
+summary: "ស្វែងយល់ពី Zustand ដែលជាបណ្ណាល័យគ្រប់គ្រង State ដ៏តូច លឿន និងងាយស្រួលបំផុតសម្រាប់ React។"
 interactiveDemoKey: "ZustandDemo"
+proTip: "Zustand មានទំហំ Bundle តូចជាង 1KB មិនត្រូវការ Provider រុំព័ទ្ធកម្មវិធី គ្មាន Boilerplate ស្មុគស្មាញដូច Redux និងគាំទ្រ TypeScript 100% ដោយស្វ័យប្រវត្តិ។"
 codeTitle: "Basic Zustand Store"
 ---
 
 # Zustand Introduction
 
-Zustand is a minimalistic state management solution based on simplified flux principles. It has a tiny footprint (<1kb), zero boilerplate, and doesn't require wrapping your app in Providers.
+Zustand (ពាក្យអាល្លឺម៉ង់មានន័យថា "State / ស្ថានភាព") គឺជាបណ្ណាល័យគ្រប់គ្រង State ដ៏ពេញនិយមបំផុតនាពេលបច្ចុប្បន្ន។ វាត្រូវបានបង្កើតឡើងដោយផ្អែកលើគោលការណ៍ Flux ដ៏សាមញ្ញ ប៉ុន្តែលុបបំបាត់ចោលនូវភាពស្មុគស្មាញ (Boilerplate) របស់ Redux ទាំងស្រុង។
 
 ### Key Concepts & Rules:
 
-- Direct hook-based access.
-- Selective re-rendering via selector functions.
-- Full TypeScript support with auto-inference.
+- បង្កើត Store ដោយផ្ទាល់តាមរយៈ Hook តែមួយគត់គឺ `create()`។
+- គ្មានការប្រើប្រាស់ Reducer, Action Types, ឬ Dispatchers ស្មុគស្មាញឡើយ។
+- គាំទ្រ TypeScript ពេញលេញ និងមានសមត្ថភាព Re-render យ៉ាងរហ័សបំផុត។
 
 ### Code Example: Basic Zustand Store
 

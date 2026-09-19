@@ -5,28 +5,36 @@ title: "Preventing Unnecessary Renders"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Architectural techniques that eliminate the need for memoization."
+summary: "បច្ចេកទេសស្ថាបត្យកម្មក្នុងការលុបបំបាត់ Re-render ដោយមិនចាំបាច់ប្រើ useMemo ឬ React.memo។"
+proTip: "យុទ្ធសាស្ត្រ 'State Down' និង 'Lift Content Up' គឺជាដំណោះស្រាយស្ថាបត្យកម្មដ៏ល្អបំផុត៖ បង្វែរ State ទៅកាន់ Child Component ណាដែលត្រូវការវា ឬបញ្ជូន Static Tree ជា `children` prop ដើម្បីកុំឱ្យវា Re-render តាម Parent។"
 codeTitle: "State Down Optimization Pattern"
 ---
 
 # Preventing Unnecessary Renders
 
-You can often eliminate re-renders by moving state down or lifting JSX up as `children`, completely avoiding manual `useMemo` or `React.memo` calls.
+មុនពេលប្រញាប់ប្រើប្រាស់ `React.memo`, `useMemo` ឬ `useCallback` ដែលធ្វើឱ្យកូដស្មុគស្មាញ អ្នកអាចលុបបំបាត់ Re-render ស្ទើរតែទាំងស្រុងតាមរយៈការរៀបចំ Component Composition ឱ្យបានត្រឹមត្រូវ៖ គឺការទម្លាក់ State ទៅក្រោម (Move State Down) និងការលើក Content ឡើងលើជា `children` (Lift Content Up)។
 
 ### Key Concepts & Rules:
 
-- Move state into dedicated leaf components.
-- Pass static trees as `{children}`.
+- **Move State Down**: ប្រសិនបើ Input State ប្រើតែក្នុង Textbox មួយ សូមបំបែក Textbox នោះជា Component ដាច់ដោយឡែក។
+- **Lift Content Up**: នៅពេល Component ទទួល `children` props ទោះបី Component នោះ Re-render ក៏ `children` នឹងមិន Re-render ឡើយ។
+- ដំណោះស្រាយស្ថាបត្យកម្មស្អាតជាង និងមិនបង្ក Overload លើ Memory ដូច Memoization។
 
 ### Code Example: State Down Optimization Pattern
 
 ```jsx
-// Moving state down into dedicated component:
+// 1. បំបែក Input ដែលមាន State ញឹកញាប់ទៅជា Component ដាច់ដោយឡែក
+function SearchBox() {
+  const [query, setQuery] = useState('');
+  return <input value={query} onChange={(e) => setQuery(e.target.value)} />;
+}
+
+// 2. ក្នុង App ដើម VeryExpensiveTree នឹងមិន Re-render ឡើយនៅពេល User វាយអក្សរ!
 export function App() {
   return (
     <div>
-      <InputWithState /> {/* Only this small input re-renders as user types */}
-      <VeryExpensiveTree /> {/* Never re-renders when user types! */}
+      <SearchBox />
+      <VeryExpensiveChartTree />
     </div>
   );
 }

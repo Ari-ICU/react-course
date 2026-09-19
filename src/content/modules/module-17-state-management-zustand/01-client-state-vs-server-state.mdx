@@ -5,22 +5,27 @@ title: "Client State vs Server State"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Defining the role of Zustand alongside TanStack Query."
+summary: "ការកំណត់តួនាទីរបស់ Zustand ឱ្យដំណើរការទន្ទឹមគ្នាជាមួយ TanStack Query យ៉ាងស៊ីចង្វាក់។"
+proTip: "កុំចម្លងទិន្នន័យពី Server យកមកដាក់ក្នុង Zustand Store ឱ្យសោះ! ចូរទុកឱ្យ TanStack Query គ្រប់គ្រង Server Cache ហើយប្រើ Zustand សម្រាប់តែ UI Client State សុទ្ធសាធ (ដូចជា Shopping Cart, Drawer, Audio Player)។"
 codeTitle: "Modern Separation of State Responsibilities"
 ---
 
 # Client State vs Server State
 
-Modern React architecture delegates server caching to TanStack Query, and client-only state (shopping cart, audio player, modal manager, drawer status) to Zustand.
+នៅក្នុងស្ថាបត្យកម្មទំនើបនៃកម្មវិធី React ការបែងចែកភារកិច្ចរវាង Server State និង Client State គឺជាគន្លឹះដ៏សំខាន់។ យើងប្រគល់ការងារគ្រប់គ្រង Cache ទិន្នន័យដែលទាញយកពី Backend ទៅកាន់ TanStack Query រីឯទិន្នន័យ Client State សុទ្ធសាធ (ដូចជា កន្ត្រកទំនិញ Shopping Cart, ផ្ទាំង Modal/Drawer, Audio Player, Theme) ត្រូវបានប្រគល់ឱ្យ Zustand គ្រប់គ្រង។
 
 ### Key Concepts & Rules:
 
-- Do NOT duplicate server data inside Zustand stores.
-- Keep stores lean, synchronous, and focused on UI state.
+- **TanStack Query**: គ្រប់គ្រង Asynchronous Server Data (Products, User Profile, Posts)។
+- **Zustand**: គ្រប់គ្រង Synchronous Client UI State (Cart items, Modal visibility, Dark mode)។
+- មិនត្រូវចម្លង ឬ Sync ទិន្នន័យ Server ចូលទៅក្នុង Zustand Store ដោយមិនចាំបាច់ឡើយ។
 
 ### Code Example: Modern Separation of State Responsibilities
 
 ```jsx
-// Server Data -> TanStack Query (Query cache)
-// Client UI State -> Zustand (Global store)
+// 1. Server Data -> គ្រប់គ្រងដោយ TanStack Query (Query Cache)
+const { data: products } = useQuery({ queryKey: ['products'], queryFn: fetchProducts });
+
+// 2. Client UI State -> គ្រប់គ្រងដោយ Zustand (Global Client Store)
+const { cart, addToCart } = useCartStore();
 ```

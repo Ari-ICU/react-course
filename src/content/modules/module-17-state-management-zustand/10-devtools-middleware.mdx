@@ -5,26 +5,39 @@ title: "DevTools Middleware"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Integrating with Redux DevTools browser extension."
+summary: "ការតភ្ជាប់ Zustand Store ជាមួយ Redux DevTools Extension ក្នុង Browser សម្រាប់ធ្វើ Time-travel Debugging។"
+proTip: "ការរុំព័ទ្ធ Store ជាមួយ `devtools()` ជួយឱ្យអ្នកអាចតាមដានរាល់ Action ដែលបានកើតឡើង មើល State Diff និងធ្វើ Time-travel Debugging យ៉ាងងាយស្រួលនៅក្នុង DevTools។"
 codeTitle: "Zustand DevTools Middleware"
 ---
 
 # DevTools Middleware
 
-Wrap your store in `devtools()` to inspect time-travel state changes in Redux DevTools.
+Zustand ផ្តល់នូវការគាំទ្រយ៉ាងពេញលេញសម្រាប់កម្មវិធីបន្ថែមរបស់ Browser គឺ **Redux DevTools**។ តាមរយៈការប្រើប្រាស់ Middleware `devtools()` រាល់ការផ្លាស់ប្តូរ State និងឈ្មោះ Action ទាំងអស់នឹងត្រូវបានបង្ហាញក្នុង Timeline នៃ DevTools ដែលជួយឱ្យការ Debug កម្មវិធីកាន់តែរហ័ស។
 
 ### Key Concepts & Rules:
 
-- Named actions appear in DevTools timeline.
+- នាំចូល `devtools` ពី `zustand/middleware`។
+- អាចកំណត់ឈ្មោះ Action ជា Argument ទីពីរក្នុង `set(..., false, 'actionName')`។
+- គាំទ្រការត្រួតពិនិត្យ State Diffs និង State History (Time-travel Debugging)។
 
 ### Code Example: Zustand DevTools Middleware
 
 ```jsx
+import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export const useStore = create<MyState>()(
-  devtools((set) => ({
-    // actions...
-  }))
+interface CounterStore {
+  count: number;
+  inc: () => void;
+}
+
+export const useCounterStore = create<CounterStore>()(
+  devtools(
+    (set) => ({
+      count: 0,
+      inc: () => set((state) => ({ count: state.count + 1 }), false, 'counter/increment'),
+    }),
+    { name: 'CounterStore' }
+  )
 );
 ```

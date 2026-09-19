@@ -5,29 +5,34 @@ title: "React Rendering"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "How and why React renders components."
+summary: "ស្វែងយល់អំពីមូលហេតុ និងរបៀបដែល React ដំណើរការ Render លើ Components។"
+proTip: "ការ Render មិនមែនមានន័យថា Browser ត្រូវ Paint DOM ឡើងវិញគ្រប់ពេលនោះទេ! React គ្រាន់តែហៅអនុគមន៍ Component ដើម្បីគណនា JSX ថ្មីប៉ុណ្ណោះ។ បើ JSX ថ្មីដូចគ្នានឹងចាស់ នោះគ្មានការផ្លាស់ប្តូរលើ Real DOM ឡើយ។"
 codeTitle: "Default Cascade Re-render Behavior"
 ---
 
 # React Rendering
 
-Rendering is React calling your component function to obtain the new JSX element tree. A component re-renders when: 1) Its state changes; 2) Its parent re-renders; 3) A context it consumes changes.
+នៅក្នុង React ពាក្យថា "Rendering" សំដៅលើដំណើរការដែល React ហៅអនុគមន៍ Component របស់អ្នក ដើម្បីទទួលបាន JSX Elements Tree ថ្មី។ Component មួយនឹង Re-render នៅពេល៖ ១) State របស់វាផ្លាស់ប្តូរ ២) Parent Component របស់វា Re-render ឬ ៣) Context ដែលវា Subscribe មានការកែប្រែតម្លៃ។
 
 ### Key Concepts & Rules:
 
-- A parent re-render automatically re-renders ALL its children by default, even if their props didn't change!
-- Rendering is not the same as DOM painting; if JSX output is identical, no DOM mutation occurs.
+- **Cascade Re-rendering**: នៅពេល Parent Re-render នោះរាល់ Child Components ទាំងអស់នឹង Re-render តាមដោយស្វ័យប្រវត្តិ ទោះបីជា Props របស់វាមិនផ្លាស់ប្តូរក៏ដោយ!
+- ការ Render (គណនា Virtual DOM ក្នុង JS) ខុសប្លែកពី DOM Painting (គូរលើ Browser)។ React ធ្វើការ Diffing ហើយ update តែ Real DOM ណាដែលមានការប្រែប្រួលពិតប្រាកដប៉ុណ្ណោះ។
+- Re-render ច្រើនដងមិនមែនតែងតែមានន័យថាយឺតនោះទេ ប៉ុន្តែវាអាចបង្កបញ្ហាប្រសិនបើ Child Component នោះមានការគណនាស្មុគស្មាញ។
 
 ### Code Example: Default Cascade Re-render Behavior
 
 ```jsx
-// When Parent re-renders, Child re-renders by default:
-function Parent() {
+import { useState } from 'react';
+
+export function Parent() {
   const [count, setCount] = useState(0);
+
   return (
     <div>
-      <button onClick={() => setCount(c => c + 1)}>Increment</button>
-      <ExpensiveChild /> {/* Re-renders on every click unless memoized! */}
+      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+      {/* ExpensiveChild នឹង Re-render រាល់ពេលចុចប៊ូតុង ទោះបីគ្មាន props ក៏ដោយ! */}
+      <ExpensiveChild />
     </div>
   );
 }

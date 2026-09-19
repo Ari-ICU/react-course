@@ -5,25 +5,38 @@ title: "Creating a Store"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Defining state variables and updater actions inside create()."
+summary: "ការកំណត់អថេរ State និង Updater Actions នៅខាងក្នុងអនុគមន៍ create() តែមួយ។"
+proTip: "នៅក្នុង Zustand ទិន្នន័យ State និង Actions (អនុគមន៍កែប្រែ) ត្រូវបានដាក់រួមគ្នានៅក្នុង Store តែមួយ (Colocation) ដែលធ្វើឱ្យកូដងាយអាន និងងាយស្រួលហៅប្រើ។"
 codeTitle: "Colocating State and Actions"
 ---
 
 # Creating a Store
 
-In Zustand, state and actions are colocated inside the store definition. The `set` function merges state updates shallowly.
+នៅក្នុង Zustand ការបង្កើត Store ត្រូវបានធ្វើឡើងតាមរយៈអនុគមន៍ `create()`។ គំរូដ៏ល្អបំផុតគឺការដាក់ State Properties និង Actions (Functions ដែលកែប្រែ State នោះ) នៅជាមួយគ្នាក្នុង Object តែមួយ។ អនុគមន៍ `set()` នឹងធ្វើការ Shallow Merge លើ State កម្រិតកំពូលដោយស្វ័យប្រវត្តិ។
 
 ### Key Concepts & Rules:
 
-- `set()` automatically merges state at the top level.
+- ប្រើ TypeScript Interface ដើម្បីកំណត់រចនាសម្ព័ន្ធ State និង Actions ឱ្យបានច្បាស់លាស់។
+- អនុគមន៍ `set()` ធ្វើការ Merge តែ Properties ណាដែលបានបញ្ជាក់ ដោយមិនបាត់ Properties ផ្សេងឡើយ។
+- អាចប្រើ `set(state => ({ ... }))` នៅពេលត្រូវការតម្លៃ State ចាស់មកគណនា។
 
 ### Code Example: Colocating State and Actions
 
 ```jsx
+import { create } from 'zustand';
+
+interface UIState {
+  isSidebarOpen: boolean;
+  activeModal: string | null;
+  toggleSidebar: () => void;
+  openModal: (modalName: string) => void;
+  closeModal: () => void;
+}
+
 export const useUIStore = create<UIState>((set) => ({
   isSidebarOpen: false,
   activeModal: null,
-  toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),
+  toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
   openModal: (modalName) => set({ activeModal: modalName }),
   closeModal: () => set({ activeModal: null }),
 }));

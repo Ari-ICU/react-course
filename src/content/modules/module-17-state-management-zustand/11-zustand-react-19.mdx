@@ -5,20 +5,25 @@ title: "Zustand + React 19"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Concurrent rendering and useSyncExternalStore integration."
+summary: "ការគាំទ្រ Concurrent Rendering និងការប្រើប្រាស់ useSyncExternalStore ដើម្បីធានាសុវត្ថិភាព 100% ក្នុង React 18 និង 19។"
+proTip: "Zustand ត្រូវបានបង្កើតឡើងនៅលើ React Native Hook `useSyncExternalStore` ដូច្នេះវាការពារបញ្ហា Visual Tearing ទាំងស្រុងនៅពេលដំណើរការក្នុង Concurrent Mode នៃ React 18 និង 19។"
 codeTitle: "Concurrent Safety Guarantee"
 ---
 
 # Zustand + React 19
 
-Zustand internally uses `useSyncExternalStore` to guarantee zero visual tearing during concurrent renders in React 18 and 19.
+នៅក្នុងសម័យកាលនៃ React 18 និង React 19 ការបង្ហាញផ្ទាំងទិដ្ឋភាពក្នុងពេលដំណាលគ្នា (Concurrent Rendering) អាចបណ្តាលឱ្យមានបញ្ហា **Visual Tearing** (UI ផ្នែកខ្លះបង្ហាញ State ចាស់ ផ្នែកខ្លះបង្ហាញ State ថ្មីក្នុង Frame តែមួយ) ប្រសិនបើបណ្ណាល័យ State ខាងក្រៅមិនត្រូវបានរចនាត្រឹមត្រូវ។ Zustand បានរួមបញ្ចូល និងពឹងផ្អែកលើ `useSyncExternalStore` API ដោយផ្ទាល់ ដើម្បីលុបបំបាត់បញ្ហានេះ។
 
 ### Key Concepts & Rules:
 
-- Completely safe for concurrent mode.
+- សុវត្ថិភាព 100% ជាមួយ Concurrent Features នៃ React 19 (Transitions, Suspense)។
+- គ្មានបញ្ហា Visual Tearing ឬ State Inconsistency ឡើយ។
+- ដំណើរការស៊ីសង្វាក់គ្នាយ៉ាងរលូនជាមួយ Server Components និង Client Components។
 
 ### Code Example: Concurrent Safety Guarantee
 
 ```jsx
-// Zustand is built natively on React's useSyncExternalStore API.
+// Zustand ត្រូវបានសរសេរឡើងដោយផ្អែកលើ React useSyncExternalStore API:
+// import { useSyncExternalStore } from 'react';
+// ធានាសុវត្ថិភាពពេញលេញក្នុង Concurrent Rendering និង React Server/Client transitions!
 ```

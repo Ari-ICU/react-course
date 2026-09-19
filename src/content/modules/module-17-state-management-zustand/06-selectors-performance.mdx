@@ -5,25 +5,34 @@ title: "Selectors & Performance"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Preventing unnecessary renders with fine-grained selectors."
-proTip: "Always use selectors like `state => state.property`. Never call `const store = useMyStore()` without a selector in performance-critical UI."
+summary: "ការការពារការ Re-render ដោយឥតប្រយោជន៍តាមរយៈ Fine-grained Selectors នៅក្នុង Zustand។"
+proTip: "កុំសរសេរ `const store = useMyStore()` ក្នុង UI Component ដែលត្រូវការ Performance ខ្ពស់ឱ្យសោះ! ត្រូវប្រើ Selector `state => state.property` ដើម្បី Subscribe តែលើ property ជាក់លាក់ប៉ុណ្ណោះ។"
 codeTitle: "Selector Subscription Pattern"
 ---
 
 # Selectors & Performance
 
-By selecting only `state.isSidebarOpen`, the component will NOT re-render if `activeModal` changes elsewhere in the store. This provides immense performance gains over Context.
+អត្ថប្រយោជន៍ធំបំផុតមួយរបស់ Zustand លើ Context API គឺសមត្ថភាព **Fine-grained Subscriptions**។ នៅពេលអ្នកប្រើប្រាស់ Selector Function ដូចជា `state => state.isSidebarOpen` Component នោះនឹង Re-render តែមួយគត់នៅពេលដែលតម្លៃ `isSidebarOpen` ផ្លាស់ប្តូរ! ប្រសិនបើ Property ផ្សេងទៀតក្នុង Store ផ្លាស់ប្តូរ Component នេះនឹងមិន Re-render ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Components re-render ONLY when their selected slice changes.
+- Component នឹង Re-render តែនៅពេលដែលលទ្ធផលនៃ Selector ផ្លាស់ប្តូរ (Strict Equality `===`)។
+- អាចគណនា Derived Data ក្នុង Selector បាន (ឧទាហរណ៍៖ `state => state.items.length`)។
+- ចៀសវាងការ return Object ថ្មីក្នុង Selector បើគ្មាន Custom Equality Check (ដូចជា `useShallow`)។
 
 ### Code Example: Selector Subscription Pattern
 
 ```jsx
-// ✅ Optimal: Subscribes ONLY to 'itemsCount':
-const count = useCartStore(state => state.items.length);
+import { useCartStore } from '@/store/useCartStore';
 
-// ❌ Suboptimal: Subscribes to ENTIRE store object:
-// const store = useCartStore(); // Re-renders on ANY change in store!
+export function CartBadge() {
+  // ✅ ល្អបំផុត៖ Subscribe តែលើចំនួនសរុបនៃទំនិញ
+  // ប្រសិនបើឈ្មោះទំនិញ ឬតម្លៃកែប្រែ Badge នេះនឹងមិន Re-render ឡើយ
+  const itemCount = useCartStore((state) => state.items.length);
+
+  return <span className="badge">{itemCount}</span>;
+}
+
+// ❌ មិនល្អ៖ Subscribe ទៅកាន់ Store ទាំងមូល
+// const store = useCartStore(); // នឹង Re-render រាល់ពេល Store មានការប្រែប្រួលណាមួយ!
 ```

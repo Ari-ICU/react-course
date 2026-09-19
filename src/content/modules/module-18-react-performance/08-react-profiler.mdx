@@ -5,27 +5,39 @@ title: "React Profiler"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Identifying slow renders and commit timelines in React DevTools."
+summary: "ការស្វែងរកចំណុចដែលដំណើរការយឺត (Slow Renders) តាមរយៈ React DevTools Profiler។"
+proTip: "បើកជម្រើស 'Record why each component rendered while profiling' នៅក្នុង Settings នៃ React DevTools ដើម្បីដឹងច្បាស់ថាតើ Component មួយ Re-render ដោយសារ State, Hook, ឬ Prop ណាមួយ។"
 codeTitle: "React Profiler API"
 ---
 
 # React Profiler
 
-The React Profiler records render duration and flame graphs, showing exactly which component rendered, why it rendered, and how long it took.
+ផ្ទាំង **React DevTools Profiler** គឺជាឧបករណ៍ដ៏សំខាន់បំផុតសម្រាប់វិភាគ Performance នៃកម្មវិធី React។ វាធ្វើការកត់ត្រារយៈពេល Render (Render Duration), បង្ហាញក្រាហ្វិក Flamegraph, និងបង្ហាញមូលហេតុច្បាស់ៗថាតើ Component ណាខ្លះ Re-render និងចំណាយពេលប៉ុន្មាន Milliseconds។
 
 ### Key Concepts & Rules:
 
-- Use 'Record why each component rendered while profiling' in DevTools settings.
+- មើលពណ៌ Flamegraph (ពណ៌លឿង/ទឹកក្រូច = ចំណាយពេលយូរ, ពណ៌ខៀវ/ប្រផេះ = លឿន ឬមិនបាន render)។
+- ប្រើប្រាស់ `<Profiler id="..." onRender={...}>` សម្រាប់ការវាស់វែងតាម Programmatic ក្នុង Code។
+- ធ្វើតេស្ត Profiling នៅក្នុង Production Build (ជាមួយ Profiling flag បើក) ដើម្បីទទួលបានទិន្នន័យជាក់ស្តែង។
 
 ### Code Example: React Profiler API
 
 ```jsx
-// Use the Profiler component programmatically if needed:
 import { Profiler } from 'react';
 
-<Profiler id="CourseTable" onRender={(id, phase, actualDuration) => {
-  console.log(`${id} [${phase}] took ${actualDuration}ms`);
-}}>
-  <CourseTable />
-</Profiler>
+function onRenderCallback(
+  id: string,
+  phase: 'mount' | 'update',
+  actualDuration: number
+) {
+  console.log(`Component ${id} [${phase}] ចំណាយពេល: ${actualDuration.toFixed(2)}ms`);
+}
+
+export function App() {
+  return (
+    <Profiler id="CourseTable" onRender={onRenderCallback}>
+      <CourseTable />
+    </Profiler>
+  );
+}
 ```

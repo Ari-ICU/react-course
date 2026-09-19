@@ -5,26 +5,38 @@ title: "React.memo"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Skipping component re-renders when props are shallowly equal."
+summary: "ការរំលងការ Re-render នៃ Component ប្រសិនបើ Props មិនមានការផ្លាស់ប្តូរ (Shallow Equality)។"
+pitfall: "ការប្រើ `React.memo` នឹងគ្មានប្រសិទ្ធភាពឡើយ ប្រសិនបើអ្នកបញ្ជូន Inline Objects (ដូចជា `style={{ color: 'red' }}`) ឬ Inline Functions (ដូចជា `onClick={() => doSomething()}`) ពី Parent ព្រោះវានឹងបង្កើត Memory Reference ថ្មីជានិច្ច!"
 codeTitle: "Memoizing Component with React.memo"
 ---
 
 # React.memo
 
-`React.memo` wraps a component function and memoizes its rendered output. If props are shallowly equal to the previous render, React skips calling the component function entirely.
+`React.memo` គឺជា Higher-Order Component (HOC) ដែលប្រើសម្រាប់រុំព័ទ្ធ Component របស់អ្នកដើម្បីធ្វើ Memoization។ ប្រសិនបើ Props ដែលបញ្ជូនមកកាន់ Component នោះមិនមានការផ្លាស់ប្តូរតម្លៃ (Shallow Comparison `Object.is`) React នឹងរំលងការហៅ Render លើ Component នោះទាំងស្រុង ដោយប្រើលទ្ធផល Render ចាស់។
 
 ### Key Concepts & Rules:
 
-- Performs shallow equality check (`Object.is`) on every prop.
-- Fails to prevent re-renders if you pass un-memoized object literals or inline functions as props!
+- ធ្វើការប្រៀបធៀប Props តាមរយៈ Shallow Equality Check (`Object.is`)។
+- មិនអាចការពារ Re-render បានឡើយ ប្រសិនបើ Parent បញ្ជូន Object ឬ Function ថ្មីរាល់ render។
+- ស័ក្តិសមបំផុតសម្រាប់ Heavy Components ដែលទទួល Props មិនសូវផ្លាស់ប្តូរ។
 
 ### Code Example: Memoizing Component with React.memo
 
 ```jsx
 import React from 'react';
 
-export const ExpensiveTableRow = React.memo(function TableRow({ item }: { item: Student }) {
-  // Only re-renders if 'item' reference changes!
-  return <tr><td>{item.name}</td><td>{item.gpa}</td></tr>;
+interface TableRowProps {
+  item: { id: string; name: string; gpa: number };
+}
+
+// រុំជាមួយ React.memo ដើម្បីកុំឱ្យ re-render បើ prop 'item' មិនផ្លាស់ប្តូរ
+export const ExpensiveTableRow = React.memo(function TableRow({ item }: TableRowProps) {
+  // ការគណនា ឬ Render ស្មុគស្មាញ...
+  return (
+    <tr>
+      <td>{item.name}</td>
+      <td>{item.gpa}</td>
+    </tr>
+  );
 });
 ```

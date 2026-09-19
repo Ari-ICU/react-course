@@ -5,26 +5,40 @@ title: "useMemo"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Caching the result of expensive calculations."
+summary: "ការ Cache លទ្ធផលនៃការគណនាដែលចំណាយកម្លាំងម៉ាស៊ីនច្រើន (Expensive Calculations)។"
+proTip: "កុំប្រើ `useMemo` លើការគណនាតូចតាចធម្មតា (ដូចជាការបូកលេខ ២ ខ្ទង់) ឱ្យសោះ! `useMemo` ខ្លួនឯងក៏ត្រូវការទំហំ Memory និងដំណើរការ CPU ក្នុងការប្រៀបធៀប Dependencies ផងដែរ។ ប្រើវាសម្រាប់តែការ Filter, Sort, ឬ Transform ទិន្នន័យ Array ធំៗប៉ុណ្ណោះ។"
 codeTitle: "useMemo for Array Filtering"
 ---
 
 # useMemo
 
-`useMemo(() => computeExpensiveValue(a, b), [a, b])` caches the calculated value and recalculates only when dependencies change.
+Hook `useMemo` ត្រូវបានប្រើប្រាស់ដើម្បី Cache (Memoize) លទ្ធផលនៃការគណនាណាដែលចំណាយពេលយូរ ឬកម្លាំងម៉ាស៊ីនច្រើន (Expensive Calculations)។ React នឹងរក្សាទុកលទ្ធផលចាស់ ហើយធ្វើការគណនាឡើងវិញតែនៅពេលដែល Dependencies នៅក្នុង Array មានការផ្លាស់ប្តូរប៉ុណ្ណោះ។
 
 ### Key Concepts & Rules:
 
-- Use for heavy filtering, sorting, or complex mathematical transformations on large arrays.
-- Do not overuse on cheap calculations; `useMemo` itself has memory and comparison overhead.
+- Syntax: `const cachedValue = useMemo(() => computeValue(a, b), [a, b]);`
+- ជៀសវាងការគណនាឡើងវិញនូវប្រតិបត្តិការ Array ធំៗ (Filtering, Sorting, Aggregations)។
+- ជួយរក្សា Object Reference ឱ្យមានស្ថិរភាព នៅពេលត្រូវបញ្ជូន Object ទៅកាន់ Memoized Child Component។
 
 ### Code Example: useMemo for Array Filtering
 
 ```jsx
-// Only re-calculates filtered items when 'query' or 'items' changes:
-const filteredStudents = useMemo(() => {
-  return items.filter(item => 
-    item.name.toLowerCase().includes(query.toLowerCase())
+import { useMemo } from 'react';
+
+export function ProductList({ products, searchQuery }: ProductListProps) {
+  // គណនាឡើងវិញតែនៅពេល 'products' ឬ 'searchQuery' មានការផ្លាស់ប្តូរ
+  const filteredProducts = useMemo(() => {
+    return products.filter((item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [products, searchQuery]);
+
+  return (
+    <ul>
+      {filteredProducts.map((p) => (
+        <li key={p.id}>{p.title}</li>
+      ))}
+    </ul>
   );
-}, [items, query]);
+}
 ```

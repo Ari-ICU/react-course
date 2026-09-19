@@ -5,26 +5,34 @@ title: "useCallback"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Caching function definitions between renders."
+summary: "ការ Cache អនុគមន៍ (Function Definitions) កុំឱ្យបង្កើតថ្មីរាល់ពេល Re-render។"
+proTip: "ប្រើប្រាស់ `useCallback` ជាមួយ Functional State Updater (ដូចជា `setCount(c => c + 1)`) ដើម្បីកុំឱ្យមាន Dependency នៅក្នុង Array (`[]`) ធ្វើឱ្យ Function Reference មានស្ថិរភាពជាអចិន្ត្រៃយ៍។"
 codeTitle: "useCallback with Functional Setter"
 ---
 
 # useCallback
 
-`useCallback(fn, deps)` returns a memoized version of the callback function with a stable reference across renders. Essential when passing callbacks to `React.memo` child components.
+នៅក្នុង JavaScript អនុគមន៍គឺជា Object ដូច្នេះរាល់ពេលដែល Component មួយ Re-render អនុគមន៍ដែលសរសេរខាងក្នុងនោះនឹងត្រូវបានបង្កើតជា Instance ថ្មីជានិច្ចក្នុង Memory។ Hook `useCallback` ជួយ Cache Function Definition ឱ្យនៅដដែលឆ្លងកាត់ការ Render ដរាបណា Dependencies មិនផ្លាស់ប្តូរ។
 
 ### Key Concepts & Rules:
 
-- `useCallback(fn, deps)` is equivalent to `useMemo(() => fn, deps)`.
-- Prevents child re-renders caused by passing freshly recreated function instances.
+- `useCallback(fn, deps)` មានសមមូលនឹង `useMemo(() => fn, deps)`។
+- សំខាន់បំផុតនៅពេលបញ្ជូន Callback Functions ទៅកាន់ Child Components ដែលត្រូវបានរុំដោយ `React.memo`។
+- គ្មានប្រយោជន៍ឡើយ ប្រសិនបើ Child Component មិនមែនជា Memoized Component!
 
 ### Code Example: useCallback with Functional Setter
 
 ```jsx
-// Stable function reference passed to memoized child:
-const handleDelete = useCallback((id: string) => {
-  setStudents(prev => prev.filter(s => s.id !== id));
-}, []); // Empty deps because functional setter is used!
+import { useState, useCallback } from 'react';
 
-return <MemoizedStudentTable onDelete={handleDelete} />;
+export function StudentManager() {
+  const [students, setStudents] = useState<Student[]>([]);
+
+  // រក្សា Function Reference ឱ្យនៅដដែលជាអចិន្ត្រៃយ៍ (empty deps [])
+  const handleDelete = useCallback((id: string) => {
+    setStudents((prev) => prev.filter((s) => s.id !== id));
+  }, []);
+
+  return <MemoizedStudentList onDelete={handleDelete} students={students} />;
+}
 ```

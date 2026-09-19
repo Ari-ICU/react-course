@@ -5,25 +5,41 @@ title: "Web Vitals in React"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "LCP, FID/INP, and CLS metrics."
+summary: "ការវាស់វែង និងកែលម្អសូចនាករ Core Web Vitals (LCP, FID/INP, CLS) ក្នុងកម្មវិធី React។"
+proTip: "ប្រើប្រាស់ `startTransition` ក្នុង React 18/19 សម្រាប់ការ Update ណាដែលមិនបន្ទាន់ (Non-urgent UI updates) ដើម្បីកុំឱ្យរាំងស្ទះដល់ការចុច ឬវាយអក្សររបស់ User ដោយជួយកែលម្អពិន្ទុ INP (Interaction to Next Paint) យ៉ាងខ្លាំង។"
 codeTitle: "startTransition for Responsive INP"
 ---
 
 # Web Vitals in React
 
-Core Web Vitals measure real-world user experience. Cumulative Layout Shift (CLS) is prevented by skeleton dimensions; Interaction to Next Paint (INP) is improved by non-blocking transitions.
+**Core Web Vitals** គឺជាស្តង់ដាររង្វាស់របស់ Google សម្រាប់វាស់ស្ទង់បទពិសោធន៍អ្នកប្រើប្រាស់ពិតប្រាកដ រួមមាន៖ **LCP** (Largest Contentful Paint - ល្បឿនបង្ហាញផ្ទាំងធំជាងគេ), **INP** (Interaction to Next Paint - ភាពរហ័សនៃការឆ្លើយតបពេលចុច), និង **CLS** (Cumulative Layout Shift - ភាពនឹងនរនៃទំព័រមិនរំកិលរញ៉េរញ៉ៃ)។
 
 ### Key Concepts & Rules:
 
-- Use `startTransition` in React 18/19 for non-urgent UI updates.
+- ការពារ **CLS**: កំណត់ Aspect Ratio និងវិមាត្រជាក់លាក់សម្រាប់រូបភាព និងប្រើប្រាស់ Skeleton Loaders។
+- កែលម្អ **INP**: ប្រើប្រាស់ `startTransition` ឬ `useDeferredValue` ដើម្បីបំបែកកិច្ចការធ្ងន់ៗកុំឱ្យ Block Main Thread។
+- កែលម្អ **LCP**: ធ្វើការ Optimize រូបភាព និងប្រើ Server Components / SSR។
 
 ### Code Example: startTransition for Responsive INP
 
 ```jsx
-import { startTransition } from 'react';
+import { useState, useTransition } from 'react';
 
-// Non-urgent update won't block typing input:
-startTransition(() => {
-  setFilteredResults(heavyCalculation(query));
-});
+export function SearchFilter() {
+  const [input, setInput] = useState('');
+  const [results, setResults] = useState([]);
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 1. បន្ទាន់៖ Update input ភ្លាមៗដើម្បីឱ្យ UI មិនគាំងពេលវាយអក្សរ
+    setInput(e.target.value);
+
+    // 2. មិនបន្ទាន់៖ ដំណើរការ Filter ធ្ងន់ៗក្នុង Transition
+    startTransition(() => {
+      setResults(heavyFilteringCalculation(e.target.value));
+    });
+  };
+
+  return <input value={input} onChange={handleChange} />;
+}
 ```

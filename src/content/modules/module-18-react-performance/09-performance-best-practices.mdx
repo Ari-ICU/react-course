@@ -5,22 +5,28 @@ title: "Performance Best Practices"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Checklist for maintaining 60fps React applications."
+summary: "គោលការណ៍ណែនាំ និងបញ្ជីត្រួតពិនិត្យ (Checklist) ដើម្បីរក្សា Frame Rate កម្រិត 60 FPS ក្នុងកម្មវិធី React។"
+proTip: "កុំធ្វើ Optimization មុនពេលវាស់វែងបញ្ហាជាក់ស្តែង (Premature optimization is the root of all evil)! ត្រូវប្រើ DevTools Profiler រកឃើញ Bottleneck សិន សឹមធ្វើការកែសម្រួល។"
 codeTitle: "Performance Golden Rules"
 ---
 
 # Performance Best Practices
 
-1) Measure before optimizing (premature optimization is the root of all evil); 2) Colocate state; 3) Use pagination/virtualization; 4) Optimize images; 5) Lazy-load heavy routes.
+ដើម្បីធានាថាកម្មវិធី React របស់អ្នកដំណើរការបានរលូនក្នុងល្បឿន 60 FPS (Frames Per Second) នៅគ្រប់ឧបករណ៍ទាំងអស់ រួមទាំងទូរស័ព្ទកម្លាំងខ្សោយ អ្នកគួរតែអនុវត្តតាមបញ្ជីត្រួតពិនិត្យ (Checklist) ខាងក្រោម៖
 
 ### Key Concepts & Rules:
 
-- Always test with CPU throttling (4x / 6x slowdown) in DevTools.
+1. **វាស់វែងមុននឹង Optimize**: កុំទាយ! ត្រូវប្រើ Profiler ដើម្បីរកមូលហេតុពិតប្រាកដ។
+2. **Colocate State**: ដាក់ State ឱ្យនៅជិតបំផុតទៅនឹងកន្លែងដែលវាត្រូវបានប្រើប្រាស់។
+3. **កាត់បន្ថយ Layout Shifts**: ប្រើប្រាស់ Skeleton Placeholders និងកំណត់ទំហំទទឹង/កម្ពស់ជាក់លាក់សម្រាប់រូបភាព។
+4. **ធ្វើតេស្តជាមួយ CPU Throttling**: តែងតែបើក 4x/6x CPU Slowdown ក្នុង Chrome DevTools ដើម្បីសាកល្បង។
 
 ### Code Example: Performance Golden Rules
 
 ```jsx
-// 1. Don't optimize until you measure bottlenecks.
-// 2. Colocate state before reaching for memo/useCallback.
-// 3. Virtualize lists > 100 items.
+// វិធានមាសទាំង ៤ នៃ React Performance៖
+// 1. កុំប្រញាប់ Optimize បើពុំទាន់មានភស្តុតាងពី Profiler ថាវាដំណើរការយឺត។
+// 2. រៀបចំស្ថាបត្យកម្ម Component (State Down / Lift Content Up) មុននឹងប្រើ React.memo។
+// 3. ប្រើប្រាស់ Virtualization នៅពេលបញ្ជីទិន្នន័យមានលើសពី 100 ជួរដេក។
+// 4. ប្រើ Lazy Loading សម្រាប់ Routes និង Heavy Libraries។
 ```

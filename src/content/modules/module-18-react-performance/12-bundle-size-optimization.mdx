@@ -5,24 +5,30 @@ title: "Bundle Size Optimization"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Analyzing bundle chunks and tree-shaking."
+summary: "ការកាត់បន្ថយទំហំ JavaScript Bundle តាមរយៈ Tree-shaking និងការវិភាគ Bundle Chunks។"
+pitfall: "ជៀសវាងការសរសេរ `import * as Icons from 'lucide-react'` ឬការប្រើ Library ធំៗដែលមិនគាំទ្រ Tree-shaking ដូចជា `moment.js`! ចូរប្រើ Named Imports ដូចជា `import { Check } from 'lucide-react'` និងបណ្ណាល័យស្រាលៗដូចជា `date-fns`។"
 codeTitle: "Tree-shakable Module Imports"
 ---
 
 # Bundle Size Optimization
 
-Import specific modules (`import { Check } from 'lucide-react'`) rather than entire library bundles. Use `@next/bundle-analyzer` to inspect production JS sizes.
+ទំហំ JavaScript Bundle កាន់តែធំ ធ្វើឱ្យ Browser ចំណាយពេលយូរក្នុងការទាញយក និង Parse កូដ។ ការធ្វើឱ្យ Bundle តូចតាមរយៈ **Tree-shaking** (ការកាត់ចោលកូដដែលមិនបានប្រើ) និងការវិភាគតាមរយៈ `@next/bundle-analyzer` គឺជាយុទ្ធសាស្ត្រស្នូលក្នុងការបង្កើនល្បឿន Web Application។
 
 ### Key Concepts & Rules:
 
-- Avoid importing massive monolithic libraries like moment.js.
+- ប្រើប្រាស់ Named Imports ដើម្បីឱ្យ Bundler អាចធ្វើ Tree-shaking បាន។
+- ជំនួសបណ្ណាល័យធំៗដោយជម្រើសទំនើបៗ (ឧ. ប្រើ `date-fns` ឬ Intl API ជំនួស `moment.js`)។
+- ប្រើឧបករណ៍ `@next/bundle-analyzer` ដើម្បីពិនិត្យមើលថាតើ Package ណាខ្លះស៊ីទំហំធំជាងគេក្នុង Bundle។
 
 ### Code Example: Tree-shakable Module Imports
 
 ```jsx
-// ❌ Bad: Imports entire package
+// ❌ មិនល្អ៖ ទាញយក Icons ទាំងពាន់ចូលក្នុង Bundle
 // import * as Icons from 'lucide-react';
 
-// ✅ Good: Tree-shakable named imports
+// ✅ ល្អបំផុត៖ Tree-shakable Named Imports (ទាញយកតែ 2 icons ប៉ុណ្ណោះ)
 import { Check, AlertCircle } from 'lucide-react';
+
+// ✅ ជំនួស moment.js ដោយ native Intl API៖
+const formattedDate = new Intl.DateTimeFormat('km-KH').format(new Date());
 ```

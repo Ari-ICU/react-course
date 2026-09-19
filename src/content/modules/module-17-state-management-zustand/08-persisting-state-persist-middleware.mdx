@@ -5,24 +5,32 @@ title: "Persisting State (persist middleware)"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Saving store state to localStorage automatically."
+summary: "ការរក្សាទុកទិន្នន័យ State ទៅក្នុង localStorage ដោយស្វ័យប្រវត្តិតាមរយៈ persist middleware។"
+proTip: "ប្រើប្រាស់ option `partialize` ដើម្បីជ្រើសរើសរក្សាទុកតែ Fields ណាដែលសំខាន់ (ដូចជា `cartItems`) ទៅក្នុង localStorage ដោយមិនចាំបាច់រក្សាទុក State បណ្តោះអាសន្នដូចជា `isLoading` ឡើយ។"
 codeTitle: "Zustand with persist Middleware"
 ---
 
 # Persisting State (persist middleware)
 
-Zustand includes a built-in `persist` middleware that synchronizes store slices with `localStorage` or `sessionStorage`.
+Zustand មានភ្ជាប់មកជាមួយនូវ Built-in Middleware ដ៏មានឥទ្ធិពលមួយឈ្មោះថា `persist`។ Middleware នេះនឹងធ្វើការ Sync ទិន្នន័យ State ទៅកាន់ `localStorage` (ឬ `sessionStorage`) ដោយស្វ័យប្រវត្តិនៅរាល់ពេលដែលមានការកែប្រែ State ហើយវានឹង Rehydrate ទិន្នន័យត្រឡប់មកវិញដោយស្វ័យប្រវត្តិពេល Reload Page។
 
 ### Key Concepts & Rules:
 
-- Automatic hydration on page reload.
-- Use `partialize` to choose which fields to persist.
+- នាំចូល `persist` ពី `zustand/middleware`។
+- ដាក់ឈ្មោះសោរ `name` សម្រាប់សម្គាល់ Storage Key ក្នុង Browser។
+- ប្រើ `partialize` option ដើម្បីចម្រាញ់យកតែ State ណាដែលចង់រក្សាទុក។
 
 ### Code Example: Zustand with persist Middleware
 
 ```jsx
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
+interface CartStore {
+  cartItems: string[];
+  addToCart: (item: string) => void;
+  clearCart: () => void;
+}
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -32,7 +40,8 @@ export const useCartStore = create<CartStore>()(
       clearCart: () => set({ cartItems: [] }),
     }),
     {
-      name: 'react-course-cart-storage', // localStorage key
+      name: 'shopping-cart-storage', // Key ក្នុង localStorage
+      // partialize: (state) => ({ cartItems: state.cartItems }), // រក្សាទុកតែ cartItems
     }
   )
 );

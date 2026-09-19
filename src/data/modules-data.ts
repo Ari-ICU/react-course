@@ -3181,170 +3181,201 @@ export const modulesData: ModuleItem[] = [
     "number": "17",
     "title": "State Management (Zustand)",
     "category": "State & Architecture",
-    "summary": "Zustand introduction, creating stores, reading state, actions, selectors, persist middleware, and enterprise state architecture.",
+    "summary": "ស្វែងយល់ពី Zustand State Management, ការបង្កើត Stores, ការអានតម្លៃ State, Actions, Selectors ការពារ Re-render, Persist Middleware, និងស្ថាបត្យកម្មគ្រប់គ្រង State កម្រិត Enterprise។",
     "iconName": "Cpu",
     "topics": [
       {
         "id": "m17-01",
         "number": "01",
         "title": "Client State vs Server State",
-        "summary": "Defining the role of Zustand alongside TanStack Query.",
-        "explanation": "Modern React architecture delegates server caching to TanStack Query, and client-only state (shopping cart, audio player, modal manager, drawer status) to Zustand.",
+        "summary": "ការកំណត់តួនាទីរបស់ Zustand ឱ្យដំណើរការទន្ទឹមគ្នាជាមួយ TanStack Query យ៉ាងស៊ីចង្វាក់។",
+        "explanation": "នៅក្នុងស្ថាបត្យកម្មទំនើបនៃកម្មវិធី React ការបែងចែកភារកិច្ចរវាង Server State និង Client State គឺជាគន្លឹះដ៏សំខាន់។ យើងប្រគល់ការងារគ្រប់គ្រង Cache ទិន្នន័យដែលទាញយកពី Backend ទៅកាន់ TanStack Query រីឯទិន្នន័យ Client State សុទ្ធសាធ (ដូចជា កន្ត្រកទំនិញ Shopping Cart, ផ្ទាំង Modal/Drawer, Audio Player, Theme) ត្រូវបានប្រគល់ឱ្យ Zustand គ្រប់គ្រង។",
         "keyPoints": [
-          "Do NOT duplicate server data inside Zustand stores.",
-          "Keep stores lean, synchronous, and focused on UI state."
+          "**TanStack Query**: គ្រប់គ្រង Asynchronous Server Data (Products, User Profile, Posts)។",
+          "**Zustand**: គ្រប់គ្រង Synchronous Client UI State (Cart items, Modal visibility, Dark mode)។",
+          "មិនត្រូវចម្លង ឬ Sync ទិន្នន័យ Server ចូលទៅក្នុង Zustand Store ដោយមិនចាំបាច់ឡើយ។"
         ],
-        "codeSnippet": "// Server Data -> TanStack Query (Query cache)\n// Client UI State -> Zustand (Global store)",
+        "codeSnippet": "// 1. Server Data -> គ្រប់គ្រងដោយ TanStack Query (Query Cache)\nconst { data: products } = useQuery({ queryKey: ['products'], queryFn: fetchProducts });\n\n// 2. Client UI State -> គ្រប់គ្រងដោយ Zustand (Global Client Store)\nconst { cart, addToCart } = useCartStore();",
         "codeLanguage": "jsx",
-        "codeTitle": "Modern Separation of State Responsibilities"
+        "codeTitle": "Modern Separation of State Responsibilities",
+        "proTip": "កុំចម្លងទិន្នន័យពី Server យកមកដាក់ក្នុង Zustand Store ឱ្យសោះ! ចូរទុកឱ្យ TanStack Query គ្រប់គ្រង Server Cache ហើយប្រើ Zustand សម្រាប់តែ UI Client State សុទ្ធសាធ (ដូចជា Shopping Cart, Drawer, Audio Player)។"
       },
       {
         "id": "m17-02",
         "number": "02",
         "title": "When to Use Context vs Zustand",
-        "summary": "Choosing the right tool for state scope and update frequency.",
-        "explanation": "Use Context for static/low-frequency data. Use Zustand when you need fine-grained selector subscriptions that only re-render components when specific chosen properties change.",
+        "summary": "ការជ្រើសរើសឧបករណ៍ត្រឹមត្រូវរវាង Context API និង Zustand អាស្រ័យលើទំហំ និងភាពញឹកញាប់នៃការ Update State។",
+        "explanation": "ទាំង Context API និង Zustand សុទ្ធតែជាឧបករណ៍ចែករំលែក State ប៉ុន្តែវាមានចំណុចខ្លាំងខុសគ្នា៖ Context API គឺល្អបំផុតសម្រាប់ទិន្នន័យដែលមានការប្រែប្រួលតិចតួច (Low frequency) ដូចជា Theme ឬ Locale។ ចំណែក Zustand គឺស័ក្តិសមបំផុតសម្រាប់ទិន្នន័យដែលមានការកែប្រែញឹកញាប់ (High frequency) ឬរចនាសម្ព័ន្ធស្មុគស្មាញ ព្រោះវាគាំទ្រ Fine-grained Selectors ការពារការ Re-render ផ្ដេសផ្ដាស។",
         "keyPoints": [
-          "Zustand requires NO Provider wrapping; access stores anywhere!"
+          "**Context API**: ភ្ជាប់មកជាមួយ React ស្រាប់ ស័ក្តិសមសម្រាប់ Theme, Language, Auth session។",
+          "**Zustand**: ដំណើរការលឿន គ្មាន Provider Hell គាំទ្រ Fine-grained Selectors និង Middleware។",
+          "មិនចាំបាច់រុំ `<Provider>` នៅជុំវិញ Component Tree ឡើយនៅពេលប្រើ Zustand។"
         ],
-        "codeSnippet": "npm install zustand",
-        "codeLanguage": "jsx",
-        "codeTitle": "Installing Zustand"
+        "codeSnippet": "# ដំឡើង Zustand នៅក្នុងគម្រោងរបស់អ្នក\nnpm install zustand",
+        "codeLanguage": "bash",
+        "codeTitle": "Installing Zustand",
+        "proTip": "ប្រើ Context សម្រាប់ទិន្នន័យ Static/Low-frequency (Theme, Locale)។ ប្រើ Zustand នៅពេលអ្នកត្រូវការ Fine-grained Selectors ដែល Re-render តែ Component ណាដែលប្រើប្រាស់ Field ផ្លាស់ប្តូរប៉ុណ្ណោះ និងមិនចាំបាច់រុំព័ទ្ធ Provider ឡើយ!"
       },
       {
         "id": "m17-03",
         "number": "03",
         "title": "Zustand Introduction",
-        "summary": "Small, fast, scalable bearbones state management.",
-        "explanation": "Zustand is a minimalistic state management solution based on simplified flux principles. It has a tiny footprint (<1kb), zero boilerplate, and doesn't require wrapping your app in Providers.",
+        "summary": "ស្វែងយល់ពី Zustand ដែលជាបណ្ណាល័យគ្រប់គ្រង State ដ៏តូច លឿន និងងាយស្រួលបំផុតសម្រាប់ React។",
+        "explanation": "Zustand (ពាក្យអាល្លឺម៉ង់មានន័យថា \"State / ស្ថានភាព\") គឺជាបណ្ណាល័យគ្រប់គ្រង State ដ៏ពេញនិយមបំផុតនាពេលបច្ចុប្បន្ន។ វាត្រូវបានបង្កើតឡើងដោយផ្អែកលើគោលការណ៍ Flux ដ៏សាមញ្ញ ប៉ុន្តែលុបបំបាត់ចោលនូវភាពស្មុគស្មាញ (Boilerplate) របស់ Redux ទាំងស្រុង។",
         "keyPoints": [
-          "Direct hook-based access.",
-          "Selective re-rendering via selector functions.",
-          "Full TypeScript support with auto-inference."
+          "បង្កើត Store ដោយផ្ទាល់តាមរយៈ Hook តែមួយគត់គឺ `create()`។",
+          "គ្មានការប្រើប្រាស់ Reducer, Action Types, ឬ Dispatchers ស្មុគស្មាញឡើយ។",
+          "គាំទ្រ TypeScript ពេញលេញ និងមានសមត្ថភាព Re-render យ៉ាងរហ័សបំផុត។"
         ],
         "codeSnippet": "import { create } from 'zustand';\n\ninterface CounterState {\n  count: number;\n  increment: () => void;\n  reset: () => void;\n}\n\nexport const useCounterStore = create<CounterState>((set) => ({\n  count: 0,\n  increment: () => set((state) => ({ count: state.count + 1 })),\n  reset: () => set({ count: 0 }),\n}));",
         "codeLanguage": "jsx",
         "codeTitle": "Basic Zustand Store",
+        "proTip": "Zustand មានទំហំ Bundle តូចជាង 1KB មិនត្រូវការ Provider រុំព័ទ្ធកម្មវិធី គ្មាន Boilerplate ស្មុគស្មាញដូច Redux និងគាំទ្រ TypeScript 100% ដោយស្វ័យប្រវត្តិ។",
         "interactiveDemoKey": "ZustandDemo"
       },
       {
         "id": "m17-04",
         "number": "04",
         "title": "Creating a Store",
-        "summary": "Defining state variables and updater actions inside create().",
-        "explanation": "In Zustand, state and actions are colocated inside the store definition. The `set` function merges state updates shallowly.",
+        "summary": "ការកំណត់អថេរ State និង Updater Actions នៅខាងក្នុងអនុគមន៍ create() តែមួយ។",
+        "explanation": "នៅក្នុង Zustand ការបង្កើត Store ត្រូវបានធ្វើឡើងតាមរយៈអនុគមន៍ `create()`។ គំរូដ៏ល្អបំផុតគឺការដាក់ State Properties និង Actions (Functions ដែលកែប្រែ State នោះ) នៅជាមួយគ្នាក្នុង Object តែមួយ។ អនុគមន៍ `set()` នឹងធ្វើការ Shallow Merge លើ State កម្រិតកំពូលដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
-          "`set()` automatically merges state at the top level."
+          "ប្រើ TypeScript Interface ដើម្បីកំណត់រចនាសម្ព័ន្ធ State និង Actions ឱ្យបានច្បាស់លាស់។",
+          "អនុគមន៍ `set()` ធ្វើការ Merge តែ Properties ណាដែលបានបញ្ជាក់ ដោយមិនបាត់ Properties ផ្សេងឡើយ។",
+          "អាចប្រើ `set(state => ({ ... }))` នៅពេលត្រូវការតម្លៃ State ចាស់មកគណនា។"
         ],
-        "codeSnippet": "export const useUIStore = create<UIState>((set) => ({\n  isSidebarOpen: false,\n  activeModal: null,\n  toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),\n  openModal: (modalName) => set({ activeModal: modalName }),\n  closeModal: () => set({ activeModal: null }),\n}));",
+        "codeSnippet": "import { create } from 'zustand';\n\ninterface UIState {\n  isSidebarOpen: boolean;\n  activeModal: string | null;\n  toggleSidebar: () => void;\n  openModal: (modalName: string) => void;\n  closeModal: () => void;\n}\n\nexport const useUIStore = create<UIState>((set) => ({\n  isSidebarOpen: false,\n  activeModal: null,\n  toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),\n  openModal: (modalName) => set({ activeModal: modalName }),\n  closeModal: () => set({ activeModal: null }),\n}));",
         "codeLanguage": "jsx",
-        "codeTitle": "Colocating State and Actions"
+        "codeTitle": "Colocating State and Actions",
+        "proTip": "នៅក្នុង Zustand ទិន្នន័យ State និង Actions (អនុគមន៍កែប្រែ) ត្រូវបានដាក់រួមគ្នានៅក្នុង Store តែមួយ (Colocation) ដែលធ្វើឱ្យកូដងាយអាន និងងាយស្រួលហៅប្រើ។"
       },
       {
         "id": "m17-05",
         "number": "05",
         "title": "Reading Store State",
-        "summary": "Accessing values inside functional components.",
-        "explanation": "Components invoke the store hook: `const isSidebarOpen = useUIStore(state => state.isSidebarOpen)`.",
+        "summary": "ការទាញយកតម្លៃ State មកប្រើប្រាស់នៅក្នុង Functional Components តាមរយៈ Selector Hook។",
+        "explanation": "ដើម្បីអានតម្លៃទិន្នន័យពី Store មកបង្ហាញនៅក្នុង React Functional Component អ្នកគ្រាន់តែហៅ Custom Hook ដែលបានបង្កើត (`useUIStore`) រួចបញ្ជូន Selector Function មួយដើម្បីទាញយកតែ Property ឬ Action ដែលត្រូវការប៉ុណ្ណោះ។",
         "keyPoints": [
-          "Always pass a selector to avoid subscribing to the entire store."
+          "Component នឹង Subscribe ដោយស្វ័យប្រវត្តិតាមរយៈ Hook។",
+          "ការបំបែកការទាញយក State និង Actions ដោយឡែកពីគ្នា ជួយសម្រួលដល់ការគ្រប់គ្រង Performance។",
+          "គ្មានតម្រូវការប្រើ Consumer Components ឬ HOC (Higher-Order Components) ឡើយ។"
         ],
-        "codeSnippet": "export function SidebarToggle() {\n  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);\n  const toggleSidebar = useUIStore((state) => state.toggleSidebar);\n\n  return <button onClick={toggleSidebar}>{isSidebarOpen ? 'Close' : 'Open'}</button>;\n}",
+        "codeSnippet": "import { useUIStore } from '@/store/useUIStore';\n\nexport function SidebarToggle() {\n  // ស្រង់យកតែតម្លៃ isSidebarOpen និង toggleSidebar\n  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);\n  const toggleSidebar = useUIStore((state) => state.toggleSidebar);\n\n  return (\n    <button \n      onClick={toggleSidebar}\n      className=\"p-2 bg-blue-600 text-white rounded\"\n    >\n      {isSidebarOpen ? 'បិទ Sidebar ◀' : 'បើក Sidebar ▶'}\n    </button>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Consuming Zustand Store"
+        "codeTitle": "Consuming Zustand Store",
+        "proTip": "ចូរហៅប្រើ Selector ជានិច្ច ដូចជា `useUIStore(state => state.isSidebarOpen)` ជំនួសឱ្យការហៅ Store ទាំងមូល ដើម្បីធានាថា Component នឹងមិន Re-render ផ្ដេសផ្ដាស។"
       },
       {
         "id": "m17-06",
         "number": "06",
         "title": "Selectors & Performance",
-        "summary": "Preventing unnecessary renders with fine-grained selectors.",
-        "explanation": "By selecting only `state.isSidebarOpen`, the component will NOT re-render if `activeModal` changes elsewhere in the store. This provides immense performance gains over Context.",
+        "summary": "ការការពារការ Re-render ដោយឥតប្រយោជន៍តាមរយៈ Fine-grained Selectors នៅក្នុង Zustand។",
+        "explanation": "អត្ថប្រយោជន៍ធំបំផុតមួយរបស់ Zustand លើ Context API គឺសមត្ថភាព **Fine-grained Subscriptions**។ នៅពេលអ្នកប្រើប្រាស់ Selector Function ដូចជា `state => state.isSidebarOpen` Component នោះនឹង Re-render តែមួយគត់នៅពេលដែលតម្លៃ `isSidebarOpen` ផ្លាស់ប្តូរ! ប្រសិនបើ Property ផ្សេងទៀតក្នុង Store ផ្លាស់ប្តូរ Component នេះនឹងមិន Re-render ឡើយ។",
         "keyPoints": [
-          "Components re-render ONLY when their selected slice changes."
+          "Component នឹង Re-render តែនៅពេលដែលលទ្ធផលនៃ Selector ផ្លាស់ប្តូរ (Strict Equality `===`)។",
+          "អាចគណនា Derived Data ក្នុង Selector បាន (ឧទាហរណ៍៖ `state => state.items.length`)។",
+          "ចៀសវាងការ return Object ថ្មីក្នុង Selector បើគ្មាន Custom Equality Check (ដូចជា `useShallow`)។"
         ],
-        "codeSnippet": "// ✅ Optimal: Subscribes ONLY to 'itemsCount':\nconst count = useCartStore(state => state.items.length);\n\n// ❌ Suboptimal: Subscribes to ENTIRE store object:\n// const store = useCartStore(); // Re-renders on ANY change in store!",
+        "codeSnippet": "import { useCartStore } from '@/store/useCartStore';\n\nexport function CartBadge() {\n  // ✅ ល្អបំផុត៖ Subscribe តែលើចំនួនសរុបនៃទំនិញ\n  // ប្រសិនបើឈ្មោះទំនិញ ឬតម្លៃកែប្រែ Badge នេះនឹងមិន Re-render ឡើយ\n  const itemCount = useCartStore((state) => state.items.length);\n\n  return <span className=\"badge\">{itemCount}</span>;\n}\n\n// ❌ មិនល្អ៖ Subscribe ទៅកាន់ Store ទាំងមូល\n// const store = useCartStore(); // នឹង Re-render រាល់ពេល Store មានការប្រែប្រួលណាមួយ!",
         "codeLanguage": "jsx",
         "codeTitle": "Selector Subscription Pattern",
-        "proTip": "Always use selectors like `state => state.property`. Never call `const store = useMyStore()` without a selector in performance-critical UI."
+        "proTip": "កុំសរសេរ `const store = useMyStore()` ក្នុង UI Component ដែលត្រូវការ Performance ខ្ពស់ឱ្យសោះ! ត្រូវប្រើ Selector `state => state.property` ដើម្បី Subscribe តែលើ property ជាក់លាក់ប៉ុណ្ណោះ។"
       },
       {
         "id": "m17-07",
         "number": "07",
         "title": "Updating Store State (set & get)",
-        "summary": "Using set() and get() for complex state transitions.",
-        "explanation": "The `get()` function allows reading other state properties inside an action without subscribing.",
+        "summary": "ការប្រើប្រាស់ set() និង get() សម្រាប់ការផ្លាស់ប្តូរ និងគណនាស្ថានភាព State ដ៏ស្មុគស្មាញ។",
+        "explanation": "អនុគមន៍ `create((set, get) => ...)` ផ្តល់ជូននូវ Parameters សំខាន់ពីរគឺ `set` សម្រាប់កែប្រែតម្លៃ State និង `get` សម្រាប់អានតម្លៃ State បច្ចុប្បន្ននៅខាងក្នុង Action Functions ដោយផ្ទាល់។ នេះមានប្រយោជន៍ខ្លាំងណាស់សម្រាប់ការត្រួតពិនិត្យលក្ខខណ្ឌមុនពេល Update (ដូចជា ការពិនិត្យមើលថាតើទំនិញមានក្នុងកន្ត្រករួចហើយឬនៅ)។",
         "keyPoints": [
-          "Use `get()` to read current values during async flows."
+          "ប្រើ `get()` ដើម្បីអានទិន្នន័យ State ផ្សេងទៀតដោយមិនបាច់រង់ចាំ Component re-render។",
+          "ស័ក្តិសមបំផុតសម្រាប់ Asynchronous Actions (ដូចជា API Calls)។",
+          "`set()` អាចទទួលយក Object ដោយផ្ទាល់ ឬ Updater Function (`state => ({ ... })`)។"
         ],
-        "codeSnippet": "export const useCartStore = create<CartState>((set, get) => ({\n  items: [],\n  addItem: (item) => {\n    const currentItems = get().items;\n    const existing = currentItems.find(i => i.id === item.id);\n    if (existing) {\n      set({\n        items: currentItems.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i)\n      });\n    } else {\n      set({ items: [...currentItems, { ...item, qty: 1 }] });\n    }\n  },\n}));",
+        "codeSnippet": "import { create } from 'zustand';\n\ninterface CartItem {\n  id: string;\n  name: string;\n  qty: number;\n}\n\ninterface CartStore {\n  items: CartItem[];\n  addItem: (product: { id: string; name: string }) => void;\n}\n\nexport const useCartStore = create<CartStore>((set, get) => ({\n  items: [],\n  addItem: (product) => {\n    const currentItems = get().items;\n    const existingIndex = currentItems.findIndex((i) => i.id === product.id);\n\n    if (existingIndex > -1) {\n      // ប្រសិនបើមានទំនិញរួចហើយ បង្កើនចំនួន qty + 1\n      const updated = [...currentItems];\n      updated[existingIndex].qty += 1;\n      set({ items: updated });\n    } else {\n      // ប្រសិនបើមិនទាន់មាន បន្ថែមចូលថ្មី\n      set({ items: [...currentItems, { ...product, qty: 1 }] });\n    }\n  },\n}));",
         "codeLanguage": "jsx",
-        "codeTitle": "Using set and get in Actions"
+        "codeTitle": "Using set and get in Actions",
+        "proTip": "ប្រើប្រាស់ `get()` នៅខាងក្នុង Actions ដើម្បីអានតម្លៃ State បច្ចុប្បន្នផ្សេងទៀត ឬក្នុង Async Functions ដោយមិនចាំបាច់ឆ្លងកាត់ការ Subscribe របស់ Component ឡើយ។"
       },
       {
         "id": "m17-08",
         "number": "08",
         "title": "Persisting State (persist middleware)",
-        "summary": "Saving store state to localStorage automatically.",
-        "explanation": "Zustand includes a built-in `persist` middleware that synchronizes store slices with `localStorage` or `sessionStorage`.",
+        "summary": "ការរក្សាទុកទិន្នន័យ State ទៅក្នុង localStorage ដោយស្វ័យប្រវត្តិតាមរយៈ persist middleware។",
+        "explanation": "Zustand មានភ្ជាប់មកជាមួយនូវ Built-in Middleware ដ៏មានឥទ្ធិពលមួយឈ្មោះថា `persist`។ Middleware នេះនឹងធ្វើការ Sync ទិន្នន័យ State ទៅកាន់ `localStorage` (ឬ `sessionStorage`) ដោយស្វ័យប្រវត្តិនៅរាល់ពេលដែលមានការកែប្រែ State ហើយវានឹង Rehydrate ទិន្នន័យត្រឡប់មកវិញដោយស្វ័យប្រវត្តិពេល Reload Page។",
         "keyPoints": [
-          "Automatic hydration on page reload.",
-          "Use `partialize` to choose which fields to persist."
+          "នាំចូល `persist` ពី `zustand/middleware`។",
+          "ដាក់ឈ្មោះសោរ `name` សម្រាប់សម្គាល់ Storage Key ក្នុង Browser។",
+          "ប្រើ `partialize` option ដើម្បីចម្រាញ់យកតែ State ណាដែលចង់រក្សាទុក។"
         ],
-        "codeSnippet": "import { create } from 'zustand';\nimport { persist } from 'zustand/middleware';\n\nexport const useCartStore = create<CartStore>()(\n  persist(\n    (set) => ({\n      cartItems: [],\n      addToCart: (item) => set((s) => ({ cartItems: [...s.cartItems, item] })),\n      clearCart: () => set({ cartItems: [] }),\n    }),\n    {\n      name: 'react-course-cart-storage', // localStorage key\n    }\n  )\n);",
+        "codeSnippet": "import { create } from 'zustand';\nimport { persist } from 'zustand/middleware';\n\ninterface CartStore {\n  cartItems: string[];\n  addToCart: (item: string) => void;\n  clearCart: () => void;\n}\n\nexport const useCartStore = create<CartStore>()(\n  persist(\n    (set) => ({\n      cartItems: [],\n      addToCart: (item) => set((s) => ({ cartItems: [...s.cartItems, item] })),\n      clearCart: () => set({ cartItems: [] }),\n    }),\n    {\n      name: 'shopping-cart-storage', // Key ក្នុង localStorage\n      // partialize: (state) => ({ cartItems: state.cartItems }), // រក្សាទុកតែ cartItems\n    }\n  )\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "Zustand with persist Middleware"
+        "codeTitle": "Zustand with persist Middleware",
+        "proTip": "ប្រើប្រាស់ option `partialize` ដើម្បីជ្រើសរើសរក្សាទុកតែ Fields ណាដែលសំខាន់ (ដូចជា `cartItems`) ទៅក្នុង localStorage ដោយមិនចាំបាច់រក្សាទុក State បណ្តោះអាសន្នដូចជា `isLoading` ឡើយ។"
       },
       {
         "id": "m17-09",
         "number": "09",
         "title": "Accessing State Outside Components",
-        "summary": "Reading and writing store data in vanilla JS, API interceptors, and utils.",
-        "explanation": "Because Zustand stores are standard JavaScript objects, you can read or update them anywhere in your codebase without React hooks!",
+        "summary": "ការអាន និងកែប្រែទិន្នន័យ Zustand Store នៅក្រៅ React Components ដូចជាក្នុង Axios Interceptors ឬ Pure Utilities។",
+        "explanation": "គុណសម្បត្តិដ៏អស្ចារ្យមួយរបស់ Zustand គឺសមត្ថភាពក្នុងការអាន និងកែប្រែ State នៅខាងក្រៅ React Component Tree (Vanilla JavaScript)។ នេះអនុញ្ញាតឱ្យអ្នកអាចទាញយក Auth Token ឬហៅ Action Logout ដោយផ្ទាល់នៅក្នុង Axios Interceptor ឬ Router Guards ដោយមិនបាច់បារម្ភពីរឿង Hook Rules ឡើយ។",
         "keyPoints": [
-          "Use `useStore.getState()` and `useStore.setState()` outside React."
+          "ប្រើ `useStore.getState()` ដើម្បីអាន State បច្ចុប្បន្ននៅក្រៅ React។",
+          "ប្រើ `useStore.setState()` ដើម្បីកែប្រែ State ដោយផ្ទាល់ពីគ្រប់ទីកន្លែង។",
+          "ប្រើ `useStore.subscribe()` ដើម្បីតាមដានការផ្លាស់ប្តូរនៅក្រៅ React។"
         ],
-        "codeSnippet": "// In an Axios interceptor or pure utility file:\nimport { useAuthStore } from '@/store/authStore';\n\n// Read token without React:\nconst token = useAuthStore.getState().token;\n\n// Update state directly outside components:\nuseAuthStore.getState().logout();",
+        "codeSnippet": "// src/lib/apiClient.ts (ឯកសារ Vanilla TypeScript គ្មាន React Component ឡើយ)\nimport axios from 'axios';\nimport { useAuthStore } from '@/store/useAuthStore';\n\nexport const apiClient = axios.create({ baseURL: '/api' });\n\napiClient.interceptors.request.use((config) => {\n  // 1. អាន Token ដោយផ្ទាល់ពី Zustand Store នៅក្រៅ React:\n  const token = useAuthStore.getState().token;\n  \n  if (token && config.headers) {\n    config.headers.Authorization = `Bearer ${token}`;\n  }\n  \n  return config;\n});\n\napiClient.interceptors.response.use(\n  (res) => res,\n  (error) => {\n    if (error.response?.status === 401) {\n      // 2. ហៅ Action logout ពី Zustand Store ដោយផ្ទាល់:\n      useAuthStore.getState().logout();\n    }\n    return Promise.reject(error);\n  }\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "Zustand Outside React Components"
+        "codeTitle": "Zustand Outside React Components",
+        "proTip": "Zustand Store គឺជា JavaScript Object សាមញ្ញមួយ ដូច្នេះអ្នកអាចហៅ `useStore.getState()` ដើម្បីអាន និង `useStore.setState()` ដើម្បីកែប្រែ State នៅគ្រប់ទីកន្លែងក្រៅ React ដោយមិនចាំបាច់ប្រើ Hooks ឡើយ!"
       },
       {
         "id": "m17-10",
         "number": "10",
         "title": "DevTools Middleware",
-        "summary": "Integrating with Redux DevTools browser extension.",
-        "explanation": "Wrap your store in `devtools()` to inspect time-travel state changes in Redux DevTools.",
+        "summary": "ការតភ្ជាប់ Zustand Store ជាមួយ Redux DevTools Extension ក្នុង Browser សម្រាប់ធ្វើ Time-travel Debugging។",
+        "explanation": "Zustand ផ្តល់នូវការគាំទ្រយ៉ាងពេញលេញសម្រាប់កម្មវិធីបន្ថែមរបស់ Browser គឺ **Redux DevTools**។ តាមរយៈការប្រើប្រាស់ Middleware `devtools()` រាល់ការផ្លាស់ប្តូរ State និងឈ្មោះ Action ទាំងអស់នឹងត្រូវបានបង្ហាញក្នុង Timeline នៃ DevTools ដែលជួយឱ្យការ Debug កម្មវិធីកាន់តែរហ័ស។",
         "keyPoints": [
-          "Named actions appear in DevTools timeline."
+          "នាំចូល `devtools` ពី `zustand/middleware`។",
+          "អាចកំណត់ឈ្មោះ Action ជា Argument ទីពីរក្នុង `set(..., false, 'actionName')`។",
+          "គាំទ្រការត្រួតពិនិត្យ State Diffs និង State History (Time-travel Debugging)។"
         ],
-        "codeSnippet": "import { devtools } from 'zustand/middleware';\n\nexport const useStore = create<MyState>()(\n  devtools((set) => ({\n    // actions...\n  }))\n);",
+        "codeSnippet": "import { create } from 'zustand';\nimport { devtools } from 'zustand/middleware';\n\ninterface CounterStore {\n  count: number;\n  inc: () => void;\n}\n\nexport const useCounterStore = create<CounterStore>()(\n  devtools(\n    (set) => ({\n      count: 0,\n      inc: () => set((state) => ({ count: state.count + 1 }), false, 'counter/increment'),\n    }),\n    { name: 'CounterStore' }\n  )\n);",
         "codeLanguage": "jsx",
-        "codeTitle": "Zustand DevTools Middleware"
+        "codeTitle": "Zustand DevTools Middleware",
+        "proTip": "ការរុំព័ទ្ធ Store ជាមួយ `devtools()` ជួយឱ្យអ្នកអាចតាមដានរាល់ Action ដែលបានកើតឡើង មើល State Diff និងធ្វើ Time-travel Debugging យ៉ាងងាយស្រួលនៅក្នុង DevTools។"
       },
       {
         "id": "m17-11",
         "number": "11",
         "title": "Zustand + React 19",
-        "summary": "Concurrent rendering and useSyncExternalStore integration.",
-        "explanation": "Zustand internally uses `useSyncExternalStore` to guarantee zero visual tearing during concurrent renders in React 18 and 19.",
+        "summary": "ការគាំទ្រ Concurrent Rendering និងការប្រើប្រាស់ useSyncExternalStore ដើម្បីធានាសុវត្ថិភាព 100% ក្នុង React 18 និង 19។",
+        "explanation": "នៅក្នុងសម័យកាលនៃ React 18 និង React 19 ការបង្ហាញផ្ទាំងទិដ្ឋភាពក្នុងពេលដំណាលគ្នា (Concurrent Rendering) អាចបណ្តាលឱ្យមានបញ្ហា **Visual Tearing** (UI ផ្នែកខ្លះបង្ហាញ State ចាស់ ផ្នែកខ្លះបង្ហាញ State ថ្មីក្នុង Frame តែមួយ) ប្រសិនបើបណ្ណាល័យ State ខាងក្រៅមិនត្រូវបានរចនាត្រឹមត្រូវ។ Zustand បានរួមបញ្ចូល និងពឹងផ្អែកលើ `useSyncExternalStore` API ដោយផ្ទាល់ ដើម្បីលុបបំបាត់បញ្ហានេះ។",
         "keyPoints": [
-          "Completely safe for concurrent mode."
+          "សុវត្ថិភាព 100% ជាមួយ Concurrent Features នៃ React 19 (Transitions, Suspense)។",
+          "គ្មានបញ្ហា Visual Tearing ឬ State Inconsistency ឡើយ។",
+          "ដំណើរការស៊ីសង្វាក់គ្នាយ៉ាងរលូនជាមួយ Server Components និង Client Components។"
         ],
-        "codeSnippet": "// Zustand is built natively on React's useSyncExternalStore API.",
+        "codeSnippet": "// Zustand ត្រូវបានសរសេរឡើងដោយផ្អែកលើ React useSyncExternalStore API:\n// import { useSyncExternalStore } from 'react';\n// ធានាសុវត្ថិភាពពេញលេញក្នុង Concurrent Rendering និង React Server/Client transitions!",
         "codeLanguage": "jsx",
-        "codeTitle": "Concurrent Safety Guarantee"
+        "codeTitle": "Concurrent Safety Guarantee",
+        "proTip": "Zustand ត្រូវបានបង្កើតឡើងនៅលើ React Native Hook `useSyncExternalStore` ដូច្នេះវាការពារបញ្ហា Visual Tearing ទាំងស្រុងនៅពេលដំណើរការក្នុង Concurrent Mode នៃ React 18 និង 19។"
       },
       {
         "id": "m17-12",
         "number": "12",
         "title": "State Management Architecture",
-        "summary": "Organizing multiple stores in large applications.",
-        "explanation": "Divide stores by domain: `useCartStore`, `useAuthStore`, `useUIStore`. Avoid creating a giant single monolithic store.",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធ Stores ជាច្រើនទៅតាម Domain មុខងារនៅក្នុងគម្រោងខ្នាតធំ (Large-scale Apps)។",
+        "explanation": "នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Scale) ការរៀបចំ Directory និងការបែងចែក Store ឱ្យមានរបៀបរៀបរយគឺជារឿងចាំបាច់។ យុទ្ធសាស្ត្រល្អបំផុតគឺការបង្កើត **Domain-based Modular Stores** ដោយបែងចែក State ទៅតាមមុខងារនីមួយៗ ជាជាងការច្របាច់បញ្ចូលគ្នាក្នុង Store យក្សតែមួយ។",
         "keyPoints": [
-          "Modular domain stores keep logic cleanly isolated."
+          "រៀបចំ Folder `src/store/` ដោយបែងចែកជាឯកសារ Store ដាច់ដោយឡែកពីគ្នា។",
+          "ប្រើប្រាស់ TypeScript Interfaces យ៉ាងច្បាស់លាស់សម្រាប់ Store នីមួយៗ។",
+          "ងាយស្រួលក្នុងការធ្វើ Refactor និងកាត់បន្ថយទំហំ Bundle តាមរយៈ Tree-shaking។"
         ],
-        "codeSnippet": "src/store/\n├── useAuthStore.ts\n├── useCartStore.ts\n├── useUIStore.ts\n└── useCourseProgressStore.ts",
+        "codeSnippet": "src/store/\n├── useAuthStore.ts           // គ្រប់គ្រង Auth Token, Session, User Profile\n├── useCartStore.ts           // គ្រប់គ្រង Cart Items, Checkout, Totals\n├── useUIStore.ts             // គ្រប់គ្រង Modals, Sidebar, Theme\n└── useNotificationStore.ts   // គ្រប់គ្រង Toast Messages, In-app Alerts",
         "codeLanguage": "jsx",
-        "codeTitle": "Modular Store Architecture"
+        "codeTitle": "Modular Store Architecture",
+        "proTip": "ជៀសវាងការបង្កើត Giant Monolithic Store តែមួយកណ្តាល! ចូរបំបែកជា Modular Domain Stores ដូចជា `useAuthStore`, `useCartStore`, `useUIStore` ដើម្បីឱ្យកូដមានភាពស្អាត ងាយស្រួល Test និងថែទាំ។"
       }
     ]
   },
@@ -3353,170 +3384,195 @@ export const modulesData: ModuleItem[] = [
     "number": "18",
     "title": "React Performance",
     "category": "Enterprise & Production",
-    "summary": "React rendering mechanics, re-render profiling, React.memo, useMemo, useCallback, large list virtualization, code splitting, and React Profiler.",
+    "summary": "យន្តការ React Rendering, ការ Profiling រកមើលបញ្ហា Re-render, React.memo, useMemo, useCallback, ការបង្កើនល្បឿន Large Lists តាមរយៈ Virtualization, Code Splitting, និង React Profiler។",
     "iconName": "Gauge",
     "topics": [
       {
         "id": "m18-01",
         "number": "01",
         "title": "React Rendering",
-        "summary": "How and why React renders components.",
-        "explanation": "Rendering is React calling your component function to obtain the new JSX element tree. A component re-renders when: 1) Its state changes; 2) Its parent re-renders; 3) A context it consumes changes.",
+        "summary": "ស្វែងយល់អំពីមូលហេតុ និងរបៀបដែល React ដំណើរការ Render លើ Components។",
+        "explanation": "នៅក្នុង React ពាក្យថា \"Rendering\" សំដៅលើដំណើរការដែល React ហៅអនុគមន៍ Component របស់អ្នក ដើម្បីទទួលបាន JSX Elements Tree ថ្មី។ Component មួយនឹង Re-render នៅពេល៖ ១) State របស់វាផ្លាស់ប្តូរ ២) Parent Component របស់វា Re-render ឬ ៣) Context ដែលវា Subscribe មានការកែប្រែតម្លៃ។",
         "keyPoints": [
-          "A parent re-render automatically re-renders ALL its children by default, even if their props didn't change!",
-          "Rendering is not the same as DOM painting; if JSX output is identical, no DOM mutation occurs."
+          "**Cascade Re-rendering**: នៅពេល Parent Re-render នោះរាល់ Child Components ទាំងអស់នឹង Re-render តាមដោយស្វ័យប្រវត្តិ ទោះបីជា Props របស់វាមិនផ្លាស់ប្តូរក៏ដោយ!",
+          "ការ Render (គណនា Virtual DOM ក្នុង JS) ខុសប្លែកពី DOM Painting (គូរលើ Browser)។ React ធ្វើការ Diffing ហើយ update តែ Real DOM ណាដែលមានការប្រែប្រួលពិតប្រាកដប៉ុណ្ណោះ។",
+          "Re-render ច្រើនដងមិនមែនតែងតែមានន័យថាយឺតនោះទេ ប៉ុន្តែវាអាចបង្កបញ្ហាប្រសិនបើ Child Component នោះមានការគណនាស្មុគស្មាញ។"
         ],
-        "codeSnippet": "// When Parent re-renders, Child re-renders by default:\nfunction Parent() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n      <ExpensiveChild /> {/* Re-renders on every click unless memoized! */}\n    </div>\n  );\n}",
+        "codeSnippet": "import { useState } from 'react';\n\nexport function Parent() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>\n      {/* ExpensiveChild នឹង Re-render រាល់ពេលចុចប៊ូតុង ទោះបីគ្មាន props ក៏ដោយ! */}\n      <ExpensiveChild />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Default Cascade Re-render Behavior"
+        "codeTitle": "Default Cascade Re-render Behavior",
+        "proTip": "ការ Render មិនមែនមានន័យថា Browser ត្រូវ Paint DOM ឡើងវិញគ្រប់ពេលនោះទេ! React គ្រាន់តែហៅអនុគមន៍ Component ដើម្បីគណនា JSX ថ្មីប៉ុណ្ណោះ។ បើ JSX ថ្មីដូចគ្នានឹងចាស់ នោះគ្មានការផ្លាស់ប្តូរលើ Real DOM ឡើយ។"
       },
       {
         "id": "m18-02",
         "number": "02",
         "title": "React.memo",
-        "summary": "Skipping component re-renders when props are shallowly equal.",
-        "explanation": "`React.memo` wraps a component function and memoizes its rendered output. If props are shallowly equal to the previous render, React skips calling the component function entirely.",
+        "summary": "ការរំលងការ Re-render នៃ Component ប្រសិនបើ Props មិនមានការផ្លាស់ប្តូរ (Shallow Equality)។",
+        "explanation": "`React.memo` គឺជា Higher-Order Component (HOC) ដែលប្រើសម្រាប់រុំព័ទ្ធ Component របស់អ្នកដើម្បីធ្វើ Memoization។ ប្រសិនបើ Props ដែលបញ្ជូនមកកាន់ Component នោះមិនមានការផ្លាស់ប្តូរតម្លៃ (Shallow Comparison `Object.is`) React នឹងរំលងការហៅ Render លើ Component នោះទាំងស្រុង ដោយប្រើលទ្ធផល Render ចាស់។",
         "keyPoints": [
-          "Performs shallow equality check (`Object.is`) on every prop.",
-          "Fails to prevent re-renders if you pass un-memoized object literals or inline functions as props!"
+          "ធ្វើការប្រៀបធៀប Props តាមរយៈ Shallow Equality Check (`Object.is`)។",
+          "មិនអាចការពារ Re-render បានឡើយ ប្រសិនបើ Parent បញ្ជូន Object ឬ Function ថ្មីរាល់ render។",
+          "ស័ក្តិសមបំផុតសម្រាប់ Heavy Components ដែលទទួល Props មិនសូវផ្លាស់ប្តូរ។"
         ],
-        "codeSnippet": "import React from 'react';\n\nexport const ExpensiveTableRow = React.memo(function TableRow({ item }: { item: Student }) {\n  // Only re-renders if 'item' reference changes!\n  return <tr><td>{item.name}</td><td>{item.gpa}</td></tr>;\n});",
+        "codeSnippet": "import React from 'react';\n\ninterface TableRowProps {\n  item: { id: string; name: string; gpa: number };\n}\n\n// រុំជាមួយ React.memo ដើម្បីកុំឱ្យ re-render បើ prop 'item' មិនផ្លាស់ប្តូរ\nexport const ExpensiveTableRow = React.memo(function TableRow({ item }: TableRowProps) {\n  // ការគណនា ឬ Render ស្មុគស្មាញ...\n  return (\n    <tr>\n      <td>{item.name}</td>\n      <td>{item.gpa}</td>\n    </tr>\n  );\n});",
         "codeLanguage": "jsx",
-        "codeTitle": "Memoizing Component with React.memo"
+        "codeTitle": "Memoizing Component with React.memo",
+        "pitfall": "ការប្រើ `React.memo` នឹងគ្មានប្រសិទ្ធភាពឡើយ ប្រសិនបើអ្នកបញ្ជូន Inline Objects (ដូចជា `style={{ color: 'red' }}`) ឬ Inline Functions (ដូចជា `onClick={() => doSomething()}`) ពី Parent ព្រោះវានឹងបង្កើត Memory Reference ថ្មីជានិច្ច!"
       },
       {
         "id": "m18-03",
         "number": "03",
         "title": "useMemo",
-        "summary": "Caching the result of expensive calculations.",
-        "explanation": "`useMemo(() => computeExpensiveValue(a, b), [a, b])` caches the calculated value and recalculates only when dependencies change.",
+        "summary": "ការ Cache លទ្ធផលនៃការគណនាដែលចំណាយកម្លាំងម៉ាស៊ីនច្រើន (Expensive Calculations)។",
+        "explanation": "Hook `useMemo` ត្រូវបានប្រើប្រាស់ដើម្បី Cache (Memoize) លទ្ធផលនៃការគណនាណាដែលចំណាយពេលយូរ ឬកម្លាំងម៉ាស៊ីនច្រើន (Expensive Calculations)។ React នឹងរក្សាទុកលទ្ធផលចាស់ ហើយធ្វើការគណនាឡើងវិញតែនៅពេលដែល Dependencies នៅក្នុង Array មានការផ្លាស់ប្តូរប៉ុណ្ណោះ។",
         "keyPoints": [
-          "Use for heavy filtering, sorting, or complex mathematical transformations on large arrays.",
-          "Do not overuse on cheap calculations; `useMemo` itself has memory and comparison overhead."
+          "Syntax: `const cachedValue = useMemo(() => computeValue(a, b), [a, b]);`",
+          "ជៀសវាងការគណនាឡើងវិញនូវប្រតិបត្តិការ Array ធំៗ (Filtering, Sorting, Aggregations)។",
+          "ជួយរក្សា Object Reference ឱ្យមានស្ថិរភាព នៅពេលត្រូវបញ្ជូន Object ទៅកាន់ Memoized Child Component។"
         ],
-        "codeSnippet": "// Only re-calculates filtered items when 'query' or 'items' changes:\nconst filteredStudents = useMemo(() => {\n  return items.filter(item => \n    item.name.toLowerCase().includes(query.toLowerCase())\n  );\n}, [items, query]);",
+        "codeSnippet": "import { useMemo } from 'react';\n\nexport function ProductList({ products, searchQuery }: ProductListProps) {\n  // គណនាឡើងវិញតែនៅពេល 'products' ឬ 'searchQuery' មានការផ្លាស់ប្តូរ\n  const filteredProducts = useMemo(() => {\n    return products.filter((item) =>\n      item.title.toLowerCase().includes(searchQuery.toLowerCase())\n    );\n  }, [products, searchQuery]);\n\n  return (\n    <ul>\n      {filteredProducts.map((p) => (\n        <li key={p.id}>{p.title}</li>\n      ))}\n    </ul>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useMemo for Array Filtering"
+        "codeTitle": "useMemo for Array Filtering",
+        "proTip": "កុំប្រើ `useMemo` លើការគណនាតូចតាចធម្មតា (ដូចជាការបូកលេខ ២ ខ្ទង់) ឱ្យសោះ! `useMemo` ខ្លួនឯងក៏ត្រូវការទំហំ Memory និងដំណើរការ CPU ក្នុងការប្រៀបធៀប Dependencies ផងដែរ។ ប្រើវាសម្រាប់តែការ Filter, Sort, ឬ Transform ទិន្នន័យ Array ធំៗប៉ុណ្ណោះ។"
       },
       {
         "id": "m18-04",
         "number": "04",
         "title": "useCallback",
-        "summary": "Caching function definitions between renders.",
-        "explanation": "`useCallback(fn, deps)` returns a memoized version of the callback function with a stable reference across renders. Essential when passing callbacks to `React.memo` child components.",
+        "summary": "ការ Cache អនុគមន៍ (Function Definitions) កុំឱ្យបង្កើតថ្មីរាល់ពេល Re-render។",
+        "explanation": "នៅក្នុង JavaScript អនុគមន៍គឺជា Object ដូច្នេះរាល់ពេលដែល Component មួយ Re-render អនុគមន៍ដែលសរសេរខាងក្នុងនោះនឹងត្រូវបានបង្កើតជា Instance ថ្មីជានិច្ចក្នុង Memory។ Hook `useCallback` ជួយ Cache Function Definition ឱ្យនៅដដែលឆ្លងកាត់ការ Render ដរាបណា Dependencies មិនផ្លាស់ប្តូរ។",
         "keyPoints": [
-          "`useCallback(fn, deps)` is equivalent to `useMemo(() => fn, deps)`.",
-          "Prevents child re-renders caused by passing freshly recreated function instances."
+          "`useCallback(fn, deps)` មានសមមូលនឹង `useMemo(() => fn, deps)`។",
+          "សំខាន់បំផុតនៅពេលបញ្ជូន Callback Functions ទៅកាន់ Child Components ដែលត្រូវបានរុំដោយ `React.memo`។",
+          "គ្មានប្រយោជន៍ឡើយ ប្រសិនបើ Child Component មិនមែនជា Memoized Component!"
         ],
-        "codeSnippet": "// Stable function reference passed to memoized child:\nconst handleDelete = useCallback((id: string) => {\n  setStudents(prev => prev.filter(s => s.id !== id));\n}, []); // Empty deps because functional setter is used!\n\nreturn <MemoizedStudentTable onDelete={handleDelete} />;",
+        "codeSnippet": "import { useState, useCallback } from 'react';\n\nexport function StudentManager() {\n  const [students, setStudents] = useState<Student[]>([]);\n\n  // រក្សា Function Reference ឱ្យនៅដដែលជាអចិន្ត្រៃយ៍ (empty deps [])\n  const handleDelete = useCallback((id: string) => {\n    setStudents((prev) => prev.filter((s) => s.id !== id));\n  }, []);\n\n  return <MemoizedStudentList onDelete={handleDelete} students={students} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "useCallback with Functional Setter"
+        "codeTitle": "useCallback with Functional Setter",
+        "proTip": "ប្រើប្រាស់ `useCallback` ជាមួយ Functional State Updater (ដូចជា `setCount(c => c + 1)`) ដើម្បីកុំឱ្យមាន Dependency នៅក្នុង Array (`[]`) ធ្វើឱ្យ Function Reference មានស្ថិរភាពជាអចិន្ត្រៃយ៍។"
       },
       {
         "id": "m18-05",
         "number": "05",
         "title": "Preventing Unnecessary Renders",
-        "summary": "Architectural techniques that eliminate the need for memoization.",
-        "explanation": "You can often eliminate re-renders by moving state down or lifting JSX up as `children`, completely avoiding manual `useMemo` or `React.memo` calls.",
+        "summary": "បច្ចេកទេសស្ថាបត្យកម្មក្នុងការលុបបំបាត់ Re-render ដោយមិនចាំបាច់ប្រើ useMemo ឬ React.memo។",
+        "explanation": "មុនពេលប្រញាប់ប្រើប្រាស់ `React.memo`, `useMemo` ឬ `useCallback` ដែលធ្វើឱ្យកូដស្មុគស្មាញ អ្នកអាចលុបបំបាត់ Re-render ស្ទើរតែទាំងស្រុងតាមរយៈការរៀបចំ Component Composition ឱ្យបានត្រឹមត្រូវ៖ គឺការទម្លាក់ State ទៅក្រោម (Move State Down) និងការលើក Content ឡើងលើជា `children` (Lift Content Up)។",
         "keyPoints": [
-          "Move state into dedicated leaf components.",
-          "Pass static trees as `{children}`."
+          "**Move State Down**: ប្រសិនបើ Input State ប្រើតែក្នុង Textbox មួយ សូមបំបែក Textbox នោះជា Component ដាច់ដោយឡែក។",
+          "**Lift Content Up**: នៅពេល Component ទទួល `children` props ទោះបី Component នោះ Re-render ក៏ `children` នឹងមិន Re-render ឡើយ។",
+          "ដំណោះស្រាយស្ថាបត្យកម្មស្អាតជាង និងមិនបង្ក Overload លើ Memory ដូច Memoization។"
         ],
-        "codeSnippet": "// Moving state down into dedicated component:\nexport function App() {\n  return (\n    <div>\n      <InputWithState /> {/* Only this small input re-renders as user types */}\n      <VeryExpensiveTree /> {/* Never re-renders when user types! */}\n    </div>\n  );\n}",
+        "codeSnippet": "// 1. បំបែក Input ដែលមាន State ញឹកញាប់ទៅជា Component ដាច់ដោយឡែក\nfunction SearchBox() {\n  const [query, setQuery] = useState('');\n  return <input value={query} onChange={(e) => setQuery(e.target.value)} />;\n}\n\n// 2. ក្នុង App ដើម VeryExpensiveTree នឹងមិន Re-render ឡើយនៅពេល User វាយអក្សរ!\nexport function App() {\n  return (\n    <div>\n      <SearchBox />\n      <VeryExpensiveChartTree />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "State Down Optimization Pattern"
+        "codeTitle": "State Down Optimization Pattern",
+        "proTip": "យុទ្ធសាស្ត្រ 'State Down' និង 'Lift Content Up' គឺជាដំណោះស្រាយស្ថាបត្យកម្មដ៏ល្អបំផុត៖ បង្វែរ State ទៅកាន់ Child Component ណាដែលត្រូវការវា ឬបញ្ជូន Static Tree ជា `children` prop ដើម្បីកុំឱ្យវា Re-render តាម Parent។"
       },
       {
         "id": "m18-06",
         "number": "06",
         "title": "Large List Optimization (Virtualization)",
-        "summary": "Rendering only visible DOM rows using virtual windowing.",
-        "explanation": "When rendering lists of 10,000+ items, creating 10,000 DOM elements crashes browser memory. Virtualization libraries (like `@tanstack/react-virtual`) render only the 15-20 rows currently visible in the scroll viewport.",
+        "summary": "ការបង្កើនល្បឿនបញ្ជីទិន្នន័យធំៗដោយ Render តែជួរដេក (Rows) ណាដែលកំពុងមើលឃើញលើអេក្រង់ប៉ុណ្ណោះ។",
+        "explanation": "នៅពេលដែលកម្មវិធីត្រូវបង្ហាញបញ្ជីទិន្នន័យរាប់ម៉ឺនជួរដេក (ដូចជា តារាងប្រតិបត្តិការធនាគារ ឬ Logs) ការ Render DOM Node ទាំងអស់ក្នុងពេលតែមួយនឹងធ្វើឱ្យ Browser ស៊ី Memory យ៉ាងខ្លាំង និងគាំង UI។ បច្ចេកទេស **List Virtualization (Windowing)** ដំណើរការដោយគណនា និង Render តែ ២០ ទៅ ៣០ ជួរដេកដែលកំពុងស្ថិតនៅក្នុង Viewport នៃ Scrollbar ប៉ុណ្ណោះ។",
         "keyPoints": [
-          "Maintains 60fps scrolling on massive datasets.",
-          "DOM contains only visible elements + small buffer."
+          "រក្សាល្បឿន 60 FPS ទោះបីជាមានទិន្នន័យ 100,000+ ជួរដេកក៏ដោយ។",
+          "Real DOM ផ្ទុកតែ Nodes ដែល User មើលឃើញផ្ទាល់ភ្នែក បូកជាមួយ Buffer តូចមួយ។",
+          "បណ្ណាល័យពេញនិយម៖ `@tanstack/react-virtual`, `react-window`។"
         ],
-        "codeSnippet": "// Virtualized windowing:\n// Total rows: 50,000\n// Rendered DOM elements: 20 visible + 5 buffer = 25 nodes total!",
+        "codeSnippet": "// គោលការណ៍នៃ Virtual Windowing៖\n// - ទិន្នន័យសរុបក្នុង JavaScript Array: 50,000 ធាតុ\n// - កម្ពស់ Scroll Container សរុប: 2,000,000px (តាមរយៈ spacer div)\n// - DOM Nodes ដែលបានបង្កើតពិតប្រាកដក្នុង HTML: ត្រឹមតែ 15 ទៅ 25 nodes ប៉ុណ្ណោះ!",
         "codeLanguage": "jsx",
-        "codeTitle": "Virtual List Concept"
+        "codeTitle": "Virtual List Concept",
+        "proTip": "ការបង្ហាញ 10,000 DOM Elements ក្នុងពេលតែមួយនឹងធ្វើឱ្យ Browser គាំង Memory! Virtualization (Windowing) ជាមួយ `@tanstack/react-virtual` ជួយឱ្យបញ្ជីទិន្នន័យ 100,000 ជួរដេកអាច Scroll បានយ៉ាងរលូនក្នុងកម្រិត 60 FPS។"
       },
       {
         "id": "m18-07",
         "number": "07",
         "title": "Lazy Loading & Code Splitting",
-        "summary": "Splitting bundle into on-demand chunks with React.lazy and Suspense.",
-        "explanation": "Allows deferring the loading of heavy components (like rich text editors, charts, or modal dialogs) until the user actually requests them.",
+        "summary": "ការបំបែក JavaScript Bundle ជាចំណែកតូចៗ និងទាញយកតែពេលត្រូវការ (On-demand) ដោយប្រើ React.lazy និង Suspense។",
+        "explanation": "តាមលំនាំដើម Webpack ឬ Turbopack នឹងច្របាច់កូដទាំងអស់ទៅក្នុង Bundle តែមួយ។ នេះមានន័យថា User ត្រូវរង់ចាំទាញយកកូដផ្ទាំងគ្រប់គ្រង Admin, Charts, និង Rich Text Editors ទាំងអស់ ទោះបីពួកគេគ្រាន់តែចង់មើល Landing Page ក៏ដោយ។ **Code Splitting** អនុញ្ញាតឱ្យយើងបំបែក Bundle ទាំងនោះ និងទាញយកតែពេល User ត្រូវការ។",
         "keyPoints": [
-          "Significantly reduces initial page load JavaScript size (First Contentful Paint)."
+          "ប្រើ `React.lazy(() => import('./Component'))` សម្រាប់ Dynamic Imports។",
+          "រុំព័ទ្ធ Lazy Component នៅក្នុង `<Suspense fallback={<LoadingSpinner />}>`។",
+          "កាត់បន្ថយទំហំ Initial Bundle យ៉ាងច្រើន បង្កើនល្បឿនផ្ទុកទំព័រដំបូង។"
         ],
-        "codeSnippet": "import React, { Suspense, useState } from 'react';\n\nconst HeavyChart = React.lazy(() => import('./HeavyAnalyticsChart'));\n\nexport function AnalyticsDashboard() {\n  const [showChart, setShowChart] = useState(false);\n\n  return (\n    <div>\n      <button onClick={() => setShowChart(true)}>Show Chart</button>\n      {showChart && (\n        <Suspense fallback={<div className=\"h-64 animate-pulse bg-slate-800\" />}>\n          <HeavyChart />\n        </Suspense>\n      )}\n    </div>\n  );\n}",
+        "codeSnippet": "import React, { Suspense, useState } from 'react';\n\n// ទាញយក JavaScript file តែនៅពេល Component នេះត្រូវបង្ហាញ\nconst HeavyAnalyticsChart = React.lazy(() => import('./HeavyAnalyticsChart'));\n\nexport function Dashboard() {\n  const [showChart, setShowChart] = useState(false);\n\n  return (\n    <div>\n      <button onClick={() => setShowChart(true)}>បង្ហាញក្រាហ្វិក</button>\n      \n      {showChart && (\n        <Suspense fallback={<div className=\"h-64 animate-pulse bg-slate-800 rounded\" />}>\n          <HeavyAnalyticsChart />\n        </Suspense>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "On-demand Lazy Component Loading"
+        "codeTitle": "On-demand Lazy Component Loading",
+        "proTip": "ប្រើប្រាស់ `React.lazy()` សម្រាប់ Heavy Components ដែលកម្របើកមើលភ្លាមៗ (ដូចជា Rich Text Editor, Modal Popup, ឬ Analytics Charts) ដើម្បីកាត់បន្ថយទំហំ Initial Bundle Size និងបង្កើនពិន្ទុ First Contentful Paint (FCP)។"
       },
       {
         "id": "m18-08",
         "number": "08",
         "title": "React Profiler",
-        "summary": "Identifying slow renders and commit timelines in React DevTools.",
-        "explanation": "The React Profiler records render duration and flame graphs, showing exactly which component rendered, why it rendered, and how long it took.",
+        "summary": "ការស្វែងរកចំណុចដែលដំណើរការយឺត (Slow Renders) តាមរយៈ React DevTools Profiler។",
+        "explanation": "ផ្ទាំង **React DevTools Profiler** គឺជាឧបករណ៍ដ៏សំខាន់បំផុតសម្រាប់វិភាគ Performance នៃកម្មវិធី React។ វាធ្វើការកត់ត្រារយៈពេល Render (Render Duration), បង្ហាញក្រាហ្វិក Flamegraph, និងបង្ហាញមូលហេតុច្បាស់ៗថាតើ Component ណាខ្លះ Re-render និងចំណាយពេលប៉ុន្មាន Milliseconds។",
         "keyPoints": [
-          "Use 'Record why each component rendered while profiling' in DevTools settings."
+          "មើលពណ៌ Flamegraph (ពណ៌លឿង/ទឹកក្រូច = ចំណាយពេលយូរ, ពណ៌ខៀវ/ប្រផេះ = លឿន ឬមិនបាន render)។",
+          "ប្រើប្រាស់ `<Profiler id=\"...\" onRender={...}>` សម្រាប់ការវាស់វែងតាម Programmatic ក្នុង Code។",
+          "ធ្វើតេស្ត Profiling នៅក្នុង Production Build (ជាមួយ Profiling flag បើក) ដើម្បីទទួលបានទិន្នន័យជាក់ស្តែង។"
         ],
-        "codeSnippet": "// Use the Profiler component programmatically if needed:\nimport { Profiler } from 'react';\n\n<Profiler id=\"CourseTable\" onRender={(id, phase, actualDuration) => {\n  console.log(`${id} [${phase}] took ${actualDuration}ms`);\n}}>\n  <CourseTable />\n</Profiler>",
+        "codeSnippet": "import { Profiler } from 'react';\n\nfunction onRenderCallback(\n  id: string,\n  phase: 'mount' | 'update',\n  actualDuration: number\n) {\n  console.log(`Component ${id} [${phase}] ចំណាយពេល: ${actualDuration.toFixed(2)}ms`);\n}\n\nexport function App() {\n  return (\n    <Profiler id=\"CourseTable\" onRender={onRenderCallback}>\n      <CourseTable />\n    </Profiler>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "React Profiler API"
+        "codeTitle": "React Profiler API",
+        "proTip": "បើកជម្រើស 'Record why each component rendered while profiling' នៅក្នុង Settings នៃ React DevTools ដើម្បីដឹងច្បាស់ថាតើ Component មួយ Re-render ដោយសារ State, Hook, ឬ Prop ណាមួយ។"
       },
       {
         "id": "m18-09",
         "number": "09",
         "title": "Performance Best Practices",
-        "summary": "Checklist for maintaining 60fps React applications.",
-        "explanation": "1) Measure before optimizing (premature optimization is the root of all evil); 2) Colocate state; 3) Use pagination/virtualization; 4) Optimize images; 5) Lazy-load heavy routes.",
-        "keyPoints": [
-          "Always test with CPU throttling (4x / 6x slowdown) in DevTools."
-        ],
-        "codeSnippet": "// 1. Don't optimize until you measure bottlenecks.\n// 2. Colocate state before reaching for memo/useCallback.\n// 3. Virtualize lists > 100 items.",
+        "summary": "គោលការណ៍ណែនាំ និងបញ្ជីត្រួតពិនិត្យ (Checklist) ដើម្បីរក្សា Frame Rate កម្រិត 60 FPS ក្នុងកម្មវិធី React។",
+        "explanation": "ដើម្បីធានាថាកម្មវិធី React របស់អ្នកដំណើរការបានរលូនក្នុងល្បឿន 60 FPS (Frames Per Second) នៅគ្រប់ឧបករណ៍ទាំងអស់ រួមទាំងទូរស័ព្ទកម្លាំងខ្សោយ អ្នកគួរតែអនុវត្តតាមបញ្ជីត្រួតពិនិត្យ (Checklist) ខាងក្រោម៖",
+        "keyPoints": [],
+        "codeSnippet": "// វិធានមាសទាំង ៤ នៃ React Performance៖\n// 1. កុំប្រញាប់ Optimize បើពុំទាន់មានភស្តុតាងពី Profiler ថាវាដំណើរការយឺត។\n// 2. រៀបចំស្ថាបត្យកម្ម Component (State Down / Lift Content Up) មុននឹងប្រើ React.memo។\n// 3. ប្រើប្រាស់ Virtualization នៅពេលបញ្ជីទិន្នន័យមានលើសពី 100 ជួរដេក។\n// 4. ប្រើ Lazy Loading សម្រាប់ Routes និង Heavy Libraries។",
         "codeLanguage": "jsx",
-        "codeTitle": "Performance Golden Rules"
+        "codeTitle": "Performance Golden Rules",
+        "proTip": "កុំធ្វើ Optimization មុនពេលវាស់វែងបញ្ហាជាក់ស្តែង (Premature optimization is the root of all evil)! ត្រូវប្រើ DevTools Profiler រកឃើញ Bottleneck សិន សឹមធ្វើការកែសម្រួល។"
       },
       {
         "id": "m18-10",
         "number": "10",
         "title": "Debouncing and Throttling",
-        "summary": "Controlling high-frequency event execution.",
-        "explanation": "Debounce delays execution until silence; Throttle limits execution to at most once per time window.",
+        "summary": "ការគ្រប់គ្រង និងកម្រិតភាពញឹកញាប់នៃការបញ្ឆេះ Events ដូចជា Search Input ឬ Window Scroll។",
+        "explanation": "Events មួយចំនួនដូចជាការវាយអក្សរក្នុង Input (Key strokes), ការរំកិលទំព័រ (Scroll), ឬការផ្លាស់ប្តូរទំហំបង្អួច (Resize) អាចបញ្ឆេះរាប់សិបដងក្នុងមួយវិនាទី។ ការអនុវត្ត **Debounce** និង **Throttle** ជួយទប់ស្កាត់កុំឱ្យអនុគមន៍ ឬ API Calls ដំណើរការញឹកញាប់ជ្រុល។",
         "keyPoints": [
-          "Debounce: Search inputs; Throttle: Window scroll / resize."
+          "**Debounce**: ពន្យារពេលដំណើរការរហូតទាល់តែគ្មាន Event កើតឡើងទៀតក្នុងរយៈពេលដែលបានកំណត់ (ឧទាហរណ៍៖ រង់ចាំ User វាយអក្សរចប់ 300ms ទើបហៅ API)។",
+          "**Throttle**: កម្រិតឱ្យអនុគមន៍ដំណើរការត្រឹមតែមួយដងគត់ ក្នុងចន្លោះពេលជាក់លាក់មួយ (ឧទាហរណ៍៖ អនុញ្ញាតឱ្យរត់ត្រឹមតែម្តងគត់រៀងរាល់ 100ms ពេល Scroll)។"
         ],
-        "codeSnippet": "// Debounced handler:\nconst debouncedSearch = useMemo(\n  () => debounce((val: string) => api.search(val), 300),\n  []\n);",
+        "codeSnippet": "import { useMemo } from 'react';\nimport debounce from 'lodash.debounce';\n\nexport function SearchInput({ onSearch }: { onSearch: (val: string) => void }) {\n  // បង្កើត debounced handler តែមួយគត់ (stable reference)\n  const debouncedSearch = useMemo(\n    () => debounce((query: string) => onSearch(query), 300),\n    [onSearch]\n  );\n\n  return (\n    <input \n      type=\"text\" \n      placeholder=\"ស្វែងរក...\" \n      onChange={(e) => debouncedSearch(e.target.value)} \n    />\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Debounced API Handler"
+        "codeTitle": "Debounced API Handler",
+        "proTip": "ប្រើ Debounce (ពន្យារពេលរហូតដល់ User ឈប់វាយអក្សរ 300ms) សម្រាប់ Search Input API Calls។ ប្រើ Throttle (អនុញ្ញាតឱ្យរត់តែមួយដងក្នុងចន្លោះពេលកំណត់) សម្រាប់ Window Scroll ឬ Resize Events។"
       },
       {
         "id": "m18-11",
         "number": "11",
         "title": "Web Vitals in React",
-        "summary": "LCP, FID/INP, and CLS metrics.",
-        "explanation": "Core Web Vitals measure real-world user experience. Cumulative Layout Shift (CLS) is prevented by skeleton dimensions; Interaction to Next Paint (INP) is improved by non-blocking transitions.",
+        "summary": "ការវាស់វែង និងកែលម្អសូចនាករ Core Web Vitals (LCP, FID/INP, CLS) ក្នុងកម្មវិធី React។",
+        "explanation": "**Core Web Vitals** គឺជាស្តង់ដាររង្វាស់របស់ Google សម្រាប់វាស់ស្ទង់បទពិសោធន៍អ្នកប្រើប្រាស់ពិតប្រាកដ រួមមាន៖ **LCP** (Largest Contentful Paint - ល្បឿនបង្ហាញផ្ទាំងធំជាងគេ), **INP** (Interaction to Next Paint - ភាពរហ័សនៃការឆ្លើយតបពេលចុច), និង **CLS** (Cumulative Layout Shift - ភាពនឹងនរនៃទំព័រមិនរំកិលរញ៉េរញ៉ៃ)។",
         "keyPoints": [
-          "Use `startTransition` in React 18/19 for non-urgent UI updates."
+          "ការពារ **CLS**: កំណត់ Aspect Ratio និងវិមាត្រជាក់លាក់សម្រាប់រូបភាព និងប្រើប្រាស់ Skeleton Loaders។",
+          "កែលម្អ **INP**: ប្រើប្រាស់ `startTransition` ឬ `useDeferredValue` ដើម្បីបំបែកកិច្ចការធ្ងន់ៗកុំឱ្យ Block Main Thread។",
+          "កែលម្អ **LCP**: ធ្វើការ Optimize រូបភាព និងប្រើ Server Components / SSR។"
         ],
-        "codeSnippet": "import { startTransition } from 'react';\n\n// Non-urgent update won't block typing input:\nstartTransition(() => {\n  setFilteredResults(heavyCalculation(query));\n});",
+        "codeSnippet": "import { useState, useTransition } from 'react';\n\nexport function SearchFilter() {\n  const [input, setInput] = useState('');\n  const [results, setResults] = useState([]);\n  const [isPending, startTransition] = useTransition();\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    // 1. បន្ទាន់៖ Update input ភ្លាមៗដើម្បីឱ្យ UI មិនគាំងពេលវាយអក្សរ\n    setInput(e.target.value);\n\n    // 2. មិនបន្ទាន់៖ ដំណើរការ Filter ធ្ងន់ៗក្នុង Transition\n    startTransition(() => {\n      setResults(heavyFilteringCalculation(e.target.value));\n    });\n  };\n\n  return <input value={input} onChange={handleChange} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "startTransition for Responsive INP"
+        "codeTitle": "startTransition for Responsive INP",
+        "proTip": "ប្រើប្រាស់ `startTransition` ក្នុង React 18/19 សម្រាប់ការ Update ណាដែលមិនបន្ទាន់ (Non-urgent UI updates) ដើម្បីកុំឱ្យរាំងស្ទះដល់ការចុច ឬវាយអក្សររបស់ User ដោយជួយកែលម្អពិន្ទុ INP (Interaction to Next Paint) យ៉ាងខ្លាំង។"
       },
       {
         "id": "m18-12",
         "number": "12",
         "title": "Bundle Size Optimization",
-        "summary": "Analyzing bundle chunks and tree-shaking.",
-        "explanation": "Import specific modules (`import { Check } from 'lucide-react'`) rather than entire library bundles. Use `@next/bundle-analyzer` to inspect production JS sizes.",
+        "summary": "ការកាត់បន្ថយទំហំ JavaScript Bundle តាមរយៈ Tree-shaking និងការវិភាគ Bundle Chunks។",
+        "explanation": "ទំហំ JavaScript Bundle កាន់តែធំ ធ្វើឱ្យ Browser ចំណាយពេលយូរក្នុងការទាញយក និង Parse កូដ។ ការធ្វើឱ្យ Bundle តូចតាមរយៈ **Tree-shaking** (ការកាត់ចោលកូដដែលមិនបានប្រើ) និងការវិភាគតាមរយៈ `@next/bundle-analyzer` គឺជាយុទ្ធសាស្ត្រស្នូលក្នុងការបង្កើនល្បឿន Web Application។",
         "keyPoints": [
-          "Avoid importing massive monolithic libraries like moment.js."
+          "ប្រើប្រាស់ Named Imports ដើម្បីឱ្យ Bundler អាចធ្វើ Tree-shaking បាន។",
+          "ជំនួសបណ្ណាល័យធំៗដោយជម្រើសទំនើបៗ (ឧ. ប្រើ `date-fns` ឬ Intl API ជំនួស `moment.js`)។",
+          "ប្រើឧបករណ៍ `@next/bundle-analyzer` ដើម្បីពិនិត្យមើលថាតើ Package ណាខ្លះស៊ីទំហំធំជាងគេក្នុង Bundle។"
         ],
-        "codeSnippet": "// ❌ Bad: Imports entire package\n// import * as Icons from 'lucide-react';\n\n// ✅ Good: Tree-shakable named imports\nimport { Check, AlertCircle } from 'lucide-react';",
+        "codeSnippet": "// ❌ មិនល្អ៖ ទាញយក Icons ទាំងពាន់ចូលក្នុង Bundle\n// import * as Icons from 'lucide-react';\n\n// ✅ ល្អបំផុត៖ Tree-shakable Named Imports (ទាញយកតែ 2 icons ប៉ុណ្ណោះ)\nimport { Check, AlertCircle } from 'lucide-react';\n\n// ✅ ជំនួស moment.js ដោយ native Intl API៖\nconst formattedDate = new Intl.DateTimeFormat('km-KH').format(new Date());",
         "codeLanguage": "jsx",
-        "codeTitle": "Tree-shakable Module Imports"
+        "codeTitle": "Tree-shakable Module Imports",
+        "pitfall": "ជៀសវាងការសរសេរ `import * as Icons from 'lucide-react'` ឬការប្រើ Library ធំៗដែលមិនគាំទ្រ Tree-shaking ដូចជា `moment.js`! ចូរប្រើ Named Imports ដូចជា `import { Check } from 'lucide-react'` និងបណ្ណាល័យស្រាលៗដូចជា `date-fns`។"
       }
     ]
   },

@@ -5,34 +5,39 @@ title: "Lazy Loading & Code Splitting"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Splitting bundle into on-demand chunks with React.lazy and Suspense."
+summary: "ការបំបែក JavaScript Bundle ជាចំណែកតូចៗ និងទាញយកតែពេលត្រូវការ (On-demand) ដោយប្រើ React.lazy និង Suspense។"
+proTip: "ប្រើប្រាស់ `React.lazy()` សម្រាប់ Heavy Components ដែលកម្របើកមើលភ្លាមៗ (ដូចជា Rich Text Editor, Modal Popup, ឬ Analytics Charts) ដើម្បីកាត់បន្ថយទំហំ Initial Bundle Size និងបង្កើនពិន្ទុ First Contentful Paint (FCP)។"
 codeTitle: "On-demand Lazy Component Loading"
 ---
 
 # Lazy Loading & Code Splitting
 
-Allows deferring the loading of heavy components (like rich text editors, charts, or modal dialogs) until the user actually requests them.
+តាមលំនាំដើម Webpack ឬ Turbopack នឹងច្របាច់កូដទាំងអស់ទៅក្នុង Bundle តែមួយ។ នេះមានន័យថា User ត្រូវរង់ចាំទាញយកកូដផ្ទាំងគ្រប់គ្រង Admin, Charts, និង Rich Text Editors ទាំងអស់ ទោះបីពួកគេគ្រាន់តែចង់មើល Landing Page ក៏ដោយ។ **Code Splitting** អនុញ្ញាតឱ្យយើងបំបែក Bundle ទាំងនោះ និងទាញយកតែពេល User ត្រូវការ។
 
 ### Key Concepts & Rules:
 
-- Significantly reduces initial page load JavaScript size (First Contentful Paint).
+- ប្រើ `React.lazy(() => import('./Component'))` សម្រាប់ Dynamic Imports។
+- រុំព័ទ្ធ Lazy Component នៅក្នុង `<Suspense fallback={<LoadingSpinner />}>`។
+- កាត់បន្ថយទំហំ Initial Bundle យ៉ាងច្រើន បង្កើនល្បឿនផ្ទុកទំព័រដំបូង។
 
 ### Code Example: On-demand Lazy Component Loading
 
 ```jsx
 import React, { Suspense, useState } from 'react';
 
-const HeavyChart = React.lazy(() => import('./HeavyAnalyticsChart'));
+// ទាញយក JavaScript file តែនៅពេល Component នេះត្រូវបង្ហាញ
+const HeavyAnalyticsChart = React.lazy(() => import('./HeavyAnalyticsChart'));
 
-export function AnalyticsDashboard() {
+export function Dashboard() {
   const [showChart, setShowChart] = useState(false);
 
   return (
     <div>
-      <button onClick={() => setShowChart(true)}>Show Chart</button>
+      <button onClick={() => setShowChart(true)}>បង្ហាញក្រាហ្វិក</button>
+      
       {showChart && (
-        <Suspense fallback={<div className="h-64 animate-pulse bg-slate-800" />}>
-          <HeavyChart />
+        <Suspense fallback={<div className="h-64 animate-pulse bg-slate-800 rounded" />}>
+          <HeavyAnalyticsChart />
         </Suspense>
       )}
     </div>

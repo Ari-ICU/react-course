@@ -5,24 +5,39 @@ title: "Debouncing and Throttling"
 moduleId: "module-18"
 moduleNumber: "18"
 category: "Enterprise & Production"
-summary: "Controlling high-frequency event execution."
+summary: "ការគ្រប់គ្រង និងកម្រិតភាពញឹកញាប់នៃការបញ្ឆេះ Events ដូចជា Search Input ឬ Window Scroll។"
+proTip: "ប្រើ Debounce (ពន្យារពេលរហូតដល់ User ឈប់វាយអក្សរ 300ms) សម្រាប់ Search Input API Calls។ ប្រើ Throttle (អនុញ្ញាតឱ្យរត់តែមួយដងក្នុងចន្លោះពេលកំណត់) សម្រាប់ Window Scroll ឬ Resize Events។"
 codeTitle: "Debounced API Handler"
 ---
 
 # Debouncing and Throttling
 
-Debounce delays execution until silence; Throttle limits execution to at most once per time window.
+Events មួយចំនួនដូចជាការវាយអក្សរក្នុង Input (Key strokes), ការរំកិលទំព័រ (Scroll), ឬការផ្លាស់ប្តូរទំហំបង្អួច (Resize) អាចបញ្ឆេះរាប់សិបដងក្នុងមួយវិនាទី។ ការអនុវត្ត **Debounce** និង **Throttle** ជួយទប់ស្កាត់កុំឱ្យអនុគមន៍ ឬ API Calls ដំណើរការញឹកញាប់ជ្រុល។
 
 ### Key Concepts & Rules:
 
-- Debounce: Search inputs; Throttle: Window scroll / resize.
+- **Debounce**: ពន្យារពេលដំណើរការរហូតទាល់តែគ្មាន Event កើតឡើងទៀតក្នុងរយៈពេលដែលបានកំណត់ (ឧទាហរណ៍៖ រង់ចាំ User វាយអក្សរចប់ 300ms ទើបហៅ API)។
+- **Throttle**: កម្រិតឱ្យអនុគមន៍ដំណើរការត្រឹមតែមួយដងគត់ ក្នុងចន្លោះពេលជាក់លាក់មួយ (ឧទាហរណ៍៖ អនុញ្ញាតឱ្យរត់ត្រឹមតែម្តងគត់រៀងរាល់ 100ms ពេល Scroll)។
 
 ### Code Example: Debounced API Handler
 
 ```jsx
-// Debounced handler:
-const debouncedSearch = useMemo(
-  () => debounce((val: string) => api.search(val), 300),
-  []
-);
+import { useMemo } from 'react';
+import debounce from 'lodash.debounce';
+
+export function SearchInput({ onSearch }: { onSearch: (val: string) => void }) {
+  // បង្កើត debounced handler តែមួយគត់ (stable reference)
+  const debouncedSearch = useMemo(
+    () => debounce((query: string) => onSearch(query), 300),
+    [onSearch]
+  );
+
+  return (
+    <input 
+      type="text" 
+      placeholder="ស្វែងរក..." 
+      onChange={(e) => debouncedSearch(e.target.value)} 
+    />
+  );
+}
 ```

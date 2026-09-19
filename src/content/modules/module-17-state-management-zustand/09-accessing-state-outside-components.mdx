@@ -5,27 +5,49 @@ title: "Accessing State Outside Components"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Reading and writing store data in vanilla JS, API interceptors, and utils."
+summary: "ការអាន និងកែប្រែទិន្នន័យ Zustand Store នៅក្រៅ React Components ដូចជាក្នុង Axios Interceptors ឬ Pure Utilities។"
+proTip: "Zustand Store គឺជា JavaScript Object សាមញ្ញមួយ ដូច្នេះអ្នកអាចហៅ `useStore.getState()` ដើម្បីអាន និង `useStore.setState()` ដើម្បីកែប្រែ State នៅគ្រប់ទីកន្លែងក្រៅ React ដោយមិនចាំបាច់ប្រើ Hooks ឡើយ!"
 codeTitle: "Zustand Outside React Components"
 ---
 
 # Accessing State Outside Components
 
-Because Zustand stores are standard JavaScript objects, you can read or update them anywhere in your codebase without React hooks!
+គុណសម្បត្តិដ៏អស្ចារ្យមួយរបស់ Zustand គឺសមត្ថភាពក្នុងការអាន និងកែប្រែ State នៅខាងក្រៅ React Component Tree (Vanilla JavaScript)។ នេះអនុញ្ញាតឱ្យអ្នកអាចទាញយក Auth Token ឬហៅ Action Logout ដោយផ្ទាល់នៅក្នុង Axios Interceptor ឬ Router Guards ដោយមិនបាច់បារម្ភពីរឿង Hook Rules ឡើយ។
 
 ### Key Concepts & Rules:
 
-- Use `useStore.getState()` and `useStore.setState()` outside React.
+- ប្រើ `useStore.getState()` ដើម្បីអាន State បច្ចុប្បន្ននៅក្រៅ React។
+- ប្រើ `useStore.setState()` ដើម្បីកែប្រែ State ដោយផ្ទាល់ពីគ្រប់ទីកន្លែង។
+- ប្រើ `useStore.subscribe()` ដើម្បីតាមដានការផ្លាស់ប្តូរនៅក្រៅ React។
 
 ### Code Example: Zustand Outside React Components
 
 ```jsx
-// In an Axios interceptor or pure utility file:
-import { useAuthStore } from '@/store/authStore';
+// src/lib/apiClient.ts (ឯកសារ Vanilla TypeScript គ្មាន React Component ឡើយ)
+import axios from 'axios';
+import { useAuthStore } from '@/store/useAuthStore';
 
-// Read token without React:
-const token = useAuthStore.getState().token;
+export const apiClient = axios.create({ baseURL: '/api' });
 
-// Update state directly outside components:
-useAuthStore.getState().logout();
+apiClient.interceptors.request.use((config) => {
+  // 1. អាន Token ដោយផ្ទាល់ពី Zustand Store នៅក្រៅ React:
+  const token = useAuthStore.getState().token;
+  
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  
+  return config;
+});
+
+apiClient.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response?.status === 401) {
+      // 2. ហៅ Action logout ពី Zustand Store ដោយផ្ទាល់:
+      useAuthStore.getState().logout();
+    }
+    return Promise.reject(error);
+  }
+);
 ```

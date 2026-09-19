@@ -5,24 +5,27 @@ title: "State Management Architecture"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Organizing multiple stores in large applications."
+summary: "ការរៀបចំរចនាសម្ព័ន្ធ Stores ជាច្រើនទៅតាម Domain មុខងារនៅក្នុងគម្រោងខ្នាតធំ (Large-scale Apps)។"
+proTip: "ជៀសវាងការបង្កើត Giant Monolithic Store តែមួយកណ្តាល! ចូរបំបែកជា Modular Domain Stores ដូចជា `useAuthStore`, `useCartStore`, `useUIStore` ដើម្បីឱ្យកូដមានភាពស្អាត ងាយស្រួល Test និងថែទាំ។"
 codeTitle: "Modular Store Architecture"
 ---
 
 # State Management Architecture
 
-Divide stores by domain: `useCartStore`, `useAuthStore`, `useUIStore`. Avoid creating a giant single monolithic store.
+នៅក្នុងកម្មវិធីខ្នាតធំ (Enterprise Scale) ការរៀបចំ Directory និងការបែងចែក Store ឱ្យមានរបៀបរៀបរយគឺជារឿងចាំបាច់។ យុទ្ធសាស្ត្រល្អបំផុតគឺការបង្កើត **Domain-based Modular Stores** ដោយបែងចែក State ទៅតាមមុខងារនីមួយៗ ជាជាងការច្របាច់បញ្ចូលគ្នាក្នុង Store យក្សតែមួយ។
 
 ### Key Concepts & Rules:
 
-- Modular domain stores keep logic cleanly isolated.
+- រៀបចំ Folder `src/store/` ដោយបែងចែកជាឯកសារ Store ដាច់ដោយឡែកពីគ្នា។
+- ប្រើប្រាស់ TypeScript Interfaces យ៉ាងច្បាស់លាស់សម្រាប់ Store នីមួយៗ។
+- ងាយស្រួលក្នុងការធ្វើ Refactor និងកាត់បន្ថយទំហំ Bundle តាមរយៈ Tree-shaking។
 
 ### Code Example: Modular Store Architecture
 
 ```jsx
 src/store/
-├── useAuthStore.ts
-├── useCartStore.ts
-├── useUIStore.ts
-└── useCourseProgressStore.ts
+├── useAuthStore.ts           // គ្រប់គ្រង Auth Token, Session, User Profile
+├── useCartStore.ts           // គ្រប់គ្រង Cart Items, Checkout, Totals
+├── useUIStore.ts             // គ្រប់គ្រង Modals, Sidebar, Theme
+└── useNotificationStore.ts   // គ្រប់គ្រង Toast Messages, In-app Alerts
 ```

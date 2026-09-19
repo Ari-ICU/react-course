@@ -5,25 +5,38 @@ title: "Reading Store State"
 moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
-summary: "Accessing values inside functional components."
+summary: "ការទាញយកតម្លៃ State មកប្រើប្រាស់នៅក្នុង Functional Components តាមរយៈ Selector Hook។"
+proTip: "ចូរហៅប្រើ Selector ជានិច្ច ដូចជា `useUIStore(state => state.isSidebarOpen)` ជំនួសឱ្យការហៅ Store ទាំងមូល ដើម្បីធានាថា Component នឹងមិន Re-render ផ្ដេសផ្ដាស។"
 codeTitle: "Consuming Zustand Store"
 ---
 
 # Reading Store State
 
-Components invoke the store hook: `const isSidebarOpen = useUIStore(state => state.isSidebarOpen)`.
+ដើម្បីអានតម្លៃទិន្នន័យពី Store មកបង្ហាញនៅក្នុង React Functional Component អ្នកគ្រាន់តែហៅ Custom Hook ដែលបានបង្កើត (`useUIStore`) រួចបញ្ជូន Selector Function មួយដើម្បីទាញយកតែ Property ឬ Action ដែលត្រូវការប៉ុណ្ណោះ។
 
 ### Key Concepts & Rules:
 
-- Always pass a selector to avoid subscribing to the entire store.
+- Component នឹង Subscribe ដោយស្វ័យប្រវត្តិតាមរយៈ Hook។
+- ការបំបែកការទាញយក State និង Actions ដោយឡែកពីគ្នា ជួយសម្រួលដល់ការគ្រប់គ្រង Performance។
+- គ្មានតម្រូវការប្រើ Consumer Components ឬ HOC (Higher-Order Components) ឡើយ។
 
 ### Code Example: Consuming Zustand Store
 
 ```jsx
+import { useUIStore } from '@/store/useUIStore';
+
 export function SidebarToggle() {
+  // ស្រង់យកតែតម្លៃ isSidebarOpen និង toggleSidebar
   const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);
   const toggleSidebar = useUIStore((state) => state.toggleSidebar);
 
-  return <button onClick={toggleSidebar}>{isSidebarOpen ? 'Close' : 'Open'}</button>;
+  return (
+    <button 
+      onClick={toggleSidebar}
+      className="p-2 bg-blue-600 text-white rounded"
+    >
+      {isSidebarOpen ? 'បិទ Sidebar ◀' : 'បើក Sidebar ▶'}
+    </button>
+  );
 }
 ```
