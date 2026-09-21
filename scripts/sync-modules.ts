@@ -80,12 +80,6 @@ ${mod.topics.map((t) => `- **Lesson ${t.number}**: ${t.title} - *${t.summary}*`)
         `summary: ${yamlString(topic.summary)}`,
       ];
 
-      if (topic.proTip) {
-        frontmatterLines.push(`proTip: ${yamlString(topic.proTip)}`);
-      }
-      if (topic.pitfall) {
-        frontmatterLines.push(`pitfall: ${yamlString(topic.pitfall)}`);
-      }
       if (topic.interactiveDemoKey) {
         frontmatterLines.push(`interactiveDemoKey: ${yamlString(topic.interactiveDemoKey)}`);
       }
