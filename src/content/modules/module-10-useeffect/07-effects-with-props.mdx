@@ -6,13 +6,13 @@ moduleId: "module-10"
 moduleNumber: "10"
 category: "Hooks & Lifecycle"
 summary: "ការធ្វើសមកាលកម្មទិន្នន័យនៅពេលដែល Props ពី Parent ផ្លាស់ប្តូរ។"
-proTip: "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId`, `moduleId`, ឬ route params) ដើម្បីទាញយកទិន្នន័យថ្មីពេល user ប្តូរទំព័រ។"
+proTip: "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId` ឬ `productId`) ដើម្បីទាញយកទិន្នន័យថ្មីពេល parent បញ្ជូន ID ថ្មីមក។"
 codeTitle: "Reacting to Prop Changes"
 ---
 
 # Effects with Props
 
-នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ Route Parameter ឬ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។
+នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។
 
 ### Key Concepts & Rules:
 

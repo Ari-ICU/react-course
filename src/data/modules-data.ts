@@ -1892,7 +1892,7 @@ export const modulesData: ModuleItem[] = [
         "number": "07",
         "title": "Effects with Props",
         "summary": "ការធ្វើសមកាលកម្មទិន្នន័យនៅពេលដែល Props ពី Parent ផ្លាស់ប្តូរ។",
-        "explanation": "នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ Route Parameter ឬ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។",
+        "explanation": "នៅពេលដែល Parent Component បញ្ជូនតម្លៃ Props ថ្មីចុះមក (ឧទាហរណ៍៖ ការផ្លាស់ប្តូរ ID នៃធាតុដែលត្រូវបង្ហាញ) Child Component អាចប្រើ `useEffect` ដោយដាក់ Prop នោះជា dependency ដើម្បីធ្វើសមកាលកម្មទិន្នន័យ ឬទាញយកព័ត៌មានលម្អិតថ្មីពី Server។",
         "keyPoints": [
           "ប្រើប្រាស់តម្លៃ Prop ជា dependency ដើម្បីឆ្លើយតបទៅនឹងការផ្លាស់ប្តូរពី Parent។",
           "រៀបចំកូដឱ្យត្រៀមខ្លួនជានិច្ចចំពោះករណីដែល Prop អាចផ្លាស់ប្តូរតម្លៃញឹកញាប់។",
@@ -1901,7 +1901,7 @@ export const modulesData: ModuleItem[] = [
         "codeSnippet": "useEffect(() => {\n  fetchModuleDetails(moduleId);\n}, [moduleId]);",
         "codeLanguage": "jsx",
         "codeTitle": "Reacting to Prop Changes",
-        "proTip": "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId`, `moduleId`, ឬ route params) ដើម្បីទាញយកទិន្នន័យថ្មីពេល user ប្តូរទំព័រ។"
+        "proTip": "ជាញឹកញាប់ `props` ដែលត្រូវដាក់ក្នុង dependencies គឺជា ID (ដូចជា `userId` ឬ `productId`) ដើម្បីទាញយកទិន្នន័យថ្មីពេល parent បញ្ជូន ID ថ្មីមក។"
       },
       {
         "id": "m10-08",
@@ -2170,7 +2170,7 @@ export const modulesData: ModuleItem[] = [
         "explanation": "ចំណុចសំខាន់ដែលត្រូវចងចាំគឺថា ការហៅ Custom Hook មួយនៅក្នុង Components ពីរផ្សេងគ្នា នឹងបង្កើត State Instances ពីរដាច់ដោយឡែកពីគ្នាទាំងស្រុង។ Custom Hooks ជួយយើងក្នុងការចែករំលែករូបមន្តនៃការគណនា និងឥរិយាបថ (Stateful Logic) មិនមែនជាការចែករំលែកទិន្នន័យ State រួមគ្នានោះឡើយ។",
         "keyPoints": [
           "រាល់ការហៅ Hook ម្តងៗ គឺស្មើនឹងការបង្កើត state និង effects ថ្មីមួយសម្រាប់តែ component នោះ។",
-          "ប្រសិនបើអ្នកចង់ចែករំលែក **ទិន្នន័យ State តែមួយគត់** ឆ្លងកាត់ Components ជាច្រើន ចូរប្រើ **React Context** ឬ **Zustand** ជំនួសវិញ។",
+          "ប្រសិនបើអ្នកចង់ចែករំលែក **ទិន្នន័យ State តែមួយគត់** ឆ្លងកាត់ Components ជាច្រើន ចូរប្រើ **React Context** ឬ **Zustand** ជំនួសវិញ (ដែលនឹងត្រូវសិក្សានៅ Module 16 និង Module 17)។",
           "ជួយឱ្យ components នីមួយៗរក្សាភាពឯករាជ្យ និងគ្មានផលប៉ះពាល់ដល់គ្នាទៅវិញទៅមក (No Side Coupling)។"
         ],
         "codeSnippet": "// Component A has its own independent toggle state;\n// Component B has its own independent toggle state.",
@@ -2791,11 +2791,11 @@ export const modulesData: ModuleItem[] = [
         "summary": "មូលហេតុដែលទិន្នន័យ Server State ត្រូវតែគ្រប់គ្រងខុសប្លែកទាំងស្រុងពី UI Client State។",
         "explanation": "នៅក្នុងការអភិវឌ្ឍកម្មវិធី React ទំនើប យើងត្រូវបែងចែក State ជាពីរប្រភេទដាច់ពីគ្នា៖ **Client State** គឺជាទិន្នន័យក្នុង Browser (Synchronous) ដែលគ្រប់គ្រងដោយផ្ទាល់ដោយ UI (ដូចជា ការបើកផ្ទាំង Modal, Theme ងងឹត/ភ្លឺ, Form Input)។ ចំណែកឯ **Server State** គឺជាទិន្នន័យ Asynchronous ដែលត្រូវបានរក្សាទុកនៅលើ Database ពីចម្ងាយ (Remote) និងអាចត្រូវបានកែប្រែដោយអ្នកប្រើប្រាស់ផ្សេងទៀតនៅពេលណាក៏បាន។",
         "keyPoints": [
-          "**Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer`, ឬបណ្ណាល័យដូចជា Zustand។",
+          "**Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer` (ឬបណ្ណាល័យដូចជា Zustand ដែលនឹងសិក្សានៅ Module 17)។",
           "**Server State**: ត្រូវការ Caching, ការទាញយកទិន្នន័យជាប្រចាំនៅ Background (Background Refetching), ការបំបាត់ Request ជាន់គ្នា (Deduplication), និងគោលការណ៍ Stale-time។",
           "ការគ្រប់គ្រង Server State ដោយផ្ទាល់តាមរយៈ `useState` + `useEffect` បង្កឱ្យមានកូដស្មុគស្មាញ និងងាយកើត Bugs បំផុត។"
         ],
-        "codeSnippet": "// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (Zustand ឬ useState)\nconst [isSidebarOpen, setIsSidebarOpen] = useState(false);\nconst [currentTab, setCurrentTab] = useState<'posts' | 'settings'>('posts');\n\n// 2. Server State: ទិន្នន័យពី Database ពីចម្ងាយ (TanStack Query)\n// ត្រូវការ Caching, Stale Invalidation, និង Background Refetching\nconst { data: userProfile } = useQuery({\n  queryKey: ['profile', userId],\n  queryFn: () => userService.getProfile(userId),\n});",
+        "codeSnippet": "// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (useState)\nconst [isSidebarOpen, setIsSidebarOpen] = useState(false);\nconst [currentTab, setCurrentTab] = useState<'posts' | 'settings'>('posts');\n\n// 2. Server State: ទិន្នន័យពី Database ពីចម្ងាយ (TanStack Query)\n// ត្រូវការ Caching, Stale Invalidation, និង Background Refetching\nconst { data: userProfile } = useQuery({\n  queryKey: ['profile', userId],\n  queryFn: () => userService.getProfile(userId),\n});",
         "codeLanguage": "jsx",
         "codeTitle": "Client vs Server State Separation",
         "proTip": "ចូរកុំច្រឡំ Client State (ដូចជាការបើក/បិទ Modal, Active Tab) ជាមួយ Server State (ដូចជាបញ្ជីទំនិញ, User Profile)។ ការព្យាយាមគ្រប់គ្រង Server State ដោយប្រើតែ `useState` + `useEffect` នឹងនាំឱ្យកើតមានបញ្ហា Cache Bugs, Duplicate Requests, និងទិន្នន័យចាស់ហួសសម័យ (Stale Data)។"
@@ -3123,7 +3123,7 @@ export const modulesData: ModuleItem[] = [
         "summary": "បញ្ហា Re-render នៃគ្រប់ Consumers ទាំងអស់នៅពេលដែលតម្លៃ Context ណាមួយផ្លាស់ប្តូរ។",
         "explanation": "ចំណុចខ្សោយដ៏ធំបំផុតរបស់ React Context API គឺបញ្ហា **Unnecessary Re-renders**។ ប្រសិនបើអ្នកដាក់ Object មួយដែលមាន 10 properties ទៅក្នុង Context ហើយមាន property តែ 1 ផ្លាស់ប្តូរ នោះរាល់ Component ទាំងអស់ដែលហៅ `useContext` នឹងត្រូវ Re-render ទាំងអស់ ទោះបីជា Component នោះប្រើតែ property ដែលមិនផ្លាស់ប្តូរក៏ដោយ!",
         "keyPoints": [
-          "Context គ្មាន Selector Mechanism ដូច Zustand ឬ Redux ឡើយ (គ្មាន fine-grained reactivity)។",
+          "Context គ្មាន Selector Mechanism ដូច Zustand ឬ Redux ឡើយ (គ្មាន fine-grained reactivity) — ដែលយើងនឹងសិក្សា Zustand នៅ Module 17 បន្ទាប់។",
           "ដំណោះស្រាយ៖ បំបែក Context ទៅតាមមុខងារ (Context Splitting) ដូចជា `ThemeContext` ដាច់ដោយឡែកពី `AuthContext`។",
           "មិនត្រូវប្រើ Context សម្រាប់ទិន្នន័យដែលមានការកែប្រែរៀងរាល់ Millisecond (High frequency) ឡើយ។"
         ],

@@ -16,14 +16,14 @@ codeTitle: "Client vs Server State Separation"
 
 ### Key Concepts & Rules:
 
-- **Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer`, ឬបណ្ណាល័យដូចជា Zustand។
+- **Client State**: គ្រប់គ្រងដោយ `useState`, `useReducer` (ឬបណ្ណាល័យដូចជា Zustand ដែលនឹងសិក្សានៅ Module 17)។
 - **Server State**: ត្រូវការ Caching, ការទាញយកទិន្នន័យជាប្រចាំនៅ Background (Background Refetching), ការបំបាត់ Request ជាន់គ្នា (Deduplication), និងគោលការណ៍ Stale-time។
 - ការគ្រប់គ្រង Server State ដោយផ្ទាល់តាមរយៈ `useState` + `useEffect` បង្កឱ្យមានកូដស្មុគស្មាញ និងងាយកើត Bugs បំផុត។
 
 ### Code Example: Client vs Server State Separation
 
 ```jsx
-// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (Zustand ឬ useState)
+// 1. Client State: គ្រប់គ្រង UI ក្នុងមូលដ្ឋាន (useState)
 const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 const [currentTab, setCurrentTab] = useState<'posts' | 'settings'>('posts');
 
