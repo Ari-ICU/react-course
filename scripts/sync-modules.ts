@@ -272,8 +272,6 @@ export function compileFromMDX() {
         codeSnippet: codeSnippet,
         codeLanguage: codeLanguage,
         codeTitle: frontmatter.codeTitle,
-        proTip: frontmatter.proTip,
-        pitfall: frontmatter.pitfall,
         interactiveDemoKey: frontmatter.interactiveDemoKey,
         image: image || undefined,
       };
@@ -313,8 +311,6 @@ export interface TopicItem {
   codeSnippet: string;
   codeLanguage?: string;
   codeTitle?: string;
-  proTip?: string;
-  pitfall?: string;
   interactiveDemoKey?: string;
   image?: string;
 }
