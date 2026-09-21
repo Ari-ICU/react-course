@@ -197,15 +197,15 @@ export const modulesData: ModuleItem[] = [
         "number": "10",
         "title": "Understanding the React Development Environment",
         "summary": "ការយល់ដឹងពី React DevTools, React StrictMode និងការស្វែងយល់ពី double-rendering behavior ក្នុង development។",
-        "explanation": "នៅក្នុង development mode ឧបករណ៍ React StrictMode នឹង mount និង unmount components ចំនួនពីរដងដោយចេតនា ដើម្បីជួយស្វែងរក accidental side-effects និងកន្លែងដែលខ្វះ cleanup functions នៅក្នុង effects។",
+        "explanation": "នៅក្នុង development mode ឧបករណ៍ React StrictMode នឹងដំណើរការ render components ចំនួនពីរដងដោយចេតនា ដើម្បីជួយស្វែងរក accidental side-effects និងកំហុសឆ្គងផ្សេងៗក្នុងកូដ។",
         "keyPoints": [
-          "StrictMode ដំណើរការ effects ពីរដងក្នុង dev mode ដើម្បីពង្រឹងគោលការណ៍ idempotency នៃកូដ។",
+          "StrictMode ដំណើរការ component rendering ពីរដងក្នុង dev mode ដើម្បីធានាភាពត្រឹមត្រូវនៃកូដ។",
           "React Developer Tools browser extension អនុញ្ញាតឱ្យ developer ពិនិត្យមើល props, state, និង render timeline នៃ components នីមួយៗបានយ៉ាងងាយស្រួល។"
         ],
         "codeSnippet": "// React.StrictMode wraps your application tree\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);",
         "codeLanguage": "jsx",
         "codeTitle": "React StrictMode Wrapper",
-        "proTip": "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅក្នុង `useEffect` កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីផ្ទៀងផ្ទាត់ cleanup function របស់អ្នកប៉ុណ្ណោះ!"
+        "proTip": "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅពេល component render ដំបូង កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីជួយស្វែងរក side-effects និងកំហុសឆ្គងដំបូងប៉ុណ្ណោះ!"
       }
     ]
   },
@@ -254,10 +254,10 @@ export const modulesData: ModuleItem[] = [
         "summary": "ការបង្កប់ dynamic expressions ការគណនា និង variables នៅខាងក្នុង curly braces `{}`។",
         "explanation": "រាល់ JavaScript expression ត្រឹមត្រូវ (ដូចជា variables, ការគណនាគណិតវិទ្យា, function calls, ឬ ternary operators) អាចដាក់នៅចន្លោះសញ្ញា curly braces `{}` នៅក្នុង JSX បានទាំងអស់។",
         "keyPoints": [
-          "Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ array methods (ដូចជា `.map()`, `.filter()`) ជំនួសវិញ។",
+          "Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ helper functions ជំនួសវិញ (ចំណែកវិធី loop បង្ហាញទិន្នន័យ យើងនឹងរៀននៅ Module 05)។",
           "Numbers និង strings នឹងត្រូវបង្ហាញលើ UI ដោយផ្ទាល់ ចំណែកឯ booleans (`true`/`false`), `null`, និង `undefined` ត្រូវបាន React ignore (មិនបង្ហាញលើអេក្រង់ឡើយ)។"
         ],
-        "codeSnippet": "export function UserGreeting({ username, points }) {\n  const multiplier = 1.5;\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg text-white\">\n      <h2 className=\"text-xl\">Welcome back, {username.toUpperCase()}!</h2>\n      <p className=\"text-slate-400\">\n        Adjusted score: {(points * multiplier).toFixed(0)} XP\n      </p>\n    </div>\n  );\n}",
+        "codeSnippet": "export function UserGreeting() {\n  const username = \"Sophea\";\n  const points = 100;\n  const multiplier = 1.5;\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg text-white\">\n      <h2 className=\"text-xl\">Welcome back, {username.toUpperCase()}!</h2>\n      <p className=\"text-slate-400\">\n        Adjusted score: {(points * multiplier).toFixed(0)} XP\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Expressions Inside JSX"
       },
@@ -269,9 +269,9 @@ export const modulesData: ModuleItem[] = [
         "explanation": "សញ្ញា Curly braces `{}` ដើរតួជាស្ពានតភ្ជាប់ទៅកាន់ពិភព JavaScript ពេញលេញ។ អ្នកអាចហៅ utility functions, format កាលបរិច្ឆេទ, និងគណនា styling បានយ៉ាងរលូន។",
         "keyPoints": [
           "អាច format កាលបរិច្ឆេទ និងលេខទិន្នន័យបានភ្លាមៗដោយប្រើ standard JavaScript APIs ដូចជា `Intl.NumberFormat` ឬ `Intl.DateTimeFormat`។",
-          "បញ្ជូន callback function reference ទៅកាន់ event handlers ដោយផ្ទាល់ ដោយមិនត្រូវហៅ function ដំណើរការភ្លាមៗពេល render នោះឡើយ (ឧ. `onClick={handleClick}` មិនមែន `onClick={handleClick()}`)។"
+          "អាចបង្កើត helper function នៅខាងក្នុង component ហើយហៅវានៅក្នុង curly braces `{}` ដើម្បីគណនា ឬ format ទិន្នន័យបានយ៉ាងរលូន។"
         ],
-        "codeSnippet": "export function ProductPrice({ priceInCents }: { priceInCents: number }) {\n  const formatCurrency = (cents: number) => \n    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);\n\n  return (\n    <span className=\"font-semibold text-emerald-400\">\n      {formatCurrency(priceInCents)}\n    </span>\n  );\n}",
+        "codeSnippet": "export function ProductPrice() {\n  const priceInCents = 4999;\n\n  const formatCurrency = (cents) => \n    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);\n\n  return (\n    <div className=\"p-4 bg-slate-900 rounded-lg\">\n      <p className=\"text-slate-400 text-sm\">Course Price:</p>\n      <span className=\"text-xl font-semibold text-emerald-400\">\n        {formatCurrency(priceInCents)}\n      </span>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "JavaScript Functions in JSX"
       },
@@ -279,11 +279,11 @@ export const modulesData: ModuleItem[] = [
         "id": "m02-05",
         "number": "05",
         "title": "JSX Attributes",
-        "summary": "ក្បួនដាក់ឈ្មោះ attributes ជាទម្រង់ camelCase និងការប្រើប្រាស់ boolean props។",
-        "explanation": "HTML attributes ត្រូវបានបំប្លែងទៅជាទម្រង់ camelCase នៅក្នុង JSX (ឧទាហរណ៍ `onclick` ក្លាយជា `onClick`, `tabindex` ក្លាយជា `tabIndex`)។ ការបញ្ជូន prop ដោយមិនកំណត់តម្លៃ គឺមានតម្លៃស្មើនឹង `true` ដោយស្វ័យប្រវត្តិ។",
+        "summary": "ក្បួនដាក់ឈ្មោះ attributes ជាទម្រង់ camelCase និងការប្រើប្រាស់ boolean attributes។",
+        "explanation": "HTML attributes ត្រូវបានបំប្លែងទៅជាទម្រង់ camelCase នៅក្នុង JSX (ឧទាហរណ៍ `tabindex` ក្លាយជា `tabIndex`, `autocomplete` ក្លាយជា `autoComplete`)។ ការកំណត់ attribute ដោយមិនបញ្ជាក់តម្លៃ គឺមានតម្លៃស្មើនឹង `true` ដោយស្វ័យប្រវត្តិ។",
         "keyPoints": [
           "ឈ្មោះ attribute ត្រូវតែសរសេរជា camelCase៖ ដូចជា `tabIndex`, `autoFocus`, `aria-*` (រក្សាសញ្ញា hyphen ដដែល)។",
-          "Boolean prop shorthand៖ ការសរសេរ `<button disabled>` គឺដូចគ្នាទៅនឹងការសរសេរ `<button disabled={true}>`។"
+          "Boolean attribute shorthand៖ ការសរសេរ `<input disabled />` គឺដូចគ្នាទៅនឹងការសរសេរ `<input disabled={true} />`។"
         ],
         "codeSnippet": "<input \n  id=\"user-email\"\n  type=\"email\"\n  autoComplete=\"email\"\n  autoFocus\n  disabled={false}\n  tabIndex={1}\n  aria-label=\"User Email Address\"\n  className=\"w-full px-4 py-2 border rounded-md\"\n/>",
         "codeLanguage": "jsx",
@@ -299,7 +299,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រើ `className` សម្រាប់គ្រប់ CSS classes ទាំងអស់។",
           "ប្រើ utility function `cn()` (ការរួមបញ្ចូលគ្នារវាង `clsx` និង `tailwind-merge`) ដើម្បីគ្រប់គ្រង conditional និង dynamic class names ឱ្យមានរបៀបរៀបរយ និងមិនជាន់គ្នា។"
         ],
-        "codeSnippet": "import { cn } from \"@/lib/utils\";\n\nexport function StatusBadge({ status }: { status: \"active\" | \"inactive\" | \"pending\" }) {\n  return (\n    <span\n      className={cn(\n        \"px-2.5 py-1 text-xs font-semibold rounded-full border\",\n        status === \"active\" && \"bg-emerald-950/50 text-emerald-400 border-emerald-800\",\n        status === \"pending\" && \"bg-amber-950/50 text-amber-400 border-amber-800\",\n        status === \"inactive\" && \"bg-rose-950/50 text-rose-400 border-rose-800\"\n      )}\n    >\n      {status.toUpperCase()}\n    </span>\n  );\n}",
+        "codeSnippet": "import { cn } from \"@/lib/utils\";\n\nexport function StatusBadge() {\n  const status = \"active\";\n\n  return (\n    <span\n      className={cn(\n        \"px-2.5 py-1 text-xs font-semibold rounded-full border\",\n        status === \"active\" && \"bg-emerald-950/50 text-emerald-400 border-emerald-800\",\n        status === \"pending\" && \"bg-amber-950/50 text-amber-400 border-amber-800\",\n        status === \"inactive\" && \"bg-rose-950/50 text-rose-400 border-rose-800\"\n      )}\n    >\n      {status.toUpperCase()}\n    </span>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "className with Dynamic Utility"
       },
@@ -313,7 +313,7 @@ export const modulesData: ModuleItem[] = [
           "Inline styles ប្រើប្រាស់ double curly braces៖ `style={{ margin: 16, backgroundColor: '#000' }}` (ស្រទាប់ក្រៅជា JSX expression, ស្រទាប់ក្នុងជា JavaScript object)។",
           "Inline styles មិនគាំទ្រ media queries ឬ pseudo-classes (`:hover`, `:focus`) ឡើយ ដូច្នេះគួរប្រើ Tailwind CSS ឬ CSS modules សម្រាប់ styling ទូទៅ។"
         ],
-        "codeSnippet": "export function CustomProgressBar({ progress }: { progress: number }) {\n  return (\n    <div className=\"w-full bg-slate-800 h-3 rounded-full overflow-hidden\">\n      <div \n        className=\"h-full bg-blue-500 transition-all duration-300\"\n        style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}\n      />\n    </div>\n  );\n}",
+        "codeSnippet": "export function CustomProgressBar() {\n  const progress = 65;\n\n  return (\n    <div className=\"w-full bg-slate-800 h-3 rounded-full overflow-hidden\">\n      <div \n        className=\"h-full bg-blue-500 transition-all duration-300\"\n        style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}\n      />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Inline Style Object in JSX"
       },
@@ -322,26 +322,27 @@ export const modulesData: ModuleItem[] = [
         "number": "08",
         "title": "JSX Fragments",
         "summary": "ការប្រមូលផ្តុំបញ្ជី children ច្រើនបញ្ចូលគ្នាដោយមិនបាច់បន្ថែម wrapper DOM nodes ឥតប្រយោជន៍។",
-        "explanation": "Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling components ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។",
+        "explanation": "Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling elements ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។",
         "keyPoints": [
           "ការសរសេរកាត់ `<>...</>` មិនបង្កើត DOM node បន្ថែមឡើយ (zero DOM overhead)។",
-          "ត្រូវប្រើ syntax ពេញ `<React.Fragment key={item.id}>` នៅពេល render fragments នៅក្នុង loop ដែលទាមទារឱ្យមាន `key` prop។"
+          "Fragments ជួយការពារបញ្ហាខូច layout នៅពេលប្រើប្រាស់ជាមួយ CSS Flexbox ឬ CSS Grid ដែលទាមទារ direct child relationships។",
+          "ប្រសិនបើត្រូវកំណត់ attributes ដូចជា `key` (នៅពេលសិក្សាអំពី dynamic lists នៅ Module 05) ត្រូវប្រើ syntax ពេញ `<React.Fragment key={...}>` ព្រោះទម្រង់កាត់ `<>` មិនអាចទទួល attribute បានឡើយ។"
         ],
-        "codeSnippet": "import React from 'react';\n\nexport function TableRowGroup({ items }) {\n  return (\n    <dl className=\"grid grid-cols-2 gap-2\">\n      {items.map((item) => (\n        // Key is required here, so use explicit React.Fragment:\n        <React.Fragment key={item.id}>\n          <dt className=\"text-slate-400 font-medium\">{item.label}</dt>\n          <dd className=\"text-white text-right\">{item.value}</dd>\n        </React.Fragment>\n      ))}\n    </dl>\n  );\n}",
+        "codeSnippet": "export function CourseOverview() {\n  return (\n    <>\n      <h2 className=\"text-xl font-bold text-white\">React Fundamentals</h2>\n      <p className=\"text-slate-400\">Master JSX, components, and core modern concepts.</p>\n      <span className=\"text-xs text-indigo-400\">No extra wrapper DOM node created</span>\n    </>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "React Fragments with Keys"
+        "codeTitle": "Using React Fragments"
       },
       {
         "id": "m02-09",
         "number": "09",
         "title": "Conditional JSX",
         "summary": "ការប្រើប្រាស់ ternary operators, early returns និង logical short-circuiting។",
-        "explanation": "Conditional rendering អនុញ្ញាតឱ្យយើងបង្ហាញ UI ផ្សេងៗគ្នាទៅតាមតម្លៃនៃ state ឬ props ដោយប្រើប្រាស់ ternary expressions (`? :`) ឬ early `return` guards។",
+        "explanation": "Conditional rendering នៅក្នុង JSX អនុញ្ញាតឱ្យយើងបង្ហាញ UI ផ្សេងៗគ្នាទៅតាមលក្ខខណ្ឌជាក់ស្តែង ដោយប្រើប្រាស់ ternary expressions (`? :`) ឬ logical operators។",
         "keyPoints": [
-          "ប្រើ early return guards សម្រាប់ loading state និង error UI ដើម្បីរក្សាកូដក្នុង main component ឱ្យខ្លី និងងាយអាន។",
-          "ប្រើ ternary operators សម្រាប់ការប្តូរ UI ពីរសណ្ឋាន (binary toggles) នៅខាងក្នុង markup ដោយផ្ទាល់។"
+          "ប្រើ ternary operators (`condition ? <TrueUI /> : <FalseUI />`) សម្រាប់ការប្តូរ UI ពីរសណ្ឋាននៅខាងក្នុង JSX ដោយផ្ទាល់។",
+          "ប្រើ logical AND (`condition && <UI />`) នៅពេលចង់បង្ហាញ UI តែមួយគត់នៅពេលដែលលក្ខខណ្ឌពិត (truthy)។"
         ],
-        "codeSnippet": "export function AuthButton({ isLoggedIn, onLogin, onLogout }: AuthButtonProps) {\n  return isLoggedIn ? (\n    <button onClick={onLogout} className=\"px-3 py-1.5 bg-rose-600 text-white rounded\">\n      Sign Out\n    </button>\n  ) : (\n    <button onClick={onLogin} className=\"px-3 py-1.5 bg-blue-600 text-white rounded\">\n      Sign In\n    </button>\n  );\n}",
+        "codeSnippet": "export function AuthStatusBadge() {\n  const isLoggedIn = true;\n\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      {isLoggedIn ? (\n        <span className=\"px-3 py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded-md text-sm font-medium\">\n          Welcome back, Member!\n        </span>\n      ) : (\n        <span className=\"px-3 py-1.5 bg-slate-800 text-slate-400 rounded-md text-sm\">\n          Please sign in to continue\n        </span>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Ternary Conditional JSX"
       },
@@ -350,12 +351,12 @@ export const modulesData: ModuleItem[] = [
         "number": "10",
         "title": "Rendering Dynamic Content",
         "summary": "ការបង្ហាញ dynamic strings, numbers, dates និង localized strings នៅលើ UI។",
-        "explanation": "Components ទទួលយក props ឬ state ហើយធ្វើបច្ចុប្បន្នភាពលើ UI ភ្លាមៗ (real-time) នៅពេលដែលទិន្នន័យមានការប្រែប្រួល។",
+        "explanation": "JSX អនុញ្ញាតឱ្យយើងបង្ហាញ dynamic data ពី JavaScript variables ទៅលើ content និង attributes (ដូចជា `src`, `href`, `alt`) បានយ៉ាងងាយស្រួល។",
         "keyPoints": [
-          "តម្លៃនៅលើ UI នឹង re-render ដោយស្វ័យប្រវត្តិនៅពេលដែល state ឬ props ដែលវាប្រើមានការផ្លាស់ប្តូរ។",
+          "អាចបញ្ចូល dynamic expressions និង variables ទៅក្នុង JSX content ដោយប្រើ curly braces `{variable}`។",
           "អាចបញ្ចូល dynamic attributes ដូចជា `alt`, `href`, និង `src` ដោយប្រើប្រាស់ `{variable}` ឬ template literals។"
         ],
-        "codeSnippet": "export function Avatar({ user }) {\n  return (\n    <img \n      src={user.avatarUrl} \n      alt={`Profile picture of ${user.name}`}\n      className=\"w-10 h-10 rounded-full border-2 border-emerald-500\" \n    />\n  );\n}",
+        "codeSnippet": "export function UserProfileHeader() {\n  const user = {\n    name: \"Dara Som\",\n    role: \"Frontend Developer\",\n    avatarUrl: \"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150\",\n  };\n\n  return (\n    <div className=\"flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <img \n        src={user.avatarUrl} \n        alt={`Profile picture of ${user.name}`}\n        className=\"w-12 h-12 rounded-full border-2 border-emerald-500\" \n      />\n      <div>\n        <h3 className=\"text-white font-bold\">{user.name}</h3>\n        <p className=\"text-sm text-slate-400\">{user.role}</p>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Dynamic Attributes in JSX"
       },
@@ -370,7 +371,7 @@ export const modulesData: ModuleItem[] = [
           "រាល់ HTML elements ទាំងអស់ត្រូវតែបិទ (closed explicitly)។",
           "Attribute `style` ត្រូវតែជា JavaScript object មិនមែនជា CSS string ធម្មតាឡើយ។"
         ],
-        "codeSnippet": "// Summary of Core JSX Rules:\n// 1. Single Root\nreturn <div className=\"card\">...</div>;\n\n// 2. Closed Tags\n<input type=\"text\" />\n\n// 3. camelCase\n<button onClick={handleClick} tabIndex={0}>Click</button>\n\n// 4. Expression braces\n<h1>{`Hello ${user.name}`}</h1>",
+        "codeSnippet": "// Summary of Core JSX Rules:\n// 1. Single Root\nreturn <div className=\"card\">...</div>;\n\n// 2. Closed Tags\n<input type=\"text\" />\n\n// 3. camelCase\n<input tabIndex={0} autoComplete=\"off\" />\n\n// 4. Expression braces\n<h1>{`Hello ${user.name}`}</h1>",
         "codeLanguage": "jsx",
         "codeTitle": "JSX Core Rules Summary"
       },
@@ -419,14 +420,14 @@ export const modulesData: ModuleItem[] = [
         "id": "m03-02",
         "number": "02",
         "title": "Functional Components",
-        "summary": "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។",
-        "explanation": "Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។",
+        "summary": "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតា។",
+        "explanation": "Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការធ្វើ test និងទំហំ bundle size តូចជាងមុន។",
         "keyPoints": [
           "ប្រកាស component ដោយប្រើ `function ComponentName()` ធម្មតា ឬ arrow function syntax។",
-          "React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។",
+          "គាំទ្រ React Hooks សម្រាប់គ្រប់គ្រង state និង lifecycle (ដែលយើងនឹងរៀននៅ Modules បន្តបន្ទាប់)។",
           "កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។"
         ],
-        "codeSnippet": "// 1. Function Declaration Component (No props)\nexport function AppHeader() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center\">\n      <h1 className=\"text-xl font-bold text-white\">React Course</h1>\n      <span className=\"text-xs px-2 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded\">\n        Active\n      </span>\n    </header>\n  );\n}\n\n// 2. Arrow Function Component (No props)\nexport const UserBadge = () => {\n  return (\n    <div className=\"inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full\">\n      <span className=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\" />\n      <span className=\"text-xs text-slate-300 font-medium\">Online</span>\n    </div>\n  );\n};",
+        "codeSnippet": "// 1. Function Declaration Component\nexport function AppHeader() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center\">\n      <h1 className=\"text-xl font-bold text-white\">React Course</h1>\n      <span className=\"text-xs px-2 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded\">\n        Active\n      </span>\n    </header>\n  );\n}\n\n// 2. Arrow Function Component\nexport const UserBadge = () => {\n  return (\n    <div className=\"inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full\">\n      <span className=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\" />\n      <span className=\"text-xs text-slate-300 font-medium\">Online</span>\n    </div>\n  );\n};",
         "codeLanguage": "jsx",
         "codeTitle": "Modern Functional Component Declarations",
         "proTip": "អ្នកអាចប្រកាស component ដោយប្រើ function declaration ឬ arrow function បានយ៉ាងងាយស្រួល ទៅតាមចំណង់ចំណូលចិត្តនៃការសរសេរកូដ។"
@@ -467,17 +468,17 @@ export const modulesData: ModuleItem[] = [
         "id": "m03-05",
         "number": "05",
         "title": "Component Structure",
-        "summary": "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, state & hooks, handlers និង JSX return។",
-        "explanation": "រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) State & hooks; ៤) Handlers & helper logic; ៥) JSX return statement។",
+        "summary": "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, variables & helpers, និង JSX return។",
+        "explanation": "រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) Internal variables & helper logic; ៤) JSX return statement។ (នៅ Modules បន្តបន្ទាប់ យើងនឹងបន្ថែម Props, Event Handlers និង State ទៅក្នុងរចនាសម្ព័ន្ធនេះជាបន្តបន្ទាប់)។",
         "keyPoints": [
-          "ហៅ React Hooks ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ function (Top level) ជានិច្ច។",
-          "ប្រកាស event handlers និង logic ផ្សេងៗមុនពេល return JSX។",
-          "ញែក complex helper functions ដែលមិនពឹងផ្អែកលើ component state ចេញទៅក្រៅ function body។"
+          "រៀបចំ import statements ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ file។",
+          "រៀបចំ variables និង helper formatting logic មុនពេល return JSX។",
+          "return JSX markup យ៉ាងច្បាស់លាស់ និងមាន structure ងាយយល់។"
         ],
-        "codeSnippet": "// 1. Imports\nimport { useState } from 'react';\nimport { Heart } from 'lucide-react';\n\n// 2. Component Declaration (No props)\nexport function LikeButton() {\n  // 3. Hooks / State\n  const [likes, setLikes] = useState(0);\n  const [liked, setLiked] = useState(false);\n\n  // 4. Event Handlers\n  const handleToggle = () => {\n    setLiked(!liked);\n    setLikes(prev => liked ? prev - 1 : prev + 1);\n  };\n\n  // 5. JSX Return\n  return (\n    <button \n      onClick={handleToggle}\n      className=\"flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500\"\n    >\n      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />\n      <span className=\"text-sm font-medium\">{likes}</span>\n    </button>\n  );\n}",
+        "codeSnippet": "// 1. Imports\nimport { Sparkles } from 'lucide-react';\n\n// 2. Component Declaration\nexport function WelcomeBanner() {\n  // 3. Variables & Helper Logic\n  const courseTitle = \"Mastering Modern React\";\n  const badgeText = \"Foundations\";\n\n  // 4. JSX Return\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-2\">\n      <div className=\"inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium\">\n        <Sparkles className=\"w-3.5 h-3.5\" />\n        <span>{badgeText}</span>\n      </div>\n      <h2 className=\"text-xl font-bold text-white\">{courseTitle}</h2>\n      <p className=\"text-sm text-slate-400\">\n        Learn React step-by-step with clean component structure.\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Predictable Component Layout Structure",
-        "proTip": "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
+        "proTip": "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Variables & Logic -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
       },
       {
         "id": "m03-06",
@@ -490,7 +491,7 @@ export const modulesData: ModuleItem[] = [
           "ផ្គុំ components តូចៗទាំងនោះបញ្ចូលគ្នានៅក្នុង layout ឬ page component ធំមួយ។",
           "ជួយបង្កើនភាពច្បាស់លាស់នៃកូដ និងងាយស្រួលក្នុងការ debug។"
         ],
-        "codeSnippet": "function Header() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800\">\n      <h1 className=\"text-xl font-bold text-white\">Dashboard Overview</h1>\n    </header>\n  );\n}\n\nfunction Sidebar() {\n  return (\n    <aside className=\"w-64 p-4 bg-slate-900/50 border-r border-slate-800 text-slate-300\">\n      <nav className=\"space-y-2\">\n        <p className=\"text-sm font-semibold text-slate-400\">Navigation</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Analytics</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Settings</p>\n      </nav>\n    </aside>\n  );\n}\n\nfunction ContentArea() {\n  return (\n    <main className=\"flex-1 p-6 text-slate-200\">\n      <h2 className=\"text-lg font-semibold text-white\">Main Activity</h2>\n      <p className=\"text-sm text-slate-400 mt-1\">Here is your daily activity feed.</p>\n    </main>\n  );\n}\n\n// Composing multiple components together into a complete page (No props)\nexport function DashboardPage() {\n  return (\n    <div className=\"min-h-screen bg-slate-950 flex flex-col\">\n      <Header />\n      <div className=\"flex flex-1\">\n        <Sidebar />\n        <ContentArea />\n      </div>\n    </div>\n  );\n}",
+        "codeSnippet": "function Header() {\n  return (\n    <header className=\"p-4 bg-slate-900 border-b border-slate-800\">\n      <h1 className=\"text-xl font-bold text-white\">Dashboard Overview</h1>\n    </header>\n  );\n}\n\nfunction Sidebar() {\n  return (\n    <aside className=\"w-64 p-4 bg-slate-900/50 border-r border-slate-800 text-slate-300\">\n      <nav className=\"space-y-2\">\n        <p className=\"text-sm font-semibold text-slate-400\">Navigation</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Analytics</p>\n        <p className=\"text-sm hover:text-white cursor-pointer\">Settings</p>\n      </nav>\n    </aside>\n  );\n}\n\nfunction ContentArea() {\n  return (\n    <main className=\"flex-1 p-6 text-slate-200\">\n      <h2 className=\"text-lg font-semibold text-white\">Main Activity</h2>\n      <p className=\"text-sm text-slate-400 mt-1\">Here is your daily activity feed.</p>\n    </main>\n  );\n}\n\n// Composing multiple components together into a complete page\nexport function DashboardPage() {\n  return (\n    <div className=\"min-h-screen bg-slate-950 flex flex-col\">\n      <Header />\n      <div className=\"flex flex-1\">\n        <Sidebar />\n        <ContentArea />\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Component Composition Pattern",
         "proTip": "ការផ្គុំ component តូចៗបញ្ចូលគ្នា ជួយឱ្យអ្នកអាចកែប្រែផ្នែកនីមួយៗនៃ UI ដោយឯករាជ្យ និងមិនប៉ះពាល់ដល់ផ្នែកផ្សេងទៀតឡើយ។"
@@ -506,7 +507,7 @@ export const modulesData: ModuleItem[] = [
           "កាត់បន្ថយការចម្លង markup និង styles ដដែលៗ (DRY - Don't Repeat Yourself)។",
           "ងាយស្រួលកែសម្រួល UI ពីព្រោះនៅពេលកែ component ដើមតែមួយ កន្លែងដែលបាន reuse ទាំងអស់នឹង update ដោយស្វ័យប្រវត្តិ។"
         ],
-        "codeSnippet": "// 1. Self-contained component with its own markup and styles (No props)\nexport function SubscribeCard() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3\">\n      <h3 className=\"font-semibold text-white\">Subscribe to Newsletter</h3>\n      <p className=\"text-xs text-slate-400\">Get modern React tips directly in your inbox.</p>\n      <button className=\"px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors\">\n        Subscribe Now\n      </button>\n    </div>\n  );\n}\n\n// 2. Reusing the exact same component in different pages/sections (No props)\nexport function HomePage() {\n  return (\n    <div className=\"space-y-6 max-w-xl mx-auto\">\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Main Content</h2>\n        <SubscribeCard />\n      </section>\n\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Sidebar Widget</h2>\n        <SubscribeCard />\n      </section>\n    </div>\n  );\n}",
+        "codeSnippet": "// 1. Self-contained component with its own markup and styles\nexport function SubscribeCard() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3\">\n      <h3 className=\"font-semibold text-white\">Subscribe to Newsletter</h3>\n      <p className=\"text-xs text-slate-400\">Get modern React tips directly in your inbox.</p>\n      <button className=\"px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors\">\n        Subscribe Now\n      </button>\n    </div>\n  );\n}\n\n// 2. Reusing the exact same component in different pages/sections\nexport function HomePage() {\n  return (\n    <div className=\"space-y-6 max-w-xl mx-auto\">\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Main Content</h2>\n        <SubscribeCard />\n      </section>\n\n      <section className=\"p-4 bg-slate-950 border border-slate-800 rounded-lg\">\n        <h2 className=\"text-sm font-semibold text-slate-400 mb-3\">Sidebar Widget</h2>\n        <SubscribeCard />\n      </section>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Reusing Components Across the UI",
         "proTip": "ការបង្កើត component មួយដែល encapsulation ទាំង markup និង styling ជួយឱ្យអ្នកអាច reuse វាបានច្រើនដងដោយមិនចាំបាច់សរសេរកូដស្ទួនឡើយ (DRY)។"
@@ -522,7 +523,7 @@ export const modulesData: ModuleItem[] = [
           "ហៅប្រើប្រាស់ child components នៅក្នុង JSX នៃ parent component តាមរយៈ syntax `<ChildComponent />`។",
           "រៀបចំ component tree ឱ្យមាន hierarchy ច្បាស់លាស់ដើម្បីងាយស្រួលអាន និងថែទាំ។"
         ],
-        "codeSnippet": "// ❌ Anti-pattern: Defining child component INSIDE parent component\n/*\nfunction Parent() {\n  // Re-declared on every single render!\n  function UserAvatar() { \n    return <div className=\"w-10 h-10 rounded-full bg-blue-500\" />; \n  }\n  return <UserAvatar />;\n}\n*/\n\n// ✅ Correct: Declared at module scope (outside parent, no props)\nfunction UserAvatar() {\n  return (\n    <div className=\"w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold\">\n      R\n    </div>\n  );\n}\n\nfunction UserDetails() {\n  return (\n    <div>\n      <p className=\"text-sm font-medium text-white\">Ratha Tech</p>\n      <p className=\"text-xs text-slate-400\">Full-Stack Developer</p>\n    </div>\n  );\n}\n\n// Parent rendering nested child components (No props)\nexport function UserCard() {\n  return (\n    <div className=\"flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <UserAvatar />\n      <UserDetails />\n    </div>\n  );\n}",
+        "codeSnippet": "// ❌ Anti-pattern: Defining child component INSIDE parent component\n/*\nfunction Parent() {\n  // Re-declared on every single render!\n  function UserAvatar() { \n    return <div className=\"w-10 h-10 rounded-full bg-blue-500\" />; \n  }\n  return <UserAvatar />;\n}\n*/\n\n// ✅ Correct: Declared at module scope (outside parent)\nfunction UserAvatar() {\n  return (\n    <div className=\"w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold\">\n      R\n    </div>\n  );\n}\n\nfunction UserDetails() {\n  return (\n    <div>\n      <p className=\"text-sm font-medium text-white\">Ratha Tech</p>\n      <p className=\"text-xs text-slate-400\">Full-Stack Developer</p>\n    </div>\n  );\n}\n\n// Parent rendering nested child components\nexport function UserCard() {\n  return (\n    <div className=\"flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl\">\n      <UserAvatar />\n      <UserDetails />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Properly Nesting Components",
         "pitfall": "ការប្រកាស component function នៅខាងក្នុង body នៃ component មួយផ្សេងទៀត នឹងបណ្តាលឱ្យវាត្រូវបង្កើតឡើងវិញរាល់ពេល re-render ដែលនាំឱ្យបាត់បង់ input focus និង state ខាងក្នុង!"
@@ -548,13 +549,13 @@ export const modulesData: ModuleItem[] = [
         "number": "10",
         "title": "Feature-based Components",
         "summary": "ការរៀបចំរចនាសម្ព័ន្ធតាម business domain capability ជំនួសឱ្យការបែងចែកតាម technical role។",
-        "explanation": "Feature folders ជួយប្រមូលផ្តុំរាល់អ្វីៗទាំងអស់ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ៖ components, hooks, utils, និង API services។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។",
+        "explanation": "Feature folders ជួយប្រមូលផ្តុំរាល់ components និង helper files ដែលពាក់ព័ន្ធនឹង business domain តែមួយនៅកន្លែងតែមួយ។ នៅពេលអ្នកចង់កែប្រែ ឬលុប feature ណាមួយចេញ រាល់ files ពាក់ព័ន្ធទាំងអស់ស្ថិតនៅជាមួយគ្នា មិនរាយប៉ាយឡើយ។",
         "keyPoints": [
           "បង្កើន maintainability នៃ project នៅពេលដែល codebase រីកធំឡើងលើសពី ១០០+ files។",
           "បង្កើតព្រំដែនច្បាស់លាស់រវាង feature-specific code និង shared reusable UI components។",
           "ងាយស្រួលក្នុងការធ្វើ code review, testing និង onboarding សមាជិកថ្មីក្នុងក្រុម។"
         ],
-        "codeSnippet": "features/auth/\n├── components/\n│   ├── LoginForm.jsx\n│   ├── RegisterModal.jsx\n│   └── PasswordStrength.jsx\n├── hooks/\n│   └── useAuth.js\n├── services/\n│   └── authApi.js\n└── utils/\n    └── authHelper.js",
+        "codeSnippet": "features/auth/\n├── components/\n│   ├── LoginForm.jsx\n│   ├── RegisterModal.jsx\n│   └── PasswordStrength.jsx\n└── utils/\n    └── authHelper.js",
         "codeLanguage": "jsx",
         "codeTitle": "Feature Folder Structure",
         "proTip": "នៅពេល feature មួយត្រូវលុបចោល អ្នកគ្រាន់តែលុប folder `features/feature-name` មួយប៉ុណ្ណោះ ដោយមិនបាច់ដើររក files រាយប៉ាយក្នុង folders ផ្សេងៗឡើយ។"
@@ -563,17 +564,17 @@ export const modulesData: ModuleItem[] = [
         "id": "m03-11",
         "number": "11",
         "title": "Container vs Presentational Components",
-        "summary": "ការបំបែករវាង logic/state management និង visual UI rendering ឱ្យដាច់ពីគ្នា។",
-        "explanation": "Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (គ្រប់គ្រង state, conditional rendering ឬ business logic)។",
+        "summary": "ការបំបែករវាង structural container និង visual UI rendering ឱ្យដាច់ពីគ្នា។",
+        "explanation": "Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើការរៀបចំ structural layout (ដែលយើងនឹងបន្ថែម props និង state នៅ Modules បន្តបន្ទាប់)។",
         "keyPoints": [
           "Presentational (Pure UI): ផ្តោតលើ visual elements, CSS styles និង HTML structure។",
-          "Container (Smart / Logic): គ្រប់គ្រង state, handling business rules និងសម្រេចចិត្តថាតើពេលណាត្រូវ render UI component។",
-          "ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និងងាយស្រួលធ្វើ unit testing។"
+          "Container (Structural / Layout): រៀបចំ layout wrapper និងកំណត់ទីតាំងសម្រាប់ presentational components។",
+          "ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និង reuse។"
         ],
-        "codeSnippet": "import { useState } from 'react';\n\n// 1. Presentational Component: Focuses purely on visual UI (No props)\nexport function ProfileCardUI() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-2xl text-center max-w-sm mx-auto\">\n      <div className=\"w-16 h-16 mx-auto rounded-full bg-indigo-600 flex items-center justify-center text-white text-xl font-bold\">\n        RT\n      </div>\n      <h3 className=\"mt-3 text-lg font-bold text-white\">Ratha Tech</h3>\n      <p className=\"text-sm text-slate-400\">Frontend Engineer</p>\n      <div className=\"mt-4 pt-3 border-t border-slate-800 flex justify-around text-xs text-slate-300\">\n        <span>12 Courses</span>\n        <span>48 Projects</span>\n      </div>\n    </div>\n  );\n}\n\n// 2. Container Component: Manages loading state and logic (No props)\nexport function ProfileContainer() {\n  const [isLoading, setIsLoading] = useState(false);\n\n  if (isLoading) {\n    return (\n      <div className=\"p-8 text-center text-slate-400 animate-pulse\">\n        Loading profile data...\n      </div>\n    );\n  }\n\n  return <ProfileCardUI />;\n}",
+        "codeSnippet": "// 1. Presentational Component: Focuses purely on visual UI layout & styling\nexport function ProfileCardUI() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-2xl text-center max-w-sm mx-auto\">\n      <div className=\"w-16 h-16 mx-auto rounded-full bg-indigo-600 flex items-center justify-center text-white text-xl font-bold\">\n        RT\n      </div>\n      <h3 className=\"mt-3 text-lg font-bold text-white\">Ratha Tech</h3>\n      <p className=\"text-sm text-slate-400\">Frontend Engineer</p>\n      <div className=\"mt-4 pt-3 border-t border-slate-800 flex justify-around text-xs text-slate-300\">\n        <span>12 Courses</span>\n        <span>48 Projects</span>\n      </div>\n    </div>\n  );\n}\n\n// 2. Container Component: Provides structural layout wrapper\nexport function ProfileContainer() {\n  return (\n    <section className=\"p-8 bg-slate-950 border border-slate-800/60 rounded-3xl max-w-md mx-auto\">\n      <h2 className=\"text-xs uppercase tracking-wider text-slate-400 font-semibold mb-4 text-center\">\n        User Profile Overview\n      </h2>\n      <ProfileCardUI />\n    </section>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Container vs Presentational Pattern",
-        "proTip": "ការបំបែករវាង Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ visual design ដោយមិនបារម្ភពីរឿង state ឬ data logic ឡើយ។"
+        "proTip": "ការបំបែករវាង Container (រៀបចំ layout) និង Presentational (UI design) ជួយឱ្យ frontend engineer អាចផ្តោតលើ visual design ដោយមិនច្របូកច្របល់ឡើយ។"
       },
       {
         "id": "m03-12",
@@ -583,10 +584,10 @@ export const modulesData: ModuleItem[] = [
         "explanation": "រក្សា components ឱ្យមានទំហំល្មម និងផ្តោតលើទំនួលខុសត្រូវតែមួយ (Single Responsibility Principle)។ ជៀសវាងការសរសេរ component មួយឱ្យធ្វើការងារច្រើនពេក ឬផ្ទុក markup រាប់រយបន្ទាត់នៅក្នុង file តែមួយ។",
         "keyPoints": [
           "រក្សា component ឱ្យមាន Purity៖ រាល់ពេល component ដំណើរការ ត្រូវតែ return JSX ដូចគ្នា និងគ្មានផលប៉ះពាល់ចំហៀង (No side effects)។",
-          "ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។",
+          "ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — component គួរតែជា pure function ដែល render UI ដោយគ្មានផលប៉ះពាល់ទៅក្រៅ។",
           "កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។"
         ],
-        "codeSnippet": "// Golden Rule of React: Purity during render\n\n// ❌ Impure: Mutating external variables during render\nlet renderCount = 0;\nfunction BadComponent() {\n  renderCount++; // Side effect: modifies external state on every render!\n  return <div>Render count: {renderCount}</div>;\n}\n\n// ✅ Pure: Rendering has no observable external mutations (No props)\nfunction GoodComponent() {\n  const currentTitle = \"Modern React Development\";\n  return <h2 className=\"text-xl font-semibold text-white\">{currentTitle}</h2>;\n}",
+        "codeSnippet": "// Golden Rule of React: Purity during render\n\n// ❌ Impure: Mutating external variables during render\nlet renderCount = 0;\nfunction BadComponent() {\n  renderCount++; // Side effect: modifies external state on every render!\n  return <div>Render count: {renderCount}</div>;\n}\n\n// ✅ Pure: Rendering has no observable external mutations\nfunction GoodComponent() {\n  const currentTitle = \"Modern React Development\";\n  return <h2 className=\"text-xl font-semibold text-white\">{currentTitle}</h2>;\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Enforcing Component Purity",
         "proTip": "ចងចាំ Golden Rule របស់ React៖ Rendering phase ត្រូវតែ Pure ដោយគ្មានការកែប្រែ external variables ឬ trigger side effects ឡើយ។"
@@ -698,32 +699,33 @@ export const modulesData: ModuleItem[] = [
         "id": "m04-07",
         "number": "07",
         "title": "Props with Arrays",
-        "summary": "ការបញ្ជូនបញ្ជីទិន្នន័យ (Lists) ទៅកាន់ components សម្រាប់ធ្វើការ iterate/map។",
-        "explanation": "បញ្ជូន arrays ទៅកាន់ components ដើម្បី render បញ្ជីទិន្នន័យ (Lists), navigations, menus ឬ tag clouds តាមរយៈ method `.map()`។",
+        "summary": "ការបញ្ជូនទិន្នន័យជា Array ទៅកាន់ components តាមរយៈ Props។",
+        "explanation": "យើងអាចបញ្ជូន arrays ទៅកាន់ components តាមរយៈ props ដើម្បីចែករំលែកបណ្តុំទិន្នន័យ ដូចជា tags, categories ឬ navigation links។",
         "keyPoints": [
-          "បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `users={userList}`។",
-          "ពេលធ្វើការ loop/map array elements ក្នុង JSX ត្រូវផ្តល់ `key` prop ដ៏មានតម្លៃ unique ជានិច្ច។"
+          "បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `features={featureList}`។",
+          "Child component អាចទទួលយក array prop និងទាញយកធាតុមកបង្ហាញតាមរយៈ array indexing (ដូចជា `features[0]`)។",
+          "ការ loop បង្ហាញធាតុ array ទាំងអស់ដោយស្វ័យប្រវត្តិ នឹងត្រូវសិក្សាលម្អិតនៅ Module 05 (Rendering Data តាមរយៈ `.map()`)។"
         ],
-        "codeSnippet": "export function TagList({ tags }) {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      {tags.map((tag) => (\n        <span key={tag} className=\"px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300\">\n          #{tag}\n        </span>\n      ))}\n    </div>\n  );\n}",
+        "codeSnippet": "// 1. Child component receives an array prop\nexport function FeatureBadges({ features }) {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      <span className=\"px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300\">\n        {features[0]}\n      </span>\n      <span className=\"px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300\">\n        {features[1]}\n      </span>\n      <span className=\"px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300\">\n        {features[2]}\n      </span>\n    </div>\n  );\n}\n\n// 2. Parent component passes an array as a prop\nexport function CourseFeatureCard() {\n  const courseFeatures = [\"Components\", \"JSX Syntax\", \"Props System\"];\n  return <FeatureBadges features={courseFeatures} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Passing and Iterating Arrays",
-        "proTip": "ប្រើ Array method .map() ដោយផ្ទាល់លើ prop ដើម្បី render dynamic list យ៉ាងរហ័ស។"
+        "codeTitle": "Passing Array Props",
+        "proTip": "យើងអាចបញ្ជូន Array ទៅ component ដោយប្រើ curly braces ដូចជា items={['React', 'Next.js']}។ នៅ Module 05 បន្ទាប់ យើងនឹងរៀនប្រើ .map() ដើម្បី loop បង្ហាញធាតុ array ទាំងអស់ដោយស្វ័យប្រវត្តិ។"
       },
       {
         "id": "m04-08",
         "number": "08",
         "title": "Props with Functions",
-        "summary": "ការបញ្ជូន callback functions ដើម្បីឆ្លើយតបទៅនឹង user events និង actions។",
-        "explanation": "ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចប្រាប់ដំណឹង (notify) ទៅកាន់ parent component វិញបាន នៅពេលដែលមាន event កើតឡើង (ដូចជាពេលចុច button ឬវាយបញ្ចូលអក្សរក្នុង input)។",
+        "summary": "ការបញ្ជូន functions ទៅកាន់ components តាមរយៈ Props ដើម្បីធ្វើការគណនា ឬ format ទិន្នន័យ។",
+        "explanation": "ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចហៅប្រើប្រាស់ logic ឬ formatting rules ដែល parent បានកំណត់។",
         "keyPoints": [
-          "ដើរតួជាយន្តការទំនាក់ទំនងពី Child ទៅ Parent (Child-to-parent communication)។",
-          "បញ្ជូន function reference (កុំ invoke function ដោយប្រើ `()` ក្នុងពេល render ឱ្យសោះ)។",
-          "ដាក់ឈ្មោះ function props ដោយប្រើបុព្វបទ `on` (ដូចជា `onDelete`, `onSelect`, `onSubmit`)។"
+          "Functions នៅក្នុង JavaScript អាចបញ្ជូនជា props តាមរយៈ curly braces៖ `<Component formatFn={myFunction} />`។",
+          "បញ្ជូន function reference ដោយផ្ទាល់ (កុំ invoke function ដោយប្រើ `()` ក្នុង JSX attribute ឱ្យសោះ)។",
+          "Child component អាចទទួលយក និងហៅដំណើរការ function prop នោះដើម្បីទាញយកលទ្ធផល (ចំណែកឯការភ្ជាប់ function prop ជាមួយ browser click events នឹងត្រូវសិក្សាលម្អិតនៅ Module 06)។"
         ],
-        "codeSnippet": "export function DeleteButton({ onDelete }) {\n  return (\n    <button \n      onClick={() => onDelete(\"item-42\")}\n      className=\"px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm\"\n    >\n      Delete Record\n    </button>\n  );\n}",
+        "codeSnippet": "// 1. Child component receives and calls a function prop\nexport function StatusDisplay({ statusCode, getStatusLabel }) {\n  // Execute the function prop to get formatted text\n  const label = getStatusLabel(statusCode);\n\n  return (\n    <div className=\"inline-flex items-center gap-2 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg\">\n      <span className=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\" />\n      <span className=\"text-xs text-white font-medium\">{label}</span>\n    </div>\n  );\n}\n\n// 2. Parent defines the function and passes it down as a prop\nexport function SystemMonitor() {\n  const resolveStatus = (code) => {\n    if (code === 200) return \"System Operational (Online)\";\n    if (code === 500) return \"Server Error\";\n    return \"Status Unknown\";\n  };\n\n  return <StatusDisplay statusCode={200} getStatusLabel={resolveStatus} />;\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Passing Callback Function Props",
-        "proTip": "ប្រើ convention ដាក់ឈ្មោះ `onEvent` សម្រាប់ prop (ឧ. `onDelete`) និង `handleEvent` សម្រាប់ handler function នៅក្នុង parent (ឧ. `handleDelete`)។"
+        "codeTitle": "Passing Functions as Props",
+        "proTip": "Functions ក្នុង JavaScript គឺជា first-class values ដូចនេះអ្នកអាចបញ្ជូន functions ទៅកាន់ child components តាមរយៈ props បានដូចជា string ឬ number ដែរ។"
       },
       {
         "id": "m04-09",
@@ -794,13 +796,13 @@ export const modulesData: ModuleItem[] = [
         "number": "13",
         "title": "One-way Data Flow",
         "summary": "លំហូរទិន្នន័យតែមួយទិស (Unidirectional) ការពារបញ្ហា circular dependency bugs ក្នុងកម្មវិធី។",
-        "explanation": "នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) តាមរយៈ props ជានិច្ច។ ប្រសិនបើ child component ត្រូវការកែប្រែទិន្នន័យ វានឹងហៅ callback function ដែល parent បានបញ្ជូនមក ដើម្បីស្នើសុំឱ្យ parent ធ្វើបច្ចុប្បន្នភាព state របស់ខ្លួន ហើយទិន្នន័យថ្មីនោះនឹងហូរចុះក្រោមមកវិញ។",
+        "explanation": "នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) ពី Parent Component ទៅកាន់ Child Component តាមរយៈ props ជានិច្ច។ Child component មិនអាចផ្លាស់ប្តូរទិន្នន័យរបស់ parent ដោយផ្ទាល់បានឡើយ ដែលធ្វើឱ្យលំហូរទិន្នន័យមានភាពច្បាស់លាស់ និងអាចទស្សន៍ទាយបាន (Predictable)។",
         "keyPoints": [
-          "ធ្វើឱ្យការផ្លាស់ប្តូរ state មានភាពច្បាស់លាស់ និងងាយស្រួលតាមដាន (traceable) តាមរយៈ React DevTools។",
-          "ការពារបញ្ហា synchronization conflicts និង circular dependencies ដែលតែងកើតឡើងលើ two-way data-binding frameworks។",
-          "Single Source of Truth៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងពិតប្រាកដតែមួយគត់ក្នុង component tree។"
+          "**Data flows down**៖ Parent ជាអ្នកកាន់កាប់ទិន្នន័យដើម ហើយបញ្ជូនវាចុះក្រោមទៅកាន់ child components ជា props។",
+          "**Read-only props**៖ Child components ទទួលយក props មកបង្ហាញ ប៉ុន្តែមិនអាច mutate ឬកែប្រែ props ទាំងនោះបានឡើយ។",
+          "**Single Source of Truth**៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងដើមតែមួយគត់ក្នុង component tree (ចំណែកឯ dynamic state នឹងត្រូវសិក្សានៅ Module 07)។"
         ],
-        "codeSnippet": "// Parent maintains single source of truth\nexport function CounterApp() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div className=\"space-y-4\">\n      {/* Data flows down as props */}\n      <CountDisplay value={count} />\n      {/* Callback flows down to trigger state change */}\n      <CountControls onIncrement={() => setCount(c => c + 1)} onReset={() => setCount(0)} />\n    </div>\n  );\n}",
+        "codeSnippet": "// 1. Child component receives data from its parent\nfunction UserBadge({ username, role }) {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <span className=\"font-semibold text-white\">{username}</span>\n      <span className=\"text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30\">\n        {role}\n      </span>\n    </div>\n  );\n}\n\n// 2. Parent component owns data and passes it strictly downwards\nexport function UserProfileCard() {\n  const user = {\n    username: \"Dara Som\",\n    role: \"Senior Developer\",\n    department: \"Engineering\",\n  };\n\n  return (\n    <div className=\"p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2\">\n      <h3 className=\"text-slate-400 text-xs uppercase tracking-wider\">User Information</h3>\n      {/* Data flows down strictly as props */}\n      <UserBadge username={user.username} role={user.role} />\n      <p className=\"text-sm text-slate-300\">Department: {user.department}</p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Unidirectional Data Flow Example",
         "proTip": "យន្តការ 'Data down, actions up' គឺជាបេះដូងនៃ React Architecture ដែលធានាថាកម្មវិធីរបស់អ្នកមានស្ថិរភាព និងងាយស្រួល scale។"
@@ -970,7 +972,7 @@ export const modulesData: ModuleItem[] = [
           "គួររួមបញ្ចូលនូវ Icon តំណាង, ចំណងជើងពន្យល់ច្បាស់លាស់, និង Call-to-Action (CTA) button ដើម្បីជំរុញឱ្យអ្នកប្រើប្រាស់បង្កើតទិន្នន័យដំបូង។",
           "ជៀសវាងការទុកឱ្យទំព័រនៅសល់តែចន្លោះទទេស្អាត ដែលអាចធ្វើឱ្យអ្នកប្រើប្រាស់គិតថាកម្មវិធីខូច ឬគាំង។"
         ],
-        "codeSnippet": "export function EmptyState({ onAction }: { onAction: () => void }) {\n  return (\n    <div className=\"text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl\">\n      <Inbox className=\"w-12 h-12 text-slate-600 mx-auto mb-3\" />\n      <h3 className=\"text-lg font-medium text-white\">No tasks created yet</h3>\n      <p className=\"text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4\">\n        Get started by creating your first task using the input above.\n      </p>\n      <button onClick={onAction} className=\"px-4 py-2 bg-blue-600 text-white rounded-lg text-sm\">\n        Add New Task\n      </button>\n    </div>\n  );\n}",
+        "codeSnippet": "export function TaskList({ tasks = [] }) {\n  // Check if data array is empty\n  if (tasks.length === 0) {\n    return (\n      <div className=\"text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl\">\n        <h3 className=\"text-lg font-medium text-white\">No tasks created yet</h3>\n        <p className=\"text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4\">\n          Your task list is empty. Add a new item to get started.\n        </p>\n        <span className=\"inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium\">\n          Ready for your first task\n        </span>\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"space-y-2\">\n      {tasks.map((task) => (\n        <div key={task.id} className=\"p-3 bg-slate-900 rounded-lg text-white\">\n          {task.title}\n        </div>\n      ))}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Engaging Empty State Component",
         "proTip": "Empty State ដ៏ល្អមិនត្រឹមតែប្រាប់ថា 'គ្មានទិន្នន័យ' ប៉ុណ្ណោះទេ តែត្រូវតែណែនាំអ្នកប្រើប្រាស់ពីសកម្មភាពបន្ទាប់ (Next Action) តាមរយៈ Call-to-Action (CTA) button។"
@@ -995,17 +997,17 @@ export const modulesData: ModuleItem[] = [
         "id": "m05-12",
         "number": "12",
         "title": "Error UI",
-        "summary": "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និងប៊ូតុង retry ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។",
-        "explanation": "នៅពេលដែល network requests ឬ data fetching ជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI ដែលច្បាស់លាស់ ផ្តល់ព័ត៌មានមានប្រយោជន៍ និងភ្ជាប់មកជាមួយប៊ូតុង retry ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចទាញយកទិន្នន័យឡើងវិញបាន។",
+        "summary": "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និង conditional UI ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។",
+        "explanation": "នៅពេលដែលដំណើរការទាញយកទិន្នន័យជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI តាមរយៈ conditional rendering ដើម្បីផ្តល់ព័ត៌មានមានប្រយោជន៍ដល់អ្នកប្រើប្រាស់។",
         "keyPoints": [
+          "ប្រើ conditional rendering ដើម្បីប្តូររវាង Normal UI និង Error UI ផ្អែកលើ status នៃទិន្នន័យ។",
           "បង្ហាញ error message ដែលងាយស្រួលយល់ និងមិនស្មុគស្មាញពេកសម្រាប់អ្នកប្រើប្រាស់ទូទៅ។",
-          "ភ្ជាប់មកជាមួយ retry callback function ជានិច្ច ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមទាញយកទិន្នន័យម្តងទៀតដោយមិនចាំបាច់ reload ទំព័រទាំងមូល។",
-          "ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ជាមួយនឹង icon សមរម្យដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ។"
+          "ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ (ចំណែកឯ button interactions នឹងត្រូវសិក្សានៅ Module 06)។"
         ],
-        "codeSnippet": "export function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {\n  return (\n    <div className=\"p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center\">\n      <p className=\"text-rose-300 font-medium\">{message}</p>\n      <button \n        onClick={onRetry}\n        className=\"mt-3 px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white rounded text-xs font-semibold\"\n      >\n        Retry Request\n      </button>\n    </div>\n  );\n}",
+        "codeSnippet": "export function DataDisplay({ isError, errorMessage, data }) {\n  // Conditional Error UI rendering\n  if (isError) {\n    return (\n      <div className=\"p-5 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center\">\n        <p className=\"text-rose-300 font-medium\">{errorMessage}</p>\n        <p className=\"mt-2 text-xs text-rose-400\">\n          Please check your connection and refresh the page.\n        </p>\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl\">\n      <h3 className=\"text-white font-bold\">{data.title}</h3>\n      <p className=\"text-slate-400 text-sm mt-1\">{data.description}</p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Error Recovery Component",
-        "proTip": "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយដំណោះស្រាយ ដូចជាប៊ូតុង 'Retry' ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមម្តងទៀតបាន។"
+        "codeTitle": "Conditional Error UI Component",
+        "proTip": "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយការណែនាំដោះស្រាយច្បាស់លាស់។"
       }
     ]
   },
@@ -1102,16 +1104,16 @@ export const modulesData: ModuleItem[] = [
         "number": "06",
         "title": "onMouseEnter & onMouseLeave",
         "summary": "ការគ្រប់គ្រង Hover interactions, animations និងការបង្ហាញ tooltips។",
-        "explanation": "`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត dynamic tooltips, preview popovers, dropdown menus ឬ custom cursor animations។",
+        "explanation": "`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត interactions, preview popovers, ឬ logging animations។",
         "keyPoints": [
           "`onMouseEnter` និង `onMouseLeave` មិនធ្វើការ bubble ឡើងលើ parent ឡើយ (ខុសពី `onMouseOver` និង `onMouseOut`) ដែលជួយកាត់បន្ថយបញ្ហា flickering នៅពេល hover លើ child elements។",
-          "ប្រើសម្រាប់ update state នៅពេលដែល hover logic ត្រូវការទិន្នន័យ JavaScript ស្មុគស្មាញ។",
+          "ចាប់យក mouse cursor coordinates ឬ trigger custom logic ក្នុងពេល hover (ចំណែកឯការផ្លាស់ប្តូរ UI តាមរយៈ State នឹងត្រូវសិក្សានៅ Module 07 បន្ទាប់)។",
           "ត្រូវប្រាកដថាបានផ្តល់នូវ keyboard alternative (ដូចជា `onFocus` និង `onBlur`) សម្រាប់អ្នកប្រើប្រាស់ដែលមិនប្រើ mouse។"
         ],
-        "codeSnippet": "export function HoverPreview() {\n  const [isHovered, setIsHovered] = useState(false);\n\n  return (\n    <div \n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => setIsHovered(false)}\n      className=\"p-4 border rounded-lg transition-colors bg-slate-900 hover:border-blue-500\"\n    >\n      Hover over me!\n      {isHovered && <p className=\"text-xs text-blue-400 mt-1\">✨ Tooltip content visible</p>}\n    </div>\n  );\n}",
+        "codeSnippet": "export function HoverPreview() {\n  const handleMouseEnter = () => {\n    console.log(\"Mouse cursor entered container\");\n  };\n\n  const handleMouseLeave = () => {\n    console.log(\"Mouse cursor left container\");\n  };\n\n  return (\n    <div \n      onMouseEnter={handleMouseEnter}\n      onMouseLeave={handleMouseLeave}\n      className=\"p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-indigo-500 transition-colors text-center text-slate-300 cursor-pointer\"\n    >\n      Hover over me! (Check browser console for event logs)\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Hover Handlers",
-        "proTip": "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` តែនៅពេលដែលអ្នកត្រូវការផ្លាស់ប្តូរ state ឬ render dynamic JSX ប៉ុណ្ណោះ។"
+        "proTip": "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` នៅពេលដែលអ្នកត្រូវការចាប់យក mouse events ក្នុង JavaScript logic។"
       },
       {
         "id": "m06-07",
@@ -1182,32 +1184,32 @@ export const modulesData: ModuleItem[] = [
         "number": "11",
         "title": "Keyboard Events",
         "summary": "ការគ្រប់គ្រង Keyboard interactions ដូចជាការចុច Enter, Escape ដើម្បីបិទ modal, និង shortcut Cmd+K។",
-        "explanation": "ការគ្រប់គ្រង keyboard events (ដូចជា `onKeyDown`, `onKeyUp`) អនុញ្ញាតឱ្យអ្នកបង្កើតនូវបទពិសោធន៍ប្រើប្រាស់ដ៏សម្បូរបែប ដូចជាការបិទ Modal ដោយចុចគ្រាប់ចុច `Escape`, ការបញ្ជូនសារដោយចុច `Enter`, ឬការបើកផ្ទាំងស្វែងរកដោយប្រើផ្លូវកាត់ `Cmd+K` / `Ctrl+K`។",
+        "explanation": "ការគ្រប់គ្រង keyboard events (ដូចជា `onKeyDown`, `onKeyUp`) អនុញ្ញាតឱ្យអ្នកបង្កើតនូវបទពិសោធន៍ប្រើប្រាស់ដ៏សម្បូរបែប ដូចជាការបិទ Modal ដោយចុចគ្រាប់ចុច `Escape`, ការបញ្ជូនសារដោយចុច `Enter`, ឬការ trigger shortcuts ផ្សេងៗ។",
         "keyPoints": [
           "ពិនិត្យគ្រាប់ចុចដោយប្រើប្រាស់ `e.key` (ឧ. `e.key === 'Escape'`, `e.key === 'Enter'`)។",
           "សម្រាប់ shortcut keys បញ្ចូលគ្នា ត្រូវពិនិត្យ boolean flags ដូចជា `e.metaKey` (សម្រាប់ Mac Command) ឬ `e.ctrlKey` (សម្រាប់ Windows Ctrl)។",
-          "នៅពេលបន្ថែម global listener លើ `window` ជាមួយ `useEffect` ត្រូវប្រាកដថាបាន return cleanup function ដើម្បី remove listener ជានិច្ច។"
+          "ចាប់យក keyboard events ដោយផ្ទាល់លើ input ឬ interactive elements តាមរយៈ handler `onKeyDown` ឬ `onKeyUp`។"
         ],
-        "codeSnippet": "useEffect(() => {\n  const handleKeyDown = (e: KeyboardEvent) => {\n    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {\n      e.preventDefault();\n      setIsSearchOpen(prev => !prev);\n    }\n  };\n  window.addEventListener('keydown', handleKeyDown);\n  return () => window.removeEventListener('keydown', handleKeyDown);\n}, []);",
+        "codeSnippet": "export function SearchInput() {\n  const handleKeyDown = (e) => {\n    if (e.key === 'Enter') {\n      alert(`Search submitted for: ${e.target.value}`);\n    } else if (e.key === 'Escape') {\n      e.target.value = '';\n    }\n  };\n\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2\">\n      <label className=\"block text-xs text-slate-400\">\n        Type query and press Enter to search, or Escape to clear:\n      </label>\n      <input\n        type=\"text\"\n        onKeyDown={handleKeyDown}\n        placeholder=\"Search courses...\"\n        className=\"w-full px-4 py-2 bg-slate-950 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500\"\n      />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Global Keyboard Shortcut Listener",
+        "codeTitle": "Keyboard Event Handler with onKeyDown",
         "proTip": "ប្រើប្រាស់ `e.key` ជំនួសឱ្យ `e.keyCode` (deprecated) ព្រោះ `e.key` ផ្តល់ឈ្មោះគ្រាប់ចុចច្បាស់លាស់ដូចជា `'Enter'`, `'Escape'`, ឬ `'ArrowDown'`។"
       },
       {
         "id": "m06-12",
         "number": "12",
         "title": "Event Handling Best Practices",
-        "summary": "គោលការណ៍ល្អៗដូចជា Debouncing, ការការពារ Double-submit, និងការរៀបចំ handler logic ឱ្យមានរបៀប។",
-        "explanation": "ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ស្មុគស្មាញចេញពី JSX markup និងការពារបញ្ហាទូទៅដូចជាការចុចស្ទួន (rapid double clicks)។",
+        "summary": "គោលការណ៍ល្អៗដូចជាការបំបែក Event Handlers ចេញពី JSX, ការដាក់ឈ្មោះច្បាស់លាស់ និង preventDefault។",
+        "explanation": "ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ចេញពី JSX markup និងផ្តល់ឈ្មោះ handler functions ឱ្យមានន័យច្បាស់លាស់។",
         "keyPoints": [
           "**បំបែក Handler ចេញពី JSX**៖ សរសេរ handler functions ដាច់ដោយឡែកនៅផ្នែកខាងលើនៃ component ដើម្បីឱ្យ JSX markup មានភាពស្រឡះ និងងាយស្រួលអាន។",
-          "**ការពារ Double-submit**៖ ប្រើប្រាស់ state ដូចជា `isSubmitting` ដើម្បីទប់ស្កាត់ការចុច submit ច្រើនដងក្នុងពេលតែមួយ។",
-          "**Debounce High-Frequency Events**៖ ចំពោះ events ដែលកើតឡើងញឹកញាប់ខ្លាំង (ដូចជា window resize, scrolling, ឬ keystrokes ក្នុងការស្វែងរក) គួរប្រើ debounce ឬ throttle ដើម្បីការពារកុំឱ្យប៉ះពាល់ដល់ performance។"
+          "**Naming Conventions**៖ ប្រើបុព្វបទ `handle` សម្រាប់ handler functions ដូចជា `handleSaveDraft`, `handleDiscard`។",
+          "**គ្រប់គ្រង Default Behavior**៖ ប្រើ `e.preventDefault()` ឱ្យបានត្រឹមត្រូវដើម្បីទប់ស្កាត់ default browser actions (ចំណែក form state នឹងត្រូវសិក្សានៅ Module 07 និង Module 08)។"
         ],
-        "codeSnippet": "// Clean extracted handler pattern\nexport function RegistrationForm() {\n  const [email, setEmail] = useState('');\n  const [isSubmitting, setIsSubmitting] = useState(false);\n\n  const handleSubmit = async (e: React.FormEvent) => {\n    e.preventDefault();\n    if (isSubmitting) return; // Prevent double submit\n    setIsSubmitting(true);\n    try {\n      await registerUser(email);\n    } finally {\n      setIsSubmitting(false);\n    }\n  };\n\n  return <form onSubmit={handleSubmit}>...</form>;\n}",
+        "codeSnippet": "// Best Practice: Extract event handlers into descriptive, named functions\nexport function ActionToolbar() {\n  const handleSaveDraft = (e) => {\n    e.preventDefault();\n    console.log(\"Draft successfully saved!\");\n    alert(\"Draft saved!\");\n  };\n\n  const handleDiscard = () => {\n    const confirmed = window.confirm(\"Are you sure you want to discard changes?\");\n    if (confirmed) {\n      console.log(\"Draft discarded by user\");\n    }\n  };\n\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl flex gap-3\">\n      <button \n        type=\"button\" \n        onClick={handleSaveDraft}\n        className=\"px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium\"\n      >\n        Save Draft\n      </button>\n      <button \n        type=\"button\" \n        onClick={handleDiscard}\n        className=\"px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium\"\n      >\n        Discard\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Best Practice Event Handler",
-        "proTip": "តែងតែការពារបញ្ហា Double-submit លើ forms តាមរយៈ boolean flag (`isSubmitting`) ឬ disable submit button រហូតដល់ network request បានបញ្ចប់ទាំងស្រុង។"
+        "proTip": "តែងតែទាញយក handler logic ចេញពី JSX មកសរសេរជា function ដាច់ដោយឡែក ដើម្បីឱ្យ JSX ងាយស្រួលអាន និងងាយស្រួលធ្វើ unit test។"
       }
     ]
   },
