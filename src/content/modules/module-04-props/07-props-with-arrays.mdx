@@ -5,32 +5,44 @@ title: "Props with Arrays"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "ការបញ្ជូនបញ្ជីទិន្នន័យ (Lists) ទៅកាន់ components សម្រាប់ធ្វើការ iterate/map។"
-proTip: "ប្រើ Array method .map() ដោយផ្ទាល់លើ prop ដើម្បី render dynamic list យ៉ាងរហ័ស។"
-codeTitle: "Passing and Iterating Arrays"
+summary: "ការបញ្ជូនទិន្នន័យជា Array ទៅកាន់ components តាមរយៈ Props។"
+proTip: "យើងអាចបញ្ជូន Array ទៅ component ដោយប្រើ curly braces ដូចជា items={['React', 'Next.js']}។ នៅ Module 05 បន្ទាប់ យើងនឹងរៀនប្រើ .map() ដើម្បី loop បង្ហាញធាតុ array ទាំងអស់ដោយស្វ័យប្រវត្តិ។"
+codeTitle: "Passing Array Props"
 ---
 
 # Props with Arrays
 
-បញ្ជូន arrays ទៅកាន់ components ដើម្បី render បញ្ជីទិន្នន័យ (Lists), navigations, menus ឬ tag clouds តាមរយៈ method `.map()`។
+យើងអាចបញ្ជូន arrays ទៅកាន់ components តាមរយៈ props ដើម្បីចែករំលែកបណ្តុំទិន្នន័យ ដូចជា tags, categories ឬ navigation links។
 
 ### Key Concepts & Rules:
 
-- បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `users={userList}`។
-- ពេលធ្វើការ loop/map array elements ក្នុង JSX ត្រូវផ្តល់ `key` prop ដ៏មានតម្លៃ unique ជានិច្ច។
+- បញ្ជូន arrays នៅខាងក្នុង curly braces៖ `items={['A', 'B', 'C']}` ឬ `features={featureList}`។
+- Child component អាចទទួលយក array prop និងទាញយកធាតុមកបង្ហាញតាមរយៈ array indexing (ដូចជា `features[0]`)។
+- ការ loop បង្ហាញធាតុ array ទាំងអស់ដោយស្វ័យប្រវត្តិ នឹងត្រូវសិក្សាលម្អិតនៅ Module 05 (Rendering Data តាមរយៈ `.map()`)។
 
-### Code Example: Passing and Iterating Arrays
+### Code Example: Passing Array Props
 
 ```jsx
-export function TagList({ tags }) {
+// 1. Child component receives an array prop
+export function FeatureBadges({ features }) {
   return (
     <div className="flex flex-wrap gap-2">
-      {tags.map((tag) => (
-        <span key={tag} className="px-2 py-1 bg-slate-800 text-xs rounded-md text-slate-300">
-          #{tag}
-        </span>
-      ))}
+      <span className="px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300">
+        {features[0]}
+      </span>
+      <span className="px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300">
+        {features[1]}
+      </span>
+      <span className="px-2.5 py-1 bg-slate-800 text-xs rounded-md text-indigo-300">
+        {features[2]}
+      </span>
     </div>
   );
+}
+
+// 2. Parent component passes an array as a prop
+export function CourseFeatureCard() {
+  const courseFeatures = ["Components", "JSX Syntax", "Props System"];
+  return <FeatureBadges features={courseFeatures} />;
 }
 ```

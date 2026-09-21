@@ -17,7 +17,7 @@ codeTitle: "Enforcing Component Purity"
 ### Key Concepts & Rules:
 
 - រក្សា component ឱ្យមាន Purity៖ រាល់ពេល component ដំណើរការ ត្រូវតែ return JSX ដូចគ្នា និងគ្មានផលប៉ះពាល់ចំហៀង (No side effects)។
-- ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — ត្រូវធ្វើ side effects នៅក្នុង `useEffect` ឬ event handlers ប៉ុណ្ណោះ។
+- ជៀសវាង side effects ក្នុងអំឡុងពេល rendering (ដូចជាការ mutate external variables) — component គួរតែជា pure function ដែល render UI ដោយគ្មានផលប៉ះពាល់ទៅក្រៅ។
 - កុំសរសេរ component តែមួយឱ្យទទួលបន្ទុកច្រើនពេក (Do one thing and do it well)។
 
 ### Code Example: Enforcing Component Purity
@@ -32,7 +32,7 @@ function BadComponent() {
   return <div>Render count: {renderCount}</div>;
 }
 
-// ✅ Pure: Rendering has no observable external mutations (No props)
+// ✅ Pure: Rendering has no observable external mutations
 function GoodComponent() {
   const currentTitle = "Modern React Development";
   return <h2 className="text-xl font-semibold text-white">{currentTitle}</h2>;

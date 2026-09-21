@@ -5,27 +5,25 @@ title: "Container vs Presentational Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ការបំបែករវាង logic/state management និង visual UI rendering ឱ្យដាច់ពីគ្នា។"
-proTip: "ការបំបែករវាង Container និង Presentational ជួយឱ្យ UI designer ឬ frontend engineer អាចផ្តោតលើ visual design ដោយមិនបារម្ភពីរឿង state ឬ data logic ឡើយ។"
+summary: "ការបំបែករវាង structural container និង visual UI rendering ឱ្យដាច់ពីគ្នា។"
+proTip: "ការបំបែករវាង Container (រៀបចំ layout) និង Presentational (UI design) ជួយឱ្យ frontend engineer អាចផ្តោតលើ visual design ដោយមិនច្របូកច្របល់ឡើយ។"
 codeTitle: "Container vs Presentational Pattern"
 ---
 
 # Container vs Presentational Components
 
-Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើដំណើរការការងារ (គ្រប់គ្រង state, conditional rendering ឬ business logic)។
+Presentational components ផ្តោតតែទៅលើការបង្ហាញរូបរាង UI ប៉ុណ្ណោះ (Visual layout និង styles)។ ចំណែកឯ Container components ផ្តោតលើការរៀបចំ structural layout (ដែលយើងនឹងបន្ថែម props និង state នៅ Modules បន្តបន្ទាប់)។
 
 ### Key Concepts & Rules:
 
 - Presentational (Pure UI): ផ្តោតលើ visual elements, CSS styles និង HTML structure។
-- Container (Smart / Logic): គ្រប់គ្រង state, handling business rules និងសម្រេចចិត្តថាតើពេលណាត្រូវ render UI component។
-- ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និងងាយស្រួលធ្វើ unit testing។
+- Container (Structural / Layout): រៀបចំ layout wrapper និងកំណត់ទីតាំងសម្រាប់ presentational components។
+- ជួយឱ្យកូដមានភាពច្បាស់លាស់ ងាយស្រួលរៀបចំ និង reuse។
 
 ### Code Example: Container vs Presentational Pattern
 
 ```jsx
-import { useState } from 'react';
-
-// 1. Presentational Component: Focuses purely on visual UI (No props)
+// 1. Presentational Component: Focuses purely on visual UI layout & styling
 export function ProfileCardUI() {
   return (
     <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl text-center max-w-sm mx-auto">
@@ -42,18 +40,15 @@ export function ProfileCardUI() {
   );
 }
 
-// 2. Container Component: Manages loading state and logic (No props)
+// 2. Container Component: Provides structural layout wrapper
 export function ProfileContainer() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  if (isLoading) {
-    return (
-      <div className="p-8 text-center text-slate-400 animate-pulse">
-        Loading profile data...
-      </div>
-    );
-  }
-
-  return <ProfileCardUI />;
+  return (
+    <section className="p-8 bg-slate-950 border border-slate-800/60 rounded-3xl max-w-md mx-auto">
+      <h2 className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-4 text-center">
+        User Profile Overview
+      </h2>
+      <ProfileCardUI />
+    </section>
+  );
 }
 ```

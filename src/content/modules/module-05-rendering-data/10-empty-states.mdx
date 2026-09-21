@@ -23,17 +23,29 @@ Empty States គឺជាផ្ទាំង UI ដែលត្រូវបង្
 ### Code Example: Engaging Empty State Component
 
 ```jsx
-export function EmptyState({ onAction }: { onAction: () => void }) {
+export function TaskList({ tasks = [] }) {
+  // Check if data array is empty
+  if (tasks.length === 0) {
+    return (
+      <div className="text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl">
+        <h3 className="text-lg font-medium text-white">No tasks created yet</h3>
+        <p className="text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4">
+          Your task list is empty. Add a new item to get started.
+        </p>
+        <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">
+          Ready for your first task
+        </span>
+      </div>
+    );
+  }
+
   return (
-    <div className="text-center py-12 px-4 border-2 border-dashed border-slate-800 rounded-2xl">
-      <Inbox className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-      <h3 className="text-lg font-medium text-white">No tasks created yet</h3>
-      <p className="text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-4">
-        Get started by creating your first task using the input above.
-      </p>
-      <button onClick={onAction} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
-        Add New Task
-      </button>
+    <div className="space-y-2">
+      {tasks.map((task) => (
+        <div key={task.id} className="p-3 bg-slate-900 rounded-lg text-white">
+          {task.title}
+        </div>
+      ))}
     </div>
   );
 }

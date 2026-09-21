@@ -16,19 +16,24 @@ codeTitle: "JavaScript Functions in JSX"
 ### Key Concepts & Rules:
 
 - អាច format កាលបរិច្ឆេទ និងលេខទិន្នន័យបានភ្លាមៗដោយប្រើ standard JavaScript APIs ដូចជា `Intl.NumberFormat` ឬ `Intl.DateTimeFormat`។
-- បញ្ជូន callback function reference ទៅកាន់ event handlers ដោយផ្ទាល់ ដោយមិនត្រូវហៅ function ដំណើរការភ្លាមៗពេល render នោះឡើយ (ឧ. `onClick={handleClick}` មិនមែន `onClick={handleClick()}`)។
+- អាចបង្កើត helper function នៅខាងក្នុង component ហើយហៅវានៅក្នុង curly braces `{}` ដើម្បីគណនា ឬ format ទិន្នន័យបានយ៉ាងរលូន។
 
 ### Code Example: JavaScript Functions in JSX
 
 ```jsx
-export function ProductPrice({ priceInCents }: { priceInCents: number }) {
-  const formatCurrency = (cents: number) => 
+export function ProductPrice() {
+  const priceInCents = 4999;
+
+  const formatCurrency = (cents) => 
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);
 
   return (
-    <span className="font-semibold text-emerald-400">
-      {formatCurrency(priceInCents)}
-    </span>
+    <div className="p-4 bg-slate-900 rounded-lg">
+      <p className="text-slate-400 text-sm">Course Price:</p>
+      <span className="text-xl font-semibold text-emerald-400">
+        {formatCurrency(priceInCents)}
+      </span>
+    </div>
   );
 }
 ```

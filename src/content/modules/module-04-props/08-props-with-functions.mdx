@@ -5,32 +5,45 @@ title: "Props with Functions"
 moduleId: "module-04"
 moduleNumber: "04"
 category: "Fundamentals"
-summary: "ការបញ្ជូន callback functions ដើម្បីឆ្លើយតបទៅនឹង user events និង actions។"
-proTip: "ប្រើ convention ដាក់ឈ្មោះ `onEvent` សម្រាប់ prop (ឧ. `onDelete`) និង `handleEvent` សម្រាប់ handler function នៅក្នុង parent (ឧ. `handleDelete`)។"
-codeTitle: "Passing Callback Function Props"
+summary: "ការបញ្ជូន functions ទៅកាន់ components តាមរយៈ Props ដើម្បីធ្វើការគណនា ឬ format ទិន្នន័យ។"
+proTip: "Functions ក្នុង JavaScript គឺជា first-class values ដូចនេះអ្នកអាចបញ្ជូន functions ទៅកាន់ child components តាមរយៈ props បានដូចជា string ឬ number ដែរ។"
+codeTitle: "Passing Functions as Props"
 ---
 
 # Props with Functions
 
-ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចប្រាប់ដំណឹង (notify) ទៅកាន់ parent component វិញបាន នៅពេលដែលមាន event កើតឡើង (ដូចជាពេលចុច button ឬវាយបញ្ចូលអក្សរក្នុង input)។
+ការបញ្ជូន functions ចុះក្រោមជា props អនុញ្ញាតឱ្យ child components អាចហៅប្រើប្រាស់ logic ឬ formatting rules ដែល parent បានកំណត់។
 
 ### Key Concepts & Rules:
 
-- ដើរតួជាយន្តការទំនាក់ទំនងពី Child ទៅ Parent (Child-to-parent communication)។
-- បញ្ជូន function reference (កុំ invoke function ដោយប្រើ `()` ក្នុងពេល render ឱ្យសោះ)។
-- ដាក់ឈ្មោះ function props ដោយប្រើបុព្វបទ `on` (ដូចជា `onDelete`, `onSelect`, `onSubmit`)។
+- Functions នៅក្នុង JavaScript អាចបញ្ជូនជា props តាមរយៈ curly braces៖ `<Component formatFn={myFunction} />`។
+- បញ្ជូន function reference ដោយផ្ទាល់ (កុំ invoke function ដោយប្រើ `()` ក្នុង JSX attribute ឱ្យសោះ)។
+- Child component អាចទទួលយក និងហៅដំណើរការ function prop នោះដើម្បីទាញយកលទ្ធផល (ចំណែកឯការភ្ជាប់ function prop ជាមួយ browser click events នឹងត្រូវសិក្សាលម្អិតនៅ Module 06)។
 
-### Code Example: Passing Callback Function Props
+### Code Example: Passing Functions as Props
 
 ```jsx
-export function DeleteButton({ onDelete }) {
+// 1. Child component receives and calls a function prop
+export function StatusDisplay({ statusCode, getStatusLabel }) {
+  // Execute the function prop to get formatted text
+  const label = getStatusLabel(statusCode);
+
   return (
-    <button 
-      onClick={() => onDelete("item-42")}
-      className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-sm"
-    >
-      Delete Record
-    </button>
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg">
+      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+      <span className="text-xs text-white font-medium">{label}</span>
+    </div>
   );
+}
+
+// 2. Parent defines the function and passes it down as a prop
+export function SystemMonitor() {
+  const resolveStatus = (code) => {
+    if (code === 200) return "System Operational (Online)";
+    if (code === 500) return "Server Error";
+    return "Status Unknown";
+  };
+
+  return <StatusDisplay statusCode={200} getStatusLabel={resolveStatus} />;
 }
 ```

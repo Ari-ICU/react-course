@@ -11,23 +11,35 @@ codeTitle: "Dynamic Attributes in JSX"
 
 # Rendering Dynamic Content
 
-Components ទទួលយក props ឬ state ហើយធ្វើបច្ចុប្បន្នភាពលើ UI ភ្លាមៗ (real-time) នៅពេលដែលទិន្នន័យមានការប្រែប្រួល។
+JSX អនុញ្ញាតឱ្យយើងបង្ហាញ dynamic data ពី JavaScript variables ទៅលើ content និង attributes (ដូចជា `src`, `href`, `alt`) បានយ៉ាងងាយស្រួល។
 
 ### Key Concepts & Rules:
 
-- តម្លៃនៅលើ UI នឹង re-render ដោយស្វ័យប្រវត្តិនៅពេលដែល state ឬ props ដែលវាប្រើមានការផ្លាស់ប្តូរ។
+- អាចបញ្ចូល dynamic expressions និង variables ទៅក្នុង JSX content ដោយប្រើ curly braces `{variable}`។
 - អាចបញ្ចូល dynamic attributes ដូចជា `alt`, `href`, និង `src` ដោយប្រើប្រាស់ `{variable}` ឬ template literals។
 
 ### Code Example: Dynamic Attributes in JSX
 
 ```jsx
-export function Avatar({ user }) {
+export function UserProfileHeader() {
+  const user = {
+    name: "Dara Som",
+    role: "Frontend Developer",
+    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+  };
+
   return (
-    <img 
-      src={user.avatarUrl} 
-      alt={`Profile picture of ${user.name}`}
-      className="w-10 h-10 rounded-full border-2 border-emerald-500" 
-    />
+    <div className="flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+      <img 
+        src={user.avatarUrl} 
+        alt={`Profile picture of ${user.name}`}
+        className="w-12 h-12 rounded-full border-2 border-emerald-500" 
+      />
+      <div>
+        <h3 className="text-white font-bold">{user.name}</h3>
+        <p className="text-sm text-slate-400">{user.role}</p>
+      </div>
+    </div>
   );
 }
 ```

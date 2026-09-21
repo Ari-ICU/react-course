@@ -5,25 +5,25 @@ title: "Functional Components"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតាជាមួយ React Hooks។"
+summary: "ស្តង់ដារទំនើបសម្រាប់ React components ដោយប្រើ JavaScript functions ធម្មតា។"
 proTip: "អ្នកអាចប្រកាស component ដោយប្រើ function declaration ឬ arrow function បានយ៉ាងងាយស្រួល ទៅតាមចំណង់ចំណូលចិត្តនៃការសរសេរកូដ។"
 codeTitle: "Modern Functional Component Declarations"
 ---
 
 # Functional Components
 
-Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components រួមផ្សំជាមួយ React Hooks ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការសរសេរ unit tests និងទំហំ bundle size តូចជាងមុន។
+Class components ត្រូវបានចាត់ទុកជា legacy ក្នុង modern React រួចទៅហើយ។ Functional components ផ្តល់នូវ syntax ខ្លីស្អាត ភាពងាយស្រួលក្នុងការអាន និងសរសេរកូដ ភាពងាយស្រួលក្នុងការធ្វើ test និងទំហំ bundle size តូចជាងមុន។
 
 ### Key Concepts & Rules:
 
 - ប្រកាស component ដោយប្រើ `function ComponentName()` ធម្មតា ឬ arrow function syntax។
-- React Hooks (ដូចជា `useState`, `useEffect`) អាចហៅប្រើបានតែនៅខាងក្នុង Functional Components ឬ Custom Hooks ប៉ុណ្ណោះ។
+- គាំទ្រ React Hooks សម្រាប់គ្រប់គ្រង state និង lifecycle (ដែលយើងនឹងរៀននៅ Modules បន្តបន្ទាប់)។
 - កាត់បន្ថយ boilerplate code ធៀបនឹង class components និងមិនចាំបាច់ដោះស្រាយបញ្ហា `this` binding ឡើយ។
 
 ### Code Example: Modern Functional Component Declarations
 
 ```jsx
-// 1. Function Declaration Component (No props)
+// 1. Function Declaration Component
 export function AppHeader() {
   return (
     <header className="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center">
@@ -35,7 +35,7 @@ export function AppHeader() {
   );
 }
 
-// 2. Arrow Function Component (No props)
+// 2. Arrow Function Component
 export const UserBadge = () => {
   return (
     <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full">

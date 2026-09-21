@@ -23,7 +23,7 @@ Reusable component គឺជា component ដែលត្រូវបានប�
 ### Code Example: Reusing Components Across the UI
 
 ```jsx
-// 1. Self-contained component with its own markup and styles (No props)
+// 1. Self-contained component with its own markup and styles
 export function SubscribeCard() {
   return (
     <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl text-center space-y-3">
@@ -36,7 +36,7 @@ export function SubscribeCard() {
   );
 }
 
-// 2. Reusing the exact same component in different pages/sections (No props)
+// 2. Reusing the exact same component in different pages/sections
 export function HomePage() {
   return (
     <div className="space-y-6 max-w-xl mx-auto">

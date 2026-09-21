@@ -6,34 +6,29 @@ moduleId: "module-02"
 moduleNumber: "02"
 category: "Fundamentals"
 summary: "ការប្រមូលផ្តុំបញ្ជី children ច្រើនបញ្ចូលគ្នាដោយមិនបាច់បន្ថែម wrapper DOM nodes ឥតប្រយោជន៍។"
-codeTitle: "React Fragments with Keys"
+codeTitle: "Using React Fragments"
 ---
 
 # JSX Fragments
 
-Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling components ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។
+Fragments (សរសេរពេញ `<React.Fragment>` ឬសរសេរកាត់ `<>...</>`) អនុញ្ញាតឱ្យយើង return sibling elements ច្រើនក្នុងពេលតែមួយ ដោយមិនបាច់បន្ថែម `<div>` tags ឥតប្រយោជន៍ទៅក្នុង DOM tree ឡើយ។
 
 ### Key Concepts & Rules:
 
 - ការសរសេរកាត់ `<>...</>` មិនបង្កើត DOM node បន្ថែមឡើយ (zero DOM overhead)។
-- ត្រូវប្រើ syntax ពេញ `<React.Fragment key={item.id}>` នៅពេល render fragments នៅក្នុង loop ដែលទាមទារឱ្យមាន `key` prop។
+- Fragments ជួយការពារបញ្ហាខូច layout នៅពេលប្រើប្រាស់ជាមួយ CSS Flexbox ឬ CSS Grid ដែលទាមទារ direct child relationships។
+- ប្រសិនបើត្រូវកំណត់ attributes ដូចជា `key` (នៅពេលសិក្សាអំពី dynamic lists នៅ Module 05) ត្រូវប្រើ syntax ពេញ `<React.Fragment key={...}>` ព្រោះទម្រង់កាត់ `<>` មិនអាចទទួល attribute បានឡើយ។
 
-### Code Example: React Fragments with Keys
+### Code Example: Using React Fragments
 
 ```jsx
-import React from 'react';
-
-export function TableRowGroup({ items }) {
+export function CourseOverview() {
   return (
-    <dl className="grid grid-cols-2 gap-2">
-      {items.map((item) => (
-        // Key is required here, so use explicit React.Fragment:
-        <React.Fragment key={item.id}>
-          <dt className="text-slate-400 font-medium">{item.label}</dt>
-          <dd className="text-white text-right">{item.value}</dd>
-        </React.Fragment>
-      ))}
-    </dl>
+    <>
+      <h2 className="text-xl font-bold text-white">React Fundamentals</h2>
+      <p className="text-slate-400">Master JSX, components, and core modern concepts.</p>
+      <span className="text-xs text-indigo-400">No extra wrapper DOM node created</span>
+    </>
   );
 }
 ```

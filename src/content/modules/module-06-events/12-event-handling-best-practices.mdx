@@ -5,40 +5,56 @@ title: "Event Handling Best Practices"
 moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
-summary: "គោលការណ៍ល្អៗដូចជា Debouncing, ការការពារ Double-submit, និងការរៀបចំ handler logic ឱ្យមានរបៀប។"
-proTip: "តែងតែការពារបញ្ហា Double-submit លើ forms តាមរយៈ boolean flag (`isSubmitting`) ឬ disable submit button រហូតដល់ network request បានបញ្ចប់ទាំងស្រុង។"
+summary: "គោលការណ៍ល្អៗដូចជាការបំបែក Event Handlers ចេញពី JSX, ការដាក់ឈ្មោះច្បាស់លាស់ និង preventDefault។"
+proTip: "តែងតែទាញយក handler logic ចេញពី JSX មកសរសេរជា function ដាច់ដោយឡែក ដើម្បីឱ្យ JSX ងាយស្រួលអាន និងងាយស្រួលធ្វើ unit test។"
 codeTitle: "Best Practice Event Handler"
 ---
 
 # Event Handling Best Practices
 
-ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ស្មុគស្មាញចេញពី JSX markup និងការពារបញ្ហាទូទៅដូចជាការចុចស្ទួន (rapid double clicks)។
+ដើម្បីកសាងកម្មវិធី React ឱ្យមានប្រសិទ្ធភាពខ្ពស់ និងគ្មាន bugs អ្នកគួរតែរៀបចំ event handlers ឱ្យមានរបៀបរៀបរយ បំបែក logic ចេញពី JSX markup និងផ្តល់ឈ្មោះ handler functions ឱ្យមានន័យច្បាស់លាស់។
 
 ### Key Concepts & Rules:
 
 - **បំបែក Handler ចេញពី JSX**៖ សរសេរ handler functions ដាច់ដោយឡែកនៅផ្នែកខាងលើនៃ component ដើម្បីឱ្យ JSX markup មានភាពស្រឡះ និងងាយស្រួលអាន។
-- **ការពារ Double-submit**៖ ប្រើប្រាស់ state ដូចជា `isSubmitting` ដើម្បីទប់ស្កាត់ការចុច submit ច្រើនដងក្នុងពេលតែមួយ។
-- **Debounce High-Frequency Events**៖ ចំពោះ events ដែលកើតឡើងញឹកញាប់ខ្លាំង (ដូចជា window resize, scrolling, ឬ keystrokes ក្នុងការស្វែងរក) គួរប្រើ debounce ឬ throttle ដើម្បីការពារកុំឱ្យប៉ះពាល់ដល់ performance។
+- **Naming Conventions**៖ ប្រើបុព្វបទ `handle` សម្រាប់ handler functions ដូចជា `handleSaveDraft`, `handleDiscard`។
+- **គ្រប់គ្រង Default Behavior**៖ ប្រើ `e.preventDefault()` ឱ្យបានត្រឹមត្រូវដើម្បីទប់ស្កាត់ default browser actions (ចំណែក form state នឹងត្រូវសិក្សានៅ Module 07 និង Module 08)។
 
 ### Code Example: Best Practice Event Handler
 
 ```jsx
-// Clean extracted handler pattern
-export function RegistrationForm() {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+// Best Practice: Extract event handlers into descriptive, named functions
+export function ActionToolbar() {
+  const handleSaveDraft = (e) => {
     e.preventDefault();
-    if (isSubmitting) return; // Prevent double submit
-    setIsSubmitting(true);
-    try {
-      await registerUser(email);
-    } finally {
-      setIsSubmitting(false);
+    console.log("Draft successfully saved!");
+    alert("Draft saved!");
+  };
+
+  const handleDiscard = () => {
+    const confirmed = window.confirm("Are you sure you want to discard changes?");
+    if (confirmed) {
+      console.log("Draft discarded by user");
     }
   };
 
-  return <form onSubmit={handleSubmit}>...</form>;
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex gap-3">
+      <button 
+        type="button" 
+        onClick={handleSaveDraft}
+        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium"
+      >
+        Save Draft
+      </button>
+      <button 
+        type="button" 
+        onClick={handleDiscard}
+        className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
+      >
+        Discard
+      </button>
+    </div>
+  );
 }
 ```

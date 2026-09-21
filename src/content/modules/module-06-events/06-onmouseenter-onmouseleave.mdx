@@ -6,34 +6,39 @@ moduleId: "module-06"
 moduleNumber: "06"
 category: "Core Concepts"
 summary: "ការគ្រប់គ្រង Hover interactions, animations និងការបង្ហាញ tooltips។"
-proTip: "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` តែនៅពេលដែលអ្នកត្រូវការផ្លាស់ប្តូរ state ឬ render dynamic JSX ប៉ុណ្ណោះ។"
+proTip: "សម្រាប់ visual effects សាមញ្ញៗ (ដូចជាការប្តូរពណ៌ ឬស្រមោល) គួរប្រើ CSS `:hover` ឬ Tailwind `hover:` classes។ ប្រើ `onMouseEnter/Leave` នៅពេលដែលអ្នកត្រូវការចាប់យក mouse events ក្នុង JavaScript logic។"
 codeTitle: "Hover Handlers"
 ---
 
 # onMouseEnter & onMouseLeave
 
-`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត dynamic tooltips, preview popovers, dropdown menus ឬ custom cursor animations។
+`onMouseEnter` និង `onMouseLeave` ត្រូវបានប្រើប្រាស់សម្រាប់ចាប់យកសកម្មភាព hover របស់ mouse cursor ចូល និងចេញពី element។ ព្រឹត្តិការណ៍ទាំងពីរនេះស័ក្តិសមបំផុតសម្រាប់ការបង្កើត interactions, preview popovers, ឬ logging animations។
 
 ### Key Concepts & Rules:
 
 - `onMouseEnter` និង `onMouseLeave` មិនធ្វើការ bubble ឡើងលើ parent ឡើយ (ខុសពី `onMouseOver` និង `onMouseOut`) ដែលជួយកាត់បន្ថយបញ្ហា flickering នៅពេល hover លើ child elements។
-- ប្រើសម្រាប់ update state នៅពេលដែល hover logic ត្រូវការទិន្នន័យ JavaScript ស្មុគស្មាញ។
+- ចាប់យក mouse cursor coordinates ឬ trigger custom logic ក្នុងពេល hover (ចំណែកឯការផ្លាស់ប្តូរ UI តាមរយៈ State នឹងត្រូវសិក្សានៅ Module 07 បន្ទាប់)។
 - ត្រូវប្រាកដថាបានផ្តល់នូវ keyboard alternative (ដូចជា `onFocus` និង `onBlur`) សម្រាប់អ្នកប្រើប្រាស់ដែលមិនប្រើ mouse។
 
 ### Code Example: Hover Handlers
 
 ```jsx
 export function HoverPreview() {
-  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = () => {
+    console.log("Mouse cursor entered container");
+  };
+
+  const handleMouseLeave = () => {
+    console.log("Mouse cursor left container");
+  };
 
   return (
     <div 
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="p-4 border rounded-lg transition-colors bg-slate-900 hover:border-blue-500"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-indigo-500 transition-colors text-center text-slate-300 cursor-pointer"
     >
-      Hover over me!
-      {isHovered && <p className="text-xs text-blue-400 mt-1">✨ Tooltip content visible</p>}
+      Hover over me! (Check browser console for event logs)
     </div>
   );
 }

@@ -5,49 +5,45 @@ title: "Component Structure"
 moduleId: "module-03"
 moduleNumber: "03"
 category: "Fundamentals"
-summary: "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, state & hooks, handlers និង JSX return។"
-proTip: "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Hooks -> Handlers -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
+summary: "ការរៀបចំរចនាសម្ព័ន្ធផ្ទៃក្នុង៖ imports, variables & helpers, និង JSX return។"
+proTip: "ការរៀបចំតាមលំដាប់លំដោយ Imports -> Variables & Logic -> JSX Return ជួយឱ្យ developer ក្នុងក្រុមអាចចូលមកអាន និងកែសម្រួលកូដបានយ៉ាងរហ័ស។"
 codeTitle: "Predictable Component Layout Structure"
 ---
 
 # Component Structure
 
-រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) State & hooks; ៤) Handlers & helper logic; ៥) JSX return statement។
+រចនាសម្ព័ន្ធ component ដែលមានស្តង់ដារច្បាស់លាស់ជួយឱ្យកូដមានភាពងាយស្រួលក្នុងការអាន និងស្មានដឹងជាមុន (Predictable)៖ ១) Imports; ២) Component declaration; ៣) Internal variables & helper logic; ៤) JSX return statement។ (នៅ Modules បន្តបន្ទាប់ យើងនឹងបន្ថែម Props, Event Handlers និង State ទៅក្នុងរចនាសម្ព័ន្ធនេះជាបន្តបន្ទាប់)។
 
 ### Key Concepts & Rules:
 
-- ហៅ React Hooks ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ function (Top level) ជានិច្ច។
-- ប្រកាស event handlers និង logic ផ្សេងៗមុនពេល return JSX។
-- ញែក complex helper functions ដែលមិនពឹងផ្អែកលើ component state ចេញទៅក្រៅ function body។
+- រៀបចំ import statements ទាំងអស់នៅផ្នែកខាងលើបង្អស់នៃ file។
+- រៀបចំ variables និង helper formatting logic មុនពេល return JSX។
+- return JSX markup យ៉ាងច្បាស់លាស់ និងមាន structure ងាយយល់។
 
 ### Code Example: Predictable Component Layout Structure
 
 ```jsx
 // 1. Imports
-import { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
-// 2. Component Declaration (No props)
-export function LikeButton() {
-  // 3. Hooks / State
-  const [likes, setLikes] = useState(0);
-  const [liked, setLiked] = useState(false);
+// 2. Component Declaration
+export function WelcomeBanner() {
+  // 3. Variables & Helper Logic
+  const courseTitle = "Mastering Modern React";
+  const badgeText = "Foundations";
 
-  // 4. Event Handlers
-  const handleToggle = () => {
-    setLiked(!liked);
-    setLikes(prev => liked ? prev - 1 : prev + 1);
-  };
-
-  // 5. JSX Return
+  // 4. JSX Return
   return (
-    <button 
-      onClick={handleToggle}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-500"
-    >
-      <Heart className={`w-4 h-4 ${liked ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
-      <span className="text-sm font-medium">{likes}</span>
-    </button>
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-2">
+      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium">
+        <Sparkles className="w-3.5 h-3.5" />
+        <span>{badgeText}</span>
+      </div>
+      <h2 className="text-xl font-bold text-white">{courseTitle}</h2>
+      <p className="text-sm text-slate-400">
+        Learn React step-by-step with clean component structure.
+      </p>
+    </div>
   );
 }
 ```

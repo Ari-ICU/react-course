@@ -11,25 +11,31 @@ codeTitle: "Ternary Conditional JSX"
 
 # Conditional JSX
 
-Conditional rendering អនុញ្ញាតឱ្យយើងបង្ហាញ UI ផ្សេងៗគ្នាទៅតាមតម្លៃនៃ state ឬ props ដោយប្រើប្រាស់ ternary expressions (`? :`) ឬ early `return` guards។
+Conditional rendering នៅក្នុង JSX អនុញ្ញាតឱ្យយើងបង្ហាញ UI ផ្សេងៗគ្នាទៅតាមលក្ខខណ្ឌជាក់ស្តែង ដោយប្រើប្រាស់ ternary expressions (`? :`) ឬ logical operators។
 
 ### Key Concepts & Rules:
 
-- ប្រើ early return guards សម្រាប់ loading state និង error UI ដើម្បីរក្សាកូដក្នុង main component ឱ្យខ្លី និងងាយអាន។
-- ប្រើ ternary operators សម្រាប់ការប្តូរ UI ពីរសណ្ឋាន (binary toggles) នៅខាងក្នុង markup ដោយផ្ទាល់។
+- ប្រើ ternary operators (`condition ? <TrueUI /> : <FalseUI />`) សម្រាប់ការប្តូរ UI ពីរសណ្ឋាននៅខាងក្នុង JSX ដោយផ្ទាល់។
+- ប្រើ logical AND (`condition && <UI />`) នៅពេលចង់បង្ហាញ UI តែមួយគត់នៅពេលដែលលក្ខខណ្ឌពិត (truthy)។
 
 ### Code Example: Ternary Conditional JSX
 
 ```jsx
-export function AuthButton({ isLoggedIn, onLogin, onLogout }: AuthButtonProps) {
-  return isLoggedIn ? (
-    <button onClick={onLogout} className="px-3 py-1.5 bg-rose-600 text-white rounded">
-      Sign Out
-    </button>
-  ) : (
-    <button onClick={onLogin} className="px-3 py-1.5 bg-blue-600 text-white rounded">
-      Sign In
-    </button>
+export function AuthStatusBadge() {
+  const isLoggedIn = true;
+
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
+      {isLoggedIn ? (
+        <span className="px-3 py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded-md text-sm font-medium">
+          Welcome back, Member!
+        </span>
+      ) : (
+        <span className="px-3 py-1.5 bg-slate-800 text-slate-400 rounded-md text-sm">
+          Please sign in to continue
+        </span>
+      )}
+    </div>
   );
 }
 ```

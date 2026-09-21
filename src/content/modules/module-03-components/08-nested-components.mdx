@@ -34,7 +34,7 @@ function Parent() {
 }
 */
 
-// ✅ Correct: Declared at module scope (outside parent, no props)
+// ✅ Correct: Declared at module scope (outside parent)
 function UserAvatar() {
   return (
     <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
@@ -52,7 +52,7 @@ function UserDetails() {
   );
 }
 
-// Parent rendering nested child components (No props)
+// Parent rendering nested child components
 export function UserCard() {
   return (
     <div className="flex items-center gap-3 p-4 bg-slate-900 border border-slate-800 rounded-xl">

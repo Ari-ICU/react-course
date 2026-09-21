@@ -21,7 +21,9 @@ Inline styles នៅក្នុង JSX តម្រូវឱ្យបញ្ជ�
 ### Code Example: Inline Style Object in JSX
 
 ```jsx
-export function CustomProgressBar({ progress }: { progress: number }) {
+export function CustomProgressBar() {
+  const progress = 65;
+
   return (
     <div className="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
       <div 

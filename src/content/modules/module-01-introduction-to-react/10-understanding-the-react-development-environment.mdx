@@ -6,17 +6,17 @@ moduleId: "module-01"
 moduleNumber: "01"
 category: "Fundamentals"
 summary: "ការយល់ដឹងពី React DevTools, React StrictMode និងការស្វែងយល់ពី double-rendering behavior ក្នុង development។"
-proTip: "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅក្នុង `useEffect` កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីផ្ទៀងផ្ទាត់ cleanup function របស់អ្នកប៉ុណ្ណោះ!"
+proTip: "ប្រសិនបើអ្នកឃើញ `console.log` ដំណើរការពីរដងនៅពេល component render ដំបូង កុំបារម្ភ នេះគឺជាចេតនារបស់ React StrictMode ដើម្បីជួយស្វែងរក side-effects និងកំហុសឆ្គងដំបូងប៉ុណ្ណោះ!"
 codeTitle: "React StrictMode Wrapper"
 ---
 
 # Understanding the React Development Environment
 
-នៅក្នុង development mode ឧបករណ៍ React StrictMode នឹង mount និង unmount components ចំនួនពីរដងដោយចេតនា ដើម្បីជួយស្វែងរក accidental side-effects និងកន្លែងដែលខ្វះ cleanup functions នៅក្នុង effects។
+នៅក្នុង development mode ឧបករណ៍ React StrictMode នឹងដំណើរការ render components ចំនួនពីរដងដោយចេតនា ដើម្បីជួយស្វែងរក accidental side-effects និងកំហុសឆ្គងផ្សេងៗក្នុងកូដ។
 
 ### Key Concepts & Rules:
 
-- StrictMode ដំណើរការ effects ពីរដងក្នុង dev mode ដើម្បីពង្រឹងគោលការណ៍ idempotency នៃកូដ។
+- StrictMode ដំណើរការ component rendering ពីរដងក្នុង dev mode ដើម្បីធានាភាពត្រឹមត្រូវនៃកូដ។
 - React Developer Tools browser extension អនុញ្ញាតឱ្យ developer ពិនិត្យមើល props, state, និង render timeline នៃ components នីមួយៗបានយ៉ាងងាយស្រួល។
 
 ### Code Example: React StrictMode Wrapper

@@ -15,13 +15,15 @@ codeTitle: "Expressions Inside JSX"
 
 ### Key Concepts & Rules:
 
-- Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ array methods (ដូចជា `.map()`, `.filter()`) ជំនួសវិញ។
+- Statements ដូចជា `if`, `for`, `while` មិនអាចសរសេរនៅខាងក្នុង `{}` បានឡើយ។ ត្រូវប្រើ ternary operators ឬ helper functions ជំនួសវិញ (ចំណែកវិធី loop បង្ហាញទិន្នន័យ យើងនឹងរៀននៅ Module 05)។
 - Numbers និង strings នឹងត្រូវបង្ហាញលើ UI ដោយផ្ទាល់ ចំណែកឯ booleans (`true`/`false`), `null`, និង `undefined` ត្រូវបាន React ignore (មិនបង្ហាញលើអេក្រង់ឡើយ)។
 
 ### Code Example: Expressions Inside JSX
 
 ```jsx
-export function UserGreeting({ username, points }) {
+export function UserGreeting() {
+  const username = "Sophea";
+  const points = 100;
   const multiplier = 1.5;
 
   return (

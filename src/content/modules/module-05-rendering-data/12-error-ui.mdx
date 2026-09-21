@@ -5,34 +5,41 @@ title: "Error UI"
 moduleId: "module-05"
 moduleNumber: "05"
 category: "Core Concepts"
-summary: "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និងប៊ូតុង retry ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។"
-proTip: "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយដំណោះស្រាយ ដូចជាប៊ូតុង 'Retry' ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមម្តងទៀតបាន។"
-codeTitle: "Error Recovery Component"
+summary: "ការបង្ហាញសារប្រាប់ដំណឹងអំពី error និង conditional UI ដើម្បីផ្តល់បទពិសោធន៍ល្អដល់អ្នកប្រើប្រាស់។"
+proTip: "កុំគ្រាន់តែបង្ហាញពាក្យថា 'Something went wrong'។ ចូរផ្តល់នូវ error message ដែលជាក់លាក់ រួមជាមួយការណែនាំដោះស្រាយច្បាស់លាស់។"
+codeTitle: "Conditional Error UI Component"
 ---
 
 # Error UI
 
-នៅពេលដែល network requests ឬ data fetching ជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI ដែលច្បាស់លាស់ ផ្តល់ព័ត៌មានមានប្រយោជន៍ និងភ្ជាប់មកជាមួយប៊ូតុង retry ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចទាញយកទិន្នន័យឡើងវិញបាន។
+នៅពេលដែលដំណើរការទាញយកទិន្នន័យជួបការបរាជ័យ (failed) កម្មវិធីត្រូវតែបង្ហាញនូវផ្ទាំង Error UI តាមរយៈ conditional rendering ដើម្បីផ្តល់ព័ត៌មានមានប្រយោជន៍ដល់អ្នកប្រើប្រាស់។
 
 ### Key Concepts & Rules:
 
+- ប្រើ conditional rendering ដើម្បីប្តូររវាង Normal UI និង Error UI ផ្អែកលើ status នៃទិន្នន័យ។
 - បង្ហាញ error message ដែលងាយស្រួលយល់ និងមិនស្មុគស្មាញពេកសម្រាប់អ្នកប្រើប្រាស់ទូទៅ។
-- ភ្ជាប់មកជាមួយ retry callback function ជានិច្ច ដើម្បីឱ្យអ្នកប្រើប្រាស់អាចព្យាយាមទាញយកទិន្នន័យម្តងទៀតដោយមិនចាំបាច់ reload ទំព័រទាំងមូល។
-- ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ជាមួយនឹង icon សមរម្យដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ។
+- ប្រើពណ៌សម្គាល់សមស្រប (ដូចជា tông ពណ៌ rose ឬ red) ដើម្បីឱ្យអ្នកប្រើប្រាស់ចាប់អារម្មណ៍ភ្លាមៗ (ចំណែកឯ button interactions នឹងត្រូវសិក្សានៅ Module 06)។
 
-### Code Example: Error Recovery Component
+### Code Example: Conditional Error UI Component
 
 ```jsx
-export function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
+export function DataDisplay({ isError, errorMessage, data }) {
+  // Conditional Error UI rendering
+  if (isError) {
+    return (
+      <div className="p-5 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center">
+        <p className="text-rose-300 font-medium">{errorMessage}</p>
+        <p className="mt-2 text-xs text-rose-400">
+          Please check your connection and refresh the page.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl text-center">
-      <p className="text-rose-300 font-medium">{message}</p>
-      <button 
-        onClick={onRetry}
-        className="mt-3 px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white rounded text-xs font-semibold"
-      >
-        Retry Request
-      </button>
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl">
+      <h3 className="text-white font-bold">{data.title}</h3>
+      <p className="text-slate-400 text-sm mt-1">{data.description}</p>
     </div>
   );
 }

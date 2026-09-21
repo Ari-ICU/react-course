@@ -12,27 +12,43 @@ codeTitle: "Unidirectional Data Flow Example"
 
 # One-way Data Flow
 
-នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) តាមរយៈ props ជានិច្ច។ ប្រសិនបើ child component ត្រូវការកែប្រែទិន្នន័យ វានឹងហៅ callback function ដែល parent បានបញ្ជូនមក ដើម្បីស្នើសុំឱ្យ parent ធ្វើបច្ចុប្បន្នភាព state របស់ខ្លួន ហើយទិន្នន័យថ្មីនោះនឹងហូរចុះក្រោមមកវិញ។
+នៅក្នុង React ទិន្នន័យតែងតែហូរចុះក្រោម (Strictly Downwards) ពី Parent Component ទៅកាន់ Child Component តាមរយៈ props ជានិច្ច។ Child component មិនអាចផ្លាស់ប្តូរទិន្នន័យរបស់ parent ដោយផ្ទាល់បានឡើយ ដែលធ្វើឱ្យលំហូរទិន្នន័យមានភាពច្បាស់លាស់ និងអាចទស្សន៍ទាយបាន (Predictable)។
 
 ### Key Concepts & Rules:
 
-- ធ្វើឱ្យការផ្លាស់ប្តូរ state មានភាពច្បាស់លាស់ និងងាយស្រួលតាមដាន (traceable) តាមរយៈ React DevTools។
-- ការពារបញ្ហា synchronization conflicts និង circular dependencies ដែលតែងកើតឡើងលើ two-way data-binding frameworks។
-- Single Source of Truth៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងពិតប្រាកដតែមួយគត់ក្នុង component tree។
+- **Data flows down**៖ Parent ជាអ្នកកាន់កាប់ទិន្នន័យដើម ហើយបញ្ជូនវាចុះក្រោមទៅកាន់ child components ជា props។
+- **Read-only props**៖ Child components ទទួលយក props មកបង្ហាញ ប៉ុន្តែមិនអាច mutate ឬកែប្រែ props ទាំងនោះបានឡើយ។
+- **Single Source of Truth**៖ ទិន្នន័យនីមួយៗគួរតែមានកន្លែងគ្រប់គ្រងដើមតែមួយគត់ក្នុង component tree (ចំណែកឯ dynamic state នឹងត្រូវសិក្សានៅ Module 07)។
 
 ### Code Example: Unidirectional Data Flow Example
 
 ```jsx
-// Parent maintains single source of truth
-export function CounterApp() {
-  const [count, setCount] = useState(0);
+// 1. Child component receives data from its parent
+function UserBadge({ username, role }) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="font-semibold text-white">{username}</span>
+      <span className="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+        {role}
+      </span>
+    </div>
+  );
+}
+
+// 2. Parent component owns data and passes it strictly downwards
+export function UserProfileCard() {
+  const user = {
+    username: "Dara Som",
+    role: "Senior Developer",
+    department: "Engineering",
+  };
 
   return (
-    <div className="space-y-4">
-      {/* Data flows down as props */}
-      <CountDisplay value={count} />
-      {/* Callback flows down to trigger state change */}
-      <CountControls onIncrement={() => setCount(c => c + 1)} onReset={() => setCount(0)} />
+    <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+      <h3 className="text-slate-400 text-xs uppercase tracking-wider">User Information</h3>
+      {/* Data flows down strictly as props */}
+      <UserBadge username={user.username} role={user.role} />
+      <p className="text-sm text-slate-300">Department: {user.department}</p>
     </div>
   );
 }
