@@ -22,12 +22,48 @@ codeTitle: "REST Architecture Model"
 ### Code Example: REST Architecture Model
 
 ```jsx
-// 1. Client (React) ផ្ញើ HTTP Request ទៅកាន់ Server:
-// GET /api/v1/products -> Headers: { Authorization: "Bearer ..." }
+import React, { useState, useEffect } from 'react';
 
-// 2. Server ដំណើរការ Business Logic និង Query Database
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+}
 
-// 3. Server ឆ្លើយតបមកវិញនូវ JSON Response:
-// Status: 200 OK
-// Body: [ { "id": 1, "title": "React Masterclass", "price": 49 } ]
+export function ProductCatalogREST() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // 1. Client initiates HTTP GET request to backend REST endpoint
+    fetch('https://api.example.com/v1/products')
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+        return res.json();
+      })
+      .then((data: Product[]) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p className="text-slate-400">Loading catalog...</p>;
+  if (error) return <p className="text-rose-400">Error: {error}</p>;
+
+  return (
+    <ul className="space-y-2">
+      {products.map(p => (
+        <li key={p.id} className="flex justify-between p-3 bg-slate-900 rounded-lg text-white">
+          <span>{p.title}</span>
+          <span className="font-mono text-emerald-400">${p.price}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 ```

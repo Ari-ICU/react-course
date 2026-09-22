@@ -6,7 +6,7 @@ moduleId: "module-17"
 moduleNumber: "17"
 category: "State & Architecture"
 summary: "ការជ្រើសរើសឧបករណ៍ត្រឹមត្រូវរវាង Context API និង Zustand អាស្រ័យលើទំហំ និងភាពញឹកញាប់នៃការ Update State។"
-codeTitle: "Installing Zustand"
+codeTitle: "Context vs Zustand Selector Comparison"
 ---
 
 # When to Use Context vs Zustand
@@ -19,9 +19,32 @@ codeTitle: "Installing Zustand"
 - **Zustand**: ដំណើរការលឿន គ្មាន Provider Hell គាំទ្រ Fine-grained Selectors និង Middleware។
 - មិនចាំបាច់រុំ `<Provider>` នៅជុំវិញ Component Tree ឡើយនៅពេលប្រើ Zustand។
 
-### Code Example: Installing Zustand
+### Code Example: Context vs Zustand Selector Comparison
 
-```bash
-# ដំឡើង Zustand នៅក្នុងគម្រោងរបស់អ្នក
-npm install zustand
+```jsx
+// ❌ Context API Pitfall:
+// When 'count' changes in Context, ALL consumers re-render even if they only need 'theme'!
+// const { theme } = useContext(AppContext); // Re-renders on any context property update!
+
+// ✅ Zustand Selector Power:
+// Component subscribes ONLY to 'theme'. Changes to 'count' will NOT cause this component to re-render!
+import { create } from 'zustand';
+
+interface AppStore {
+  theme: 'light' | 'dark';
+  count: number;
+  increment: () => void;
+}
+
+export const useAppStore = create<AppStore>((set) => ({
+  theme: 'dark',
+  count: 0,
+  increment: () => set((s) => ({ count: s.count + 1 })),
+}));
+
+export function ThemeOnlyBadge() {
+  // Fine-grained selector: zero wasted re-renders!
+  const theme = useAppStore((state) => state.theme);
+  return <span className="px-2 py-1 bg-slate-800 text-xs text-white">Theme: {theme}</span>;
+}
 ```

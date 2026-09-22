@@ -6,7 +6,7 @@ moduleId: "module-15"
 moduleNumber: "15"
 category: "Routing & Network"
 summary: "ស្វែងយល់ពីបណ្ណាល័យគ្រប់គ្រង Asynchronous Server State ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ React (ពីមុនហៅថា React Query)។"
-codeTitle: "Installing TanStack Query v5"
+codeTitle: "TanStack Query Quickstart Setup"
 ---
 
 # TanStack Query Introduction
@@ -19,9 +19,39 @@ TanStack Query (ពីមុនហៅថា React Query) គឺជាបណ្�
 - មានប្រព័ន្ធ Caching ដ៏ឆ្លាតវៃ និង Garbage Collection ដោយស្វ័យប្រវត្តិ។
 - គាំទ្រការ Refresh ទិន្នន័យដោយស្វ័យប្រវត្តិនៅពេល User ត្រឡប់មកកាន់ផ្ទាំង Browser វិញ (Window Focus)។
 
-### Code Example: Installing TanStack Query v5
+### Code Example: TanStack Query Quickstart Setup
 
-```bash
-# ដំឡើង TanStack Query v5 និង DevTools សម្រាប់ React
-npm install @tanstack/react-query @tanstack/react-query-devtools
+```jsx
+// 1. Install TanStack Query:
+// npm install @tanstack/react-query @tanstack/react-query-devtools
+
+import React from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
+function CourseLessonList() {
+  // Declarative query handles loading, errors, caching, and retries automatically!
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['lessons'],
+    queryFn: async () => {
+      const res = await fetch('/api/lessons');
+      if (!res.ok) throw new Error('Network error');
+      return res.json();
+    },
+  });
+
+  if (isLoading) return <div>Loading cached data...</div>;
+  if (isError) return <div>Failed to load: {error.message}</div>;
+
+  return <div>Lessons loaded: {data.length} items</div>;
+}
+
+export function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <CourseLessonList />
+    </QueryClientProvider>
+  );
+}
 ```

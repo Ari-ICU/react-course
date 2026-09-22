@@ -22,9 +22,38 @@ codeTitle: "Modern Separation of State Responsibilities"
 ### Code Example: Modern Separation of State Responsibilities
 
 ```jsx
-// 1. Server Data -> គ្រប់គ្រងដោយ TanStack Query (Query Cache)
-const { data: products } = useQuery({ queryKey: ['products'], queryFn: fetchProducts });
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { create } from 'zustand';
 
-// 2. Client UI State -> គ្រប់គ្រងដោយ Zustand (Global Client Store)
-const { cart, addToCart } = useCartStore();
+// 1. Client UI State: Managed synchronously via Zustand (No loading spinners needed)
+interface UIState {
+  isCartDrawerOpen: boolean;
+  toggleCartDrawer: () => void;
+}
+export const useUIStore = create<UIState>((set) => ({
+  isCartDrawerOpen: false,
+  toggleCartDrawer: () => set((state) => ({ isCartDrawerOpen: !state.isCartDrawerOpen })),
+}));
+
+// 2. Component coordinating Server State & Client State
+export function StorefrontHeader() {
+  // Server State: Cached, background refreshed, handles network state
+  const { data: user } = useQuery({
+    queryKey: ['authUser'],
+    queryFn: async () => ({ name: 'Sophea', role: 'Developer' }),
+  });
+
+  // Client UI State: Fast, local interface interaction
+  const { isCartDrawerOpen, toggleCartDrawer } = useUIStore();
+
+  return (
+    <header className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex justify-between">
+      <span className="text-white">Logged in as: {user?.name || 'Guest'}</span>
+      <button onClick={toggleCartDrawer} className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+        Cart ({isCartDrawerOpen ? 'Open' : 'Closed'})
+      </button>
+    </header>
+  );
+}
 ```

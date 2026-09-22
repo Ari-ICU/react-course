@@ -6,7 +6,7 @@ moduleId: "module-16"
 moduleNumber: "16"
 category: "State & Architecture"
 summary: "យន្តការស្នូលរបស់ React សម្រាប់បញ្ជូនទិន្នន័យទៅកាន់គ្រប់ Components ទាំងអស់នៅក្នុង Tree ដោយមិនចាំបាច់ឆ្លងកាត់ Props។"
-codeTitle: "Context Imports"
+codeTitle: "ThemeContext Definition & Consumption"
 ---
 
 # What is Context?
@@ -19,10 +19,38 @@ codeTitle: "Context Imports"
 - ស័ក្តិសមបំផុតសម្រាប់ទិន្នន័យសកលដែលមានការផ្លាស់ប្តូរតិចតួច (Low-frequency updates)។
 - ជួយដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាព។
 
-### Code Example: Context Imports
+### Code Example: ThemeContext Definition & Consumption
 
 ```jsx
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-// Context គឺជាយន្តការដើមរបស់ React មិនត្រូវការ npm package បន្ថែមឡើយ
+// 1. Create the Context object
+const ThemeContext = createContext<{ theme: string; toggleTheme: () => void }>({
+  theme: 'dark',
+  toggleTheme: () => {},
+});
+
+// 2. Deep Leaf Component consumes context directly without prop drilling
+function ThemeStatus() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  return (
+    <button onClick={toggleTheme} className="px-3 py-1.5 bg-slate-800 text-white rounded text-sm">
+      Active Theme: {theme} (Click to Toggle)
+    </button>
+  );
+}
+
+// 3. Provider Component wraps child hierarchy
+export function ContextDemoApp() {
+  const [theme, setTheme] = useState('dark');
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl">
+        <ThemeStatus />
+      </div>
+    </ThemeContext.Provider>
+  );
+}
 ```
