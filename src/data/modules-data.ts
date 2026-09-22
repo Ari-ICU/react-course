@@ -370,7 +370,7 @@ export const modulesData: ModuleItem[] = [
           "មិនត្រូវសរសេរ `items.length && <List />` ឡើយ -> ត្រូវប្តូរមកប្រើ `items.length > 0 && <List />` ឬប្រើ ternary `items.length ? <List /> : null`។",
           "ជៀសវាងការប្រើប្រាស់ array index ជា `key` នៅពេលដែលបញ្ជីទិន្នន័យអាចមានការតម្រៀបឡើងវិញ (reorder) ឬលុបចេញ (remove)។"
         ],
-        "codeSnippet": "// ❌ Pitfall: Renders the number \"0\" onto the webpage!\n{messages.length && <Badge count={messages.length} />}\n\n// ✅ Fix: Use explicit boolean comparison:\n{messages.length > 0 && <Badge count={messages.length} />}\n\n// ✅ Alternative: Use ternary operator:\n{messages.length > 0 ? <Badge count={messages.length} /> : null}",
+        "codeSnippet": "import React, { useState } from 'react';\n\nexport function MessageNotificationCenter() {\n  const [messages, setMessages] = useState<string[]>([]);\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <h4 className=\"text-white font-bold\">Notification Inbox</h4>\n\n      {/* ❌ PITFALL: When messages is empty (length === 0), JavaScript renders the number \"0\" onto the screen!\n          <div>{messages.length && <span>You have new messages</span>}</div>\n      */}\n\n      {/* ✅ FIX 1: Explicit boolean comparison > 0 */}\n      <div>\n        {messages.length > 0 && (\n          <span className=\"px-2 py-1 bg-blue-600 text-white text-xs rounded-full\">\n            {messages.length} New Messages\n          </span>\n        )}\n      </div>\n\n      {/* ✅ FIX 2: Ternary operator */}\n      <p className=\"text-xs text-slate-400\">\n        {messages.length > 0\n          ? 'Click to view unread conversations'\n          : 'Inbox is completely clear'}\n      </p>\n\n      <button\n        onClick={() => setMessages(prev => [...prev, 'New alert'])}\n        className=\"px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs\"\n      >\n        Receive Test Message\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "The Logical AND Zero Bug"
       }
@@ -440,7 +440,7 @@ export const modulesData: ModuleItem[] = [
           "ដាក់ឈ្មោះ helper/child components ឱ្យមានលំដាប់លំដោយសមហេតុផលដូចជា `CardHeader`, `CardBody`, `CardFooter`។",
           "ដាក់ឈ្មោះឱ្យឆ្លុះបញ្ចាំងពីមុខងារជាក់ស្តែង (Domain-driven) ជៀសវាងឈ្មោះទូទៅពេកដូចជា `Item` ឬ `Data`។"
         ],
-        "codeSnippet": "// ❌ Incorrect: Lowercase treated as unknown HTML element\n// function userProfile() { return <div>User</div>; }\n\n// ✅ Correct: PascalCase recognized as React component\nexport function UserProfile() {\n  return <div className=\"p-4 bg-slate-900 rounded\">User Profile</div>;\n}",
+        "codeSnippet": "import React from 'react';\n\n// ❌ INCORRECT: Lowercase is treated by JSX parser as native HTML tag:\n// function userAvatar() { return <img>...</img>; } // JSX evaluates <userAvatar /> as <useravatar></useravatar>\n\n// ✅ CORRECT: PascalCase is recognized by React as a custom component:\nfunction UserAvatar({ src, alt }: { src: string; alt: string }) {\n  return <img src={src} alt={alt} className=\"w-10 h-10 rounded-full border border-slate-700\" />;\n}\n\n// ✅ Predictable Domain-Driven naming hierarchy:\nexport function UserProfileCard() {\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl flex items-center gap-3\">\n      <UserAvatar src=\"/avatars/dara.jpg\" alt=\"Dara Chan\" />\n      <div>\n        <h4 className=\"text-white font-bold text-sm\">Dara Chan</h4>\n        <p className=\"text-xs text-slate-400\">Full-Stack Engineer</p>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "PascalCase Naming Rule"
       },
@@ -892,7 +892,7 @@ export const modulesData: ModuleItem[] = [
           "ជួយឱ្យកូដ JSX មានភាពខ្លី និងមានភាព declarative ខ្ពស់។",
           "អាចប្រើសម្រាប់កំណត់ dynamic CSS class names ផ្អែកលើ state ផងដែរ។"
         ],
-        "codeSnippet": "<button className={isActive ? \"bg-blue-600 text-white\" : \"bg-slate-800 text-slate-400\"}>\n  {isActive ? \"Currently Selected\" : \"Select Option\"}\n</button>",
+        "codeSnippet": "import React, { useState } from 'react';\n\nexport function SubscriptionToggle() {\n  const [isSubscribed, setIsSubscribed] = useState(false);\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <div className=\"flex items-center justify-between\">\n        <span className=\"text-white text-sm font-medium\">Newsletter Status</span>\n        \n        {/* 1. Ternary operator used for dynamic class names and button text */}\n        <button\n          onClick={() => setIsSubscribed(prev => !prev)}\n          className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${\n            isSubscribed\n              ? \"bg-emerald-600 hover:bg-emerald-700 text-white\"\n              : \"bg-slate-800 hover:bg-slate-700 text-slate-300\"\n          }`}\n        >\n          {isSubscribed ? \"Subscribed ✓\" : \"Subscribe Now\"}\n        </button>\n      </div>\n\n      {/* 2. Ternary operator used for conditional UI blocks */}\n      <p className=\"text-xs text-slate-400\">\n        {isSubscribed\n          ? \"You will receive updates for every new React module.\"\n          : \"Subscribe to receive weekly React exercises and tips.\"}\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Inline Ternary Operator"
       },
@@ -992,7 +992,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រសិនបើអ្នកត្រូវការបញ្ជូន arguments បន្ថែម ចូរប្រើ inline arrow function៖ `onClick={() => handleDelete(id)}`។",
           "ការសរសេរ `onClick={handleClick()}` នឹង return តម្លៃរបស់ function ទៅឱ្យ onClick ដែលមិនត្រឹមតែរត់ខុសពេលនោះទេ ថែមទាំងធ្វើឱ្យ event លែងដំណើរការទៀតផង។"
         ],
-        "codeSnippet": "// ❌ Wrong: handleClick runs immediately on render!\n// <button onClick={handleClick()}>Click</button>\n\n// ✅ Correct: Function reference passed\n<button onClick={handleClick}>Click</button>\n\n// ✅ Correct: Arrow function wrapper for arguments\n<button onClick={() => handleDelete(item.id)}>Delete</button>",
+        "codeSnippet": "import { useState } from 'react';\n\nexport function EventHandlerDemo() {\n  const [log, setLog] = useState('No action yet');\n\n  // Function reference to pass\n  function handleDirectClick() {\n    setLog('Direct click triggered via reference!');\n  }\n\n  // Handler accepting custom parameter\n  function handleDelete(id) {\n    setLog(`Deleted item #${id} via arrow wrapper!`);\n  }\n\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <p className=\"text-sm font-mono text-emerald-400\">Status: {log}</p>\n\n      <div className=\"flex flex-wrap gap-3\">\n        {/* ✅ Correct: Pass function reference without parentheses */}\n        <button\n          onClick={handleDirectClick}\n          className=\"px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium\"\n        >\n          onClick={'{handleDirectClick}'}\n        </button>\n\n        {/* ✅ Correct: Arrow function to pass arguments */}\n        <button\n          onClick={() => handleDelete(101)}\n          className=\"px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-medium\"\n        >\n          onClick={'{\\(\\) => handleDelete\\(101\\)}'}\n        </button>\n\n        {/* ❌ INCORRECT: handleDirectClick() runs immediately during render!\n            <button onClick={handleDirectClick()}>Wrong!</button>\n        */}\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Function Reference vs Invocation"
       },
@@ -1082,7 +1082,7 @@ export const modulesData: ModuleItem[] = [
           "ជៀសវាងការសរសេរ `onClick={handleAction(item.id)}` ដាច់ខាត ព្រោះវានឹងរត់កូដភ្លាមៗពេល render។",
           "វិធីសាស្ត្រនេះជួយឱ្យកូដមានភាពសាមញ្ញ ងាយយល់ និងស្អាតបាត។"
         ],
-        "codeSnippet": "<button onClick={(e) => handleArchive(item.id, e)}>\n  Archive Item\n</button>",
+        "codeSnippet": "import React, { useState } from 'react';\n\ninterface Task {\n  id: string;\n  title: string;\n  isComplete: boolean;\n}\n\nexport function TaskActionList() {\n  const [tasks, setTasks] = useState<Task[]>([\n    { id: 't-1', title: 'Review PR #42', isComplete: false },\n    { id: 't-2', title: 'Setup Vitest suite', isComplete: true },\n  ]);\n\n  // Handler receiving custom item parameters + SyntheticEvent\n  const handleToggleStatus = (id: string, currentStatus: boolean, e: React.MouseEvent) => {\n    e.stopPropagation(); // Access event methods cleanly\n    setTasks(prev => prev.map(t => t.id === id ? { ...t, isComplete: !currentStatus } : t));\n  };\n\n  return (\n    <ul className=\"space-y-2\">\n      {tasks.map((task) => (\n        <li key={task.id} className=\"flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded-lg\">\n          <span className={task.isComplete ? \"line-through text-slate-500\" : \"text-slate-200\"}>\n            {task.title}\n          </span>\n          {/* Passing custom arguments via inline arrow function */}\n          <button\n            onClick={(e) => handleToggleStatus(task.id, task.isComplete, e)}\n            className=\"px-3 py-1 text-xs font-semibold rounded bg-blue-600 hover:bg-blue-700 text-white\"\n          >\n            {task.isComplete ? \"Undo\" : \"Complete\"}\n          </button>\n        </li>\n      ))}\n    </ul>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Passing Custom Parameters"
       },
@@ -1198,7 +1198,7 @@ export const modulesData: ModuleItem[] = [
           "ដាច់ខាតកុំហៅ hooks នៅខាងក្នុង loops, conditions, ឬ nested functions។",
           "នៅក្នុង TypeScript អ្នកអាចកំណត់ Generic type ដូចជា `useState<User | null>(null)` ដើម្បីធានា Type Safety។"
         ],
-        "codeSnippet": "const [isOpen, setIsOpen] = useState(false);\nconst [user, setUser] = useState<User | null>(null);\nconst [tags, setTags] = useState<string[]>([]);",
+        "codeSnippet": "import React, { useState } from 'react';\n\ninterface User {\n  name: string;\n  role: 'student' | 'instructor';\n}\n\nexport function UserProfileEditor() {\n  // 1. Primitive boolean state\n  const [isOpen, setIsOpen] = useState<boolean>(false);\n\n  // 2. Object state with TypeScript generic union\n  const [user, setUser] = useState<User | null>({\n    name: 'Sophea',\n    role: 'student',\n  });\n\n  // 3. Array state\n  const [tags, setTags] = useState<string[]>(['react', 'frontend']);\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <h4 className=\"text-white font-bold\">{user?.name} ({user?.role})</h4>\n      <p className=\"text-slate-400 text-sm\">Tags: {tags.join(', ')}</p>\n      \n      <button\n        onClick={() => setIsOpen(!isOpen)}\n        className=\"px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm\"\n      >\n        Toggle Editor ({isOpen ? 'Open' : 'Closed'})\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "useState TypeScript Declarations"
       },
@@ -1213,7 +1213,7 @@ export const modulesData: ModuleItem[] = [
           "ធានាថានឹងទាញយកតម្លៃ state ថ្មីបំផុតពិតប្រាកដ ទោះបីជាហៅច្រើនដងជាប់គ្នាក្នុង event តែមួយក៏ដោយ។",
           "ជួយការពារ bugs នៅពេលដំណើរការក្នុង asynchronous callbacks (ដូចជា `setTimeout` ឬ `fetch`)។"
         ],
-        "codeSnippet": "// ⚠️ Problem with direct state:\n// setCount(count + 1);\n// setCount(count + 1); // count is still stale; only increments by 1!\n\n// ✅ Solution: Functional updates\nsetCount(prev => prev + 1);\nsetCount(prev => prev + 1); // Increments by 2 safely!",
+        "codeSnippet": "import React, { useState } from 'react';\n\nexport function BatchCounter() {\n  const [count, setCount] = useState(0);\n\n  // ❌ Problematic: Multiple direct updates read stale closure count\n  const handleStaleIncrement = () => {\n    setCount(count + 1);\n    setCount(count + 1); // Reads same stale count; only increments by 1!\n  };\n\n  // ✅ Solution: Functional updater gets pending latest state\n  const handleBatchIncrement = () => {\n    setCount(prev => prev + 1);\n    setCount(prev => prev + 1); // Correctly increments by +2!\n  };\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <h3 className=\"text-2xl font-bold text-white\">Count: {count}</h3>\n      <div className=\"flex gap-3\">\n        <button\n          onClick={handleStaleIncrement}\n          className=\"px-3 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-sm\"\n        >\n          Direct (+1 Bug)\n        </button>\n        <button\n          onClick={handleBatchIncrement}\n          className=\"px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold\"\n        >\n          Functional Updater (+2 Safe)\n        </button>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Functional State Updates"
       },
@@ -1228,7 +1228,7 @@ export const modulesData: ModuleItem[] = [
           "ត្រូវតែ return object ឬ array ថ្មីជានិច្ចតាមរយៈ Spread Operator (`...`) ឬ Immutable methods។",
           "រាល់ការផ្លាស់ប្តូរ state ដោយជោគជ័យនឹងជំរុញឱ្យ component និង child components របស់វា re-render ឡើងវិញ។"
         ],
-        "codeSnippet": "// ❌ Bug: Mutating array in place fails to re-render\n/*\nitems.push(newItem);\nsetItems(items); // Identical reference! React does nothing.\n*/\n\n// ✅ Fix: Create new array reference via spread\nsetItems(prev => [...prev, newItem]);",
+        "codeSnippet": "import React, { useState } from 'react';\n\nexport function ImmutableItemList() {\n  const [items, setItems] = useState<string[]>(['Learn JSX', 'Master Hooks']);\n\n  // ❌ Bug: Mutating array in-place keeps identical memory reference\n  // Object.is(items, items) === true -> React skips re-render!\n  const handleMutateBug = () => {\n    // items.push('New Item');\n    // setItems(items); // Does NOT update the UI!\n  };\n\n  // ✅ Correct: Create a new array reference via spread operator\n  const handleImmutableAdd = () => {\n    const newItem = `Item #${items.length + 1}`;\n    setItems(prev => [...prev, newItem]); // New reference -> triggers re-render!\n  };\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <ul className=\"list-disc pl-5 text-slate-300 text-sm space-y-1\">\n        {items.map((item, idx) => (\n          <li key={idx}>{item}</li>\n        ))}\n      </ul>\n      <button\n        onClick={handleImmutableAdd}\n        className=\"px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold\"\n      >\n        Add Item (Immutable Spread)\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Immutability & Object.is() Comparison"
       },
@@ -1274,7 +1274,7 @@ export const modulesData: ModuleItem[] = [
           "ដាក់បញ្ចូលគ្នាជា Object លុះត្រាតែវាជា fields នៃ Form តែមួយ ឬតម្លៃដែលផ្លាស់ប្តូរទន្ទឹមគ្នាជានិច្ច។",
           "ជួយជៀសវាងការ spread properties ច្រើនជាន់ដោយមិនចាំបាច់។"
         ],
-        "codeSnippet": "// Good: Independent concerns kept separate\nconst [searchQuery, setSearchQuery] = useState('');\nconst [currentPage, setCurrentPage] = useState(1);\nconst [isLoading, setIsLoading] = useState(false);",
+        "codeSnippet": "import React, { useState } from 'react';\n\nexport function UserSearchFilter() {\n  // Independent concerns separated into distinct state slices:\n  const [query, setQuery] = useState('');\n  const [roleFilter, setRoleFilter] = useState('all');\n  const [isSearching, setIsSearching] = useState(false);\n\n  const handleReset = () => {\n    setQuery('');\n    setRoleFilter('all');\n    setIsSearching(false);\n  };\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 gap-3\">\n        <input\n          type=\"text\"\n          value={query}\n          onChange={(e) => setQuery(e.target.value)}\n          placeholder=\"Search by name...\"\n          className=\"px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm\"\n        />\n\n        <select\n          value={roleFilter}\n          onChange={(e) => setRoleFilter(e.target.value)}\n          className=\"px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm\"\n        >\n          <option value=\"all\">All Roles</option>\n          <option value=\"admin\">Admins</option>\n          <option value=\"member\">Members</option>\n        </select>\n      </div>\n\n      <div className=\"flex items-center justify-between text-xs text-slate-400\">\n        <span>Active Filter: {roleFilter} | Query: \"{query}\"</span>\n        <button onClick={handleReset} className=\"text-blue-400 hover:underline\">\n          Reset All\n        </button>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Multiple State Slices"
       },
@@ -1334,7 +1334,7 @@ export const modulesData: ModuleItem[] = [
           "**Single Source of Truth**៖ កុំចម្លង props ទៅដាក់ក្នុង state លុះត្រាតែអ្នកមានបំណងចង់ឱ្យវាដើរតួជា initial value ស៊ីដាច់ដោយឡែក។",
           "រក្សា state ឱ្យនៅជាទម្រង់សាមញ្ញ និងប្រើ derived values ជំនួសការបង្កើត state ស្ទួន។"
         ],
-        "codeSnippet": "// State Colocation Rule:\n// If only ComponentA needs 'isModalOpen', keep it inside ComponentA,\n// NOT in the global store or App root!",
+        "codeSnippet": "import React, { useState } from 'react';\n\n// 1. Child component collocates its own toggle state locally\nfunction SearchModal() {\n  const [isOpen, setIsOpen] = useState(false); // Colocated: App root does not need this!\n\n  return (\n    <div>\n      <button onClick={() => setIsOpen(true)} className=\"text-sm text-blue-400\">\n        Open Search\n      </button>\n      {isOpen && (\n        <div className=\"fixed inset-0 bg-black/60 flex items-center justify-center p-4\">\n          <div className=\"bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-3\">\n            <h3 className=\"text-white font-bold\">Search Modal</h3>\n            <button onClick={() => setIsOpen(false)} className=\"px-3 py-1 bg-slate-700 text-white rounded\">\n              Close\n            </button>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n\n// 2. Compute Derived State instead of storing redundant state variables:\nexport function UserProfileCard() {\n  const [firstName, setFirstName] = useState('Dara');\n  const [lastName, setLastName] = useState('Chan');\n\n  // ✅ Derived value computed on render (No redundant useState needed!):\n  const fullName = `${firstName} ${lastName}`;\n\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2\">\n      <h4 className=\"text-white font-semibold\">User: {fullName}</h4>\n      <SearchModal />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "State Colocation Rule"
       }
@@ -1565,7 +1565,7 @@ export const modulesData: ModuleItem[] = [
           "Child Component ទទួលបាន Props ក្នុងលក្ខណៈ Read-only (មិនអាចកែប្រែតម្លៃដើមបានឡើយ)។",
           "នៅពេលដែលទិន្នន័យនៅក្នុង Parent ផ្លាស់ប្តូរ Child Component នឹងធ្វើការ re-render ដោយស្វ័យប្រវត្តិតាមតម្លៃថ្មីនោះ។"
         ],
-        "codeSnippet": "<ChildComponent message=\"Hello from parent!\" count={42} />",
+        "codeSnippet": "import React from 'react';\n\n// 1. Child Component receives data strictly via props (Read-only)\ninterface CourseCardProps {\n  title: string;\n  lessonCount: number;\n  level: 'Beginner' | 'Advanced';\n}\n\nfunction CourseCard({ title, lessonCount, level }: CourseCardProps) {\n  return (\n    <div className=\"p-4 bg-slate-800 border border-slate-700 rounded-xl space-y-1.5\">\n      <div className=\"flex items-center justify-between\">\n        <h4 className=\"text-white font-bold\">{title}</h4>\n        <span className=\"text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-medium\">\n          {level}\n        </span>\n      </div>\n      <p className=\"text-sm text-slate-400\">{lessonCount} lessons included</p>\n    </div>\n  );\n}\n\n// 2. Parent Component owns data and passes it down\nexport function CourseListParent() {\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-4\">\n      <h3 className=\"text-lg font-bold text-white\">Available Courses</h3>\n      <div className=\"space-y-3\">\n        {/* Passing props down in unidirectional flow */}\n        <CourseCard title=\"React 19 Essentials\" lessonCount={24} level=\"Beginner\" />\n        <CourseCard title=\"Zustand & TanStack Query\" lessonCount={18} level=\"Advanced\" />\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Parent to Child Data Flow"
       },
@@ -1580,7 +1580,7 @@ export const modulesData: ModuleItem[] = [
           "Child ធ្វើការហៅ function នោះនៅពេលមាន interaction៖ `props.onSelect(itemId)`។",
           "Parent ទទួល parameters ពី Child រួចធ្វើការ update លើ state របស់ខ្លួន។"
         ],
-        "codeSnippet": "// Parent:\n<ChildComponent onSelect={(itemId) => setSelected(itemId)} />\n\n// Child:\n<button onClick={() => onSelect('item-1')}>Select Item</button>",
+        "codeSnippet": "import React, { useState } from 'react';\n\n// 1. Child Component: Triggers parent callback on user interaction\ninterface RatingPickerProps {\n  onSelectRating: (stars: number) => void;\n}\n\nfunction RatingPicker({ onSelectRating }: RatingPickerProps) {\n  return (\n    <div className=\"flex gap-2\">\n      {[1, 2, 3, 4, 5].map((star) => (\n        <button\n          key={star}\n          onClick={() => onSelectRating(star)}\n          className=\"px-3 py-1.5 bg-slate-800 hover:bg-amber-600 text-white rounded font-bold text-sm transition-colors\"\n        >\n          {star} ★\n        </button>\n      ))}\n    </div>\n  );\n}\n\n// 2. Parent Component: Supplies the callback and stores child outcome in state\nexport function FeedbackParent() {\n  const [selectedStars, setSelectedStars] = useState<number | null>(null);\n\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <h3 className=\"text-white font-semibold\">How was your learning experience?</h3>\n      \n      {/* Passing callback function downward */}\n      <RatingPicker onSelectRating={(stars) => setSelectedStars(stars)} />\n\n      {selectedStars && (\n        <p className=\"text-emerald-400 text-sm font-medium\">\n          Thank you! You rated this lesson {selectedStars} out of 5 stars.\n        </p>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Child to Parent Notification"
       },
@@ -1625,7 +1625,7 @@ export const modulesData: ModuleItem[] = [
           "Sibling ទីមួយដើរតួជា Controller (អ្នកផ្លាស់ប្តូរទិន្នន័យ) រីឯ Sibling ទីពីរដើរតួជា Consumer (អ្នកបង្ហាញលទ្ធផល)។",
           "រក្សាស្ថាបត្យកម្មកូដឱ្យមានលក្ខណៈ Predictable និងងាយស្រួល Debug។"
         ],
-        "codeSnippet": "// Sibling 1 (Filter input) -> updates query in Parent -> Sibling 2 (Results list) receives filtered query",
+        "codeSnippet": "import React, { useState } from 'react';\n\n// Sibling A: Input controller that triggers changes\nfunction FilterInput({ query, onQueryChange }: { query: string; onQueryChange: (val: string) => void }) {\n  return (\n    <input\n      type=\"text\"\n      value={query}\n      onChange={(e) => onQueryChange(e.target.value)}\n      placeholder=\"Type to filter modules...\"\n      className=\"w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm\"\n    />\n  );\n}\n\n// Sibling B: Consumer that displays filtered data\nfunction FilterResults({ count }: { count: number }) {\n  return (\n    <p className=\"text-xs text-slate-400\">\n      Found <span className=\"text-blue-400 font-bold\">{count}</span> matching results\n    </p>\n  );\n}\n\n// Common Parent: Holds and coordinates shared state\nexport function SiblingStateCoordinator() {\n  const [query, setQuery] = useState('');\n  const allModules = ['JSX Syntax', 'State & Hooks', 'Routing', 'Context API'];\n  const filtered = allModules.filter(m => m.toLowerCase().includes(query.toLowerCase()));\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <FilterInput query={query} onQueryChange={setQuery} />\n      <FilterResults count={filtered.length} />\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Sibling State Sharing"
       },
@@ -1653,7 +1653,7 @@ export const modulesData: ModuleItem[] = [
           "ធ្វើឱ្យ Component APIs មានភាពរញ៉េរញ៉ៃ (Pollutes component interfaces)។",
           "ដំណោះស្រាយមាន ៣ សំខាន់ៗ៖"
         ],
-        "codeSnippet": "// Prop Drilling Anti-pattern:\n// <Page user={user}> -> <Dashboard user={user}> -> <Sidebar user={user}> -> <Avatar user={user}>",
+        "codeSnippet": "import React from 'react';\n\n// Level 4 (Leaf): Actually needs and renders the username\nfunction UserBadge({ username }: { username: string }) {\n  return <span className=\"font-bold text-blue-400\">@{username}</span>;\n}\n\n// Level 3 (Intermediary): Does not care about username, but forced to pass it!\nfunction SidebarNav({ username }: { username: string }) {\n  return (\n    <nav className=\"p-3 bg-slate-800 rounded-lg\">\n      <UserBadge username={username} />\n    </nav>\n  );\n}\n\n// Level 2 (Intermediary): Also forced to forward username!\nfunction DashboardLayout({ username }: { username: string }) {\n  return (\n    <div className=\"space-y-4\">\n      <SidebarNav username={username} />\n    </div>\n  );\n}\n\n// Level 1 (Root): Holds the user state\nexport function PropDrillingDemo() {\n  const user = { username: 'chann_dara' };\n  return <DashboardLayout username={user.username} />;\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Prop Drilling Demonstration"
       },
@@ -1668,7 +1668,7 @@ export const modulesData: ModuleItem[] = [
           "Leaf Component (ដូចជា `<Avatar user={user} />`) ត្រូវបានបង្កើតឡើងនៅ Parent កំពូលផ្ទាល់ ដែលមាន access ទៅកាន់ `user` រួចជាស្រេច។",
           "ជួយកាត់បន្ថយ coupling និងធ្វើឱ្យ components នៅកណ្តាលមានភាព generic ខ្ពស់។"
         ],
-        "codeSnippet": "// Instead of passing user through Sidebar:\n// <Sidebar><Avatar user={user} /></Sidebar>",
+        "codeSnippet": "import React, { ReactNode } from 'react';\n\n// Leaf component rendered where data lives\nfunction UserBadge({ username }: { username: string }) {\n  return <span className=\"font-bold text-blue-400\">@{username}</span>;\n}\n\n// Intermediary components simply render children without knowing about user!\nfunction SidebarNav({ children }: { children: ReactNode }) {\n  return <nav className=\"p-3 bg-slate-800 rounded-lg\">{children}</nav>;\n}\n\nfunction DashboardLayout({ children }: { children: ReactNode }) {\n  return <div className=\"space-y-4\">{children}</div>;\n}\n\n// Root creates the UserBadge directly, eliminating all prop forwarding:\nexport function CompositionSolutionDemo() {\n  const user = { username: 'chann_dara' };\n\n  return (\n    <DashboardLayout>\n      <SidebarNav>\n        {/* ✅ Directly composed: No prop drilling through intermediate components! */}\n        <UserBadge username={user.username} />\n      </SidebarNav>\n    </DashboardLayout>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Composition Solving Prop Drilling"
       },
@@ -1683,7 +1683,7 @@ export const modulesData: ModuleItem[] = [
           "កំណត់ឈ្មោះ Props ឱ្យច្បាស់លាស់ និងមានលក្ខណៈ Intuitive ស្របតាមក្បួន React conventions។",
           "ជៀសវាងការបង្កើត props ច្រើនហួសហេតុ (Boolean flag explosion) ដែលធ្វើឱ្យ component ពិបាកថែទាំ។"
         ],
-        "codeSnippet": "type AlertProps = \n  | { variant: 'simple'; message: string }\n  | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };",
+        "codeSnippet": "import React from 'react';\n\n// Mutually exclusive prop API design via TypeScript Discriminated Unions:\ntype AlertProps =\n  | { variant: 'simple'; message: string }\n  | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };\n\nexport function BannerAlert(props: AlertProps) {\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between\">\n      <span className=\"text-slate-200 text-sm\">{props.message}</span>\n\n      {/* TypeScript guarantees onAction exists ONLY if variant is 'actionable' */}\n      {props.variant === 'actionable' && (\n        <button\n          onClick={props.onAction}\n          className=\"px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold\"\n        >\n          {props.actionLabel}\n        </button>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Discriminated Union Props"
       }
@@ -1723,7 +1723,7 @@ export const modulesData: ModuleItem[] = [
           "Side effects ត្រូវតែស្ថិតនៅក្នុងកន្លែងពីរគត់៖ **Event Handlers** (ឆ្លើយតបនឹងការចុចរបស់ user) ឬ **useEffect** (ដំណើរការពេល render រួច)។",
           "ការដាក់ side effects ក្នុង render body អាចបណ្តាលឱ្យកើត bugs ធ្ងន់ធ្ងរ និង re-render គ្មានទីបញ្ចប់។"
         ],
-        "codeSnippet": "// Side effects belong in useEffect or event handlers, NOT in render body!",
+        "codeSnippet": "import React, { useState, useEffect } from 'react';\n\nexport function SideEffectDemo() {\n  const [clickCount, setClickCount] = useState(0);\n\n  // ❌ Anti-pattern: Side effects inside render body mutate outside world unpredictably!\n  // document.title = `Clicked ${clickCount} times`; // BAD during render\n\n  // ✅ Correct: Side effect cleanly isolated inside useEffect after paint\n  useEffect(() => {\n    document.title = `Clicked ${clickCount} times`;\n    \n    // Side effect: Log analytics event\n    console.log(`[Analytics] User clicked count: ${clickCount}`);\n  }, [clickCount]);\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <h3 className=\"text-white font-bold\">Side Effect Placement</h3>\n      <p className=\"text-slate-300 text-sm\">\n        Document title updates cleanly in useEffect: <span className=\"text-blue-400 font-mono\">{clickCount}</span>\n      </p>\n      <button\n        onClick={() => setClickCount(prev => prev + 1)}\n        className=\"px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold\"\n      >\n        Increment & Trigger Effect\n      </button>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Side Effect Placement"
       },
@@ -1749,7 +1749,7 @@ export const modulesData: ModuleItem[] = [
         "summary": "ការប្រៀបធៀប No Array, Empty Array [], និង Populated Dependencies [a, b]។",
         "explanation": "Dependency Array គឺជាកត្តាកំណត់ថាតើ `useEffect` របស់អ្នកត្រូវដំណើរការនៅពេលណាខ្លះ។ មានជម្រើស ៣ សំខាន់ៗក្នុងការកំណត់ Dependency Array៖",
         "keyPoints": [],
-        "codeSnippet": "// 1. Runs after every single render (rarely desired):\nuseEffect(() => { console.log('Rendered'); });\n\n// 2. Runs once on initial mount:\nuseEffect(() => { console.log('Mounted'); }, []);\n\n// 3. Runs when count changes:\nuseEffect(() => { console.log('Count is', count); }, [count]);",
+        "codeSnippet": "import React, { useState, useEffect } from 'react';\n\nexport function DependencyMatrixDemo() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n\n  // 1. No dependency array: Runs after every single render (Warning: high cost!)\n  useEffect(() => {\n    console.log('[Render Cycle] Component rendered/re-rendered');\n  });\n\n  // 2. Empty array []: Runs once on initial mount only\n  useEffect(() => {\n    console.log('[Mount] Component initialized once');\n  }, []);\n\n  // 3. Populated dependencies [count]: Runs on mount + whenever count changes\n  useEffect(() => {\n    console.log(`[Count Changed] New count is: ${count}`);\n  }, [count]); // Ignores changes to 'text'\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <div className=\"flex items-center gap-3\">\n        <button\n          onClick={() => setCount(c => c + 1)}\n          className=\"px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm\"\n        >\n          Count: {count}\n        </button>\n        <input\n          type=\"text\"\n          value={text}\n          onChange={(e) => setText(e.target.value)}\n          placeholder=\"Type here (triggers no-array effect)...\"\n          className=\"px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-white text-sm\"\n        />\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Dependency Array Options"
       },
@@ -1763,7 +1763,7 @@ export const modulesData: ModuleItem[] = [
           "Effects មានលក្ខណៈ **Non-blocking** តាមលំនាំដើម ដូច្នេះអ្នកប្រើប្រាស់អាចមើលឃើញ UI ភ្លាមៗដោយមិនចាំបាច់រង់ចាំ effect បញ្ចប់។",
           "ជួយបង្កើន Perceived Performance នៃកម្មវិធី web ឱ្យមានអារម្មណ៍ថារលូន និងឆ្លើយតបរហ័ស។"
         ],
-        "codeSnippet": "// Timeline:\n// 1. Render JSX -> 2. Browser Paints UI -> 3. useEffect Runs",
+        "codeSnippet": "import React, { useState, useEffect, useRef } from 'react';\n\nexport function EffectTimelineDemo() {\n  const [timelineLogs, setTimelineLogs] = useState<string[]>([]);\n  const boxRef = useRef<HTMLDivElement>(null);\n\n  // 1. Render phase executes first (Synchronous calculation)\n  console.log('1. Render Phase: Computing JSX elements');\n\n  // 2. useEffect executes strictly AFTER DOM paint\n  useEffect(() => {\n    // At this point, the browser has painted pixels\n    const width = boxRef.current?.getBoundingClientRect().width || 0;\n    \n    setTimelineLogs(prev => [\n      ...prev,\n      `3. Effect Executed: Box measured at ${width}px after DOM paint!`\n    ]);\n  }, []);\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <div ref={boxRef} className=\"p-3 bg-blue-950/60 border border-blue-800 rounded-lg text-blue-200 text-sm\">\n        Measured UI Element\n      </div>\n\n      <div className=\"text-xs font-mono text-emerald-400 space-y-1\">\n        {timelineLogs.map((log, i) => (\n          <p key={i}>{log}</p>\n        ))}\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Effect Execution Timeline"
       },
@@ -1793,7 +1793,7 @@ export const modulesData: ModuleItem[] = [
           "រៀបចំកូដឱ្យត្រៀមខ្លួនជានិច្ចចំពោះករណីដែល Prop អាចផ្លាស់ប្តូរតម្លៃញឹកញាប់។",
           "សម្អាតទិន្នន័យចាស់ ឬ cancel requests មុនពេលទាញយកទិន្នន័យសម្រាប់ Prop ថ្មី។"
         ],
-        "codeSnippet": "useEffect(() => {\n  fetchModuleDetails(moduleId);\n}, [moduleId]);",
+        "codeSnippet": "import React, { useState, useEffect } from 'react';\n\ninterface ModuleDetailProps {\n  moduleId: string;\n}\n\nexport function ModuleDetailViewer({ moduleId }: ModuleDetailProps) {\n  const [moduleData, setModuleData] = useState<string | null>(null);\n  const [isLoading, setIsLoading] = useState(false);\n\n  useEffect(() => {\n    let isCurrent = true;\n    setIsLoading(true);\n\n    // Reacting to moduleId prop change: fetch details for the new ID\n    const timer = setTimeout(() => {\n      if (isCurrent) {\n        setModuleData(`Syllabus and lessons for module: ${moduleId}`);\n        setIsLoading(false);\n      }\n    }, 400);\n\n    // Cleanup prevents race conditions when moduleId changes rapidly\n    return () => {\n      isCurrent = false;\n      clearTimeout(timer);\n    };\n  }, [moduleId]); // Re-runs whenever the parent passes a new moduleId\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2\">\n      <h4 className=\"text-white font-bold\">Module ID: {moduleId}</h4>\n      <p className=\"text-slate-300 text-sm\">\n        {isLoading ? 'Loading content...' : moduleData}\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Reacting to Prop Changes"
       },
@@ -1838,7 +1838,7 @@ export const modulesData: ModuleItem[] = [
           "**Object/Function Reference Trap**៖ ជៀសវាងការដាក់ objects ឬ functions ដែលមិនទាន់ memoized ទៅក្នុង dependencies។ ចូរប្រើ primitive values (strings, numbers, booleans) ឬប្រើ `useCallback` / `useMemo`។",
           "គោរពតាម ESLint rule `react-hooks/exhaustive-deps` ជានិច្ច។"
         ],
-        "codeSnippet": "// ❌ Infinite Loop Bug:\n/*\nuseEffect(() => {\n  setCount(count + 1); // Triggers re-render -> runs effect -> triggers re-render...\n}, [count]);\n*/",
+        "codeSnippet": "import React, { useState, useEffect } from 'react';\n\nexport function TimerCorrectionDemo() {\n  const [seconds, setSeconds] = useState(0);\n\n  // ❌ 1. PITFALL: Triggers infinite re-render loop!\n  // useEffect(() => {\n  //   setSeconds(seconds + 1); // Mutates state -> re-renders -> effect runs again!\n  // }, [seconds]);\n\n  // ✅ 2. FIX: Use functional update with empty dependency array []\n  useEffect(() => {\n    const timer = setInterval(() => {\n      // Functional updater reads latest state without depending on 'seconds'\n      setSeconds(prev => prev + 1);\n    }, 1000);\n\n    return () => clearInterval(timer); // Clean up interval on unmount\n  }, []); // Safe: Empty array runs interval setup only once!\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2\">\n      <h4 className=\"text-white font-bold\">Elapsed Seconds: {seconds}</h4>\n      <p className=\"text-xs text-slate-400\">\n        Using functional updates eliminates the infinite re-render loop hazard.\n      </p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Infinite Loop Example"
       },
@@ -1877,7 +1877,7 @@ export const modulesData: ModuleItem[] = [
           "ជាឧបករណ៍ចម្បងក្នុងការធ្វើ DOM Manipulation នៅក្នុង React។",
           "តម្លៃក្នុង `.current` អាចផ្លាស់ប្តូរបានដោយសេរី (Mutable)។"
         ],
-        "codeSnippet": "import { useRef } from 'react';\n\nconst renderCountRef = useRef(0);\nrenderCountRef.current++; // Mutated without causing re-render!",
+        "codeSnippet": "import React, { useState, useRef } from 'react';\n\nexport function RenderTracker() {\n  const [inputText, setInputText] = useState('');\n  \n  // useRef holds mutable value across renders without causing re-renders\n  const renderCountRef = useRef(1);\n  renderCountRef.current++; // Mutated during render lifecycle for measurement\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <input\n        type=\"text\"\n        value={inputText}\n        onChange={(e) => setInputText(e.target.value)}\n        placeholder=\"Type to trigger re-renders...\"\n        className=\"w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm\"\n      />\n      <div className=\"text-xs font-mono text-emerald-400\">\n        Component has rendered: <span className=\"font-bold\">{renderCountRef.current}</span> times\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "useRef Declaration"
       },
@@ -1892,7 +1892,7 @@ export const modulesData: ModuleItem[] = [
           "ភ្ជាប់ ref ទៅកាន់ JSX element តាមរយៈ attribute `ref={inputRef}`។",
           "នៅពេល unmount React នឹង reset `.current` ឱ្យទៅជា `null` វិញ។"
         ],
-        "codeSnippet": "const inputRef = useRef<HTMLInputElement>(null);\nreturn <input ref={inputRef} type=\"text\" />;",
+        "codeSnippet": "import React, { useRef } from 'react';\n\nexport function AutoFocusSearch() {\n  // Explicitly type the ref with HTMLInputElement and initialize with null\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  const handleFocus = () => {\n    // Safely access current DOM element properties and methods\n    inputRef.current?.focus();\n  };\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <div className=\"flex gap-2\">\n        <input\n          ref={inputRef}\n          type=\"text\"\n          placeholder=\"Search course library...\"\n          className=\"flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-blue-500\"\n        />\n        <button\n          onClick={handleFocus}\n          className=\"px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold\"\n        >\n          Focus Input\n        </button>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "useRef Syntax with TypeScript"
       },
@@ -2052,7 +2052,7 @@ export const modulesData: ModuleItem[] = [
           "ប្រសិនបើអ្នកចង់ចែករំលែក **ទិន្នន័យ State តែមួយគត់** ឆ្លងកាត់ Components ជាច្រើន ចូរប្រើ **React Context** ឬ **Zustand** ជំនួសវិញ (ដែលនឹងត្រូវសិក្សានៅ Module 16 និង Module 17)។",
           "ជួយឱ្យ components នីមួយៗរក្សាភាពឯករាជ្យ និងគ្មានផលប៉ះពាល់ដល់គ្នាទៅវិញទៅមក (No Side Coupling)។"
         ],
-        "codeSnippet": "// Component A has its own independent toggle state;\n// Component B has its own independent toggle state.",
+        "codeSnippet": "import React, { useState } from 'react';\n\n// 1. Reusable Custom Hook (Encapsulates logic)\nfunction useToggle(initialValue = false): [boolean, () => void] {\n  const [value, setValue] = useState(initialValue);\n  const toggle = () => setValue(prev => !prev);\n  return [value, toggle];\n}\n\n// 2. Component A: Uses hook for dark mode toggle\nexport function ThemeToggle() {\n  const [isDark, toggleDark] = useToggle(false);\n  return (\n    <button onClick={toggleDark} className=\"px-3 py-1 bg-slate-800 text-white rounded text-sm\">\n      Theme: {isDark ? '🌙 Dark' : '☀️ Light'}\n    </button>\n  );\n}\n\n// 3. Component B: Uses the same hook for modal visibility\n// Notice: Component B has its OWN independent state that does not affect Component A!\nexport function PreviewModal() {\n  const [isOpen, toggleModal] = useToggle(false);\n  return (\n    <div>\n      <button onClick={toggleModal} className=\"px-3 py-1 bg-blue-600 text-white rounded text-sm\">\n        {isOpen ? 'Close Preview' : 'Open Preview'}\n      </button>\n      {isOpen && <div className=\"p-3 bg-slate-800 text-slate-300 mt-2 rounded\">Modal Content</div>}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Isolated Hook State Instances"
       },
@@ -2152,7 +2152,7 @@ export const modulesData: ModuleItem[] = [
           "State របស់កម្មវិធីត្រូវបានរក្សាទុកក្នុង JavaScript Memory ឆ្លងកាត់ការផ្លាស់ប្តូរ Route នីមួយៗ។",
           "Server គ្រាន់តែផ្គត់ផ្គង់ static bundle និង API endpoints (JSON Data) ប៉ុណ្ណោះ។"
         ],
-        "codeSnippet": "// Traditional Multi-Page App: Server returns full HTML page per URL.\n// Single Page App (SPA): Client-side JavaScript swaps view components on URL change.",
+        "codeSnippet": "import React from 'react';\nimport { BrowserRouter, Routes, Route, Link } from 'react-router-dom';\n\nfunction HomeView() {\n  return <h2 className=\"text-white text-xl font-bold\">Welcome to Course Catalog</h2>;\n}\n\nfunction ModulesView() {\n  return <h2 className=\"text-white text-xl font-bold\">All 27 React Modules</h2>;\n}\n\nexport function SpaNavigationDemo() {\n  return (\n    <BrowserRouter>\n      <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n        {/* Client-side navigation: <Link> updates URL without browser reloading! */}\n        <nav className=\"flex gap-4 border-b border-slate-800 pb-3\">\n          <Link to=\"/\" className=\"text-blue-400 hover:underline text-sm font-medium\">Home</Link>\n          <Link to=\"/modules\" className=\"text-blue-400 hover:underline text-sm font-medium\">Modules</Link>\n        </nav>\n\n        {/* View dynamically swaps inside DOM based on client route */}\n        <Routes>\n          <Route path=\"/\" element={<HomeView />} />\n          <Route path=\"/modules\" element={<ModulesView />} />\n        </Routes>\n      </div>\n    </BrowserRouter>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "SPA Mental Model"
       },
@@ -2167,9 +2167,9 @@ export const modulesData: ModuleItem[] = [
           "ចាប់ពី Version 6 ឡើងទៅ React Router គាំទ្រ Nested Routes, Data Loaders, Action Handlers និង Layout Outlets យ៉ាងរលូន។",
           "ប្រើ package `react-router-dom` សម្រាប់ web applications។"
         ],
-        "codeSnippet": "npm install react-router-dom",
-        "codeLanguage": "bash",
-        "codeTitle": "Installing React Router"
+        "codeSnippet": "// 1. Install react-router-dom:\n// npm install react-router-dom\n\nimport React from 'react';\nimport { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';\n\nfunction RootLayout() {\n  return (\n    <div className=\"min-h-screen bg-slate-950 text-white\">\n      <header className=\"p-4 border-b border-slate-800 flex gap-4\">\n        <Link to=\"/\">Overview</Link>\n        <Link to=\"/courses\">Courses</Link>\n      </header>\n      <main className=\"p-6\">\n        <Outlet /> {/* Renders child route component */}\n      </main>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    path: '/',\n    element: <RootLayout />,\n    children: [\n      { index: true, element: <h2>Home Dashboard</h2> },\n      { path: 'courses', element: <h2>All Available Courses</h2> },\n    ],\n  },\n]);\n\nexport function App() {\n  return <RouterProvider router={router} />;\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "React Router Setup with RouterProvider"
       },
       {
         "id": "m13-03",
@@ -2257,7 +2257,7 @@ export const modulesData: ModuleItem[] = [
           "អនុញ្ញាតឱ្យ component តែមួយដើរតួជា template សម្រាប់ URLs រាប់ពាន់ផ្សេងគ្នា។",
           "តម្លៃជាក់ស្តែងនៃ parameter នឹងត្រូវទាញយកតាមរយៈ `useParams()` hook។"
         ],
-        "codeSnippet": "<Route path=\"/modules/:moduleId\" element={<ModuleDetailView />} />",
+        "codeSnippet": "import React from 'react';\nimport { Routes, Route, useParams, Link } from 'react-router-dom';\n\n// 1. Component reading the dynamic parameter from URL\nfunction ModuleDetailView() {\n  // useParams extracts \":moduleId\" from current URL path\n  const { moduleId } = useParams<{ moduleId: string }>();\n\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <h2 className=\"text-xl font-bold text-white\">Viewing Module: {moduleId}</h2>\n      <p className=\"text-sm text-slate-400\">Extracting params enables dynamic lesson loading.</p>\n      <Link to=\"/modules\" className=\"text-blue-400 text-sm hover:underline\">\n        ← Back to All Modules\n      </Link>\n    </div>\n  );\n}\n\n// 2. Route Configuration using colon \":\" for parameter placeholder\nexport function ModuleAppRoutes() {\n  return (\n    <Routes>\n      <Route path=\"/modules/:moduleId\" element={<ModuleDetailView />} />\n    </Routes>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Dynamic Route Parameter Definition"
       },
@@ -2317,7 +2317,7 @@ export const modulesData: ModuleItem[] = [
           "តែងតែផ្តល់នូវការរចនាទំព័រ 404 ប្រកបដោយភាពរួសរាយ រួមជាមួយនឹងប៊ូតុងត្រឡប់ទៅកាន់ទំព័រដើមវិញ (Home Link)។",
           "ជៀសវាងការទុកឱ្យទំព័រទទេស្អាតពេល user វាយ URL ខុស។"
         ],
-        "codeSnippet": "<Route path=\"*\" element={<NotFoundView />} />",
+        "codeSnippet": "import React from 'react';\nimport { Routes, Route, Link } from 'react-router-dom';\n\n// 1. Engaging 404 Fallback Component\nfunction NotFoundView() {\n  return (\n    <div className=\"text-center py-16 space-y-4\">\n      <h1 className=\"text-6xl font-black text-rose-500\">404</h1>\n      <h2 className=\"text-2xl font-bold text-white\">Lesson or Page Not Found</h2>\n      <p className=\"text-slate-400 max-w-md mx-auto\">\n        The route you navigated to does not exist in this course.\n      </p>\n      <Link\n        to=\"/\"\n        className=\"inline-block px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm transition-colors\"\n      >\n        Return to Home\n      </Link>\n    </div>\n  );\n}\n\n// 2. Wildcard Route placed at the very end of <Routes>\nexport function AppRouter() {\n  return (\n    <Routes>\n      <Route path=\"/\" element={<h2>Home Page</h2>} />\n      {/* Catch-all matching any undefined path */}\n      <Route path=\"*\" element={<NotFoundView />} />\n    </Routes>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Catch-all 404 Route"
       },
@@ -2402,7 +2402,7 @@ export const modulesData: ModuleItem[] = [
           "Frontend ទទួលខុសត្រូវលើ User Interface (UI) និង State រីឯ Backend ទទួលខុសត្រូវលើ Database, Security, និង Business Logic។",
           "ប្រើប្រាស់ HTTP Methods ស្របតាមស្តង់ដារ REST (GET, POST, PUT, PATCH, DELETE)។"
         ],
-        "codeSnippet": "// 1. Client (React) ផ្ញើ HTTP Request ទៅកាន់ Server:\n// GET /api/v1/products -> Headers: { Authorization: \"Bearer ...\" }\n\n// 2. Server ដំណើរការ Business Logic និង Query Database\n\n// 3. Server ឆ្លើយតបមកវិញនូវ JSON Response:\n// Status: 200 OK\n// Body: [ { \"id\": 1, \"title\": \"React Masterclass\", \"price\": 49 } ]",
+        "codeSnippet": "import React, { useState, useEffect } from 'react';\n\ninterface Product {\n  id: number;\n  title: string;\n  price: number;\n}\n\nexport function ProductCatalogREST() {\n  const [products, setProducts] = useState<Product[]>([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    // 1. Client initiates HTTP GET request to backend REST endpoint\n    fetch('https://api.example.com/v1/products')\n      .then(res => {\n        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);\n        return res.json();\n      })\n      .then((data: Product[]) => {\n        setProducts(data);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, []);\n\n  if (loading) return <p className=\"text-slate-400\">Loading catalog...</p>;\n  if (error) return <p className=\"text-rose-400\">Error: {error}</p>;\n\n  return (\n    <ul className=\"space-y-2\">\n      {products.map(p => (\n        <li key={p.id} className=\"flex justify-between p-3 bg-slate-900 rounded-lg text-white\">\n          <span>{p.title}</span>\n          <span className=\"font-mono text-emerald-400\">${p.price}</span>\n        </li>\n      ))}\n    </ul>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "REST Architecture Model"
       },
@@ -2652,9 +2652,9 @@ export const modulesData: ModuleItem[] = [
           "មានប្រព័ន្ធ Caching ដ៏ឆ្លាតវៃ និង Garbage Collection ដោយស្វ័យប្រវត្តិ។",
           "គាំទ្រការ Refresh ទិន្នន័យដោយស្វ័យប្រវត្តិនៅពេល User ត្រឡប់មកកាន់ផ្ទាំង Browser វិញ (Window Focus)។"
         ],
-        "codeSnippet": "# ដំឡើង TanStack Query v5 និង DevTools សម្រាប់ React\nnpm install @tanstack/react-query @tanstack/react-query-devtools",
-        "codeLanguage": "bash",
-        "codeTitle": "Installing TanStack Query v5"
+        "codeSnippet": "// 1. Install TanStack Query:\n// npm install @tanstack/react-query @tanstack/react-query-devtools\n\nimport React from 'react';\nimport { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';\n\nconst queryClient = new QueryClient();\n\nfunction CourseLessonList() {\n  // Declarative query handles loading, errors, caching, and retries automatically!\n  const { data, isLoading, isError, error } = useQuery({\n    queryKey: ['lessons'],\n    queryFn: async () => {\n      const res = await fetch('/api/lessons');\n      if (!res.ok) throw new Error('Network error');\n      return res.json();\n    },\n  });\n\n  if (isLoading) return <div>Loading cached data...</div>;\n  if (isError) return <div>Failed to load: {error.message}</div>;\n\n  return <div>Lessons loaded: {data.length} items</div>;\n}\n\nexport function App() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <CourseLessonList />\n    </QueryClientProvider>\n  );\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "TanStack Query Quickstart Setup"
       },
       {
         "id": "m15-03",
@@ -2844,9 +2844,9 @@ export const modulesData: ModuleItem[] = [
           "ស័ក្តិសមបំផុតសម្រាប់ទិន្នន័យសកលដែលមានការផ្លាស់ប្តូរតិចតួច (Low-frequency updates)។",
           "ជួយដោះស្រាយបញ្ហា Prop Drilling យ៉ាងមានប្រសិទ្ធភាព។"
         ],
-        "codeSnippet": "import { createContext, useContext, useState } from 'react';\n\n// Context គឺជាយន្តការដើមរបស់ React មិនត្រូវការ npm package បន្ថែមឡើយ",
+        "codeSnippet": "import React, { createContext, useContext, useState } from 'react';\n\n// 1. Create the Context object\nconst ThemeContext = createContext<{ theme: string; toggleTheme: () => void }>({\n  theme: 'dark',\n  toggleTheme: () => {},\n});\n\n// 2. Deep Leaf Component consumes context directly without prop drilling\nfunction ThemeStatus() {\n  const { theme, toggleTheme } = useContext(ThemeContext);\n  return (\n    <button onClick={toggleTheme} className=\"px-3 py-1.5 bg-slate-800 text-white rounded text-sm\">\n      Active Theme: {theme} (Click to Toggle)\n    </button>\n  );\n}\n\n// 3. Provider Component wraps child hierarchy\nexport function ContextDemoApp() {\n  const [theme, setTheme] = useState('dark');\n  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl\">\n        <ThemeStatus />\n      </div>\n    </ThemeContext.Provider>\n  );\n}",
         "codeLanguage": "jsx",
-        "codeTitle": "Context Imports"
+        "codeTitle": "ThemeContext Definition & Consumption"
       },
       {
         "id": "m16-02",
@@ -3015,7 +3015,7 @@ export const modulesData: ModuleItem[] = [
           "**Zustand**: គ្រប់គ្រង Synchronous Client UI State (Cart items, Modal visibility, Dark mode)។",
           "មិនត្រូវចម្លង ឬ Sync ទិន្នន័យ Server ចូលទៅក្នុង Zustand Store ដោយមិនចាំបាច់ឡើយ។"
         ],
-        "codeSnippet": "// 1. Server Data -> គ្រប់គ្រងដោយ TanStack Query (Query Cache)\nconst { data: products } = useQuery({ queryKey: ['products'], queryFn: fetchProducts });\n\n// 2. Client UI State -> គ្រប់គ្រងដោយ Zustand (Global Client Store)\nconst { cart, addToCart } = useCartStore();",
+        "codeSnippet": "import React from 'react';\nimport { useQuery } from '@tanstack/react-query';\nimport { create } from 'zustand';\n\n// 1. Client UI State: Managed synchronously via Zustand (No loading spinners needed)\ninterface UIState {\n  isCartDrawerOpen: boolean;\n  toggleCartDrawer: () => void;\n}\nexport const useUIStore = create<UIState>((set) => ({\n  isCartDrawerOpen: false,\n  toggleCartDrawer: () => set((state) => ({ isCartDrawerOpen: !state.isCartDrawerOpen })),\n}));\n\n// 2. Component coordinating Server State & Client State\nexport function StorefrontHeader() {\n  // Server State: Cached, background refreshed, handles network state\n  const { data: user } = useQuery({\n    queryKey: ['authUser'],\n    queryFn: async () => ({ name: 'Sophea', role: 'Developer' }),\n  });\n\n  // Client UI State: Fast, local interface interaction\n  const { isCartDrawerOpen, toggleCartDrawer } = useUIStore();\n\n  return (\n    <header className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl flex justify-between\">\n      <span className=\"text-white\">Logged in as: {user?.name || 'Guest'}</span>\n      <button onClick={toggleCartDrawer} className=\"px-3 py-1 bg-blue-600 text-white rounded text-sm\">\n        Cart ({isCartDrawerOpen ? 'Open' : 'Closed'})\n      </button>\n    </header>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Modern Separation of State Responsibilities"
       },
@@ -3030,9 +3030,9 @@ export const modulesData: ModuleItem[] = [
           "**Zustand**: ដំណើរការលឿន គ្មាន Provider Hell គាំទ្រ Fine-grained Selectors និង Middleware។",
           "មិនចាំបាច់រុំ `<Provider>` នៅជុំវិញ Component Tree ឡើយនៅពេលប្រើ Zustand។"
         ],
-        "codeSnippet": "# ដំឡើង Zustand នៅក្នុងគម្រោងរបស់អ្នក\nnpm install zustand",
-        "codeLanguage": "bash",
-        "codeTitle": "Installing Zustand"
+        "codeSnippet": "// ❌ Context API Pitfall:\n// When 'count' changes in Context, ALL consumers re-render even if they only need 'theme'!\n// const { theme } = useContext(AppContext); // Re-renders on any context property update!\n\n// ✅ Zustand Selector Power:\n// Component subscribes ONLY to 'theme'. Changes to 'count' will NOT cause this component to re-render!\nimport { create } from 'zustand';\n\ninterface AppStore {\n  theme: 'light' | 'dark';\n  count: number;\n  increment: () => void;\n}\n\nexport const useAppStore = create<AppStore>((set) => ({\n  theme: 'dark',\n  count: 0,\n  increment: () => set((s) => ({ count: s.count + 1 })),\n}));\n\nexport function ThemeOnlyBadge() {\n  // Fine-grained selector: zero wasted re-renders!\n  const theme = useAppStore((state) => state.theme);\n  return <span className=\"px-2 py-1 bg-slate-800 text-xs text-white\">Theme: {theme}</span>;\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "Context vs Zustand Selector Comparison"
       },
       {
         "id": "m17-03",
@@ -3166,7 +3166,7 @@ export const modulesData: ModuleItem[] = [
           "គ្មានបញ្ហា Visual Tearing ឬ State Inconsistency ឡើយ។",
           "ដំណើរការស៊ីសង្វាក់គ្នាយ៉ាងរលូនជាមួយ Server Components និង Client Components។"
         ],
-        "codeSnippet": "// Zustand ត្រូវបានសរសេរឡើងដោយផ្អែកលើ React useSyncExternalStore API:\n// import { useSyncExternalStore } from 'react';\n// ធានាសុវត្ថិភាពពេញលេញក្នុង Concurrent Rendering និង React Server/Client transitions!",
+        "codeSnippet": "import React, { useTransition } from 'react';\nimport { create } from 'zustand';\n\ninterface SearchStore {\n  query: string;\n  results: string[];\n  setQuery: (q: string) => void;\n}\n\nexport const useSearchStore = create<SearchStore>((set) => ({\n  query: '',\n  results: [],\n  setQuery: (query) => {\n    // Zustand uses useSyncExternalStore under the hood to prevent tearing during concurrent transitions\n    const results = ['React 19 Hooks', 'Server Components', 'Actions'].filter(i =>\n      i.toLowerCase().includes(query.toLowerCase())\n    );\n    set({ query, results });\n  },\n}));\n\nexport function React19ConcurrentSearch() {\n  const [isPending, startTransition] = useTransition();\n  const { query, results, setQuery } = useSearchStore();\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    const val = e.target.value;\n    // Wrapping high-priority user input in React 19 transition safely with Zustand:\n    startTransition(() => {\n      setQuery(val);\n    });\n  };\n\n  return (\n    <div className=\"p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3\">\n      <input\n        type=\"text\"\n        value={query}\n        onChange={handleChange}\n        placeholder=\"Concurrent search...\"\n        className=\"w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm\"\n      />\n      {isPending && <p className=\"text-xs text-blue-400 animate-pulse\">Rendering transition...</p>}\n      <ul className=\"text-sm text-slate-300\">\n        {results.map((r, i) => <li key={i}>• {r}</li>)}\n      </ul>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Concurrent Safety Guarantee"
       },
@@ -3281,7 +3281,7 @@ export const modulesData: ModuleItem[] = [
           "Real DOM ផ្ទុកតែ Nodes ដែល User មើលឃើញផ្ទាល់ភ្នែក បូកជាមួយ Buffer តូចមួយ។",
           "បណ្ណាល័យពេញនិយម៖ `@tanstack/react-virtual`, `react-window`។"
         ],
-        "codeSnippet": "// គោលការណ៍នៃ Virtual Windowing៖\n// - ទិន្នន័យសរុបក្នុង JavaScript Array: 50,000 ធាតុ\n// - កម្ពស់ Scroll Container សរុប: 2,000,000px (តាមរយៈ spacer div)\n// - DOM Nodes ដែលបានបង្កើតពិតប្រាកដក្នុង HTML: ត្រឹមតែ 15 ទៅ 25 nodes ប៉ុណ្ណោះ!",
+        "codeSnippet": "import React, { useState } from 'react';\n\n// Virtual windowing renders only visible rows out of thousands\ninterface VirtualListProps {\n  items: string[];\n  rowHeight: number; // e.g. 40px per item\n  visibleCount: number; // e.g. 10 visible items at a time\n}\n\nexport function VirtualizedWindowList({ items, rowHeight = 40, visibleCount = 8 }: VirtualListProps) {\n  const [scrollTop, setScrollTop] = useState(0);\n\n  // Calculate slice range based on current scroll position\n  const startIndex = Math.floor(scrollTop / rowHeight);\n  const endIndex = Math.min(items.length, startIndex + visibleCount + 2); // +2 buffer\n  const visibleItems = items.slice(startIndex, endIndex);\n\n  return (\n    <div\n      onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}\n      className=\"h-[320px] overflow-y-auto border border-slate-800 bg-slate-900 rounded-xl relative\"\n    >\n      {/* Total height spacer simulates scrollbar for 50,000 items */}\n      <div style={{ height: `${items.length * rowHeight}px`, position: 'relative' }}>\n        {/* Only render 10 actual DOM nodes instead of 50,000! */}\n        <div style={{ transform: `translateY(${startIndex * rowHeight}px)` }}>\n          {visibleItems.map((item, index) => (\n            <div\n              key={startIndex + index}\n              style={{ height: `${rowHeight}px` }}\n              className=\"px-4 flex items-center border-b border-slate-800/60 text-sm text-slate-200\"\n            >\n              #{startIndex + index + 1} - {item}\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Virtual List Concept"
       },
@@ -3322,7 +3322,7 @@ export const modulesData: ModuleItem[] = [
         "summary": "គោលការណ៍ណែនាំ និងបញ្ជីត្រួតពិនិត្យ (Checklist) ដើម្បីរក្សា Frame Rate កម្រិត 60 FPS ក្នុងកម្មវិធី React។",
         "explanation": "ដើម្បីធានាថាកម្មវិធី React របស់អ្នកដំណើរការបានរលូនក្នុងល្បឿន 60 FPS (Frames Per Second) នៅគ្រប់ឧបករណ៍ទាំងអស់ រួមទាំងទូរស័ព្ទកម្លាំងខ្សោយ អ្នកគួរតែអនុវត្តតាមបញ្ជីត្រួតពិនិត្យ (Checklist) ខាងក្រោម៖",
         "keyPoints": [],
-        "codeSnippet": "// វិធានមាសទាំង ៤ នៃ React Performance៖\n// 1. កុំប្រញាប់ Optimize បើពុំទាន់មានភស្តុតាងពី Profiler ថាវាដំណើរការយឺត។\n// 2. រៀបចំស្ថាបត្យកម្ម Component (State Down / Lift Content Up) មុននឹងប្រើ React.memo។\n// 3. ប្រើប្រាស់ Virtualization នៅពេលបញ្ជីទិន្នន័យមានលើសពី 100 ជួរដេក។\n// 4. ប្រើ Lazy Loading សម្រាប់ Routes និង Heavy Libraries។",
+        "codeSnippet": "import React, { useState, ReactNode } from 'react';\n\n// Expensive component tree that shouldn't re-render when user types in search input\nfunction HeavyChartDisplay() {\n  console.log('Heavy chart rendered (costly calculation)');\n  return <div className=\"p-4 bg-slate-800 rounded-lg text-slate-300\">Detailed Analytics Chart</div>;\n}\n\n// Optimization Rule: Move rapid state down into isolated leaf component\nfunction LocalSearchInput() {\n  const [query, setQuery] = useState('');\n  return (\n    <input\n      type=\"text\"\n      value={query}\n      onChange={(e) => setQuery(e.target.value)}\n      placeholder=\"Type here without re-rendering chart...\"\n      className=\"px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-white text-sm\"\n    />\n  );\n}\n\n// Optimization Rule: Pass expensive UI as children to avoid re-rendering\nexport function OptimizedDashboard({ children }: { children?: ReactNode }) {\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      {/* 1. State changes inside LocalSearchInput stay inside LocalSearchInput */}\n      <LocalSearchInput />\n\n      {/* 2. Heavy content passed as prop/children never re-renders unnecessarily! */}\n      {children || <HeavyChartDisplay />}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Performance Golden Rules"
       },
@@ -3366,7 +3366,7 @@ export const modulesData: ModuleItem[] = [
           "ជំនួសបណ្ណាល័យធំៗដោយជម្រើសទំនើបៗ (ឧ. ប្រើ `date-fns` ឬ Intl API ជំនួស `moment.js`)។",
           "ប្រើឧបករណ៍ `@next/bundle-analyzer` ដើម្បីពិនិត្យមើលថាតើ Package ណាខ្លះស៊ីទំហំធំជាងគេក្នុង Bundle។"
         ],
-        "codeSnippet": "// ❌ មិនល្អ៖ ទាញយក Icons ទាំងពាន់ចូលក្នុង Bundle\n// import * as Icons from 'lucide-react';\n\n// ✅ ល្អបំផុត៖ Tree-shakable Named Imports (ទាញយកតែ 2 icons ប៉ុណ្ណោះ)\nimport { Check, AlertCircle } from 'lucide-react';\n\n// ✅ ជំនួស moment.js ដោយ native Intl API៖\nconst formattedDate = new Intl.DateTimeFormat('km-KH').format(new Date());",
+        "codeSnippet": "import React, { Suspense, useState } from 'react';\n// ✅ 1. Tree-shakable named imports: Bundler excludes hundreds of unused icons!\nimport { Activity, Download } from 'lucide-react';\n\n// ✅ 2. Dynamic import with React.lazy: Splits heavy library into a separate chunk\nconst HeavyAnalyticsModal = React.lazy(() => import('./HeavyAnalyticsModal'));\n\nexport function BundleOptimizedView() {\n  const [showModal, setShowModal] = useState(false);\n\n  return (\n    <div className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <div className=\"flex gap-2\">\n        <button\n          onClick={() => setShowModal(true)}\n          className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm\"\n        >\n          <Activity className=\"w-4 h-4\" /> Load Heavy Analytics On Demand\n        </button>\n      </div>\n\n      {/* Chunk is fetched from server only when user opens modal */}\n      {showModal && (\n        <Suspense fallback={<div className=\"p-4 text-slate-400\">Loading bundle chunk...</div>}>\n          <HeavyAnalyticsModal onClose={() => setShowModal(false)} />\n        </Suspense>\n      )}\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Tree-shakable Module Imports"
       }
@@ -3557,7 +3557,7 @@ export const modulesData: ModuleItem[] = [
           "**`asChild` pattern (Slot)**: បញ្ចូល Props និង ClassNames ចូលទៅក្នុង Child Element ផ្ទាល់ដោយមិនបង្កើត DOM Node បន្ថែម។",
           "ជួយជៀសវាងបញ្ហា Nested Interactive Elements (ដូចជាការដាក់ `<a>` នៅខាងក្នុង `<button>` ដែលជាកំហុស Invalid HTML)។"
         ],
-        "codeSnippet": "// 1. បង្ហាញជា Button ធម្មតា\n<Button onClick={handleClick}>ចុចទីនេះ</Button>\n\n// 2. បង្ហាញជា Tag <a> (Link) ប៉ុន្តែមាន Style ដូច Button បេះបិទ\n<Button as=\"a\" href=\"/curriculum\">ទៅកាន់ទំព័រមេរៀន</Button>\n\n// 3. គំរូ asChild ជាមួយ Radix UI Slot និង Next.js Link:\n// <Button asChild>\n//   <Link href=\"/projects\">មើលគម្រោងទាំងអស់</Link>\n// </Button>",
+        "codeSnippet": "import React, { ElementType, ComponentPropsWithoutRef } from 'react';\n\n// Polymorphic component prop types supporting dynamic 'as' prop\ntype PolymorphicButtonProps<E extends ElementType> = {\n  as?: E;\n  children: React.ReactNode;\n} & ComponentPropsWithoutRef<E>;\n\nexport function PolymorphicButton<E extends ElementType = 'button'>({\n  as,\n  children,\n  className = '',\n  ...restProps\n}: PolymorphicButtonProps<E>) {\n  // Dynamic tag creation: defaults to <button>, but can render as <a> or custom link\n  const Component = as || 'button';\n\n  return (\n    <Component\n      className={`px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors ${className}`}\n      {...restProps}\n    >\n      {children}\n    </Component>\n  );\n}\n\n// Usage examples:\nexport function PolymorphicDemo() {\n  return (\n    <div className=\"flex gap-3\">\n      {/* 1. Renders as native <button> */}\n      <PolymorphicButton onClick={() => alert('Clicked!')}>\n        Native Button\n      </PolymorphicButton>\n\n      {/* 2. Renders as HTML <a> tag with href, retaining identical styles! */}\n      <PolymorphicButton as=\"a\" href=\"https://react.dev\" target=\"_blank\">\n        External Link\n      </PolymorphicButton>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Polymorphic Component Concept"
       }
@@ -3642,7 +3642,7 @@ export const modulesData: ModuleItem[] = [
           "**Refresh Token**: រក្សាទុកដោយសុវត្ថិភាព និងផ្ញើទៅកាន់ Endpoint `/api/auth/refresh` តែមួយគត់។",
           "**Token Rotation**: រាល់ពេល Refresh Server នឹងចេញទាំង Access Token ថ្មី និង Refresh Token ថ្មីដើម្បីការពារ Replay Attacks។"
         ],
-        "codeSnippet": "// វដ្តជីវិតនៃ Token (Token Lifecycle):\n// 1. User ចូលប្រើប្រាស់ -> ទទួលបាន Access Token (15 នាទី) + Refresh Token (7 ថ្ងៃ)\n// 2. ក្រោយ 15 នាទី Access Token ផុតកំណត់ -> API ឆ្លើយតប 401\n// 3. កម្មវិធីហៅ POST /api/auth/refresh ដោយស្វ័យប្រវត្តិនូវ Background\n// 4. ទទួលបាន Access Token ថ្មីភ្លាមៗ -> User អាចបន្តប្រើប្រាស់ដោយរលូន មិនបាច់ Login ឡើងវិញឡើយ!",
+        "codeSnippet": "import axios from 'axios';\n\nexport const apiClient = axios.create({\n  baseURL: '/api/v1',\n});\n\n// 1. Request Interceptor: Attach short-lived Access Token (15 mins)\napiClient.interceptors.request.use((config) => {\n  const token = localStorage.getItem('access_token');\n  if (token) config.headers.Authorization = `Bearer ${token}`;\n  return config;\n});\n\n// 2. Response Interceptor: Catch 401, perform token rotation, and retry\napiClient.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    const originalRequest = error.config;\n\n    // If 401 Unauthorized and not already retried\n    if (error.response?.status === 401 && !originalRequest._retry) {\n      originalRequest._retry = true;\n\n      try {\n        // Exchange HttpOnly refresh cookie for a new short-lived access token\n        const res = await axios.post('/api/auth/refresh', {}, { withCredentials: true });\n        const newAccessToken = res.data.accessToken;\n\n        localStorage.setItem('access_token', newAccessToken);\n        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;\n\n        // Seamlessly retry the original failed request\n        return apiClient(originalRequest);\n      } catch (refreshErr) {\n        // Refresh token expired: log user out securely\n        window.location.href = '/login';\n        return Promise.reject(refreshErr);\n      }\n    }\n    return Promise.reject(error);\n  }\n);",
         "codeLanguage": "jsx",
         "codeTitle": "Token Rotation Lifecycle"
       },
@@ -3742,9 +3742,9 @@ export const modulesData: ModuleItem[] = [
           "កាត់បន្ថយចំនួន Re-renders នៃ Component ឱ្យនៅកម្រិតទាបបំផុត។",
           "រួមបញ្ចូលគ្នាយ៉ាងរលូនជាមួយបណ្ណាល័យ Validation ដូចជា Zod តាមរយៈ Resolvers។"
         ],
-        "codeSnippet": "# ដំឡើង React Hook Form, Zod, និង Hookform Resolvers\nnpm install react-hook-form zod @hookform/resolvers",
-        "codeLanguage": "bash",
-        "codeTitle": "Installing RHF and Zod"
+        "codeSnippet": "// 1. Install: npm install react-hook-form zod @hookform/resolvers\n\nimport React from 'react';\nimport { useForm } from 'react-hook-form';\n\ninterface FormData {\n  fullName: string;\n  email: string;\n}\n\nexport function QuickRegistrationForm() {\n  // RHF registers uncontrolled inputs via ref callback: zero unnecessary component re-renders!\n  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();\n\n  const onSubmit = (data: FormData) => {\n    console.log('Submitted payload:', data);\n  };\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)} className=\"p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4\">\n      <div>\n        <input\n          {...register('fullName', { required: 'Name is required' })}\n          placeholder=\"Full Name\"\n          className=\"w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm\"\n        />\n        {errors.fullName && <p className=\"text-xs text-rose-400 mt-1\">{errors.fullName.message}</p>}\n      </div>\n\n      <button type=\"submit\" className=\"px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-bold\">\n        Register (Zero Lag)\n      </button>\n    </form>\n  );\n}",
+        "codeLanguage": "jsx",
+        "codeTitle": "Uncontrolled RHF Starter Pattern"
       },
       {
         "id": "m21-02",
@@ -3998,9 +3998,9 @@ export const modulesData: ModuleItem[] = [
           "**Component Tests (RTL)**: ធ្វើតេស្តលើការ Render នៃ Component និង User Events ជាមួយ React Testing Library។",
           "**E2E Tests (Playwright / Cypress)**: ធ្វើតេស្តលើ User Flows ពេញលេញតាំងពីដើមដល់ចប់នៅលើ Real Browser។"
         ],
-        "codeSnippet": "# ដំឡើង Vitest, React Testing Library, User Event, និង JSDOM\nnpm install -D vitest @testing-library/react @testing-library/user-event jsdom",
-        "codeLanguage": "bash",
-        "codeTitle": "Installing Testing Stack"
+        "codeSnippet": "// 1. Install: npm install -D vitest @testing-library/react @testing-library/user-event jsdom\n\nimport { describe, it, expect } from 'vitest';\nimport { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { LoginForm } from './LoginForm';\n\ndescribe('LoginForm User Experience', () => {\n  it('allows user to type credentials and see success greeting', async () => {\n    const user = userEvent.setup();\n    render(<LoginForm />);\n\n    // Test from user perspective: finding input by accessible label\n    const emailInput = screen.getByLabelText(/email address/i);\n    const submitBtn = screen.getByRole('button', { name: /log in/i });\n\n    // Simulate real user typing and clicking\n    await user.type(emailInput, 'student@reactcourse.com');\n    await user.click(submitBtn);\n\n    // Verify DOM updates that the user can actually perceive:\n    expect(screen.getByText(/welcome back/i)).toBeInTheDocument();\n  });\n});",
+        "codeLanguage": "jsx",
+        "codeTitle": "Testing User Behavior with RTL"
       },
       {
         "id": "m24-02",
@@ -4053,7 +4053,7 @@ export const modulesData: ModuleItem[] = [
           "ទប់ស្កាត់ការដំណើរការកូដ `<script>alert('hack')</script>` ដែល User បញ្ចូលតាមរយៈ Form។",
           "មិនត្រូវប្រើ `eval()` ឬបង្កើត HTML តាមរយៈ String Concatenation ឡើយ។"
         ],
-        "codeSnippet": "export function UserComment({ commentText }: { commentText: string }) {\n  // ប្រសិនបើ commentText គឺជា៖ \"<script>stealTokens()</script>\"\n  // React នឹង Render វាជាអត្ថបទធម្មតាសុវត្ថិភាព 100%៖\n  // &lt;script&gt;stealTokens()&lt;/script&gt;\n  return <div className=\"comment-box\">{commentText}</div>;\n}",
+        "codeSnippet": "import React from 'react';\n\ninterface CommentProps {\n  author: string;\n  commentText: string;\n  websiteUrl?: string;\n}\n\nexport function UserCommentSecurityDemo({ author, commentText, websiteUrl }: CommentProps) {\n  // 1. React AUTO-ESCAPES all strings injected into JSX expressions:\n  // Even if commentText contains: \"<script>stealTokens()</script>\" or \"<img src=x onerror=alert(1)>\"\n  // React converts them into safe string text: &lt;script&gt;stealTokens()&lt;/script&gt;\n  return (\n    <div className=\"p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2\">\n      <div className=\"flex items-center justify-between\">\n        <span className=\"font-bold text-white\">{author}</span>\n        \n        {/* 2. Security best practice: Prevent tab-napping on external links */}\n        {websiteUrl && (\n          <a\n            href={websiteUrl}\n            target=\"_blank\"\n            rel=\"noopener noreferrer\"\n            className=\"text-xs text-blue-400 hover:underline\"\n          >\n            Website\n          </a>\n        )}\n      </div>\n\n      <p className=\"text-slate-300 text-sm\">{commentText}</p>\n    </div>\n  );\n}",
         "codeLanguage": "jsx",
         "codeTitle": "Automatic XSS Escaping"
       },
