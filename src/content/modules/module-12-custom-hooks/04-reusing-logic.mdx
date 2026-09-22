@@ -22,6 +22,36 @@ codeTitle: "Isolated Hook State Instances"
 ### Code Example: Isolated Hook State Instances
 
 ```jsx
-// Component A has its own independent toggle state;
-// Component B has its own independent toggle state.
+import React, { useState } from 'react';
+
+// 1. Reusable Custom Hook (Encapsulates logic)
+function useToggle(initialValue = false): [boolean, () => void] {
+  const [value, setValue] = useState(initialValue);
+  const toggle = () => setValue(prev => !prev);
+  return [value, toggle];
+}
+
+// 2. Component A: Uses hook for dark mode toggle
+export function ThemeToggle() {
+  const [isDark, toggleDark] = useToggle(false);
+  return (
+    <button onClick={toggleDark} className="px-3 py-1 bg-slate-800 text-white rounded text-sm">
+      Theme: {isDark ? '🌙 Dark' : '☀️ Light'}
+    </button>
+  );
+}
+
+// 3. Component B: Uses the same hook for modal visibility
+// Notice: Component B has its OWN independent state that does not affect Component A!
+export function PreviewModal() {
+  const [isOpen, toggleModal] = useToggle(false);
+  return (
+    <div>
+      <button onClick={toggleModal} className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+        {isOpen ? 'Close Preview' : 'Open Preview'}
+      </button>
+      {isOpen && <div className="p-3 bg-slate-800 text-slate-300 mt-2 rounded">Modal Content</div>}
+    </div>
+  );
+}
 ```

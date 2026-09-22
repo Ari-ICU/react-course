@@ -22,6 +22,34 @@ codeTitle: "SPA Mental Model"
 ### Code Example: SPA Mental Model
 
 ```jsx
-// Traditional Multi-Page App: Server returns full HTML page per URL.
-// Single Page App (SPA): Client-side JavaScript swaps view components on URL change.
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+function HomeView() {
+  return <h2 className="text-white text-xl font-bold">Welcome to Course Catalog</h2>;
+}
+
+function ModulesView() {
+  return <h2 className="text-white text-xl font-bold">All 27 React Modules</h2>;
+}
+
+export function SpaNavigationDemo() {
+  return (
+    <BrowserRouter>
+      <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+        {/* Client-side navigation: <Link> updates URL without browser reloading! */}
+        <nav className="flex gap-4 border-b border-slate-800 pb-3">
+          <Link to="/" className="text-blue-400 hover:underline text-sm font-medium">Home</Link>
+          <Link to="/modules" className="text-blue-400 hover:underline text-sm font-medium">Modules</Link>
+        </nav>
+
+        {/* View dynamically swaps inside DOM based on client route */}
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/modules" element={<ModulesView />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
 ```

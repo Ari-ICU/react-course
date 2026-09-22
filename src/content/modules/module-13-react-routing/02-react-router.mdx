@@ -6,7 +6,7 @@ moduleId: "module-13"
 moduleNumber: "13"
 category: "Routing & Network"
 summary: "បណ្ណាល័យស្តង់ដារសម្រាប់គ្រប់គ្រង declarative client-side routing ក្នុង React SPAs។"
-codeTitle: "Installing React Router"
+codeTitle: "React Router Setup with RouterProvider"
 ---
 
 # React Router
@@ -19,8 +19,41 @@ codeTitle: "Installing React Router"
 - ចាប់ពី Version 6 ឡើងទៅ React Router គាំទ្រ Nested Routes, Data Loaders, Action Handlers និង Layout Outlets យ៉ាងរលូន។
 - ប្រើ package `react-router-dom` សម្រាប់ web applications។
 
-### Code Example: Installing React Router
+### Code Example: React Router Setup with RouterProvider
 
-```bash
-npm install react-router-dom
+```jsx
+// 1. Install react-router-dom:
+// npm install react-router-dom
+
+import React from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
+
+function RootLayout() {
+  return (
+    <div className="min-h-screen bg-slate-950 text-white">
+      <header className="p-4 border-b border-slate-800 flex gap-4">
+        <Link to="/">Overview</Link>
+        <Link to="/courses">Courses</Link>
+      </header>
+      <main className="p-6">
+        <Outlet /> {/* Renders child route component */}
+      </main>
+    </div>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    children: [
+      { index: true, element: <h2>Home Dashboard</h2> },
+      { path: 'courses', element: <h2>All Available Courses</h2> },
+    ],
+  },
+]);
+
+export function App() {
+  return <RouterProvider router={router} />;
+}
 ```
