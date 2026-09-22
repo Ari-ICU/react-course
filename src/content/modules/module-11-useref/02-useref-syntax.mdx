@@ -22,6 +22,34 @@ codeTitle: "useRef Syntax with TypeScript"
 ### Code Example: useRef Syntax with TypeScript
 
 ```jsx
-const inputRef = useRef<HTMLInputElement>(null);
-return <input ref={inputRef} type="text" />;
+import React, { useRef } from 'react';
+
+export function AutoFocusSearch() {
+  // Explicitly type the ref with HTMLInputElement and initialize with null
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFocus = () => {
+    // Safely access current DOM element properties and methods
+    inputRef.current?.focus();
+  };
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <div className="flex gap-2">
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Search course library..."
+          className="flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-blue-500"
+        />
+        <button
+          onClick={handleFocus}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold"
+        >
+          Focus Input
+        </button>
+      </div>
+    </div>
+  );
+}
 ```
