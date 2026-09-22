@@ -22,8 +22,28 @@ Hook `useRef` ផ្តល់ត្រឡប់មកវិញនូវ JavaScri
 ### Code Example: useRef Declaration
 
 ```jsx
-import { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
-const renderCountRef = useRef(0);
-renderCountRef.current++; // Mutated without causing re-render!
+export function RenderTracker() {
+  const [inputText, setInputText] = useState('');
+  
+  // useRef holds mutable value across renders without causing re-renders
+  const renderCountRef = useRef(1);
+  renderCountRef.current++; // Mutated during render lifecycle for measurement
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <input
+        type="text"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+        placeholder="Type to trigger re-renders..."
+        className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm"
+      />
+      <div className="text-xs font-mono text-emerald-400">
+        Component has rendered: <span className="font-bold">{renderCountRef.current}</span> times
+      </div>
+    </div>
+  );
+}
 ```

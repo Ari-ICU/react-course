@@ -22,10 +22,33 @@ codeTitle: "Infinite Loop Example"
 ### Code Example: Infinite Loop Example
 
 ```jsx
-// ❌ Infinite Loop Bug:
-/*
-useEffect(() => {
-  setCount(count + 1); // Triggers re-render -> runs effect -> triggers re-render...
-}, [count]);
-*/
+import React, { useState, useEffect } from 'react';
+
+export function TimerCorrectionDemo() {
+  const [seconds, setSeconds] = useState(0);
+
+  // ❌ 1. PITFALL: Triggers infinite re-render loop!
+  // useEffect(() => {
+  //   setSeconds(seconds + 1); // Mutates state -> re-renders -> effect runs again!
+  // }, [seconds]);
+
+  // ✅ 2. FIX: Use functional update with empty dependency array []
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Functional updater reads latest state without depending on 'seconds'
+      setSeconds(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(timer); // Clean up interval on unmount
+  }, []); // Safe: Empty array runs interval setup only once!
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+      <h4 className="text-white font-bold">Elapsed Seconds: {seconds}</h4>
+      <p className="text-xs text-slate-400">
+        Using functional updates eliminates the infinite re-render loop hazard.
+      </p>
+    </div>
+  );
+}
 ```
