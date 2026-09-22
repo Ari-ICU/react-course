@@ -21,12 +21,42 @@ codeTitle: "The Logical AND Zero Bug"
 ### Code Example: The Logical AND Zero Bug
 
 ```jsx
-// ❌ Pitfall: Renders the number "0" onto the webpage!
-{messages.length && <Badge count={messages.length} />}
+import React, { useState } from 'react';
 
-// ✅ Fix: Use explicit boolean comparison:
-{messages.length > 0 && <Badge count={messages.length} />}
+export function MessageNotificationCenter() {
+  const [messages, setMessages] = useState<string[]>([]);
 
-// ✅ Alternative: Use ternary operator:
-{messages.length > 0 ? <Badge count={messages.length} /> : null}
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <h4 className="text-white font-bold">Notification Inbox</h4>
+
+      {/* ❌ PITFALL: When messages is empty (length === 0), JavaScript renders the number "0" onto the screen!
+          <div>{messages.length && <span>You have new messages</span>}</div>
+      */}
+
+      {/* ✅ FIX 1: Explicit boolean comparison > 0 */}
+      <div>
+        {messages.length > 0 && (
+          <span className="px-2 py-1 bg-blue-600 text-white text-xs rounded-full">
+            {messages.length} New Messages
+          </span>
+        )}
+      </div>
+
+      {/* ✅ FIX 2: Ternary operator */}
+      <p className="text-xs text-slate-400">
+        {messages.length > 0
+          ? 'Click to view unread conversations'
+          : 'Inbox is completely clear'}
+      </p>
+
+      <button
+        onClick={() => setMessages(prev => [...prev, 'New alert'])}
+        className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs"
+      >
+        Receive Test Message
+      </button>
+    </div>
+  );
+}
 ```

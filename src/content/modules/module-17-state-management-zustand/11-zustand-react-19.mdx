@@ -22,7 +22,53 @@ codeTitle: "Concurrent Safety Guarantee"
 ### Code Example: Concurrent Safety Guarantee
 
 ```jsx
-// Zustand ត្រូវបានសរសេរឡើងដោយផ្អែកលើ React useSyncExternalStore API:
-// import { useSyncExternalStore } from 'react';
-// ធានាសុវត្ថិភាពពេញលេញក្នុង Concurrent Rendering និង React Server/Client transitions!
+import React, { useTransition } from 'react';
+import { create } from 'zustand';
+
+interface SearchStore {
+  query: string;
+  results: string[];
+  setQuery: (q: string) => void;
+}
+
+export const useSearchStore = create<SearchStore>((set) => ({
+  query: '',
+  results: [],
+  setQuery: (query) => {
+    // Zustand uses useSyncExternalStore under the hood to prevent tearing during concurrent transitions
+    const results = ['React 19 Hooks', 'Server Components', 'Actions'].filter(i =>
+      i.toLowerCase().includes(query.toLowerCase())
+    );
+    set({ query, results });
+  },
+}));
+
+export function React19ConcurrentSearch() {
+  const [isPending, startTransition] = useTransition();
+  const { query, results, setQuery } = useSearchStore();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    // Wrapping high-priority user input in React 19 transition safely with Zustand:
+    startTransition(() => {
+      setQuery(val);
+    });
+  };
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        placeholder="Concurrent search..."
+        className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm"
+      />
+      {isPending && <p className="text-xs text-blue-400 animate-pulse">Rendering transition...</p>}
+      <ul className="text-sm text-slate-300">
+        {results.map((r, i) => <li key={i}>• {r}</li>)}
+      </ul>
+    </div>
+  );
+}
 ```

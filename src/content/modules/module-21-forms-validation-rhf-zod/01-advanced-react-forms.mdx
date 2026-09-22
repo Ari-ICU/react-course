@@ -6,7 +6,7 @@ moduleId: "module-21"
 moduleNumber: "21"
 category: "Enterprise & Production"
 summary: "មូលហេតុដែល Uncontrolled Forms ជាមួយ React Hook Form មានល្បឿនលឿនជាង Controlled Forms ធម្មតា។"
-codeTitle: "Installing RHF and Zod"
+codeTitle: "Uncontrolled RHF Starter Pattern"
 ---
 
 # Advanced React Forms
@@ -19,9 +19,42 @@ codeTitle: "Installing RHF and Zod"
 - កាត់បន្ថយចំនួន Re-renders នៃ Component ឱ្យនៅកម្រិតទាបបំផុត។
 - រួមបញ្ចូលគ្នាយ៉ាងរលូនជាមួយបណ្ណាល័យ Validation ដូចជា Zod តាមរយៈ Resolvers។
 
-### Code Example: Installing RHF and Zod
+### Code Example: Uncontrolled RHF Starter Pattern
 
-```bash
-# ដំឡើង React Hook Form, Zod, និង Hookform Resolvers
-npm install react-hook-form zod @hookform/resolvers
+```jsx
+// 1. Install: npm install react-hook-form zod @hookform/resolvers
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+interface FormData {
+  fullName: string;
+  email: string;
+}
+
+export function QuickRegistrationForm() {
+  // RHF registers uncontrolled inputs via ref callback: zero unnecessary component re-renders!
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    console.log('Submitted payload:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <div>
+        <input
+          {...register('fullName', { required: 'Name is required' })}
+          placeholder="Full Name"
+          className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white text-sm"
+        />
+        {errors.fullName && <p className="text-xs text-rose-400 mt-1">{errors.fullName.message}</p>}
+      </div>
+
+      <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-bold">
+        Register (Zero Lag)
+      </button>
+    </form>
+  );
+}
 ```

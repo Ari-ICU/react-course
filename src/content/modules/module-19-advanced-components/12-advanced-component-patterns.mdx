@@ -22,14 +22,47 @@ codeTitle: "Polymorphic Component Concept"
 ### Code Example: Polymorphic Component Concept
 
 ```jsx
-// 1. បង្ហាញជា Button ធម្មតា
-<Button onClick={handleClick}>ចុចទីនេះ</Button>
+import React, { ElementType, ComponentPropsWithoutRef } from 'react';
 
-// 2. បង្ហាញជា Tag <a> (Link) ប៉ុន្តែមាន Style ដូច Button បេះបិទ
-<Button as="a" href="/curriculum">ទៅកាន់ទំព័រមេរៀន</Button>
+// Polymorphic component prop types supporting dynamic 'as' prop
+type PolymorphicButtonProps<E extends ElementType> = {
+  as?: E;
+  children: React.ReactNode;
+} & ComponentPropsWithoutRef<E>;
 
-// 3. គំរូ asChild ជាមួយ Radix UI Slot និង Next.js Link:
-// <Button asChild>
-//   <Link href="/projects">មើលគម្រោងទាំងអស់</Link>
-// </Button>
+export function PolymorphicButton<E extends ElementType = 'button'>({
+  as,
+  children,
+  className = '',
+  ...restProps
+}: PolymorphicButtonProps<E>) {
+  // Dynamic tag creation: defaults to <button>, but can render as <a> or custom link
+  const Component = as || 'button';
+
+  return (
+    <Component
+      className={`px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors ${className}`}
+      {...restProps}
+    >
+      {children}
+    </Component>
+  );
+}
+
+// Usage examples:
+export function PolymorphicDemo() {
+  return (
+    <div className="flex gap-3">
+      {/* 1. Renders as native <button> */}
+      <PolymorphicButton onClick={() => alert('Clicked!')}>
+        Native Button
+      </PolymorphicButton>
+
+      {/* 2. Renders as HTML <a> tag with href, retaining identical styles! */}
+      <PolymorphicButton as="a" href="https://react.dev" target="_blank">
+        External Link
+      </PolymorphicButton>
+    </div>
+  );
+}
 ```

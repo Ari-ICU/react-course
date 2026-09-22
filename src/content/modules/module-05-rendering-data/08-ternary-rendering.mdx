@@ -1,3 +1,4 @@
+
 ---
 id: "m05-08"
 number: "08"
@@ -22,7 +23,36 @@ Ternary operator តាមទម្រង់ `condition ? <ComponentA /> : <Comp
 ### Code Example: Inline Ternary Operator
 
 ```jsx
-<button className={isActive ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-400"}>
-  {isActive ? "Currently Selected" : "Select Option"}
-</button>
+import React, { useState } from 'react';
+
+export function SubscriptionToggle() {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="text-white text-sm font-medium">Newsletter Status</span>
+        
+        {/* 1. Ternary operator used for dynamic class names and button text */}
+        <button
+          onClick={() => setIsSubscribed(prev => !prev)}
+          className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            isSubscribed
+              ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+              : "bg-slate-800 hover:bg-slate-700 text-slate-300"
+          }`}
+        >
+          {isSubscribed ? "Subscribed ✓" : "Subscribe Now"}
+        </button>
+      </div>
+
+      {/* 2. Ternary operator used for conditional UI blocks */}
+      <p className="text-xs text-slate-400">
+        {isSubscribed
+          ? "You will receive updates for every new React module."
+          : "Subscribe to receive weekly React exercises and tips."}
+      </p>
+    </div>
+  );
+}
 ```

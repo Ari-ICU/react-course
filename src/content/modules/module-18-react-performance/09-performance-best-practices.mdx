@@ -23,9 +23,38 @@ codeTitle: "Performance Golden Rules"
 ### Code Example: Performance Golden Rules
 
 ```jsx
-// វិធានមាសទាំង ៤ នៃ React Performance៖
-// 1. កុំប្រញាប់ Optimize បើពុំទាន់មានភស្តុតាងពី Profiler ថាវាដំណើរការយឺត។
-// 2. រៀបចំស្ថាបត្យកម្ម Component (State Down / Lift Content Up) មុននឹងប្រើ React.memo។
-// 3. ប្រើប្រាស់ Virtualization នៅពេលបញ្ជីទិន្នន័យមានលើសពី 100 ជួរដេក។
-// 4. ប្រើ Lazy Loading សម្រាប់ Routes និង Heavy Libraries។
+import React, { useState, ReactNode } from 'react';
+
+// Expensive component tree that shouldn't re-render when user types in search input
+function HeavyChartDisplay() {
+  console.log('Heavy chart rendered (costly calculation)');
+  return <div className="p-4 bg-slate-800 rounded-lg text-slate-300">Detailed Analytics Chart</div>;
+}
+
+// Optimization Rule: Move rapid state down into isolated leaf component
+function LocalSearchInput() {
+  const [query, setQuery] = useState('');
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Type here without re-rendering chart..."
+      className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-white text-sm"
+    />
+  );
+}
+
+// Optimization Rule: Pass expensive UI as children to avoid re-rendering
+export function OptimizedDashboard({ children }: { children?: ReactNode }) {
+  return (
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      {/* 1. State changes inside LocalSearchInput stay inside LocalSearchInput */}
+      <LocalSearchInput />
+
+      {/* 2. Heavy content passed as prop/children never re-renders unnecessarily! */}
+      {children || <HeavyChartDisplay />}
+    </div>
+  );
+}
 ```

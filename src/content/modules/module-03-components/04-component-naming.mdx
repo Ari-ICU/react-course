@@ -22,11 +22,26 @@ React components ត្រូវតែចាប់ផ្តើមដោយអក
 ### Code Example: PascalCase Naming Rule
 
 ```jsx
-// ❌ Incorrect: Lowercase treated as unknown HTML element
-// function userProfile() { return <div>User</div>; }
+import React from 'react';
 
-// ✅ Correct: PascalCase recognized as React component
-export function UserProfile() {
-  return <div className="p-4 bg-slate-900 rounded">User Profile</div>;
+// ❌ INCORRECT: Lowercase is treated by JSX parser as native HTML tag:
+// function userAvatar() { return <img>...</img>; } // JSX evaluates <userAvatar /> as <useravatar></useravatar>
+
+// ✅ CORRECT: PascalCase is recognized by React as a custom component:
+function UserAvatar({ src, alt }: { src: string; alt: string }) {
+  return <img src={src} alt={alt} className="w-10 h-10 rounded-full border border-slate-700" />;
+}
+
+// ✅ Predictable Domain-Driven naming hierarchy:
+export function UserProfileCard() {
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl flex items-center gap-3">
+      <UserAvatar src="/avatars/dara.jpg" alt="Dara Chan" />
+      <div>
+        <h4 className="text-white font-bold text-sm">Dara Chan</h4>
+        <p className="text-xs text-slate-400">Full-Stack Engineer</p>
+      </div>
+    </div>
+  );
 }
 ```

@@ -22,12 +22,34 @@ codeTitle: "Tree-shakable Module Imports"
 ### Code Example: Tree-shakable Module Imports
 
 ```jsx
-// ❌ មិនល្អ៖ ទាញយក Icons ទាំងពាន់ចូលក្នុង Bundle
-// import * as Icons from 'lucide-react';
+import React, { Suspense, useState } from 'react';
+// ✅ 1. Tree-shakable named imports: Bundler excludes hundreds of unused icons!
+import { Activity, Download } from 'lucide-react';
 
-// ✅ ល្អបំផុត៖ Tree-shakable Named Imports (ទាញយកតែ 2 icons ប៉ុណ្ណោះ)
-import { Check, AlertCircle } from 'lucide-react';
+// ✅ 2. Dynamic import with React.lazy: Splits heavy library into a separate chunk
+const HeavyAnalyticsModal = React.lazy(() => import('./HeavyAnalyticsModal'));
 
-// ✅ ជំនួស moment.js ដោយ native Intl API៖
-const formattedDate = new Intl.DateTimeFormat('km-KH').format(new Date());
+export function BundleOptimizedView() {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <div className="flex gap-2">
+        <button
+          onClick={() => setShowModal(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm"
+        >
+          <Activity className="w-4 h-4" /> Load Heavy Analytics On Demand
+        </button>
+      </div>
+
+      {/* Chunk is fetched from server only when user opens modal */}
+      {showModal && (
+        <Suspense fallback={<div className="p-4 text-slate-400">Loading bundle chunk...</div>}>
+          <HeavyAnalyticsModal onClose={() => setShowModal(false)} />
+        </Suspense>
+      )}
+    </div>
+  );
+}
 ```

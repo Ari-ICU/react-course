@@ -6,7 +6,7 @@ moduleId: "module-24"
 moduleNumber: "24"
 category: "Enterprise & Production"
 summary: "ពីរ៉ាមីតនៃការធ្វើតេស្ត (Testing Pyramid)៖ Unit Tests, Component Integration Tests, និង End-to-End (E2E) Tests។"
-codeTitle: "Installing Testing Stack"
+codeTitle: "Testing User Behavior with RTL"
 ---
 
 # Testing Philosophy
@@ -19,9 +19,31 @@ codeTitle: "Installing Testing Stack"
 - **Component Tests (RTL)**: ធ្វើតេស្តលើការ Render នៃ Component និង User Events ជាមួយ React Testing Library។
 - **E2E Tests (Playwright / Cypress)**: ធ្វើតេស្តលើ User Flows ពេញលេញតាំងពីដើមដល់ចប់នៅលើ Real Browser។
 
-### Code Example: Installing Testing Stack
+### Code Example: Testing User Behavior with RTL
 
-```bash
-# ដំឡើង Vitest, React Testing Library, User Event, និង JSDOM
-npm install -D vitest @testing-library/react @testing-library/user-event jsdom
+```jsx
+// 1. Install: npm install -D vitest @testing-library/react @testing-library/user-event jsdom
+
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { LoginForm } from './LoginForm';
+
+describe('LoginForm User Experience', () => {
+  it('allows user to type credentials and see success greeting', async () => {
+    const user = userEvent.setup();
+    render(<LoginForm />);
+
+    // Test from user perspective: finding input by accessible label
+    const emailInput = screen.getByLabelText(/email address/i);
+    const submitBtn = screen.getByRole('button', { name: /log in/i });
+
+    // Simulate real user typing and clicking
+    await user.type(emailInput, 'student@reactcourse.com');
+    await user.click(submitBtn);
+
+    // Verify DOM updates that the user can actually perceive:
+    expect(screen.getByText(/welcome back/i)).toBeInTheDocument();
+  });
+});
 ```

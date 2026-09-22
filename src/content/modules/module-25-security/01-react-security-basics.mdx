@@ -22,10 +22,38 @@ codeTitle: "Automatic XSS Escaping"
 ### Code Example: Automatic XSS Escaping
 
 ```jsx
-export function UserComment({ commentText }: { commentText: string }) {
-  // ប្រសិនបើ commentText គឺជា៖ "<script>stealTokens()</script>"
-  // React នឹង Render វាជាអត្ថបទធម្មតាសុវត្ថិភាព 100%៖
-  // &lt;script&gt;stealTokens()&lt;/script&gt;
-  return <div className="comment-box">{commentText}</div>;
+import React from 'react';
+
+interface CommentProps {
+  author: string;
+  commentText: string;
+  websiteUrl?: string;
+}
+
+export function UserCommentSecurityDemo({ author, commentText, websiteUrl }: CommentProps) {
+  // 1. React AUTO-ESCAPES all strings injected into JSX expressions:
+  // Even if commentText contains: "<script>stealTokens()</script>" or "<img src=x onerror=alert(1)>"
+  // React converts them into safe string text: &lt;script&gt;stealTokens()&lt;/script&gt;
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="font-bold text-white">{author}</span>
+        
+        {/* 2. Security best practice: Prevent tab-napping on external links */}
+        {websiteUrl && (
+          <a
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-blue-400 hover:underline"
+          >
+            Website
+          </a>
+        )}
+      </div>
+
+      <p className="text-slate-300 text-sm">{commentText}</p>
+    </div>
+  );
 }
 ```
