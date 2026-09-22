@@ -21,7 +21,7 @@ export const courseMetadata: CourseMetadata = {
   subtitle: "From Intermediate to Enterprise Architecture (React 19, Next.js, TanStack Query, Zustand, Zod & Shadcn UI)",
   level: "Intermediate → Advanced",
   totalModules: 27,
-  totalTopics: 304,
+  totalTopics: 264,
   totalProjects: 6,
   prerequisites: [
     "HTML5 Semantic markup & accessibility standards",

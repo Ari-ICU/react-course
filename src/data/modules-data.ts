@@ -1713,7 +1713,7 @@ export const modulesData: ModuleItem[] = [
         "codeTitle": "Synchronizing Document Title"
       },
       {
-        "id": "m010-02",
+        "id": "m10-02",
         "number": "02",
         "title": "Side Effects",
         "summary": "អ្វីទៅដែលត្រូវបានចាត់ទុកជា Side Effect នៅក្នុងកម្មវិធី React។",
@@ -4019,7 +4019,7 @@ export const modulesData: ModuleItem[] = [
       },
       {
         "id": "m24-03",
-        "number": "04",
+        "number": "03",
         "title": "Mocking API Requests (MSW)",
         "summary": "ការប្រើប្រាស់ Mock Service Worker (MSW) ដើម្បីស្ទាក់ចាប់ និងក្លែងបន្លំ Network Requests យ៉ាងជាក់ស្តែងបំផុត។",
         "explanation": "**Mock Service Worker (MSW)** គឺជាបណ្ណាល័យស្តង់ដារមាសសម្រាប់ការក្លែងបន្លំ API (API Mocking) ក្នុងប្រព័ន្ធ Ecosystem នៃ JavaScript។ ជំនួសឱ្យការ Mock អនុគមន៍ `fetch` ឬ `axios` ដោយប្រើ `vi.fn()` ដែលងាយប្រឈមនឹងកំហុស MSW ធ្វើការស្ទាក់ចាប់ HTTP Requests នៅកម្រិត Network Layer ដោយផ្ទាល់ ដែលធ្វើឱ្យកូដតេស្តដំណើរការដូចទៅនឹង Server ពិតប្រាកដ។",
