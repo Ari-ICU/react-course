@@ -22,7 +22,42 @@ codeTitle: "Reacting to Prop Changes"
 ### Code Example: Reacting to Prop Changes
 
 ```jsx
-useEffect(() => {
-  fetchModuleDetails(moduleId);
-}, [moduleId]);
+import React, { useState, useEffect } from 'react';
+
+interface ModuleDetailProps {
+  moduleId: string;
+}
+
+export function ModuleDetailViewer({ moduleId }: ModuleDetailProps) {
+  const [moduleData, setModuleData] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let isCurrent = true;
+    setIsLoading(true);
+
+    // Reacting to moduleId prop change: fetch details for the new ID
+    const timer = setTimeout(() => {
+      if (isCurrent) {
+        setModuleData(`Syllabus and lessons for module: ${moduleId}`);
+        setIsLoading(false);
+      }
+    }, 400);
+
+    // Cleanup prevents race conditions when moduleId changes rapidly
+    return () => {
+      isCurrent = false;
+      clearTimeout(timer);
+    };
+  }, [moduleId]); // Re-runs whenever the parent passes a new moduleId
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+      <h4 className="text-white font-bold">Module ID: {moduleId}</h4>
+      <p className="text-slate-300 text-sm">
+        {isLoading ? 'Loading content...' : moduleData}
+      </p>
+    </div>
+  );
+}
 ```

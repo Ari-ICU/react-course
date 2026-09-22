@@ -22,7 +22,38 @@ Hook `useState` គឺជា built-in hook មូលដ្ឋានបំផុ�
 ### Code Example: useState TypeScript Declarations
 
 ```jsx
-const [isOpen, setIsOpen] = useState(false);
-const [user, setUser] = useState<User | null>(null);
-const [tags, setTags] = useState<string[]>([]);
+import React, { useState } from 'react';
+
+interface User {
+  name: string;
+  role: 'student' | 'instructor';
+}
+
+export function UserProfileEditor() {
+  // 1. Primitive boolean state
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // 2. Object state with TypeScript generic union
+  const [user, setUser] = useState<User | null>({
+    name: 'Sophea',
+    role: 'student',
+  });
+
+  // 3. Array state
+  const [tags, setTags] = useState<string[]>(['react', 'frontend']);
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <h4 className="text-white font-bold">{user?.name} ({user?.role})</h4>
+      <p className="text-slate-400 text-sm">Tags: {tags.join(', ')}</p>
+      
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm"
+      >
+        Toggle Editor ({isOpen ? 'Open' : 'Closed'})
+      </button>
+    </div>
+  );
+}
 ```

@@ -22,7 +22,43 @@ codeTitle: "Passing Custom Parameters"
 ### Code Example: Passing Custom Parameters
 
 ```jsx
-<button onClick={(e) => handleArchive(item.id, e)}>
-  Archive Item
-</button>
+import React, { useState } from 'react';
+
+interface Task {
+  id: string;
+  title: string;
+  isComplete: boolean;
+}
+
+export function TaskActionList() {
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 't-1', title: 'Review PR #42', isComplete: false },
+    { id: 't-2', title: 'Setup Vitest suite', isComplete: true },
+  ]);
+
+  // Handler receiving custom item parameters + SyntheticEvent
+  const handleToggleStatus = (id: string, currentStatus: boolean, e: React.MouseEvent) => {
+    e.stopPropagation(); // Access event methods cleanly
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, isComplete: !currentStatus } : t));
+  };
+
+  return (
+    <ul className="space-y-2">
+      {tasks.map((task) => (
+        <li key={task.id} className="flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded-lg">
+          <span className={task.isComplete ? "line-through text-slate-500" : "text-slate-200"}>
+            {task.title}
+          </span>
+          {/* Passing custom arguments via inline arrow function */}
+          <button
+            onClick={(e) => handleToggleStatus(task.id, task.isComplete, e)}
+            className="px-3 py-1 text-xs font-semibold rounded bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            {task.isComplete ? "Undo" : "Complete"}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
 ```

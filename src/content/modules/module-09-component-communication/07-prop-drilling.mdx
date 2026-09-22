@@ -24,6 +24,34 @@ Prop Drilling (ឬ Threading) គឺជាស្ថានភាពដែលអ�
 ### Code Example: Prop Drilling Demonstration
 
 ```jsx
-// Prop Drilling Anti-pattern:
-// <Page user={user}> -> <Dashboard user={user}> -> <Sidebar user={user}> -> <Avatar user={user}>
+import React from 'react';
+
+// Level 4 (Leaf): Actually needs and renders the username
+function UserBadge({ username }: { username: string }) {
+  return <span className="font-bold text-blue-400">@{username}</span>;
+}
+
+// Level 3 (Intermediary): Does not care about username, but forced to pass it!
+function SidebarNav({ username }: { username: string }) {
+  return (
+    <nav className="p-3 bg-slate-800 rounded-lg">
+      <UserBadge username={username} />
+    </nav>
+  );
+}
+
+// Level 2 (Intermediary): Also forced to forward username!
+function DashboardLayout({ username }: { username: string }) {
+  return (
+    <div className="space-y-4">
+      <SidebarNav username={username} />
+    </div>
+  );
+}
+
+// Level 1 (Root): Holds the user state
+export function PropDrillingDemo() {
+  const user = { username: 'chann_dara' };
+  return <DashboardLayout username={user.username} />;
+}
 ```

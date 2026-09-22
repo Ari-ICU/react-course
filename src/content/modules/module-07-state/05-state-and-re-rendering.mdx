@@ -22,12 +22,38 @@ React ធ្វើការប្រៀបធៀបតម្លៃ state ចា�
 ### Code Example: Immutability & Object.is() Comparison
 
 ```jsx
-// ❌ Bug: Mutating array in place fails to re-render
-/*
-items.push(newItem);
-setItems(items); // Identical reference! React does nothing.
-*/
+import React, { useState } from 'react';
 
-// ✅ Fix: Create new array reference via spread
-setItems(prev => [...prev, newItem]);
+export function ImmutableItemList() {
+  const [items, setItems] = useState<string[]>(['Learn JSX', 'Master Hooks']);
+
+  // ❌ Bug: Mutating array in-place keeps identical memory reference
+  // Object.is(items, items) === true -> React skips re-render!
+  const handleMutateBug = () => {
+    // items.push('New Item');
+    // setItems(items); // Does NOT update the UI!
+  };
+
+  // ✅ Correct: Create a new array reference via spread operator
+  const handleImmutableAdd = () => {
+    const newItem = `Item #${items.length + 1}`;
+    setItems(prev => [...prev, newItem]); // New reference -> triggers re-render!
+  };
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <ul className="list-disc pl-5 text-slate-300 text-sm space-y-1">
+        {items.map((item, idx) => (
+          <li key={idx}>{item}</li>
+        ))}
+      </ul>
+      <button
+        onClick={handleImmutableAdd}
+        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold"
+      >
+        Add Item (Immutable Spread)
+      </button>
+    </div>
+  );
+}
 ```

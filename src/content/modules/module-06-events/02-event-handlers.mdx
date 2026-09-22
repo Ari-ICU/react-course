@@ -22,12 +22,47 @@ codeTitle: "Function Reference vs Invocation"
 ### Code Example: Function Reference vs Invocation
 
 ```jsx
-// ❌ Wrong: handleClick runs immediately on render!
-// <button onClick={handleClick()}>Click</button>
+import { useState } from 'react';
 
-// ✅ Correct: Function reference passed
-<button onClick={handleClick}>Click</button>
+export function EventHandlerDemo() {
+  const [log, setLog] = useState('No action yet');
 
-// ✅ Correct: Arrow function wrapper for arguments
-<button onClick={() => handleDelete(item.id)}>Delete</button>
+  // Function reference to pass
+  function handleDirectClick() {
+    setLog('Direct click triggered via reference!');
+  }
+
+  // Handler accepting custom parameter
+  function handleDelete(id) {
+    setLog(`Deleted item #${id} via arrow wrapper!`);
+  }
+
+  return (
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <p className="text-sm font-mono text-emerald-400">Status: {log}</p>
+
+      <div className="flex flex-wrap gap-3">
+        {/* ✅ Correct: Pass function reference without parentheses */}
+        <button
+          onClick={handleDirectClick}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium"
+        >
+          onClick={'{handleDirectClick}'}
+        </button>
+
+        {/* ✅ Correct: Arrow function to pass arguments */}
+        <button
+          onClick={() => handleDelete(101)}
+          className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-medium"
+        >
+          onClick={'{\(\) => handleDelete\(101\)}'}
+        </button>
+
+        {/* ❌ INCORRECT: handleDirectClick() runs immediately during render!
+            <button onClick={handleDirectClick()}>Wrong!</button>
+        */}
+      </div>
+    </div>
+  );
+}
 ```

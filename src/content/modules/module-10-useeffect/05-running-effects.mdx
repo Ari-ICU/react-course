@@ -21,6 +21,38 @@ React ដំណើរការទៅតាមលំដាប់លំដោយ�
 ### Code Example: Effect Execution Timeline
 
 ```jsx
-// Timeline:
-// 1. Render JSX -> 2. Browser Paints UI -> 3. useEffect Runs
+import React, { useState, useEffect, useRef } from 'react';
+
+export function EffectTimelineDemo() {
+  const [timelineLogs, setTimelineLogs] = useState<string[]>([]);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // 1. Render phase executes first (Synchronous calculation)
+  console.log('1. Render Phase: Computing JSX elements');
+
+  // 2. useEffect executes strictly AFTER DOM paint
+  useEffect(() => {
+    // At this point, the browser has painted pixels
+    const width = boxRef.current?.getBoundingClientRect().width || 0;
+    
+    setTimelineLogs(prev => [
+      ...prev,
+      `3. Effect Executed: Box measured at ${width}px after DOM paint!`
+    ]);
+  }, []);
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <div ref={boxRef} className="p-3 bg-blue-950/60 border border-blue-800 rounded-lg text-blue-200 text-sm">
+        Measured UI Element
+      </div>
+
+      <div className="text-xs font-mono text-emerald-400 space-y-1">
+        {timelineLogs.map((log, i) => (
+          <p key={i}>{log}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
 ```

@@ -22,9 +22,46 @@ codeTitle: "Child to Parent Notification"
 ### Code Example: Child to Parent Notification
 
 ```jsx
-// Parent:
-<ChildComponent onSelect={(itemId) => setSelected(itemId)} />
+import React, { useState } from 'react';
 
-// Child:
-<button onClick={() => onSelect('item-1')}>Select Item</button>
+// 1. Child Component: Triggers parent callback on user interaction
+interface RatingPickerProps {
+  onSelectRating: (stars: number) => void;
+}
+
+function RatingPicker({ onSelectRating }: RatingPickerProps) {
+  return (
+    <div className="flex gap-2">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          onClick={() => onSelectRating(star)}
+          className="px-3 py-1.5 bg-slate-800 hover:bg-amber-600 text-white rounded font-bold text-sm transition-colors"
+        >
+          {star} ★
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// 2. Parent Component: Supplies the callback and stores child outcome in state
+export function FeedbackParent() {
+  const [selectedStars, setSelectedStars] = useState<number | null>(null);
+
+  return (
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <h3 className="text-white font-semibold">How was your learning experience?</h3>
+      
+      {/* Passing callback function downward */}
+      <RatingPicker onSelectRating={(stars) => setSelectedStars(stars)} />
+
+      {selectedStars && (
+        <p className="text-emerald-400 text-sm font-medium">
+          Thank you! You rated this lesson {selectedStars} out of 5 stars.
+        </p>
+      )}
+    </div>
+  );
+}
 ```

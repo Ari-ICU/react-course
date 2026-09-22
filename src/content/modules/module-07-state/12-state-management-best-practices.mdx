@@ -22,7 +22,44 @@ codeTitle: "State Colocation Rule"
 ### Code Example: State Colocation Rule
 
 ```jsx
-// State Colocation Rule:
-// If only ComponentA needs 'isModalOpen', keep it inside ComponentA,
-// NOT in the global store or App root!
+import React, { useState } from 'react';
+
+// 1. Child component collocates its own toggle state locally
+function SearchModal() {
+  const [isOpen, setIsOpen] = useState(false); // Colocated: App root does not need this!
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(true)} className="text-sm text-blue-400">
+        Open Search
+      </button>
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-3">
+            <h3 className="text-white font-bold">Search Modal</h3>
+            <button onClick={() => setIsOpen(false)} className="px-3 py-1 bg-slate-700 text-white rounded">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// 2. Compute Derived State instead of storing redundant state variables:
+export function UserProfileCard() {
+  const [firstName, setFirstName] = useState('Dara');
+  const [lastName, setLastName] = useState('Chan');
+
+  // ✅ Derived value computed on render (No redundant useState needed!):
+  const fullName = `${firstName} ${lastName}`;
+
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+      <h4 className="text-white font-semibold">User: {fullName}</h4>
+      <SearchModal />
+    </div>
+  );
+}
 ```

@@ -22,5 +22,40 @@ codeTitle: "Parent to Child Data Flow"
 ### Code Example: Parent to Child Data Flow
 
 ```jsx
-<ChildComponent message="Hello from parent!" count={42} />
+import React from 'react';
+
+// 1. Child Component receives data strictly via props (Read-only)
+interface CourseCardProps {
+  title: string;
+  lessonCount: number;
+  level: 'Beginner' | 'Advanced';
+}
+
+function CourseCard({ title, lessonCount, level }: CourseCardProps) {
+  return (
+    <div className="p-4 bg-slate-800 border border-slate-700 rounded-xl space-y-1.5">
+      <div className="flex items-center justify-between">
+        <h4 className="text-white font-bold">{title}</h4>
+        <span className="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-medium">
+          {level}
+        </span>
+      </div>
+      <p className="text-sm text-slate-400">{lessonCount} lessons included</p>
+    </div>
+  );
+}
+
+// 2. Parent Component owns data and passes it down
+export function CourseListParent() {
+  return (
+    <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-4">
+      <h3 className="text-lg font-bold text-white">Available Courses</h3>
+      <div className="space-y-3">
+        {/* Passing props down in unidirectional flow */}
+        <CourseCard title="React 19 Essentials" lessonCount={24} level="Beginner" />
+        <CourseCard title="Zustand & TanStack Query" lessonCount={18} level="Advanced" />
+      </div>
+    </div>
+  );
+}
 ```

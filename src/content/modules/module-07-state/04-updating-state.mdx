@@ -22,11 +22,41 @@ codeTitle: "Functional State Updates"
 ### Code Example: Functional State Updates
 
 ```jsx
-// ⚠️ Problem with direct state:
-// setCount(count + 1);
-// setCount(count + 1); // count is still stale; only increments by 1!
+import React, { useState } from 'react';
 
-// ✅ Solution: Functional updates
-setCount(prev => prev + 1);
-setCount(prev => prev + 1); // Increments by 2 safely!
+export function BatchCounter() {
+  const [count, setCount] = useState(0);
+
+  // ❌ Problematic: Multiple direct updates read stale closure count
+  const handleStaleIncrement = () => {
+    setCount(count + 1);
+    setCount(count + 1); // Reads same stale count; only increments by 1!
+  };
+
+  // ✅ Solution: Functional updater gets pending latest state
+  const handleBatchIncrement = () => {
+    setCount(prev => prev + 1);
+    setCount(prev => prev + 1); // Correctly increments by +2!
+  };
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <h3 className="text-2xl font-bold text-white">Count: {count}</h3>
+      <div className="flex gap-3">
+        <button
+          onClick={handleStaleIncrement}
+          className="px-3 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-sm"
+        >
+          Direct (+1 Bug)
+        </button>
+        <button
+          onClick={handleBatchIncrement}
+          className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold"
+        >
+          Functional Updater (+2 Safe)
+        </button>
+      </div>
+    </div>
+  );
+}
 ```

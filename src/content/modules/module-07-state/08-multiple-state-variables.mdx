@@ -22,8 +22,49 @@ codeTitle: "Multiple State Slices"
 ### Code Example: Multiple State Slices
 
 ```jsx
-// Good: Independent concerns kept separate
-const [searchQuery, setSearchQuery] = useState('');
-const [currentPage, setCurrentPage] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
+import React, { useState } from 'react';
+
+export function UserSearchFilter() {
+  // Independent concerns separated into distinct state slices:
+  const [query, setQuery] = useState('');
+  const [roleFilter, setRoleFilter] = useState('all');
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleReset = () => {
+    setQuery('');
+    setRoleFilter('all');
+    setIsSearching(false);
+  };
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by name..."
+          className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
+        />
+
+        <select
+          value={roleFilter}
+          onChange={(e) => setRoleFilter(e.target.value)}
+          className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
+        >
+          <option value="all">All Roles</option>
+          <option value="admin">Admins</option>
+          <option value="member">Members</option>
+        </select>
+      </div>
+
+      <div className="flex items-center justify-between text-xs text-slate-400">
+        <span>Active Filter: {roleFilter} | Query: "{query}"</span>
+        <button onClick={handleReset} className="text-blue-400 hover:underline">
+          Reset All
+        </button>
+      </div>
+    </div>
+  );
+}
 ```

@@ -22,5 +22,35 @@ codeTitle: "Side Effect Placement"
 ### Code Example: Side Effect Placement
 
 ```jsx
-// Side effects belong in useEffect or event handlers, NOT in render body!
+import React, { useState, useEffect } from 'react';
+
+export function SideEffectDemo() {
+  const [clickCount, setClickCount] = useState(0);
+
+  // ❌ Anti-pattern: Side effects inside render body mutate outside world unpredictably!
+  // document.title = `Clicked ${clickCount} times`; // BAD during render
+
+  // ✅ Correct: Side effect cleanly isolated inside useEffect after paint
+  useEffect(() => {
+    document.title = `Clicked ${clickCount} times`;
+    
+    // Side effect: Log analytics event
+    console.log(`[Analytics] User clicked count: ${clickCount}`);
+  }, [clickCount]);
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <h3 className="text-white font-bold">Side Effect Placement</h3>
+      <p className="text-slate-300 text-sm">
+        Document title updates cleanly in useEffect: <span className="text-blue-400 font-mono">{clickCount}</span>
+      </p>
+      <button
+        onClick={() => setClickCount(prev => prev + 1)}
+        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold"
+      >
+        Increment & Trigger Effect
+      </button>
+    </div>
+  );
+}
 ```

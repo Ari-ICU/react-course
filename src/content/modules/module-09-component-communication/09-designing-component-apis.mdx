@@ -22,7 +22,28 @@ codeTitle: "Discriminated Union Props"
 ### Code Example: Discriminated Union Props
 
 ```jsx
-type AlertProps = 
+import React from 'react';
+
+// Mutually exclusive prop API design via TypeScript Discriminated Unions:
+type AlertProps =
   | { variant: 'simple'; message: string }
   | { variant: 'actionable'; message: string; actionLabel: string; onAction: () => void };
+
+export function BannerAlert(props: AlertProps) {
+  return (
+    <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between">
+      <span className="text-slate-200 text-sm">{props.message}</span>
+
+      {/* TypeScript guarantees onAction exists ONLY if variant is 'actionable' */}
+      {props.variant === 'actionable' && (
+        <button
+          onClick={props.onAction}
+          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold"
+        >
+          {props.actionLabel}
+        </button>
+      )}
+    </div>
+  );
+}
 ```

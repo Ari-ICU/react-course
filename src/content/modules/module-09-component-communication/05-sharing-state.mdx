@@ -22,5 +22,41 @@ codeTitle: "Sibling State Sharing"
 ### Code Example: Sibling State Sharing
 
 ```jsx
-// Sibling 1 (Filter input) -> updates query in Parent -> Sibling 2 (Results list) receives filtered query
+import React, { useState } from 'react';
+
+// Sibling A: Input controller that triggers changes
+function FilterInput({ query, onQueryChange }: { query: string; onQueryChange: (val: string) => void }) {
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={(e) => onQueryChange(e.target.value)}
+      placeholder="Type to filter modules..."
+      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm"
+    />
+  );
+}
+
+// Sibling B: Consumer that displays filtered data
+function FilterResults({ count }: { count: number }) {
+  return (
+    <p className="text-xs text-slate-400">
+      Found <span className="text-blue-400 font-bold">{count}</span> matching results
+    </p>
+  );
+}
+
+// Common Parent: Holds and coordinates shared state
+export function SiblingStateCoordinator() {
+  const [query, setQuery] = useState('');
+  const allModules = ['JSX Syntax', 'State & Hooks', 'Routing', 'Context API'];
+  const filtered = allModules.filter(m => m.toLowerCase().includes(query.toLowerCase()));
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <FilterInput query={query} onQueryChange={setQuery} />
+      <FilterResults count={filtered.length} />
+    </div>
+  );
+}
 ```

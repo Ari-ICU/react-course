@@ -22,12 +22,45 @@ Dependency Array គឺជាកត្តាកំណត់ថាតើ `useEffe
 ### Code Example: Dependency Array Options
 
 ```jsx
-// 1. Runs after every single render (rarely desired):
-useEffect(() => { console.log('Rendered'); });
+import React, { useState, useEffect } from 'react';
 
-// 2. Runs once on initial mount:
-useEffect(() => { console.log('Mounted'); }, []);
+export function DependencyMatrixDemo() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
 
-// 3. Runs when count changes:
-useEffect(() => { console.log('Count is', count); }, [count]);
+  // 1. No dependency array: Runs after every single render (Warning: high cost!)
+  useEffect(() => {
+    console.log('[Render Cycle] Component rendered/re-rendered');
+  });
+
+  // 2. Empty array []: Runs once on initial mount only
+  useEffect(() => {
+    console.log('[Mount] Component initialized once');
+  }, []);
+
+  // 3. Populated dependencies [count]: Runs on mount + whenever count changes
+  useEffect(() => {
+    console.log(`[Count Changed] New count is: ${count}`);
+  }, [count]); // Ignores changes to 'text'
+
+  return (
+    <div className="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setCount(c => c + 1)}
+          className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm"
+        >
+          Count: {count}
+        </button>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type here (triggers no-array effect)..."
+          className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-white text-sm"
+        />
+      </div>
+    </div>
+  );
+}
 ```

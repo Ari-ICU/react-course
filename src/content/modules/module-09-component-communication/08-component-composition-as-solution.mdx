@@ -22,6 +22,33 @@ codeTitle: "Composition Solving Prop Drilling"
 ### Code Example: Composition Solving Prop Drilling
 
 ```jsx
-// Instead of passing user through Sidebar:
-// <Sidebar><Avatar user={user} /></Sidebar>
+import React, { ReactNode } from 'react';
+
+// Leaf component rendered where data lives
+function UserBadge({ username }: { username: string }) {
+  return <span className="font-bold text-blue-400">@{username}</span>;
+}
+
+// Intermediary components simply render children without knowing about user!
+function SidebarNav({ children }: { children: ReactNode }) {
+  return <nav className="p-3 bg-slate-800 rounded-lg">{children}</nav>;
+}
+
+function DashboardLayout({ children }: { children: ReactNode }) {
+  return <div className="space-y-4">{children}</div>;
+}
+
+// Root creates the UserBadge directly, eliminating all prop forwarding:
+export function CompositionSolutionDemo() {
+  const user = { username: 'chann_dara' };
+
+  return (
+    <DashboardLayout>
+      <SidebarNav>
+        {/* ✅ Directly composed: No prop drilling through intermediate components! */}
+        <UserBadge username={user.username} />
+      </SidebarNav>
+    </DashboardLayout>
+  );
+}
 ```
